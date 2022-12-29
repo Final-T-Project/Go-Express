@@ -32,6 +32,18 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `mydb`.`serves`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`serves` (
+  `id_serves` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(20) NOT NULL,
+  `price` INT NOT NULL,
+  `description` TEXT(6000) NOT NULL,
+  PRIMARY KEY (`id_serves`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `mydb`.`employer`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`employer` (
@@ -43,7 +55,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`employer` (
   `photo` VARCHAR(300) NOT NULL,
   `phone_number` VARCHAR(8) NOT NULL,
   `state` ENUM("Accepted", "Not Accepted") NOT NULL DEFAULT 'Not Accepted',
-  PRIMARY KEY (`id_employer`))
+  `serves_id_serves` INT NOT NULL,
+  PRIMARY KEY (`id_employer`),
+  INDEX `fk_employer_serves1_idx` (`serves_id_serves` ASC) VISIBLE,
+  CONSTRAINT `fk_employer_serves1`
+    FOREIGN KEY (`serves_id_serves`)
+    REFERENCES `mydb`.`serves` (`id_serves`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -55,6 +74,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cart` (
   `payment_type` ENUM("Cash", "Bank Card") NOT NULL,
   `date` VARCHAR(25) NULL DEFAULT 'Null',
   `user_id_user` VARCHAR(50) NOT NULL,
+  `state` ENUM("done", "not done") NOT NULL DEFAULT '\"not done\"',
   PRIMARY KEY (`id_cart`),
   INDEX `fk_cart_user1_idx` (`user_id_user` ASC) VISIBLE,
   CONSTRAINT `fk_cart_user1`
@@ -88,32 +108,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_product_cart1`
-    FOREIGN KEY (`cart_id_cart`)
-    REFERENCES `mydb`.`cart` (`id_cart`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`serves`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`serves` (
-  `id_serves` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(20) NOT NULL,
-  `price` INT NOT NULL,
-  `description` TEXT(6000) NOT NULL,
-  `user_id_user` VARCHAR(50) NOT NULL,
-  `cart_id_cart` INT NOT NULL,
-  PRIMARY KEY (`id_serves`),
-  INDEX `fk_serves_user1_idx` (`user_id_user` ASC) VISIBLE,
-  INDEX `fk_serves_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
-  CONSTRAINT `fk_serves_user1`
-    FOREIGN KEY (`user_id_user`)
-    REFERENCES `mydb`.`user` (`id_user`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_serves_cart1`
     FOREIGN KEY (`cart_id_cart`)
     REFERENCES `mydb`.`cart` (`id_cart`)
     ON DELETE NO ACTION
@@ -174,36 +168,45 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`reservation` (
   `id_reservation` INT NOT NULL AUTO_INCREMENT,
   `date` ENUM("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31") NOT NULL,
-  `state` ENUM("Availabel", "Not Availabel") NULL,
+  `employer_id` VARCHAR(45) NULL,
   `user_id_user` VARCHAR(50) NOT NULL,
+  `serves_id_serves` INT NOT NULL,
+  `cart_id_cart` INT NOT NULL,
   PRIMARY KEY (`id_reservation`),
   INDEX `fk_reservation_user1_idx` (`user_id_user` ASC) VISIBLE,
+  INDEX `fk_reservation_serves1_idx` (`serves_id_serves` ASC) VISIBLE,
+  INDEX `fk_reservation_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
   CONSTRAINT `fk_reservation_user1`
     FOREIGN KEY (`user_id_user`)
     REFERENCES `mydb`.`user` (`id_user`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_reservation_serves1`
+    FOREIGN KEY (`serves_id_serves`)
+    REFERENCES `mydb`.`serves` (`id_serves`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_reservation_cart1`
+    FOREIGN KEY (`cart_id_cart`)
+    REFERENCES `mydb`.`cart` (`id_cart`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`historique`
+-- Table `mydb`.`availibility`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`historique` (
-  `id_historique` INT NOT NULL AUTO_INCREMENT,
-  `user_id_user` VARCHAR(50) NOT NULL,
-  `cart_id_cart` INT NOT NULL,
-  PRIMARY KEY (`id_historique`),
-  INDEX `fk_historique_user1_idx` (`user_id_user` ASC) VISIBLE,
-  INDEX `fk_historique_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
-  CONSTRAINT `fk_historique_user1`
-    FOREIGN KEY (`user_id_user`)
-    REFERENCES `mydb`.`user` (`id_user`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_historique_cart1`
-    FOREIGN KEY (`cart_id_cart`)
-    REFERENCES `mydb`.`cart` (`id_cart`)
+CREATE TABLE IF NOT EXISTS `mydb`.`availibility` (
+  `idavailibility` INT NOT NULL AUTO_INCREMENT,
+  `state` ENUM("Available", "Not Available") NOT NULL DEFAULT 'Available',
+  `serves_id_serves` INT NOT NULL,
+  `date` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idavailibility`),
+  INDEX `fk_availibility_serves1_idx` (`serves_id_serves` ASC) VISIBLE,
+  CONSTRAINT `fk_availibility_serves1`
+    FOREIGN KEY (`serves_id_serves`)
+    REFERENCES `mydb`.`serves` (`id_serves`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
