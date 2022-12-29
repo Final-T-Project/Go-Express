@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cart` (
   `payment_type` ENUM("Cash", "Bank Card") NOT NULL,
   `date` VARCHAR(25) NULL DEFAULT 'Null',
   `user_id_user` VARCHAR(50) NOT NULL,
-  `state` ENUM("done", "not done") NOT NULL DEFAULT '\"not done\"',
+  `state` ENUM("done", "not done") NOT NULL DEFAULT 'not done',
   PRIMARY KEY (`id_cart`),
   INDEX `fk_cart_user1_idx` (`user_id_user` ASC) VISIBLE,
   CONSTRAINT `fk_cart_user1`

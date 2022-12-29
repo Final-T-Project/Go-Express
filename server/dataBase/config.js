@@ -1,5 +1,6 @@
-
-module.exports = { host: "localhost", 
-                    user: "root", 
-                    password: "root", 
-                    database: "sportapp", };
+module.exports = {
+  host: "localhost",
+  user: "root",
+  password: "root",
+  database: "mydb",
+};
