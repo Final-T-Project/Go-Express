@@ -1,9 +1,18 @@
 const express = require("express");
 const app = express();
+
 const cors = require("cors");
 app.use(express.urlencoded({ extended: true }));
-const route = require("./routes");
 app.use(express.json());
 app.use(cors());
-app.use("/api/", route);
+
+const usersRoute = require("./routes/user.js");
+const adminRoute = require("./routes/admin.js");
+const productRoute = require("./routes/product.js");
+const cartRoute = require("./routes/cart.js");
+
+app.use("/users", usersRoute);
+app.use("/admin", adminRoute);
+app.use("/products", productRoute);
+app.use("/carts", cartRoute);
 module.exports = app;

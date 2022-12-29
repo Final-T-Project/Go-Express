@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`user` (
   `adress` VARCHAR(200) NULL,
   `photo` VARCHAR(700) NULL,
   `phone_number` VARCHAR(8) NOT NULL,
-  `ville` ENUM("Tunis", "Ariana", "Beja", "Ben Arous", "Bizerte", "Gabes", "Gafsa", "Jendouba", "Kairouan", "Kasserine", "kebili", "Kef", "Mahdia", "Manouba", "Medenine", "Monastir", "Nabeul", "Sfax", "Sidi Bouzid", "Siliana", "Sousse", "Tataouine", "Touzeur", "Tunis", "Zaghouan") NULL,
+  `ville` ENUM("Tunis", "Ariana", "Beja", "Ben Arous", "Bizerte", "Gabes", "Gafsa", "Jendouba", "Kairouan", "Kasserine", "kebili", "Kef", "Mahdia", "Manouba", "Medenine", "Monastir", "Nabeul", "Sfax", "Sidi Bouzid", "Siliana", "Sousse", "Tataouine", "Touzeur", "Zaghouan") NULL,
   `email` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_user`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
@@ -151,8 +151,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`devi` (
   `id_devi` INT NOT NULL AUTO_INCREMENT,
-  `departureDestination` ENUM("Tunis", "Ariana", "Beja", "Ben Arous", "Bizerte", "Gabes", "Gafsa", "Jendouba", "Kairouan", "Kasserine", "kebili", "Kef", "Mahdia", "Manouba", "Medenine", "Monastir", "Nabeul", "Sfax", "Sidi Bouzid", "Siliana", "Sousse", "Tataouine", "Touzeur", "Tunis", "Zaghouan") NOT NULL,
-  `arrivalDestination` ENUM("Tunis", "Ariana", "Beja", "Ben Arous", "Bizerte", "Gabes", "Gafsa", "Jendouba", "Kairouan", "Kasserine", "kebili", "Kef", "Mahdia", "Manouba", "Medenine", "Monastir", "Nabeul", "Sfax", "Sidi Bouzid", "Siliana", "Sousse", "Tataouine", "Touzeur", "Tunis", "Zaghouan") NOT NULL,
+  `departureDestination` ENUM("Ariana", "Beja", "Ben Arous", "Bizerte", "Gabes", "Gafsa", "Jendouba", "Kairouan", "Kasserine", "kebili", "Kef", "Mahdia", "Manouba", "Medenine", "Monastir", "Nabeul", "Sfax", "Sidi Bouzid", "Siliana", "Sousse", "Tataouine", "Touzeur", "Tunis", "Zaghouan") NOT NULL,
+  `arrivalDestination` ENUM( "Ariana", "Beja", "Ben Arous", "Bizerte", "Gabes", "Gafsa", "Jendouba", "Kairouan", "Kasserine", "kebili", "Kef", "Mahdia", "Manouba", "Medenine", "Monastir", "Nabeul", "Sfax", "Sidi Bouzid", "Siliana", "Sousse", "Tataouine", "Touzeur", "Tunis", "Zaghouan") NOT NULL,
   `dismountType` ENUM("House", "Company") NOT NULL,
   `startingStage` ENUM("S+1", "S+2", "S+3", "Duplex", "Villa") NOT NULL,
   `arrivingStage` ENUM("S+1", "S+2", "S+3", "Duplex", "Villa") NOT NULL,
