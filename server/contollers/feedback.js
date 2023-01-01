@@ -1,7 +1,7 @@
 const feedback =require("../dataBase/models/feedback.js")
 
 module.exports={
-    addFeedback : function(req,res){
+    AddFeedback : function(req,res){
         feedback.add(
             function(err,results){
                 if(err) res.status(500).send(err)
