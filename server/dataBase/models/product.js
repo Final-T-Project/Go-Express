@@ -19,4 +19,11 @@ module.exports = {
       callback(error, results);
     });
   },
+
+  getProducts: function (callback, category) {
+    const sql = `SELECT * FROM product WHERE category="${category}"`;
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  },
 };
