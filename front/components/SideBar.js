@@ -1,9 +1,13 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { StatusBar } from 'expo-status-bar';
 import React, { useRef, useState } from 'react';
 import { Animated, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View ,ScrollView} from 'react-native';
 import profile from '../assets/profile.png';
 =======
+=======
+
+>>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
 import { StatusBar } from "expo-status-bar";
 import React, { useRef, useState } from "react";
 import {
@@ -16,7 +20,11 @@ import {
   View,
 } from "react-native";
 import profile from "../assets/profile.png";
+<<<<<<< HEAD
 >>>>>>> 0ccff3301cdc1f681943a642cfe289ea687eeaf5
+=======
+
+>>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
 // Tab ICons...
 import home from "../assets/home.png";
 import Shop from "../assets/Shop.png";
@@ -25,6 +33,10 @@ import settings from "../assets/settings.png";
 import logout from "../assets/logout.png";
 // Menu
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
 import menu from '../assets/menu.png';
 import close from '../assets/close.png';
 // import Profil from '../Pages/Profil'
@@ -33,6 +45,7 @@ import photo from '../assets/photo.jpg';
 import { useNavigation } from '@react-navigation/native';
 import Home from '../Pages/Home'
 import TabBar from './TabBar'
+<<<<<<< HEAD
 =======
 import menu from "../assets/menu.png";
 import close from "../assets/close.png";
@@ -40,6 +53,8 @@ import close from "../assets/close.png";
 // Photo
 import photo from "../assets/photo.jpg";
 >>>>>>> 0ccff3301cdc1f681943a642cfe289ea687eeaf5
+=======
+>>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
 
 export default function SideBbar({navigation}) {
   const [Page,SetPage] = useState('Home');
@@ -56,18 +71,11 @@ export default function SideBbar({navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ justifyContent: "flex-start", padding: 15 }}>
-        <Image
-          source={profile}
-          style={{
-            width: 90,
-            height: 90,
-            borderRadius: 60,
-            marginTop: 15,
-          }}
-        ></Image>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
       <View style={{ justifyContent: 'flex-start', padding:25 }}>
         <TouchableOpacity onPress={()=>navigation.navigate("Profil")}><Image source={profile} style={{
           width: 90,
@@ -88,6 +96,7 @@ export default function SideBbar({navigation}) {
             marginTop: 6,
             color: 'white'
           }}>View Profile</Text> */}
+<<<<<<< HEAD
 =======
         <Text
           style={{
@@ -110,6 +119,9 @@ export default function SideBbar({navigation}) {
             View Profile
           </Text>
 >>>>>>> 0ccff3301cdc1f681943a642cfe289ea687eeaf5
+=======
+
+>>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
         </TouchableOpacity>
       
 
@@ -156,33 +168,34 @@ export default function SideBbar({navigation}) {
           // Menu Button...
         }
 
-        <Animated.View
-          style={{
-            transform: [
-              {
-                translateY: closeButtonOffset,
-              },
-            ],
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              // Do Actions Here....
-              // Scaling the view...
-              Animated.timing(scaleValue, {
-                toValue: showMenu ? 1 : 0.88,
-                duration: 300,
-                useNativeDriver: true,
-              }).start();
 
-              Animated.timing(offsetValue, {
-                // YOur Random Value...
-                toValue: showMenu ? 0 : 230,
-                duration: 300,
-                useNativeDriver: true,
-              }).start();
+        <Animated.View style={{
+          transform: [{
+            translateY: closeButtonOffset
+          }]
+        }}>
+          <TouchableOpacity onPress={() => {
+            // Do Actions Here....
+            // Scaling the view...
+            Animated.timing(scaleValue, {
+              toValue: showMenu ? 1 : 0.88,
+              duration: 300,
+              useNativeDriver: true
+            })
+              .start()
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            Animated.timing(offsetValue, {
+              // YOur Random Value...
+              toValue: showMenu ? 0 : 230,
+              duration: 300,
+              useNativeDriver: true
+            })
+              .start()
+
+>>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
             Animated.timing(closeButtonOffset, {
               // YOur Random Value...
               toValue: !showMenu ? -30 : 0,
@@ -202,6 +215,7 @@ export default function SideBbar({navigation}) {
 
             }}></Image>
         
+<<<<<<< HEAD
 =======
               Animated.timing(closeButtonOffset, {
                 // YOur Random Value...
@@ -223,6 +237,9 @@ export default function SideBbar({navigation}) {
               }}
             ></Image>
 >>>>>>> 0ccff3301cdc1f681943a642cfe289ea687eeaf5
+=======
+
+>>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
           </TouchableOpacity>
           {/* {Page === 'Home' ?
       <ScrollView>
@@ -232,6 +249,10 @@ export default function SideBbar({navigation}) {
       
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
       <ScrollView >
 
       
@@ -292,6 +313,7 @@ export default function SideBbar({navigation}) {
         </Animated.View>
 
       <TabBar navigation={navigation}/>
+<<<<<<< HEAD
 =======
           {/* <Text
             style={{
@@ -330,6 +352,9 @@ export default function SideBbar({navigation}) {
           </Text> */}
         </Animated.View>
 >>>>>>> 0ccff3301cdc1f681943a642cfe289ea687eeaf5
+=======
+
+>>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
       </Animated.View>
     </SafeAreaView>
   );
@@ -381,18 +406,27 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
       </View>
     </TouchableOpacity>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
    
   )
      
 }
+<<<<<<< HEAD
 =======
   );
 };
 >>>>>>> 0ccff3301cdc1f681943a642cfe289ea687eeaf5
+=======
+
+>>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+<<<<<<< HEAD
 <<<<<<< HEAD
     backgroundColor: '#FFAD62',
     alignItems: 'flex-start',
@@ -402,5 +436,12 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
 >>>>>>> 0ccff3301cdc1f681943a642cfe289ea687eeaf5
+=======
+
+    backgroundColor: '#FFAD62',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+
+>>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
   },
 });
