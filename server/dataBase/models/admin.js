@@ -9,6 +9,12 @@ module.exports = {
       callback(error, results);
     });
   },
+  getOneUser: function (callback, id) {
+    const sql = `SELECT * FROM user WHERE id_user ="${id}"`;
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  },
 
   getAllProduct: function (callback) {
     const sql = `SELECT * FROM product`;
