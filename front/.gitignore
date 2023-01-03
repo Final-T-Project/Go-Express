@@ -1,4 +1,4 @@
-node_modules/
+node_modules
 .expo/
 npm-debug.*
 *.jks
@@ -10,4 +10,4 @@ npm-debug.*
 web-build/
 .vscode
 .DS_Store
-package-lock.json/
+package-lock.json
