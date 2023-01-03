@@ -6,7 +6,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 const Page = () => (
   <>
     <Head>
-      <title>404 | Material Kit</title>
+      <title>404 </title>
     </Head>
     <Box
       component="main"

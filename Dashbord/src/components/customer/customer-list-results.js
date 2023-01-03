@@ -11,6 +11,8 @@ import {
   Typography,
 } from "@mui/material";
 
+import Link from "next/link";
+
 export const CustomerListResults = (props) => {
   return (
     <Card>
@@ -41,9 +43,12 @@ export const CustomerListResults = (props) => {
                       }}
                     >
                       <Avatar src={element.photo} sx={{ mr: 2 }}></Avatar>
-                      <Typography color="textPrimary" variant="body1">
-                        {element.name}
-                      </Typography>
+
+                      <Link href={"/id"} as={`/${element.id_user}`}>
+                        <Typography color="textPrimary" variant="body1">
+                          {element.name}
+                        </Typography>
+                      </Link>
                     </Box>
                   </TableCell>
                   <TableCell>{element.email}</TableCell>
