@@ -18,4 +18,12 @@ module.exports = {
       req.body.id_cart
     );
   },
+  // function to get Product by categories
+
+  GetProductBycategoy: function (req, res) {
+    product.getProducts(function (err, results) {
+      if (err) res.status(500).send(err);
+      else res.json(results);
+    }, req.params.category);
+  },
 };
