@@ -2,10 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View ,TextInput ,Button , Image} from 'react-native';
 import { useState,useRef } from 'react';
 
-import SideBar from '../components/SideBar';
 
-import eye from "../assets/eye.png"
-  ///----------------------------------------------------> Firebase stuff importation  <----------------------------------------------------------------------------///
+///----------------------------------------------------> Firebase stuff importation  <----------------------------------------------------------------------------///
 
 import firebaseConfig from '../config/firebase';  //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
 import { getAuth, createUserWithEmailAndPassword ,signInWithEmailAndPassword , sendPasswordResetEmail, se} from "firebase/auth";  // importing the auth of Firebase 
@@ -20,7 +18,7 @@ export default function App() {
 
   const emailRef = useRef(null);
   const passwordRef = useRef(null)
-  const passwordTitle=useRef(null)
+  var passwordTitle = useRef(null)
 
   ///----------------------------------------------------> States <----------------------------------------------------------------------------///
   const [value, setValue] = useState({
@@ -32,24 +30,23 @@ export default function App() {
     error: ""      // ST7A9ITHECH LHA9 AMAAA TAJEM TESTHA9HA    
   });
 
-  const [user,setUser]=useState("")
-  const [userId,setUserId]=useState("")
+  const [user, setUser] = useState("");
+  const [userId, setUserId] = useState("");
 
-  var [counterError,setCounterError]=useState(1)
+
 
 
   const app = initializeApp(firebaseConfig)   //  ----------->  BECH NAAMLOU INITIALIZATION LEL CONFIG TA3 EL FIREBASE W NRODOUH EL app MTE3NA
   const auth=getAuth(app)   //  ----------->  TA3TIIII AUTHORISATION LEL app MTE3EKKK BECH TNAJEM TESTAKHDEMHA KI T CREATE WALA SIGN IN LEL USER
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
-  
-///----------------------------------------------------> USE NAVIGATE APPLICATION <----------------------------------------------------------------------------///
-  const Navigation=useNavigation()
-///----------------------------------------------------------------------------------------------------------------------------------------------///
- 
-///----------------------------------------------------> function for handling the creating the account (FEL SignIn.tsx) <-----------------------------------------///
 
+  ///----------------------------------------------------> USE NAVIGATE APPLICATION <----------------------------------------------------------------------------///
+  const Navigation = useNavigation();
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
+  ///----------------------------------------------------> function for handling the creating the account (FEL SignIn.tsx) <-----------------------------------------///
+
+  ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
   ///----------------------------------------------------> function for handling the Sign In to te account <-----------------------------------------///
   const handleLogIn=()=>{
@@ -63,8 +60,9 @@ export default function App() {
       Navigation.navigate("SideBar")
     })
     .catch((error)=>{
-      //setCounterError(counterError++)
-      console.log("---------------->"+counterError)
+      if (!value.email.length || !value.password.length){
+        alert('Please fill all information')
+      }
       setValue({ ...value, error: error.code })
       if (error.code==="auth/invalid-email" ||error.code==="auth/user-not-found"){
         //alert("Ekteb EMAIL shihhh ya hajjj")
@@ -75,14 +73,10 @@ export default function App() {
       if (error.code==="auth/wrong-password"){
         setValue({...value,error: "auth/wrong-password" })
         setValue({...value,passwordError:true})
-        setValue({...value,emailError:false})
+        setValue({...value,emailError:false}) 
         console.log('------------------>'+value.error)
         passwordRef.current.focus();
-        passwordTitle.current.style.backgroundColor='red';
     
-      }
-      if (!value.email.length || !value.password.length){
-        alert('Please fill all information')
       }
       else {
         console.log(error.message)
@@ -107,9 +101,6 @@ export default function App() {
   }
   
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
-
-
-
 
   ///-------------------------------------------------------------------> The Sign up / Sign In structure page  <--------------------------------------------///
 
@@ -158,15 +149,15 @@ export default function App() {
             
             {/** ---------------------------------------------------BUTTONS Sign in  -----------------------------------------------*/}
           <View style={{ alignItems: 'center'}}>
-             <Text style={{fontSize:17,fontWeight:'500',borderRadius:44,backgroundColor:'#40946C',color:'white',padding:15,marginTop:30,textAlign:'center',width:150}} onPress={()=>{handleLogIn()
-            setCounterError(counterError++)}}> Sign in </Text> 
+             <Text style={{fontSize:17,fontWeight:'500',borderRadius:44,backgroundColor:'#40946C',color:'white',padding:15,marginTop:30,textAlign:'center',width:150}} onPress={()=>{handleLogIn()}}> Sign in </Text> 
           </View>
 
-          {counterError>3?<Text style={{marginTop:10,textAlign:"center",fontSize:17,fontWeight:'600'}} onPress={()=>forgetPassword()}>Forget password ?</Text>:null}
+          <Text style={{marginTop:10,textAlign:"center",fontSize:17,fontWeight:'600'}} onPress={()=>forgetPassword()}>Forget password ?</Text>
 
           <StatusBar style="inverted" />
-          </View>
-    </View></>
+        </View>
+      </View>
+    </>
   );
 }
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
@@ -174,30 +165,27 @@ export default function App() {
 const css = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFE2AA',
-    alignItems: 'center',
-    justifyContent:'center',
-    
+    backgroundColor: "#FFE2AA",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  box :{
-    backgroundColor:'white',
-    width:350,
-    height:500,
-    borderRadius:44,
-    
-    justifyContent:'center',
+  box: {
+    backgroundColor: "white",
+    width: 350,
+    height: 500,
+    borderRadius: 44,
 
-    shadowColor:'black',
+    justifyContent: "center",
+
+    shadowColor: "black",
     shadowOffset: {
-        width: 0,
-        height: 0,
+      width: 0,
+      height: 0,
     },
     shadowOpacity: 60,
     shadowRadius: 40,
     elevation: 20,
-  
-  }
-  ,
+  },
   textParam: {
     backgroundColor:'white',
     fontSize:25,
@@ -211,9 +199,6 @@ const css = StyleSheet.create({
   }
 });
 
-
-
 function onSolvedRecaptcha() {
   alert("yesyyyyyy");
 }
-
