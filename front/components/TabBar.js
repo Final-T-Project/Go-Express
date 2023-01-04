@@ -1,145 +1,3 @@
-
-
-// import React from 'react';
-// import {
-//   Alert,
-//   Animated,
-//   StyleSheet,
-//   TouchableOpacity,
-//   View,
-//   Dimensions
-// } from 'react-native';
-// import { CurvedBottomBar } from 'react-native-curved-bottom-bar';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { useNavigation } from "@react-navigation/native";
-// import Profil from '../Pages/Profil';
-// import Shop from '../Pages/Shop';
-//  const TabBar = () => {
-//   const navigation = useNavigation();
-//   const { width, height } = Dimensions.get('window');
-//   const _renderIcon = (routeName, selectedTab) => {
-//     let icon = '';
-
-//     switch (routeName) {
-//       case 'title1':
-//         icon = 'ios-home-outline';
-//         break;
-//       case 'title2':
-//         icon = 'settings-outline';
-//         break;
-//     }
-
-//     return (
-//       <Ionicons
-//         name={icon}
-//         size={25}
-//         color={routeName === selectedTab ? 'red' : 'gray'}
-//       />
-//     );
-//   };
-//   // const renderTabBar = ({ routeName, selectedTab, navigate }) => {
-//     return (
-//       <TouchableOpacity
-//         // onPress={() => alert("routeName")}
-//         style={{
-//           flex: 1,
-//           alignItems: 'center',
-//           justifyContent: 'center',
-//         }}>
-//         {_renderIcon(routeName, selectedTab)}
-//       </TouchableOpacity>
-//     );
-//   };
-
-//   return (
-//     <View style={{ flex: 1 }}>
-      
-//         <CurvedBottomBar.Navigator
-//           style={styles.bottomBar}
-//           strokeWidth={0.5}
-//           strokeColor="#DDDDDD"
-//           height={55}
-          
-//           circleWidth={55}
-//           bgColor="#FFAD62"
-//           initialRouteName=""
-//           borderTopLeftRight={0}
-//           renderCircle={() => (
-//             <Animated.View style={styles.btnCircle}>
-//               <TouchableOpacity
-//                 style={{
-//                   flex: 1,
-//                   justifyContent: 'center',
-//                 }}
-//                 onPress={() => {navigation.navigate('Profil')}}>
-//                 <Ionicons name={'apps-sharp'} color="gray" size={25} />
-//               </TouchableOpacity>
-//             </Animated.View>
-//           )}
-//           >
-//           <CurvedBottomBar.Screen
-//             name="title1"
-//             position="LEFT"
-//             component={() => (
-//               <Shop />
-//             )}
-//           />
-//           <CurvedBottomBar.Screen
-//             name="title2"
-            
-//             component={() => (
-//               <Shop />
-//             )}
-//             position="RIGHT"
-//           />
-//         </CurvedBottomBar.Navigator>
-      
-//     </View>
-//   );
-
-// export default TabBar
-// export const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     padding: 20,
-//     marginTop:200,
-//   },
-//   button: {
-//     marginVertical: 5,
-//   },
-//   bottomBar: {
-//     // height: 30,
-    
-//   },
-//   btnCircle: {
-//     width: 60,
-//     height: 60,
-//     borderRadius: 35,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     backgroundColor: 'white',
-//     padding: 10,
-//     shadowColor: '#000',
-//     shadowOffset: {
-//       width: 0,
-//       height: 0.5,
-//     },
-//     shadowOpacity: 0.2,
-//     shadowRadius: 1.41,
-//     elevation: 1,
-//     bottom: 30,
-//   },
-//   imgCircle: {
-//     width: 30,
-//     height: 30,
-//     tintColor: 'gray',
-//   },
-//   img: {
-//     width: 30,
-//     height: 30,
-//   },
-// });
 import { View, Image, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Animated, Text, Alert,Dimensions,SafeAreaView} from 'react-native';
 import SideBbar from './SideBar';
 import React from 'react'
@@ -147,10 +5,6 @@ const { width, height } = Dimensions.get('window');
 
 
 const TabBar = ({navigation}) => {
-    
-
-
-   
         return (
             <SafeAreaView style={{
                 flex: 1,
@@ -291,13 +145,8 @@ const TabBar = ({navigation}) => {
                     {/* </View> */}
                 </View>
             </SafeAreaView>
-        );
-    
-
-    
+        );  
 }
-
-
 const styles = StyleSheet.create({
 
     MainContainer: {
@@ -331,12 +180,7 @@ const styles = StyleSheet.create({
         textShadowRadius: 10,
         borderWidth: 2,
         borderColor: '#ffedd5'
-        
-
     }
-
-
 });
-
-export default TabBar
+export default TabBar;
 
