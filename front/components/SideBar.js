@@ -8,8 +8,10 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ScrollView,
 } from "react-native";
 import profile from "../assets/profile.png";
+
 // Tab ICons...
 import home from "../assets/home.png";
 import Shop from "../assets/Shop.png";
@@ -19,11 +21,16 @@ import logout from "../assets/logout.png";
 // Menu
 import menu from "../assets/menu.png";
 import close from "../assets/close.png";
-
+// import Profil from '../Pages/Profil'
 // Photo
 import photo from "../assets/photo.jpg";
 
-export default function App() {
+import { useNavigation } from "@react-navigation/native";
+import Home from "../Pages/Home";
+import TabBar from "./TabBar";
+
+export default function SideBbar() {
+  const [Page, SetPage] = useState("Home");
   const [currentTab, setCurrentTab] = useState("Home");
   // To get the curretn Status of menu ...
   const [showMenu, setShowMenu] = useState(false);
@@ -34,32 +41,31 @@ export default function App() {
   // Scale Intially must be One...
   const scaleValue = useRef(new Animated.Value(1)).current;
   const closeButtonOffset = useRef(new Animated.Value(0)).current;
-
+  // test
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ justifyContent: "flex-start", padding: 15 }}>
-        <Image
-          source={profile}
-          style={{
-            width: 90,
-            height: 90,
-            borderRadius: 60,
-            marginTop: 15,
-          }}
-        ></Image>
-
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: "bold",
-            color: "white",
-            marginTop: 10,
-          }}
-        >
-          Hello Jenna{" "}
-        </Text>
-
+      <View style={{ justifyContent: "flex-start", padding: 25 }}>
         <TouchableOpacity>
+          {/* onPress={() => navigation.navigate("Profil")} */}
+          <Image
+            source={profile}
+            style={{
+              width: 90,
+              height: 90,
+              borderRadius: 60,
+              marginTop: 30,
+            }}
+          ></Image>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              color: "white",
+              marginTop: 10,
+            }}
+          >
+            Hello Jenna{" "}
+          </Text>
           <Text
             style={{
               marginTop: 6,
@@ -80,7 +86,6 @@ export default function App() {
           {TabButton(currentTab, setCurrentTab, "Notifications", notifications)}
           {TabButton(currentTab, setCurrentTab, "Settings", settings)}
         </View>
-
         <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
       </View>
 
@@ -107,7 +112,6 @@ export default function App() {
         {
           // Menu Button...
         }
-
         <Animated.View
           style={{
             transform: [
@@ -155,7 +159,7 @@ export default function App() {
             ></Image>
           </TouchableOpacity>
 
-          {/* <Text
+          <Text
             style={{
               fontSize: 30,
               fontWeight: "bold",
@@ -165,32 +169,9 @@ export default function App() {
           >
             {currentTab}
           </Text>
-
-          <Image
-            source={photo}
-            style={{
-              width: "100%",
-              height: 300,
-              borderRadius: 15,
-              marginTop: 25,
-            }}
-          ></Image>
-
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: "bold",
-              paddingTop: 15,
-              paddingBottom: 5,
-            }}
-          >
-            Jenna Ezarik
-          </Text>
-
-          <Text style={{}}>
-            Techie, YouTuber, PS Lover, Apple Sheep's Sister
-          </Text> */}
         </Animated.View>
+        <TabBar />
+        {/* navigation={navigation} */}
       </Animated.View>
     </SafeAreaView>
   );
@@ -198,15 +179,28 @@ export default function App() {
 
 // For multiple Buttons...
 const TabButton = (currentTab, setCurrentTab, title, image) => {
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
       onPress={() => {
-        if (title == "LogOut") {
-          // Do your Stuff...
+        if (title == "Home") {
+          setCurrentTab("Home");
+          navigation.navigate("Home");
+        } else if (title == "Shop") {
+          setCurrentTab("Shop");
+          navigation.navigate("Shop");
+        } else if (title == "Notifications") {
+          setCurrentTab("Notifications");
+        } else if (title == "Settings") {
+          setCurrentTab("Settings");
+        } else if (title == "Settings") {
+          setCurrentTab("Settings");
         } else {
-          setCurrentTab(title);
+          navigation.navigate("Log in");
         }
       }}
+      LogOut
+      // onPress={() => navigation.navigate("Profil")}
     >
       <View
         style={{
@@ -247,7 +241,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5359D1",
+    backgroundColor: "#FFAD62",
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
