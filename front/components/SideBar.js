@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { StatusBar } from 'expo-status-bar';
-import React, { useRef, useState } from 'react';
-import { Animated, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View ,ScrollView} from 'react-native';
-import profile from '../assets/profile.png';
-=======
-=======
-
->>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
 import { StatusBar } from "expo-status-bar";
 import React, { useRef, useState } from "react";
 import {
@@ -18,13 +8,10 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ScrollView,
 } from "react-native";
 import profile from "../assets/profile.png";
-<<<<<<< HEAD
->>>>>>> 0ccff3301cdc1f681943a642cfe289ea687eeaf5
-=======
 
->>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
 // Tab ICons...
 import home from "../assets/home.png";
 import Shop from "../assets/Shop.png";
@@ -32,32 +19,18 @@ import notifications from "../assets/bell.png";
 import settings from "../assets/settings.png";
 import logout from "../assets/logout.png";
 // Menu
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
-import menu from '../assets/menu.png';
-import close from '../assets/close.png';
-// import Profil from '../Pages/Profil'
-// Photo
-import photo from '../assets/photo.jpg';
-import { useNavigation } from '@react-navigation/native';
-import Home from '../Pages/Home'
-import TabBar from './TabBar'
-<<<<<<< HEAD
-=======
 import menu from "../assets/menu.png";
 import close from "../assets/close.png";
-
+// import Profil from '../Pages/Profil'
 // Photo
 import photo from "../assets/photo.jpg";
->>>>>>> 0ccff3301cdc1f681943a642cfe289ea687eeaf5
-=======
->>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
 
-export default function SideBbar({navigation}) {
-  const [Page,SetPage] = useState('Home');
+import { useNavigation } from "@react-navigation/native";
+import Home from "../Pages/Home";
+import TabBar from "./TabBar";
+
+export default function SideBbar() {
+  const [Page, SetPage] = useState("Home");
   const [currentTab, setCurrentTab] = useState("Home");
   // To get the curretn Status of menu ...
   const [showMenu, setShowMenu] = useState(false);
@@ -71,45 +44,28 @@ export default function SideBbar({navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
-      <View style={{ justifyContent: 'flex-start', padding:25 }}>
-        <TouchableOpacity onPress={()=>navigation.navigate("Profil")}><Image source={profile} style={{
-          width: 90,
-          height: 90,
-          borderRadius: 60,
-          marginTop: 30
-        }}></Image>
-
-        <Text style={{
-          fontSize: 20,
-          fontWeight: 'bold',
-          color: 'white',
-          marginTop: 10,
-        }}>Hello Jenna </Text>
-
-        
-          {/* <Text style={{
-            marginTop: 6,
-            color: 'white'
-          }}>View Profile</Text> */}
-<<<<<<< HEAD
-=======
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: "bold",
-            color: "white",
-            marginTop: 10,
-          }}
-        >
-          Hello Jenna{" "}
-        </Text>
-
+      <View style={{ justifyContent: "flex-start", padding: 25 }}>
         <TouchableOpacity>
+          {/* onPress={() => navigation.navigate("Profil")} */}
+          <Image
+            source={profile}
+            style={{
+              width: 90,
+              height: 90,
+              borderRadius: 60,
+              marginTop: 30,
+            }}
+          ></Image>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              color: "white",
+              marginTop: 10,
+            }}
+          >
+            Hello Jenna{" "}
+          </Text>
           <Text
             style={{
               marginTop: 6,
@@ -118,18 +74,8 @@ export default function SideBbar({navigation}) {
           >
             View Profile
           </Text>
->>>>>>> 0ccff3301cdc1f681943a642cfe289ea687eeaf5
-=======
-
->>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
         </TouchableOpacity>
-      
 
-
-
-
-
-       
         <View style={{ flexGrow: 1, marginTop: 50 }}>
           {
             // Tab Bar Buttons....
@@ -140,7 +86,6 @@ export default function SideBbar({navigation}) {
           {TabButton(currentTab, setCurrentTab, "Notifications", notifications)}
           {TabButton(currentTab, setCurrentTab, "Settings", settings)}
         </View>
-
         <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
       </View>
 
@@ -167,56 +112,32 @@ export default function SideBbar({navigation}) {
         {
           // Menu Button...
         }
+        <Animated.View
+          style={{
+            transform: [
+              {
+                translateY: closeButtonOffset,
+              },
+            ],
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              // Do Actions Here....
+              // Scaling the view...
+              Animated.timing(scaleValue, {
+                toValue: showMenu ? 1 : 0.88,
+                duration: 300,
+                useNativeDriver: true,
+              }).start();
 
+              Animated.timing(offsetValue, {
+                // YOur Random Value...
+                toValue: showMenu ? 0 : 230,
+                duration: 300,
+                useNativeDriver: true,
+              }).start();
 
-        <Animated.View style={{
-          transform: [{
-            translateY: closeButtonOffset
-          }]
-        }}>
-          <TouchableOpacity onPress={() => {
-            // Do Actions Here....
-            // Scaling the view...
-            Animated.timing(scaleValue, {
-              toValue: showMenu ? 1 : 0.88,
-              duration: 300,
-              useNativeDriver: true
-            })
-              .start()
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-            Animated.timing(offsetValue, {
-              // YOur Random Value...
-              toValue: showMenu ? 0 : 230,
-              duration: 300,
-              useNativeDriver: true
-            })
-              .start()
-
->>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
-            Animated.timing(closeButtonOffset, {
-              // YOur Random Value...
-              toValue: !showMenu ? -30 : 0,
-              duration: 300,
-              useNativeDriver: true
-            })
-              .start()
-
-            setShowMenu(!showMenu);
-          }}>
-
-            <Image source={showMenu ? close : menu} style={{
-              width: 20,
-              height: 20,
-              tintColor: 'black',
-              marginTop: 40,
-
-            }}></Image>
-        
-<<<<<<< HEAD
-=======
               Animated.timing(closeButtonOffset, {
                 // YOur Random Value...
                 toValue: !showMenu ? -30 : 0,
@@ -236,86 +157,9 @@ export default function SideBbar({navigation}) {
                 marginTop: 40,
               }}
             ></Image>
->>>>>>> 0ccff3301cdc1f681943a642cfe289ea687eeaf5
-=======
-
->>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
           </TouchableOpacity>
-          {/* {Page === 'Home' ?
-      <ScrollView>
-              <View>
-              
-      </View>
-      
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
-      <ScrollView >
-
-      
-      
-            </ScrollView>
-        </ScrollView>:Page === 'Home' ? (
-        <View>
-          <TouchableOpacity onPress={()=> SetPage('Profil')}>
-        </TouchableOpacity>
-        <Profil />
-        </View>)
-        :Page ==="Home" ?(
-        <View>
-          <TouchableOpacity onPress={()=>SetPage('Home')}>
-            
-            </TouchableOpacity>
-            <Articles />
-            </View>):Page ==="Complain" ?(
-            <View>
-              <TouchableOpacity onPress={()=>SetPage('Home')}>
-                
-                </TouchableOpacity>
-                <ComplainScreen />
-                </View>):Page ==="Suggestion" ?(
-                <View>
-                  <TouchableOpacity onPress={()=>SetPage('Home')}>
-                   
-                    </TouchableOpacity><SuggesstionScreen />
-                    </View>)
-                    
-                    : null
-                    } */}
-          <Text style={{
-            fontSize: 30,
-            fontWeight: 'bold',
-            color: 'black',
-            paddingTop: 20
-          }}>{currentTab}</Text>
-
-          {/* <Image source={photo} style={{
-            width: '100%',
-            height: 300,
-            borderRadius: 15,
-            marginTop: 25
-          }}></Image> */}
-
-   {/* <Text style={{
-            fontSize: 20,
-            fontWeight: 'bold'
-            , paddingTop: 15,
-            paddingBottom: 5
-          }}>Jenna Ezarik</Text>
-
-          <Text style={{
-          }}>Techie, YouTuber, PS Lover, Apple Sheep's Sister</Text>
-         */}
-         
-        </Animated.View>
-
-      <TabBar navigation={navigation}/>
-<<<<<<< HEAD
-=======
-          {/* <Text
+          <Text
             style={{
               fontSize: 30,
               fontWeight: "bold",
@@ -325,36 +169,9 @@ export default function SideBbar({navigation}) {
           >
             {currentTab}
           </Text>
-
-          <Image
-            source={photo}
-            style={{
-              width: "100%",
-              height: 300,
-              borderRadius: 15,
-              marginTop: 25,
-            }}
-          ></Image>
-
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: "bold",
-              paddingTop: 15,
-              paddingBottom: 5,
-            }}
-          >
-            Jenna Ezarik
-          </Text>
-
-          <Text style={{}}>
-            Techie, YouTuber, PS Lover, Apple Sheep's Sister
-          </Text> */}
         </Animated.View>
->>>>>>> 0ccff3301cdc1f681943a642cfe289ea687eeaf5
-=======
-
->>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
+        <TabBar />
+        {/* navigation={navigation} */}
       </Animated.View>
     </SafeAreaView>
   );
@@ -362,15 +179,29 @@ export default function SideBbar({navigation}) {
 
 // For multiple Buttons...
 const TabButton = (currentTab, setCurrentTab, title, image) => {
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
       onPress={() => {
-        if (title == "LogOut") {
-          // Do your Stuff...
+        if (title == "Home") {
+          setCurrentTab("Home");
+           navigation.navigate("Home");
+    
+        } else if (title == "Shop") {
+          setCurrentTab("Shop");
+          navigation.navigate("Shop");
+        } else if (title == "Notifications") {
+          setCurrentTab("Notifications");
+        } else if (title == "Settings") {
+          setCurrentTab("Settings");
+        } else if (title == "Settings") {
+          setCurrentTab("Settings");
         } else {
-          setCurrentTab(title);
+          navigation.navigate("Log in");
         }
       }}
+      LogOut
+      // onPress={() => navigation.navigate("Profil")}
     >
       <View
         style={{
@@ -405,43 +236,14 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
         </Text>
       </View>
     </TouchableOpacity>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
-   
-  )
-     
-}
-<<<<<<< HEAD
-=======
   );
 };
->>>>>>> 0ccff3301cdc1f681943a642cfe289ea687eeaf5
-=======
-
->>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-<<<<<<< HEAD
-<<<<<<< HEAD
-    backgroundColor: '#FFAD62',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-=======
-    backgroundColor: "#5359D1",
+    backgroundColor: "#FFAD62",
     alignItems: "flex-start",
     justifyContent: "flex-start",
->>>>>>> 0ccff3301cdc1f681943a642cfe289ea687eeaf5
-=======
-
-    backgroundColor: '#FFAD62',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-
->>>>>>> 29bfa26cb223261cf916b6b09cd79208391c97ad
   },
 });
