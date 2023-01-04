@@ -41,7 +41,7 @@ export default function SideBbar() {
   // Scale Intially must be One...
   const scaleValue = useRef(new Animated.Value(1)).current;
   const closeButtonOffset = useRef(new Animated.Value(0)).current;
-
+  // test
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ justifyContent: "flex-start", padding: 25 }}>
@@ -185,8 +185,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
       onPress={() => {
         if (title == "Home") {
           setCurrentTab("Home");
-           navigation.navigate("Home");
-    
+          navigation.navigate("Home");
         } else if (title == "Shop") {
           setCurrentTab("Shop");
           navigation.navigate("Shop");

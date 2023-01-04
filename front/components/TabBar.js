@@ -1,27 +1,27 @@
-
-import React from 'react';
+import React from "react";
 import {
   Alert,
   Animated,
   StyleSheet,
   TouchableOpacity,
   View,
-} from 'react-native';
-import { CurvedBottomBar } from 'react-native-curved-bottom-bar';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { NavigationContainer } from '@react-navigation/native';
+  Text,
+} from "react-native";
+import { CurvedBottomBar } from "react-native-curved-bottom-bar";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { NavigationContainer } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
- const TabBar = () => {
+const TabBar = () => {
   const navigation = useNavigation();
   const _renderIcon = (routeName, selectedTab) => {
-    let icon = '';
+    let icon = "";
 
     switch (routeName) {
-      case 'title1':
-        icon = 'ios-home-outline';
+      case "title1":
+        icon = "ios-home-outline";
         break;
-      case 'title2':
-        icon = 'settings-outline';
+      case "title2":
+        icon = "settings-outline";
         break;
     }
 
@@ -29,7 +29,7 @@ import { useNavigation } from "@react-navigation/native";
       <Ionicons
         name={icon}
         size={25}
-        color={routeName === selectedTab ? 'red' : 'gray'}
+        color={routeName === selectedTab ? "red" : "gray"}
       />
     );
   };
@@ -39,9 +39,10 @@ import { useNavigation } from "@react-navigation/native";
         onPress={() => navigate(routeName)}
         style={{
           flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         {_renderIcon(routeName, selectedTab)}
       </TouchableOpacity>
     );
@@ -49,49 +50,51 @@ import { useNavigation } from "@react-navigation/native";
 
   return (
     <View style={{ flex: 1 }}>
-      
-        <CurvedBottomBar.Navigator
-          style={styles.bottomBar}
-          strokeWidth={0.5}
-          strokeColor="#DDDDDD"
-          height={55}
-          circleWidth={55}
-          bgColor="#FFAD62"
-          initialRouteName="title1"
-          borderTopLeftRight
-          renderCircle={({ selectedTab, navigate }) => (
-            <Animated.View style={styles.btnCircle}>
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  justifyContent: 'center',
-                }}
-                onPress={() => {navigation.navigate('Profil')}}>
-                <Ionicons name={'apps-sharp'} color="gray" size={25} />
-              </TouchableOpacity>
-            </Animated.View>
+      <CurvedBottomBar.Navigator
+        style={styles.bottomBar}
+        strokeWidth={0.5}
+        strokeColor="#DDDDDD"
+        height={55}
+        circleWidth={55}
+        bgColor="#FFAD62"
+        initialRouteName="title1"
+        borderTopLeftRight
+        renderCircle={({ selectedTab, navigate }) => (
+          <Animated.View style={styles.btnCircle}>
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                justifyContent: "center",
+              }}
+              onPress={() => {
+                navigation.navigate("Profil");
+              }}
+            >
+              <Ionicons name={"apps-sharp"} color="gray" size={25} />
+            </TouchableOpacity>
+          </Animated.View>
+        )}
+        tabBar={renderTabBar}
+      >
+        <CurvedBottomBar.Screen
+          name="title1"
+          position="LEFT"
+          component={() => (
+            <View style={{ backgroundColor: "#BFEFFF", flex: 1 }} />
           )}
-          tabBar={renderTabBar}>
-          <CurvedBottomBar.Screen
-            name="title1"
-            position="LEFT"
-            component={() => (
-              <View style={{ backgroundColor: '#BFEFFF', flex: 1 }} />
-            )}
-          />
-          <CurvedBottomBar.Screen
-            name="title2"
-            component={() => (
-              <View style={{ backgroundColor: '#FFEBCD', flex: 1 }} />
-            )}
-            position="RIGHT"
-          />
-        </CurvedBottomBar.Navigator>
-      
+        />
+        <CurvedBottomBar.Screen
+          name="title2"
+          component={() => (
+            <View style={{ backgroundColor: "#FFEBCD", flex: 1 }} />
+          )}
+          position="RIGHT"
+        />
+      </CurvedBottomBar.Navigator>
     </View>
   );
 };
-export default TabBar
+export default TabBar;
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -105,11 +108,11 @@ export const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 35,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
     padding: 10,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 0.5,
@@ -122,7 +125,7 @@ export const styles = StyleSheet.create({
   imgCircle: {
     width: 30,
     height: 30,
-    tintColor: 'gray',
+    tintColor: "gray",
   },
   img: {
     width: 30,
