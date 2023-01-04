@@ -30,8 +30,6 @@ import Home from "../Pages/Home";
 import TabBar from "./TabBar";
 
 export default function SideBbar() {
-  var navigation = useNavigation();
-  
   const [Page, SetPage] = useState("Home");
   const [currentTab, setCurrentTab] = useState("Home");
   // To get the curretn Status of menu ...
@@ -47,7 +45,8 @@ export default function SideBbar() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ justifyContent: "flex-start", padding: 25 }}>
-        <TouchableOpacity onPress={() => navigation.navigate("Profil")}>
+        <TouchableOpacity>
+          {/* onPress={() => navigation.navigate("Profil")} */}
           <Image
             source={profile}
             style={{
@@ -57,7 +56,6 @@ export default function SideBbar() {
               marginTop: 30,
             }}
           ></Image>
-
           <Text
             style={{
               fontSize: 20,
@@ -68,7 +66,6 @@ export default function SideBbar() {
           >
             Hello Jenna{" "}
           </Text>
-
           <Text
             style={{
               marginTop: 6,
@@ -89,7 +86,6 @@ export default function SideBbar() {
           {TabButton(currentTab, setCurrentTab, "Notifications", notifications)}
           {TabButton(currentTab, setCurrentTab, "Settings", settings)}
         </View>
-
         <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
       </View>
 
@@ -116,7 +112,6 @@ export default function SideBbar() {
         {
           // Menu Button...
         }
-
         <Animated.View
           style={{
             transform: [
@@ -175,8 +170,8 @@ export default function SideBbar() {
             {currentTab}
           </Text>
         </Animated.View>
-
-        <TabBar navigation={navigation} />
+        <TabBar />
+        {/* navigation={navigation} */}
       </Animated.View>
     </SafeAreaView>
   );
@@ -184,15 +179,28 @@ export default function SideBbar() {
 
 // For multiple Buttons...
 const TabButton = (currentTab, setCurrentTab, title, image) => {
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
       onPress={() => {
-        if (title == "LogOut") {
-          navigation.navigate("Log in");
+        if (title == "Home") {
+          setCurrentTab("Home");
+           navigation.navigate("Home");
+    
+        } else if (title == "Shop") {
+          setCurrentTab("Shop");
+          navigation.navigate("Shop");
+        } else if (title == "Notifications") {
+          setCurrentTab("Notifications");
+        } else if (title == "Settings") {
+          setCurrentTab("Settings");
+        } else if (title == "Settings") {
+          setCurrentTab("Settings");
         } else {
-          setCurrentTab(title);
+          navigation.navigate("Log in");
         }
       }}
+      LogOut
       // onPress={() => navigation.navigate("Profil")}
     >
       <View
