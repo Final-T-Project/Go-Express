@@ -2,8 +2,9 @@ import React from "react";
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import TabBar from "../components/TabBar";
-export default function Profil() {
+export default function Profil({navigation}) {
     return (
+        <>
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.titleBar}>
@@ -29,7 +30,7 @@ export default function Profil() {
                     <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>Photographer</Text>
                 </View>
 
-                <View style={styles.statsContainer}>
+                {/* <View style={styles.statsContainer}>
                     <View style={styles.statsBox}>
                         <Text style={[styles.text, { fontSize: 24 }]}>483</Text>
                         <Text style={[styles.text, styles.subText]}>Posts</Text>
@@ -42,7 +43,7 @@ export default function Profil() {
                         <Text style={[styles.text, { fontSize: 24 }]}>302</Text>
                         <Text style={[styles.text, styles.subText]}>Following</Text>
                     </View>
-                </View>
+                </View> */}
 
                 <View style={{ marginTop: 32 }}>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -61,29 +62,32 @@ export default function Profil() {
                         <Text style={[styles.text, { fontSize: 12, color: "#DFD8C8", textTransform: "uppercase" }]}>Media</Text>
                     </View>
                 </View>
-                <Text style={[styles.subText, styles.recent]}>Recent Activity</Text>
+                {/* <Text style={[styles.subText, styles.recent]}>Recent Activity</Text> */}
                 <View style={{ alignItems: "center" }}>
                     <View style={styles.recentItem}>
                         <View style={styles.activityIndicator}></View>
-                        <View style={{ width: 250 }}>
+                        {/* <View style={{ width: 250 }}>
                             <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
                                 Started following <Text style={{ fontWeight: "400" }}>Jake Challeahe</Text> and <Text style={{ fontWeight: "400" }}>Luis Poteer</Text>
                             </Text>
-                        </View>
+                        </View> */}
                     </View>
 
-                    <View style={styles.recentItem}>
+                    {/* <View style={styles.recentItem}>
                         <View style={styles.activityIndicator}></View>
                         <View style={{ width: 250 }}>
                             <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
                                 Started following <Text style={{ fontWeight: "400" }}>Luke Harper</Text>
                             </Text>
                         </View>
-                    </View>
+                    </View> */}
                 </View>
             </ScrollView>
-            <TabBar/>
+            
+         <TabBar navigation={navigation}/>
+           
         </SafeAreaView>
+        </>
     );
 }
 
