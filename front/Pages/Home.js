@@ -16,10 +16,8 @@ export default function Home() {
 
   return (
     <>
+      <Text>HOMEEEEEE</Text>
       <SideBar />
-      <View>
-        <Text>HOMEEEEEE</Text>
-      </View>
     </>
   );
 }

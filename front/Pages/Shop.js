@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import SideBar from "../components/SideBar.js";
+// import SideBar from "../components/SideBar.js";
 
 export default function Shop() {
   const navigation = useNavigation();
@@ -61,9 +61,9 @@ export default function Shop() {
 
   return (
     <>
-      <View>
+      {/* <View>
         <SideBar />
-      </View>
+      </View> */}
       <View>
         <FlatList
           data={categories}
