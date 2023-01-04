@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View ,TextInput ,Button , Image} from 'react-native';
+import { StyleSheet, Text, View ,TextInput ,Button , Image,ImageBackground} from 'react-native';
 import { useState,useRef } from 'react';
 
 
@@ -105,7 +105,11 @@ export default function App() {
   ///-------------------------------------------------------------------> The Sign up / Sign In structure page  <--------------------------------------------///
 
   return (<>
-    <View style={css.container}>
+        
+      <View style={css.container}>
+      <ImageBackground style={{flex: 1,width:500,width:700}}
+      source={{uri: 'https://images.unsplash.com/reserve/bOvf94dPRxWu0u3QsPjF_tree.jpg?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bmF0dXJhbHxlbnwwfHwwfHw%3D&w=1000&q=80'}}>
+
       <View style={css.box}>
           <Text style={css.textParam}  > Log In : </Text>
           <Text style={{marginTop:20,textAlign:"left",fontSize:20,fontWeight:'bold',marginLeft:35,marginBottom:8}}>Email</Text>
@@ -156,6 +160,7 @@ export default function App() {
 
           <StatusBar style="inverted" />
         </View>
+      </ImageBackground>
       </View>
     </>
   );
@@ -168,13 +173,16 @@ const css = StyleSheet.create({
     backgroundColor: "#FFE2AA",
     alignItems: "center",
     justifyContent: "center",
+    position:'absolute'
   },
   box: {
     backgroundColor: "white",
-    width: 350,
-    height: 500,
-    borderRadius: 44,
+    width: 400,
+    height: 600,
+    borderBottomRightRadius:120,
+    transform: [{rotate: '45deg'}],
 
+    alignItems:'center',
     justifyContent: "center",
 
     shadowColor: "black",
