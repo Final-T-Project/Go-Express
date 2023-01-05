@@ -11,24 +11,16 @@ import {
   ScrollView,
 } from "react-native";
 import profile from "../assets/profile.png";
-
 // Tab ICons...
-import home from "../assets/home.png";
-import shop from "../assets/Shop.png";
-import notifications from "../assets/bell.png";
-import settings from "../assets/settings.png";
+import home from "../assets/feedback.png";
+import cart from "front/assets/shopping-cart-empty-side-view.png";
+import notifications from "front/assets/notification.png";
+import chat from "../assets/chat.png";
 import logout from "../assets/logout.png";
-// Menu
 import menu from "../assets/menu.png";
 import close from "../assets/close.png";
-// import Profil from '../Pages/Profil'
-// Photo
-import photo from "../assets/photo.jpg";
-
-import { useNavigation } from "@react-navigation/native";
-import Home from "../Pages/Home";
-import Shop from "../Pages/Shop";
-import TabBar from "./TabBar";
+// import { useNavigation } from "@react-navigation/native";
+import TabBar from "../components/TabBar";
 
 export default function SideBbar({navigation}) {
   const [Page, SetPage] = useState("Home");
@@ -45,9 +37,12 @@ export default function SideBbar({navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ justifyContent: "flex-start", padding: 25 }}>
-        <TouchableOpacity>
-          {/* onPress={() => navigation.navigate("Profil")} */}
+      {/* blaset el contenue mta el side bar */}
+      <View style={{ justifyContent: "flex-start", padding: 30 }}>
+        <TouchableOpacity
+        onPress={() => {navigation.navigate("Profil")}}
+        >
+          
           <Image
             source={profile}
             style={{
@@ -66,21 +61,29 @@ export default function SideBbar({navigation}) {
             }}
           >
             Hello Jenna{" "}
+           
           </Text>
-        <Text>
-          View Profil
-        </Text>
+          <Text
+            style={{
+              fontSize: 15,
+              // fontWeight: "bold",
+              color: "white",
+              marginTop: 10,
+            }}
+          >
+            View Profil
+          </Text>
         </TouchableOpacity>
 
-        <View style={{ flexGrow: 1, marginTop: 50 }}>
+        <View style={{ flexGrow: 1, marginTop: 60 }}>
           {
             // Tab Bar Buttons....
           }
 
-          {TabButton(currentTab, setCurrentTab, "Home", home)}
-          {TabButton(currentTab, setCurrentTab, "Shop", shop)}
-          {TabButton(currentTab, setCurrentTab, "Notifications", notifications)}
-          {TabButton(currentTab, setCurrentTab, "Settings", settings)}
+          {TabButton(currentTab, setCurrentTab, "Feedback", home)}
+          {TabButton(currentTab, setCurrentTab, "Notification", notifications)}
+          {TabButton(currentTab, setCurrentTab, "Cart", cart)}
+          {TabButton(currentTab, setCurrentTab, "Chat", chat)}
         </View>
         <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
       </View>
@@ -121,6 +124,7 @@ export default function SideBbar({navigation}) {
             onPress={() => {
               // Do Actions Here....
               // Scaling the view...
+              
               Animated.timing(scaleValue, {
                 toValue: showMenu ? 1 : 0.88,
                 duration: 300,
@@ -147,24 +151,24 @@ export default function SideBbar({navigation}) {
             <Image
               source={showMenu ? close : menu}
               style={{
-                width: 20,
-                height: 20,
-                tintColor: "black",
+                width: 30,
+                height: 30,
+                tintColor: "#ea580c",
                 marginTop: 40,
               }}
             ></Image>
           </TouchableOpacity>
-
-          <Text
+          {/* <Text
             style={{
               fontSize: 30,
               fontWeight: "bold",
-              color: "black",
+              color: "red",
               paddingTop: 20,
             }}
           >
             {currentTab}
-          </Text>
+          </Text> */}
+          
         </Animated.View>
         <TabBar navigation={navigation}/>
         {/* navigation={navigation} */}
@@ -175,28 +179,29 @@ export default function SideBbar({navigation}) {
 
 // For multiple Buttons...
 const TabButton = (currentTab, setCurrentTab, title, image) => {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   return (
     <TouchableOpacity
       onPress={() => {
-        if (title == "Home") {
-          setCurrentTab("Home");
-           navigation.navigate("Home");
+        if (title == "Feedback") {
+          setCurrentTab("Feedback");
+          
+          //  navigation.navigate("Home");
     
-        } else if (title == "Shop") {
-          setCurrentTab("Shop");
-          navigation.navigate("Shop");
-        } else if (title == "Notifications") {
-          setCurrentTab("Notifications");
-        } else if (title == "Settings") {
-          setCurrentTab("Settings");
+        } else if (title == "Notification") {
+          setCurrentTab("Notification");
+          // navigation.navigate("Shop");
+        } else if (title == "Cart") {
+          setCurrentTab("Cart");
+        } else if (title == "Chat") {
+          setCurrentTab("Chat");
         } else if (title == "Settings") {
           setCurrentTab("Settings");
         } else {
-          navigation.navigate("Log in");
+          // navigation.navigate("Log in");
         }
       }}
-
+      LogOut
       // onPress={() => navigation.navigate("Profil")}
     >
       <View
@@ -207,8 +212,8 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           backgroundColor: currentTab == title ? "white" : "transparent",
           paddingLeft: 13,
           paddingRight: 35,
-          borderRadius: 8,
-          marginTop: 15,
+          borderRadius: 10,
+          marginTop: 20,
         }}
       >
         <Image
@@ -216,7 +221,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           style={{
             width: 27,
             height: 25,
-            tintColor: currentTab == title ? "#5359D1" : "white",
+            tintColor: currentTab == title ? "#ea580c" : "white",
           }}
         ></Image>
 
@@ -225,12 +230,12 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
             fontSize: 15,
             fontWeight: "bold",
             paddingLeft: 15,
-            color: currentTab == title ? "#5359D1" : "white",
+            color: currentTab == title ? "black" : "white",
           }}
         >
           {title}
         </Text>
-      </View>
+      </View> 
     </TouchableOpacity>
   );
 };
@@ -243,3 +248,4 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
 });
+//side bar 
