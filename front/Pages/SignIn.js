@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View ,TextInput ,Button, TouchableWithoutFeedback , Keyboard} from 'react-native';
+import { StyleSheet, Text, View ,TextInput ,Button, TouchableWithoutFeedback , Keyboard } from 'react-native';
 import { useState } from 'react';
 
 
@@ -22,7 +22,10 @@ export default function App() {
     password: "",    //   TO STORE THE PASSWORD INPUT
     confirmPassword:"",
 
-    error: "",       // ST7A9ITHECH LHA9 AMAAA TAJEM TESTHA9HA    
+    error: "",       // ST7A9ITHECH LHA9 AMAAA TAJEM TESTHA9HA  
+    
+    emailConfirmation:false,
+    emailInput:"",
   });
 
   const [user,setUser]=useState("")
@@ -40,11 +43,15 @@ export default function App() {
 ///----------------------------------------------------> function for handling the creating the account <-----------------------------------------///
   const handleSignIn=()=>{
     if( value.confirmPassword !== value.password){
-          alert("Passwords do not match")
-        }
+      alert("Passwords do not match")
+    }
     if ( !value.nameUser.length || !value.email.length || !value.password.length || !value.confirmPassword.length){
       alert ('fill all the inputs !!!')
-    }else{
+    }
+      if (value.emailConfirmation===false){
+        alert("you need to confirm your email")
+      }
+    else{
     createUserWithEmailAndPassword(auth,value.email,value.password)    //  -----------> TA3MEL CREATION L USER JDID BEL EMAIL WEL PASSWORD ILI KTEBTHOM
     .then((userCredential)=>{         //  ----------->  BAAD EL CREATION TA3 EL USER FEL FIREBASE , EL FIREBASE YRAJA3 OBJET ESMOU (userCredential) FIH INFO AL USER
       setUser(userCredential.user)   //  ---------->  Setting the user object (containing the detail of the athentication information )
@@ -55,12 +62,10 @@ export default function App() {
     .then(()=>{                    
       alert("YEYYY USER ADDED")
       console.log(userId)
-      if( value.confirmPassword !== value.password){
-        alert("Passwords do not match")
-      }
+
       
      
-        Navigation.navigate("PhoneNumber Verif",{name:value.nameUser,email:value.email})
+        //Navigation.navigate("PhoneNumber Verif",{name:value.nameUser,email:value.email})
      }
     )
     .catch((error)=>{
@@ -75,6 +80,8 @@ export default function App() {
     })
 
   }}
+
+
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
 
@@ -117,11 +124,15 @@ export default function App() {
         />
 
         {/** ---------------------------------------------------BUTTONS  -----------------------------------------------*/}
-     <Text style={{fontSize:17,fontWeight:'500',borderBottomLeftRadius:120,borderRadius:18,backgroundColor:'#F96A27',color:'white',padding:15,marginTop:30,textAlign:'center',width:250}} onPress={()=>{handleLogIn()}} onPress={handleSignIn}> Create an account </Text> 
+     <Text style={{fontSize:17,fontWeight:'500',borderBottomLeftRadius:120,borderRadius:18,backgroundColor:'#F96A27',color:'white',padding:15,marginTop:30,textAlign:'center',width:250}} onPress={()=>{
+      showAlert()
+      }}> Create an account </Text> 
       
       <StatusBar style="inverted" />
       </View>
+      
     </View>
+    
     </TouchableWithoutFeedback>
     </>
   );

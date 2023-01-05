@@ -115,7 +115,7 @@ export default function App() {
 
       <View style={css.box}>
         <Image source={require("../assets/Group 1 copy.png")} style={{marginTop:50,width:10,height:10}}/>
-          <Text style={css.textParam}  > Log In : </Text>
+          <Text style={css.textParam}  > (LOGO HERE) </Text>
           <Text style={{marginTop:20,textAlign:"left",fontSize:20,fontWeight:'bold',marginRight:210,marginBottom:8}}>Email</Text>
           {/** ---------------------------------------------------EMAIL INPUT -----------------------------------------------*/}
 
@@ -184,10 +184,11 @@ const css = StyleSheet.create({
   box: {
     backgroundColor: "#FEE9E5",
     width: 330,
-    height: 600,
+    height: 550,
     borderBottomLeftRadius:120,
     marginLeft:41,
-   
+    marginTop:100,
+  
 
     alignItems:'center',
     justifyContent: "center",
@@ -205,12 +206,12 @@ const css = StyleSheet.create({
     backgroundColor:'#FEE9E5',
     fontSize:25,
     fontWeight:'bold',
-    marginLeft:20,
-    marginTop:10,
+    marginLeft:0,
+    marginTop:-50,
     marginBottom:10,
-    padding:10,
     textAlign:'center',
     width:250,
+    height:35,
   }
 });
 
