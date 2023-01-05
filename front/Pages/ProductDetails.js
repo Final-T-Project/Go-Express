@@ -21,7 +21,7 @@ export default function Products({ route }) {
           <Text style={styles.name}>{element.name}</Text>
           <Text style={styles.price}>dt {element.price}</Text>
           <Text style={styles.description}>element.description</Text>
-          <Button title="Add to cart" />
+          <Button style={styles.button} title="Add to cart" />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -63,5 +63,9 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: "#787878",
     marginBottom: 16,
+  },
+
+  button: {
+    backgroundColor: "white",
   },
 });

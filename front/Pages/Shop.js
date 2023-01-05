@@ -45,7 +45,7 @@ export default function Shop({ navigation }) {
   const renderCategory = ({ item }) => (
     <TouchableHighlight
       onPress={() => navigation.navigate("Products", { props: item.name })}
-      underlayColor="#5359D1"
+      underlayColor="#FFAD62"
     >
       <View style={styles.categoriesItemContainer}>
         <Image
