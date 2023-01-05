@@ -202,7 +202,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
         }
       }}
       LogOut
-      // onPress={() => navigation.navigate("Profil")}
+      //onPress={() => navigation.navigate("Profil")}
     >
       <View
         style={{

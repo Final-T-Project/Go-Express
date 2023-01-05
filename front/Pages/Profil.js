@@ -14,6 +14,8 @@ import TabBar from "../components/TabBar";
 
 import { Avatar, HStack, Center, NativeBaseProvider } from "native-base";
 //  import { Avatar } from "react-native-paper";
+
+
 export default function Profil({ navigation }) {
   return (
     <>
@@ -143,6 +145,7 @@ export default function Profil({ navigation }) {
           </View>
         </ScrollView>
       </View>
+
 
       <TabBar navigation={navigation} />
     </>
