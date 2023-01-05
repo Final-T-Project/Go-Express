@@ -30,7 +30,7 @@ import Home from "../Pages/Home";
 import Shop from "../Pages/Shop";
 import TabBar from "./TabBar";
 
-export default function SideBbar() {
+export default function SideBbar({navigation}) {
   const [Page, SetPage] = useState("Home");
   const [currentTab, setCurrentTab] = useState("Home");
   // To get the curretn Status of menu ...
@@ -42,7 +42,7 @@ export default function SideBbar() {
   // Scale Intially must be One...
   const scaleValue = useRef(new Animated.Value(1)).current;
   const closeButtonOffset = useRef(new Animated.Value(0)).current;
-  // test
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ justifyContent: "flex-start", padding: 25 }}>
@@ -67,14 +67,7 @@ export default function SideBbar() {
           >
             Hello Jenna{" "}
           </Text>
-          <Text
-            style={{
-              marginTop: 6,
-              color: "white",
-            }}
-          >
-            View Profile
-          </Text>
+        
         </TouchableOpacity>
 
         <View style={{ flexGrow: 1, marginTop: 50 }}>
@@ -104,7 +97,7 @@ export default function SideBbar() {
           left: 0,
           right: 0,
           paddingHorizontal: 15,
-          paddingVertical: 20,
+          paddingVertical: 0,
           borderRadius: showMenu ? 15 : 0,
           // Transforming View...
           transform: [{ scale: scaleValue }, { translateX: offsetValue }],
@@ -171,7 +164,7 @@ export default function SideBbar() {
             {currentTab}
           </Text>
         </Animated.View>
-        <TabBar />
+        <TabBar navigation={navigation}/>
         {/* navigation={navigation} */}
       </Animated.View>
     </SafeAreaView>
@@ -186,7 +179,8 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
       onPress={() => {
         if (title == "Home") {
           setCurrentTab("Home");
-          navigation.navigate("Home");
+           navigation.navigate("Home");
+    
         } else if (title == "Shop") {
           setCurrentTab("Shop");
           navigation.navigate("Shop");

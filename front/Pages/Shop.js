@@ -11,9 +11,9 @@ import { useNavigation } from "@react-navigation/native";
 import SideBbar from "../components/SideBar.js";
 
 // import SideBar from "../components/SideBar.js";
-
-export default function Shop() {
-  const navigation = useNavigation();
+import TabBar from "../components/TabBar";
+export default function Shop({navigation}) {
+  
 
   // all categories
   const categories = [
@@ -68,8 +68,10 @@ export default function Shop() {
           data={categories}
           renderItem={renderCategory}
           keyExtractor={(item) => `${item.id}`}
-        />
+        />  
+        <TabBar navigation={navigation}/>
       </View>
+    
     </>
   );
 }
