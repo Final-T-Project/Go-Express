@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View ,TextInput ,Button} from 'react-native';
-import { useState } from 'react';
+import { StyleSheet, Text, View ,TextInput ,Button, TouchableWithoutFeedback , Keyboard ,ScrollView} from 'react-native';
+import { useState , useEffect } from 'react';
 
 
 
   ///----------------------------------------------------> Firebase stuff importation  <----------------------------------------------------------------------------///
 
 import firebaseConfig from '../config/firebase';  //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";  // importing the auth of Firebase 
+import { getAuth, createUserWithEmailAndPassword , sendEmailVerification , onAuthStateChanged} from "firebase/auth";  // importing the auth of Firebase 
 import { initializeApp } from 'firebase/app';
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
 import { useNavigation } from '@react-navigation/native';
@@ -22,7 +22,10 @@ export default function App() {
     password: "",    //   TO STORE THE PASSWORD INPUT
     confirmPassword:"",
 
-    error: "",       // ST7A9ITHECH LHA9 AMAAA TAJEM TESTHA9HA    
+    error: "",       // ST7A9ITHECH LHA9 AMAAA TAJEM TESTHA9HA  
+    
+    emailConfirmation:false,
+    emailInput:"",
   });
 
   const [user,setUser]=useState("")
@@ -38,13 +41,31 @@ export default function App() {
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
 ///----------------------------------------------------> function for handling the creating the account <-----------------------------------------///
-  const handleSignIn=()=>{
+useEffect(() => {
+  console.log(auth.currentUser)
+  const EmailConfirmed = auth.onAuthStateChanged((user) => {
+    if (!user?.emailVerified) {
+      setValue({...value,emailConfirmation:false})
+    }else{
+      setValue({...value,emailConfirmation:true})
+    }
+  });
+
+  // unsubscribe from the listener when the component unmounts
+  return () => EmailConfirmed();
+}, []);
+
+
+
+
+const handleSignIn=()=>{
     if( value.confirmPassword !== value.password){
-          alert("Passwords do not match")
-        }
+      alert("Passwords do not match")
+    }
     if ( !value.nameUser.length || !value.email.length || !value.password.length || !value.confirmPassword.length){
       alert ('fill all the inputs !!!')
-    }else{
+    }
+    else{
     createUserWithEmailAndPassword(auth,value.email,value.password)    //  -----------> TA3MEL CREATION L USER JDID BEL EMAIL WEL PASSWORD ILI KTEBTHOM
     .then((userCredential)=>{         //  ----------->  BAAD EL CREATION TA3 EL USER FEL FIREBASE , EL FIREBASE YRAJA3 OBJET ESMOU (userCredential) FIH INFO AL USER
       setUser(userCredential.user)   //  ---------->  Setting the user object (containing the detail of the athentication information )
@@ -55,12 +76,11 @@ export default function App() {
     .then(()=>{                    
       alert("YEYYY USER ADDED")
       console.log(userId)
-      if( value.confirmPassword !== value.password){
-        alert("Passwords do not match")
-      }
+      auth.currentUser.sendEmailVerification()
+      alert("Email sent for confirmation")
       
      
-        Navigation.navigate("PhoneNumber Verif",{name:value.nameUser,email:value.email})
+        //Navigation.navigate("PhoneNumber Verif",{name:value.nameUser,email:value.email})
      }
     )
     .catch((error)=>{
@@ -70,11 +90,13 @@ export default function App() {
         if ( !value.nameUser.length || !value.email.length || !value.password.length || !value.confirmPassword.length){
             alert ('fill all the inputs !!!')
         }else {
-          alert("ACCOUNT ALREADY EXIST")
+          alert(error)
         }
     })
 
   }}
+
+
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
 
@@ -87,39 +109,56 @@ export default function App() {
   ///-------------------------------------------------------------------> The Sign up / Sign In structure page  <--------------------------------------------///
 
   return (<>
-
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    
     <View style={css.container}>
     {/** ---------------------------------------------------NAME INPUT -----------------------------------------------*/}
+    <View style={css.box}>
     <Text style={{marginTop:20,textAlign:"left",fontSize:20,fontWeight:'bold'}}>Name</Text>
     <TextInput
-        style={{height: 50,fontSize:15,borderColor:'black',borderWidth:1,padding:10,width:350,borderRadius:100,alignItems:'center'}}
+         style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
         placeholder="Your Name here"  onChangeText={(text) => setValue({ ...value, nameUser: text })}
         />
  
       <Text style={{marginTop:40,textAlign:"left",fontSize:20,fontWeight:'bold'}}>Email</Text>
       {/** ---------------------------------------------------EMAIL INPUT -----------------------------------------------*/}
-      <TextInput
-        style={{height: 50,fontSize:15,borderColor:'black',borderWidth:1,padding:10,width:350,borderRadius:100,alignItems:'center'}}
+      <TextInput keyboardType="email-address" 
+         style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
         placeholder="Your Email here"  onChangeText={(text) => setValue({ ...value, email: text })}
         />
+
+        
+        {!value.emailConfirmation?<Text style={{color:'red'}}> Email not confirmed yet </Text>:<Text style={{color:'green'}}> Email Confirmed, you can create your account</Text>}
+        
+        
         <Text style={{marginTop:40,textAlign:"left",fontSize:20,fontWeight:'bold'}}>Password</Text>
         {/** ---------------------------------------------------PASSWORD INPUT -----------------------------------------------*/}
        <TextInput  secureTextEntry={true}
-        style={{height: 50,fontSize:15,borderColor:'black',borderWidth:1,padding:10,width:350,borderRadius:100,alignItems:'center'}}
+         style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
         placeholder="Your password here"  onChangeText={(text) => setValue({ ...value, password: text })}
         />
         {/** ---------------------------------------------------CONfirm PAssword INPUT -----------------------------------------------*/}
         <Text style={{marginTop:40,textAlign:"left",fontSize:20,fontWeight:'bold'}}>Confirm password</Text>
     <TextInput secureTextEntry={true}
-        style={{height: 50,fontSize:15,borderColor:'black',borderWidth:1,padding:10,width:350,borderRadius:100,alignItems:'center'}}
+         style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
         placeholder="Confirm your password"  onChangeText={(text) => setValue({ ...value, confirmPassword: text })}
         />
 
         {/** ---------------------------------------------------BUTTONS  -----------------------------------------------*/}
-     <Text style={{borderRadius:20,marginTop:20,backgroundColor:'black',color:'white',padding:10}} onPress={handleSignIn}> Create an account </Text> 
+     <Text style={{fontSize:17,fontWeight:'500',borderBottomLeftRadius:120,borderRadius:18,backgroundColor:'#F96A27',color:'white',padding:15,marginTop:30,textAlign:'center',width:250}} onPress={()=>{
+      handleSignIn()
+      }}> Create an account </Text> 
+     
+
       
       <StatusBar style="inverted" />
-    </View></>
+      </View>
+      
+    </View>
+    
+  
+    </TouchableWithoutFeedback>
+    </>
   );
 }
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
@@ -127,7 +166,7 @@ export default function App() {
 const css = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFB897',
     alignItems: 'center',
    
     
@@ -139,7 +178,27 @@ const css = StyleSheet.create({
     marginLeft:20,
     marginTop:200,
     marginBottom:0
-  }
+  },
+  box: {
+    backgroundColor: "#FEE9E5",
+    width: 330,
+    height: 600,
+    borderBottomLeftRadius:120,
+    
+   
+
+    alignItems:'center',
+    justifyContent: "center",
+
+    shadowColor: "black",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 60,
+    shadowRadius: 40,
+    elevation: 20,
+  },
 });
 
 

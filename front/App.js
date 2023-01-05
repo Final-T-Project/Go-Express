@@ -12,16 +12,19 @@ import Profil from "./Pages/Profil";
 import LogInSignIn from "./Pages/LogInSignIn";
 import Home from "./Pages/Home";
 import SignIn from "./Pages/SignIn";
+import AddProduct from "./Pages/AddProduct"
+
 
 // import { PhoneAuthCredential } from 'firebase/auth';
 import PhoneNumber from "./Pages/PhoneNumber";
-import AddProduct from "./Pages/AddProduct.js";
+import EmailConfirmation from "./components/EmailConfirmation.js";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SideBar">
+      <Stack.Navigator initialRouteName="Log in">
         <Stack.Screen
           name="Log in"
           options={{ headerShown: false }}
@@ -49,6 +52,7 @@ export default function App() {
         />
         <Stack.Screen name="Products" component={Products} />
         <Stack.Screen name="ProductDetails" component={ProductDetails} />
+        <Stack.Screen name="Email Confiramtion" component={EmailConfirmation} />
         <Stack.Screen
           name="AddProduct"
           options={{ headerShown: false }}
