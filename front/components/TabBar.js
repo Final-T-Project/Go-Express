@@ -130,7 +130,7 @@ const TabBar = ({navigation}) => {
                                 onPress={() => {navigation.navigate("Profil")}}
                             >
                                 <Image
-                                    source={{ uri: 'https://res.cloudinary.com/dn9qfvg2p/image/upload/v1672864997/user_1_uxrcvl.png' }}
+                                    source={{ uri: 'https://res.cloudinary.com/dn9qfvg2p/image/upload/v1672910617/add-product_pnbr3t.png' }}
 
                                     
                                     style={{ marginHorizontal: 16, width: 30, height: 30 }}
@@ -138,7 +138,7 @@ const TabBar = ({navigation}) => {
                                 />
                      
                             </TouchableOpacity>
-                            <Text style={{justifyContent:'center',alignItems:'center' }}> Profile </Text>
+                            <Text style={{justifyContent:'center',alignItems:'center' }}> Add </Text>
                            
                         </View>
 
