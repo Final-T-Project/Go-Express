@@ -9,9 +9,11 @@ module.exports = {
         else res.json(results);
       },
       req.body.sellIerd,
+      req.body.buyerId,
       req.body.name,
       req.body.category,
       req.body.price,
+      req.body.description,
       req.body.photo,
       req.body.quantity,
       req.body.id_user,
