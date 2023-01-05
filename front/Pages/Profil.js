@@ -1,102 +1,153 @@
- import React from "react";
- import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, Touchable, TouchableOpacity } from "react-native";
- import { Ionicons, MaterialIcons } from "@expo/vector-icons";
- import TabBar from "../components/TabBar";
- 
- import { Avatar, HStack, Center, NativeBaseProvider } from "native-base";
-//  import { Avatar } from "react-native-paper";
-export default function Profil({navigation}) {
-     return (
-         <>
-         <View>
-            <ScrollView>
-                <View>
-                    <TouchableOpacity
-                    style={{padding:10,width:'100%',backgroundColor:"#ffedd5",height:150,}}
-                    >
-                    </TouchableOpacity>
-                </View>
-                
-                
-                <View style={{alignItems:'center'}}>
-                           <TouchableOpacity>
-                 <NativeBaseProvider>
-                     <Center flex={1} px="3">
-                         <Avatar bg="green.500" source={{uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" }}  style={{width:140,height:140,borderRadius:100,marginTop:-600}}>
-                        </Avatar>
-                      </Center>
-                </NativeBaseProvider>
-                           </TouchableOpacity> 
-                            <Text style={{fontSize:25,fontWeight:'bold',padding:0,color:'black'}}>User name</Text>
-                          
-                        </View>
-                        {/* user number */}
-                        <View
-                        style={{alignSelf:'center',
-                                flexDirection:'row',
-                                // justifyContent:'centre',
-                                backgroundColor:'red',
-                                width:'90%',
-                                padding:20,
-                                paddingBottom:22,
-                                borderRadius:10,
-                                shadowOpacity:80,
-                                elevation:15,
-                                marginTop:50,
-                                marginBottom:40}}
-                        >
-                             <Image source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1672937081/phone-call_ile7m8.png" }} style={{width:33,height:33}}></Image>
-                             <Text style={{fontSize:20,color:'#', marginLeft:70}}>User Email</Text>
-                        </View>
-                        {/* user Email */}
-                        <View
-                        style={{alignSelf:'center',
-                                flexDirection:'row',
-                                // justifyContent:'centre',
-                                backgroundColor:'#fff',
-                                width:'90%',
-                                padding:15,
-                                paddingBottom:22,
-                                borderRadius:10,
-                                shadowOpacity:80,
-                                elevation:15,
-                                marginTop:-15,
-                                marginBottom:40}}
-                        >
-                             <Image source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1671726895/gmail_dcjbrl.png" }} style={{width:33,height:33}}></Image>
-                             <Text style={{fontSize:20,color:'#', marginLeft:70}}>User Email</Text>
-                        </View>
-                        {/* user place */}
-                        <View
-                        style={{alignSelf:'center',
-                                flexDirection:'row',
-                                // justifyContent:'centre',
-                                backgroundColor:'#fff',
-                                width:'90%',
-                                padding:15,
-                                paddingBottom:22,
-                                borderRadius:10,
-                                shadowOpacity:80,
-                                elevation:15,
-                                marginTop:-15,
-                                marginBottom:40}}
-                        >
-                             <Image source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1671726727/location_xel02r.png" }} style={{width:33,height:33}}></Image>
-                             <Text style={{fontSize:20,color:'#', marginLeft:70}}>User Adress</Text>
-                        </View>
-                      
-            </ScrollView> 
-           
-         </View> 
-         
-           
-                         <TabBar navigation={navigation}/>
-                   
-      
-         </>
-     );
+import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Image,
+  ScrollView,
+  Touchable,
+  TouchableOpacity,
+} from "react-native";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import TabBar from "../components/TabBar";
 
- }
+import { Avatar, HStack, Center, NativeBaseProvider } from "native-base";
+//  import { Avatar } from "react-native-paper";
+export default function Profil({ navigation }) {
+  return (
+    <>
+      <View>
+        <ScrollView>
+          <View>
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                width: "100%",
+                backgroundColor: "#ffedd5",
+                height: 150,
+              }}
+            ></TouchableOpacity>
+          </View>
+
+          <View style={{ alignItems: "center" }}>
+            <TouchableOpacity>
+              <NativeBaseProvider>
+                <Center flex={1} px="3">
+                  <Avatar
+                    bg="green.500"
+                    source={{
+                      uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                    }}
+                    style={{
+                      width: 140,
+                      height: 140,
+                      borderRadius: 100,
+                      marginTop: -90,
+                    }}
+                  ></Avatar>
+                </Center>
+              </NativeBaseProvider>
+            </TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 25,
+                fontWeight: "bold",
+                padding: 10,
+                color: "black",
+              }}
+            >
+              User name
+            </Text>
+          </View>
+          {/* user number */}
+          <View
+            style={{
+              alignSelf: "center",
+              flexDirection: "row",
+              // justifyContent:'centre',
+              backgroundColor: "#fff",
+              width: "90%",
+              padding: 20,
+              paddingBottom: 22,
+              borderRadius: 10,
+              shadowOpacity: 80,
+              elevation: 15,
+              marginTop: 50,
+              marginBottom: 40,
+            }}
+          >
+            <Image
+              source={{
+                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1672937081/phone-call_ile7m8.png",
+              }}
+              style={{ width: 33, height: 33 }}
+            ></Image>
+            <Text style={{ fontSize: 20, color: "#", marginLeft: 70 }}>
+              User Email
+            </Text>
+          </View>
+          {/* user Email */}
+          <View
+            style={{
+              alignSelf: "center",
+              flexDirection: "row",
+              // justifyContent:'centre',
+              backgroundColor: "#fff",
+              width: "90%",
+              padding: 15,
+              paddingBottom: 22,
+              borderRadius: 10,
+              shadowOpacity: 80,
+              elevation: 15,
+              marginTop: -15,
+              marginBottom: 40,
+            }}
+          >
+            <Image
+              source={{
+                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1671726895/gmail_dcjbrl.png",
+              }}
+              style={{ width: 33, height: 33 }}
+            ></Image>
+            <Text style={{ fontSize: 20, color: "#", marginLeft: 70 }}>
+              User Email
+            </Text>
+          </View>
+          {/* user place */}
+          <View
+            style={{
+              alignSelf: "center",
+              flexDirection: "row",
+              // justifyContent:'centre',
+              backgroundColor: "#fff",
+              width: "90%",
+              padding: 15,
+              paddingBottom: 22,
+              borderRadius: 10,
+              shadowOpacity: 80,
+              elevation: 15,
+              marginTop: -15,
+              marginBottom: 40,
+            }}
+          >
+            <Image
+              source={{
+                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1671726727/location_xel02r.png",
+              }}
+              style={{ width: 33, height: 33 }}
+            ></Image>
+            <Text style={{ fontSize: 20, color: "#", marginLeft: 70 }}>
+              User Adress
+            </Text>
+          </View>
+        </ScrollView>
+      </View>
+
+      <TabBar navigation={navigation} />
+    </>
+  );
+}
 
 // const styles = StyleSheet.create({
 //     container: {
@@ -104,7 +155,7 @@ export default function Profil({navigation}) {
 //         backgroundColor: "#FFF"
 //     },
 //     text: {
-       
+
 //         color: "#52575D"
 //     },
 //     image: {
@@ -219,4 +270,3 @@ export default function Profil({navigation}) {
 //         marginRight: 20
 //     }
 // });
-
