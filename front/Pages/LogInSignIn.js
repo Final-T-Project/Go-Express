@@ -107,33 +107,34 @@ export default function App() {
   return (<>
         
       <View style={css.container}>
-      <ImageBackground style={{flex: 1,width:500,width:700}}
-      source={{uri: 'https://images.unsplash.com/reserve/bOvf94dPRxWu0u3QsPjF_tree.jpg?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bmF0dXJhbHxlbnwwfHwwfHw%3D&w=1000&q=80'}}>
+      <ImageBackground style={{flex: 1,width:500,width:1000}}
+      >
 
       <View style={css.box}>
+        <Image source={require("../assets/Group 1 copy.png")} style={{marginTop:50,width:10,height:10}}/>
           <Text style={css.textParam}  > Log In : </Text>
-          <Text style={{marginTop:20,textAlign:"left",fontSize:20,fontWeight:'bold',marginLeft:35,marginBottom:8}}>Email</Text>
+          <Text style={{marginTop:20,textAlign:"left",fontSize:20,fontWeight:'bold',marginRight:210,marginBottom:8}}>Email</Text>
           {/** ---------------------------------------------------EMAIL INPUT -----------------------------------------------*/}
 
           <View style={{ alignItems: 'center',}}>
-          {value.emailError===false?<TextInput
-            style={{height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:100,alignItems:'center'}}
+          {value.emailError===false?<TextInput 
+            style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
             placeholder="Your Email here"  keyboardType="email-address"  onChangeText={(text) => setValue({ ...value, email: text })} ref={emailRef}
             />:<TextInput
-            style={{height: 50,fontSize:17,borderColor:'red',borderWidth:2,padding:10,width:290,borderRadius:100,alignItems:'center',color:'red'}}
+            style={{height: 50,fontSize:17,borderColor:'red',borderWidth:2,padding:10,width:290,borderRadius:18,alignItems:'center',color:'red'}}
             placeholder="Your Email here"  keyboardType="email-address"  onChangeText={(text) => setValue({ ...value, email: text })} ref={emailRef} defaultValue="Your Email is wrong" onFocus={()=>setValue({...value,emailError:false})}
             />}
 
             </View>
-            <Text style={{marginTop:40,textAlign:"left",fontSize:20,fontWeight:'bold',marginLeft:35,marginBottom:8}} ref={passwordTitle} >Password</Text>
+            <Text style={{marginTop:40,textAlign:"left",fontSize:20,fontWeight:'bold',marginRight:170,marginBottom:8}} ref={passwordTitle} >Password</Text>
             {/** ---------------------------------------------------PASSWORD INPUT -----------------------------------------------*/}
             
             <View style={{ alignItems: 'center',}}>
           {value.passwordError?<TextInput  secureTextEntry={value.passwordHide}
-            style={{height: 50,fontSize:17,borderColor:'red',borderWidth:2,padding:10,width:290,borderRadius:100,alignItems:'center',color:'red'}}
+            style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'red',borderWidth:2,padding:10,width:290,borderRadius:18,alignItems:'center',color:'red'}}
             placeholder="Your password here"  onChangeText={(text) => setValue({ ...value, password: text })} ref={passwordRef}
             />:<TextInput  secureTextEntry={value.passwordHide}
-            style={{height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:100,alignItems:'center'}}
+            style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
             placeholder="Your password here"  onChangeText={(text) => setValue({ ...value, password: text })} ref={passwordRef}
             />}
             
@@ -153,7 +154,7 @@ export default function App() {
             
             {/** ---------------------------------------------------BUTTONS Sign in  -----------------------------------------------*/}
           <View style={{ alignItems: 'center'}}>
-             <Text style={{fontSize:17,fontWeight:'500',borderRadius:44,backgroundColor:'#40946C',color:'white',padding:15,marginTop:30,textAlign:'center',width:150}} onPress={()=>{handleLogIn()}}> Sign in </Text> 
+             <Text style={{fontSize:17,fontWeight:'500',borderBottomLeftRadius:120,borderRadius:18,backgroundColor:'#F96A27',color:'white',padding:15,marginTop:30,textAlign:'center',width:150}} onPress={()=>{handleLogIn()}}> Log in </Text> 
           </View>
 
           <Text style={{marginTop:10,textAlign:"center",fontSize:17,fontWeight:'600'}} onPress={()=>forgetPassword()}>Forget password ?</Text>
@@ -170,17 +171,19 @@ export default function App() {
 const css = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFE2AA",
+    backgroundColor: "#FFB897",
     alignItems: "center",
     justifyContent: "center",
-    position:'absolute'
+    position:'absolute',
+    height:800,
   },
   box: {
-    backgroundColor: "white",
-    width: 400,
+    backgroundColor: "#FEE9E5",
+    width: 330,
     height: 600,
-    borderBottomRightRadius:120,
-    transform: [{rotate: '45deg'}],
+    borderBottomLeftRadius:120,
+    marginLeft:41,
+   
 
     alignItems:'center',
     justifyContent: "center",
@@ -195,7 +198,7 @@ const css = StyleSheet.create({
     elevation: 20,
   },
   textParam: {
-    backgroundColor:'white',
+    backgroundColor:'#FEE9E5',
     fontSize:25,
     fontWeight:'bold',
     marginLeft:20,
@@ -203,7 +206,7 @@ const css = StyleSheet.create({
     marginBottom:10,
     padding:10,
     textAlign:'center',
-    width:300,
+    width:250,
   }
 });
 
