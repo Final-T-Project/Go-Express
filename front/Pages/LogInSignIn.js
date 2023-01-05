@@ -94,6 +94,9 @@ export default function App() {
       alert("Email send")
     })
     .catch((error)=>{
+      if (error.code==="auth/user-not-found"){
+        alert(" You don't have an account :)), create an account first")
+      }
       console.log(error)
     })
     }
