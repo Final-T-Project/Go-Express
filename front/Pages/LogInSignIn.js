@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View ,TextInput ,Button , Image,ImageBackground} from 'react-native';
+import { StyleSheet, Text, View ,TextInput ,Button , Image,ImageBackground , Keyboard, TouchableWithoutFeedback} from 'react-native';
 import { useState,useRef } from 'react';
 
 
@@ -105,8 +105,8 @@ export default function App() {
   ///-------------------------------------------------------------------> The Sign up / Sign In structure page  <--------------------------------------------///
 
   return (<>
-        
-      <View style={css.container}>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={css.container} onPress={()=>Keyboard.dismiss()}>
       <ImageBackground style={{flex: 1,width:500,width:1000}}
       >
 
@@ -163,6 +163,7 @@ export default function App() {
         </View>
       </ImageBackground>
       </View>
+      </TouchableWithoutFeedback>
     </>
   );
 }
