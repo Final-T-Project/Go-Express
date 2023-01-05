@@ -40,7 +40,7 @@ export default function App() {
         />
         <Stack.Screen
           name="Shop"
-          options={{ headerShown: false }}
+          options={{ headerShown: false}}
           component={Shop}
         />
         <Stack.Screen name="Products" component={Products} />

@@ -113,7 +113,7 @@ const TabBar = ({navigation}) => {
 
                             >
                                 <Image
-                                    source={{ uri: 'https://res.cloudinary.com/dn9qfvg2p/image/upload/v1672864774/cart_oaakcj.png' }}
+                                    source={{ uri: 'https://res.cloudinary.com/dn9qfvg2p/image/upload/v1672920615/store_whb5qi.png' }}
                                    
                                     style={{ marginHorizontal: 16, width: 30, height: 30 }}
                                     containerStyle={{ marginHorizontal: 16 }}
