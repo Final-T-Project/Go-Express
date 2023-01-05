@@ -66,7 +66,9 @@ export default function SideBbar({navigation}) {
           >
             Hello Jenna{" "}
           </Text>
-        
+        <Text>
+          View Profil
+        </Text>
         </TouchableOpacity>
 
         <View style={{ flexGrow: 1, marginTop: 50 }}>
