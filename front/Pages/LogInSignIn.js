@@ -1,26 +1,13 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  Image,
-  ImageBackground,
-} from "react-native";
-import { useState, useRef } from "react";
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View ,TextInput ,Button , Image,ImageBackground , Keyboard, TouchableWithoutFeedback} from 'react-native';
+import { useState,useRef } from 'react';
+
 
 ///----------------------------------------------------> Firebase stuff importation  <----------------------------------------------------------------------------///
 
-import firebaseConfig from "../config/firebase"; //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-  se,
-} from "firebase/auth"; // importing the auth of Firebase
-import { initializeApp } from "firebase/app";
+import firebaseConfig from '../config/firebase';  //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
+import { getAuth, createUserWithEmailAndPassword ,signInWithEmailAndPassword , sendPasswordResetEmail, GoogleAuthProvider , signInWithPopup} from "firebase/auth";  // importing the auth of Firebase 
+import { initializeApp } from 'firebase/app';
 
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
 import { useNavigation } from "@react-navigation/native";
@@ -46,9 +33,11 @@ export default function App() {
   const app = initializeApp(firebaseConfig); //  ----------->  BECH NAAMLOU INITIALIZATION LEL CONFIG TA3 EL FIREBASE W NRODOUH EL app MTE3NA
   const auth = getAuth(app); //  ----------->  TA3TIIII AUTHORISATION LEL app MTE3EKKK BECH TNAJEM TESTAKHDEMHA KI T CREATE WALA SIGN IN LEL USER
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
+  const provider = new GoogleAuthProvider()
 
   ///----------------------------------------------------> USE NAVIGATE APPLICATION <----------------------------------------------------------------------------///
   const Navigation = useNavigation();
+
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
   ///----------------------------------------------------> function for handling the creating the account (FEL SignIn.tsx) <-----------------------------------------///
@@ -97,86 +86,57 @@ export default function App() {
   const forgetPassword = () => {
     if (value.email.length < 5) {
       alert("Write your Email");
-    } else {
-      sendPasswordResetEmail(auth, value.email)
-        .then(() => {
-          alert("Email send");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    } 
+  
+    else {
+      sendPasswordResetEmail(auth,value.email)
+    .then(()=>{
+      alert("Email send")
+    })
+    .catch((error)=>{
+      if (error.code==="auth/user-not-found"){
+        alert(" You don't have an account :)), create an account first")
+      }
+      console.log(error)
+    })
     }
-  };
+    
+  }
 
+  const testGoogle=()=>{
+    signInWithPopup(auth,provider).then((result)=>{
+      console.log(result)
+    }).catch((error)=>{
+      console.log(error)
+    })
+  }
+  
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
   ///-------------------------------------------------------------------> The Sign up / Sign In structure page  <--------------------------------------------///
 
-  return (
-    <>
-      <View style={css.container}>
-        <ImageBackground style={{ flex: 1, width: 500, width: 1000 }}>
-          <View style={css.box}>
-            <Image
-              source={require("../assets/Group 1 copy.png")}
-              style={{ marginTop: 50, width: 10, height: 10 }}
-            />
-            <Text style={css.textParam}> Log In : </Text>
-            <Text
-              style={{
-                marginTop: 20,
-                textAlign: "left",
-                fontSize: 20,
-                fontWeight: "bold",
-                marginRight: 210,
-                marginBottom: 8,
-              }}
-            >
-              Email
-            </Text>
-            {/** ---------------------------------------------------EMAIL INPUT -----------------------------------------------*/}
+  return (<>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={css.container} onPress={()=>Keyboard.dismiss()}>
+      <ImageBackground style={{flex: 1,width:500,width:1000}}
+      >
 
-            <View style={{ alignItems: "center" }}>
-              {value.emailError === false ? (
-                <TextInput
-                  style={{
-                    backgroundColor: "white",
-                    height: 50,
-                    fontSize: 17,
-                    borderColor: "black",
-                    borderWidth: 1,
-                    padding: 10,
-                    width: 290,
-                    borderRadius: 18,
-                    alignItems: "center",
-                  }}
-                  placeholder="Your Email here"
-                  keyboardType="email-address"
-                  onChangeText={(text) => setValue({ ...value, email: text })}
-                  ref={emailRef}
-                />
-              ) : (
-                <TextInput
-                  style={{
-                    height: 50,
-                    fontSize: 17,
-                    borderColor: "red",
-                    borderWidth: 2,
-                    padding: 10,
-                    width: 290,
-                    borderRadius: 18,
-                    alignItems: "center",
-                    color: "red",
-                  }}
-                  placeholder="Your Email here"
-                  keyboardType="email-address"
-                  onChangeText={(text) => setValue({ ...value, email: text })}
-                  ref={emailRef}
-                  defaultValue="Your Email is wrong"
-                  onFocus={() => setValue({ ...value, emailError: false })}
-                />
-              )}
-            </View>
+      <View style={css.box}>
+        <Image source={require("../assets/Group 1 copy.png")} style={{marginTop:50,width:10,height:10}}/>
+          <Text style={css.textParam}  > (LOGO HERE) </Text>
+          <Text style={{marginTop:20,textAlign:"left",fontSize:20,fontWeight:'bold',marginRight:210,marginBottom:8}}>Email</Text>
+          {/** ---------------------------------------------------EMAIL INPUT -----------------------------------------------*/}
+
+          <View style={{ alignItems: 'center',}}>
+          {value.emailError===false?<TextInput 
+            style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
+            placeholder="Your Email here"  keyboardType="email-address"  onChangeText={(text) => setValue({ ...value, email: text })} ref={emailRef}
+            />:<TextInput
+            style={{height: 50,fontSize:17,borderColor:'red',borderWidth:2,padding:10,width:290,borderRadius:18,alignItems:'center',color:'red'}}
+            placeholder="Your Email here"  keyboardType="email-address"  onChangeText={(text) => setValue({ ...value, email: text })} ref={emailRef} defaultValue="Your Email is wrong" onFocus={()=>setValue({...value,emailError:false})}
+            />}
+
+            
             <Text
               style={{
                 marginTop: 40,
@@ -328,8 +288,15 @@ export default function App() {
 
             <StatusBar style="inverted" />
           </View>
-        </ImageBackground>
+
+        
+
+          <StatusBar style="inverted" />
+         
+        </View>
+      </ImageBackground>
       </View>
+      </TouchableWithoutFeedback>
     </>
   );
 }
@@ -347,9 +314,11 @@ const css = StyleSheet.create({
   box: {
     backgroundColor: "#FEE9E5",
     width: 330,
-    height: 600,
-    borderBottomLeftRadius: 120,
-    marginLeft: 41,
+    height: 550,
+    borderBottomLeftRadius:120,
+    marginLeft:41,
+    marginTop:100,
+  
 
     alignItems: "center",
     justifyContent: "center",
@@ -364,18 +333,15 @@ const css = StyleSheet.create({
     elevation: 20,
   },
   textParam: {
-    backgroundColor: "#FEE9E5",
-    fontSize: 25,
-    fontWeight: "bold",
-    marginLeft: 20,
-    marginTop: 10,
-    marginBottom: 10,
-    padding: 10,
-    textAlign: "center",
-    width: 250,
-  },
+    backgroundColor:'#FEE9E5',
+    fontSize:25,
+    fontWeight:'bold',
+    marginLeft:0,
+    marginTop:-50,
+    marginBottom:10,
+    textAlign:'center',
+    width:250,
+    height:35,
+  }
 });
 
-function onSolvedRecaptcha() {
-  alert("yesyyyyyy");
-}
