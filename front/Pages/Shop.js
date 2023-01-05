@@ -8,6 +8,7 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import SideBbar from "../components/SideBar.js";
 
 // import SideBar from "../components/SideBar.js";
 
@@ -61,10 +62,8 @@ export default function Shop() {
 
   return (
     <>
-      {/* <View>
-        <SideBar />
-      </View> */}
       <View>
+        <SideBbar />
         <FlatList
           data={categories}
           renderItem={renderCategory}
