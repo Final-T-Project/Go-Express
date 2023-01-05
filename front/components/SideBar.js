@@ -14,7 +14,7 @@ import profile from "../assets/profile.png";
 
 // Tab ICons...
 import home from "../assets/home.png";
-import Shop from "../assets/Shop.png";
+import shop from "../assets/Shop.png";
 import notifications from "../assets/bell.png";
 import settings from "../assets/settings.png";
 import logout from "../assets/logout.png";
@@ -27,6 +27,7 @@ import photo from "../assets/photo.jpg";
 
 import { useNavigation } from "@react-navigation/native";
 import Home from "../Pages/Home";
+import Shop from "../Pages/Shop";
 import TabBar from "./TabBar";
 
 export default function SideBbar({navigation}) {
@@ -77,7 +78,7 @@ export default function SideBbar({navigation}) {
           }
 
           {TabButton(currentTab, setCurrentTab, "Home", home)}
-          {TabButton(currentTab, setCurrentTab, "Shop", Shop)}
+          {TabButton(currentTab, setCurrentTab, "Shop", shop)}
           {TabButton(currentTab, setCurrentTab, "Notifications", notifications)}
           {TabButton(currentTab, setCurrentTab, "Settings", settings)}
         </View>
@@ -195,7 +196,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           navigation.navigate("Log in");
         }
       }}
-      LogOut
+
       // onPress={() => navigation.navigate("Profil")}
     >
       <View

@@ -28,18 +28,25 @@ export default function App() {
         <Stack.Screen name="History" component={History} />
         <Stack.Screen name="Create an account" component={SignIn} />
         <Stack.Screen name="PhoneNumber Verif" component={PhoneNumber} />
-        <Stack.Screen name="Profil" options={{ headerShown: false }} component={Profil} />
+        <Stack.Screen
+          name="Profil"
+          options={{ headerShown: false }}
+          component={Profil}
+        />
         {/* <Stack.Screen name="TabBar" component={TabBar} /> */}
         <Stack.Screen
           name="SideBar"
           options={{ headerShown: false }}
           component={SideBar}
         />
-        <Stack.Screen name="Shop" options={{ headerShown: false }}component={Shop} />
+        <Stack.Screen
+          name="Shop"
+          options={{ headerShown: false }}
+          component={Shop}
+        />
         <Stack.Screen name="Products" component={Products} />
         <Stack.Screen name="ProductDetails" component={ProductDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );
-
 }
