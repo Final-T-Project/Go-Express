@@ -10,8 +10,7 @@ module.exports = {
       },
       req.body.id_user,
       req.body.name,
-      req.body.email,
-      req.body.phone_number
+      req.body.email
     );
   },
   // function to update user

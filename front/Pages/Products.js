@@ -30,12 +30,13 @@ export default function Products({ route }) {
 
   const renderRecipes = ({ item }) => (
     <TouchableHighlight
-      underlayColor="#5359D1"
+      underlayColor="#FFAD62"
       onPress={() => navigation.navigate("ProductDetails", { props: item })}
     >
       {/* { props: item.id_product } */}
       <View style={styles.container}>
-        <Image style={styles.photo} source={item.photo} />
+        <Image style={styles.photo} source={{ uri: item.photo }} />
+
         <Text style={styles.title}>{item.name}</Text>
         <Text style={styles.price}>{item.price} dt</Text>
       </View>

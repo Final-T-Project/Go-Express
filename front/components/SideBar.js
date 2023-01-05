@@ -22,7 +22,7 @@ import close from "../assets/close.png";
 // import { useNavigation } from "@react-navigation/native";
 import TabBar from "../components/TabBar";
 
-export default function SideBbar({navigation}) {
+export default function SideBbar({ navigation }) {
   const [Page, SetPage] = useState("Home");
   const [currentTab, setCurrentTab] = useState("Home");
   // To get the curretn Status of menu ...
@@ -170,7 +170,7 @@ export default function SideBbar({navigation}) {
           </Text> */}
           
         </Animated.View>
-        <TabBar navigation={navigation}/>
+        <TabBar navigation={navigation} />
         {/* navigation={navigation} */}
       </Animated.View>
     </SafeAreaView>
@@ -198,7 +198,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
         } else if (title == "Settings") {
           setCurrentTab("Settings");
         } else {
-          // navigation.navigate("Log in");
+           //navigation.navigate("Log in");
         }
       }}
       LogOut

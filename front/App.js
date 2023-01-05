@@ -12,6 +12,7 @@ import Profil from "./Pages/Profil";
 import LogInSignIn from "./Pages/LogInSignIn";
 import Home from "./Pages/Home";
 import SignIn from "./Pages/SignIn";
+import AddProduct from "./Pages/AddProduct"
 
 
 // import { PhoneAuthCredential } from 'firebase/auth';
@@ -24,8 +25,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Log in">
-
-        <Stack.Screen name="Log in" options={{ headerShown: false }} component={LogInSignIn} />
+        <Stack.Screen
+          name="Log in"
+          options={{ headerShown: false }}
+          component={LogInSignIn}
+        />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="History" component={History} />
         <Stack.Screen name="Create an account" component={SignIn} />
@@ -43,12 +47,17 @@ export default function App() {
         />
         <Stack.Screen
           name="Shop"
-          options={{ headerShown: false}}
+          options={{ headerShown: false }}
           component={Shop}
         />
         <Stack.Screen name="Products" component={Products} />
         <Stack.Screen name="ProductDetails" component={ProductDetails} />
         <Stack.Screen name="Email Confiramtion" component={EmailConfirmation} />
+        <Stack.Screen
+          name="AddProduct"
+          options={{ headerShown: false }}
+          component={AddProduct}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
