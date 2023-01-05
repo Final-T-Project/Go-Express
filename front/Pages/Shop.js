@@ -12,9 +12,7 @@ import SideBbar from "../components/SideBar.js";
 
 // import SideBar from "../components/SideBar.js";
 import TabBar from "../components/TabBar";
-export default function Shop({navigation}) {
-  
-
+export default function Shop({ navigation }) {
   // all categories
   const categories = [
     {
@@ -63,15 +61,13 @@ export default function Shop({navigation}) {
   return (
     <>
       <View>
-        <SideBbar />
         <FlatList
           data={categories}
           renderItem={renderCategory}
           keyExtractor={(item) => `${item.id}`}
-        />  
-        <TabBar navigation={navigation}/>
+        />
+        <TabBar navigation={navigation} />
       </View>
-    
     </>
   );
 }
