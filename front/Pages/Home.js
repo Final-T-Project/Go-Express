@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Ionic from "react-native-vector-icons/Ionicons";
 
-export default function Home() {
+export default function Home({ navigation }) {
   ///----------------------------------------------------> create the Tag of the Navigation tag <----------------------------------------------------------------------------///
   const Tab = createBottomTabNavigator();
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
