@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View ,TextInput ,Button, TouchableWithoutFeedback , Keyboard } from 'react-native';
-import { useState } from 'react';
+import { StyleSheet, Text, View ,TextInput ,Button, TouchableWithoutFeedback , Keyboard ,ScrollView} from 'react-native';
+import { useState , useEffect } from 'react';
 
 
 
   ///----------------------------------------------------> Firebase stuff importation  <----------------------------------------------------------------------------///
 
 import firebaseConfig from '../config/firebase';  //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";  // importing the auth of Firebase 
+import { getAuth, createUserWithEmailAndPassword , sendEmailVerification , onAuthStateChanged} from "firebase/auth";  // importing the auth of Firebase 
 import { initializeApp } from 'firebase/app';
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
 import { useNavigation } from '@react-navigation/native';
@@ -41,16 +41,30 @@ export default function App() {
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
 ///----------------------------------------------------> function for handling the creating the account <-----------------------------------------///
-  const handleSignIn=()=>{
+useEffect(() => {
+  console.log(auth.currentUser)
+  const EmailConfirmed = auth.onAuthStateChanged((user) => {
+    if (!user?.emailVerified) {
+      setValue({...value,emailConfirmation:false})
+    }else{
+      setValue({...value,emailConfirmation:true})
+    }
+  });
+
+  // unsubscribe from the listener when the component unmounts
+  return () => EmailConfirmed();
+}, []);
+
+
+
+
+const handleSignIn=()=>{
     if( value.confirmPassword !== value.password){
       alert("Passwords do not match")
     }
     if ( !value.nameUser.length || !value.email.length || !value.password.length || !value.confirmPassword.length){
       alert ('fill all the inputs !!!')
     }
-      if (value.emailConfirmation===false){
-        alert("you need to confirm your email")
-      }
     else{
     createUserWithEmailAndPassword(auth,value.email,value.password)    //  -----------> TA3MEL CREATION L USER JDID BEL EMAIL WEL PASSWORD ILI KTEBTHOM
     .then((userCredential)=>{         //  ----------->  BAAD EL CREATION TA3 EL USER FEL FIREBASE , EL FIREBASE YRAJA3 OBJET ESMOU (userCredential) FIH INFO AL USER
@@ -62,7 +76,8 @@ export default function App() {
     .then(()=>{                    
       alert("YEYYY USER ADDED")
       console.log(userId)
-
+      auth.currentUser.sendEmailVerification()
+      alert("Email sent for confirmation")
       
      
         //Navigation.navigate("PhoneNumber Verif",{name:value.nameUser,email:value.email})
@@ -75,7 +90,7 @@ export default function App() {
         if ( !value.nameUser.length || !value.email.length || !value.password.length || !value.confirmPassword.length){
             alert ('fill all the inputs !!!')
         }else {
-          alert("ACCOUNT ALREADY EXIST")
+          alert(error)
         }
     })
 
@@ -95,6 +110,7 @@ export default function App() {
 
   return (<>
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    
     <View style={css.container}>
     {/** ---------------------------------------------------NAME INPUT -----------------------------------------------*/}
     <View style={css.box}>
@@ -106,10 +122,15 @@ export default function App() {
  
       <Text style={{marginTop:40,textAlign:"left",fontSize:20,fontWeight:'bold'}}>Email</Text>
       {/** ---------------------------------------------------EMAIL INPUT -----------------------------------------------*/}
-      <TextInput
+      <TextInput keyboardType="email-address" 
          style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
         placeholder="Your Email here"  onChangeText={(text) => setValue({ ...value, email: text })}
         />
+
+        
+        {!value.emailConfirmation?<Text style={{color:'red'}}> Email not confirmed yet </Text>:<Text style={{color:'green'}}> Email Confirmed, you can create your account</Text>}
+        
+        
         <Text style={{marginTop:40,textAlign:"left",fontSize:20,fontWeight:'bold'}}>Password</Text>
         {/** ---------------------------------------------------PASSWORD INPUT -----------------------------------------------*/}
        <TextInput  secureTextEntry={true}
@@ -125,14 +146,17 @@ export default function App() {
 
         {/** ---------------------------------------------------BUTTONS  -----------------------------------------------*/}
      <Text style={{fontSize:17,fontWeight:'500',borderBottomLeftRadius:120,borderRadius:18,backgroundColor:'#F96A27',color:'white',padding:15,marginTop:30,textAlign:'center',width:250}} onPress={()=>{
-      showAlert()
+      handleSignIn()
       }}> Create an account </Text> 
+     
+
       
       <StatusBar style="inverted" />
       </View>
       
     </View>
     
+  
     </TouchableWithoutFeedback>
     </>
   );

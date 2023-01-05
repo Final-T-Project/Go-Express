@@ -6,7 +6,7 @@ import { useState,useRef } from 'react';
 ///----------------------------------------------------> Firebase stuff importation  <----------------------------------------------------------------------------///
 
 import firebaseConfig from '../config/firebase';  //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
-import { getAuth, createUserWithEmailAndPassword ,signInWithEmailAndPassword , sendPasswordResetEmail, se} from "firebase/auth";  // importing the auth of Firebase 
+import { getAuth, createUserWithEmailAndPassword ,signInWithEmailAndPassword , sendPasswordResetEmail, GoogleAuthProvider , signInWithPopup} from "firebase/auth";  // importing the auth of Firebase 
 import { initializeApp } from 'firebase/app';
 
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
@@ -39,9 +39,11 @@ export default function App() {
   const app = initializeApp(firebaseConfig)   //  ----------->  BECH NAAMLOU INITIALIZATION LEL CONFIG TA3 EL FIREBASE W NRODOUH EL app MTE3NA
   const auth=getAuth(app)   //  ----------->  TA3TIIII AUTHORISATION LEL app MTE3EKKK BECH TNAJEM TESTAKHDEMHA KI T CREATE WALA SIGN IN LEL USER
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
+  const provider = new GoogleAuthProvider()
 
   ///----------------------------------------------------> USE NAVIGATE APPLICATION <----------------------------------------------------------------------------///
   const Navigation = useNavigation();
+
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
   ///----------------------------------------------------> function for handling the creating the account (FEL SignIn.tsx) <-----------------------------------------///
@@ -101,6 +103,14 @@ export default function App() {
     })
     }
     
+  }
+
+  const testGoogle=()=>{
+    signInWithPopup(auth,provider).then((result)=>{
+      console.log(result)
+    }).catch((error)=>{
+      console.log(error)
+    })
   }
   
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
@@ -163,6 +173,7 @@ export default function App() {
           <Text style={{marginTop:10,textAlign:"center",fontSize:17,fontWeight:'600'}} onPress={()=>forgetPassword()}>Forget password ?</Text>
 
           <StatusBar style="inverted" />
+         
         </View>
       </ImageBackground>
       </View>

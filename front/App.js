@@ -13,8 +13,11 @@ import LogInSignIn from "./Pages/LogInSignIn";
 import Home from "./Pages/Home";
 import SignIn from "./Pages/SignIn";
 
+
 // import { PhoneAuthCredential } from 'firebase/auth';
 import PhoneNumber from "./Pages/PhoneNumber";
+import EmailConfirmation from "./components/EmailConfirmation.js";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -45,6 +48,7 @@ export default function App() {
         />
         <Stack.Screen name="Products" component={Products} />
         <Stack.Screen name="ProductDetails" component={ProductDetails} />
+        <Stack.Screen name="Email Confiramtion" component={EmailConfirmation} />
       </Stack.Navigator>
     </NavigationContainer>
   );
