@@ -16,7 +16,7 @@ export default function Products({ route }) {
   return (
     <SafeAreaView>
       <ScrollView>
-        <Image style={styles.image} source={element.photo} />
+        <Image style={styles.image} source={{ uri: element.photo }} />
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{element.name}</Text>
           <Text style={styles.price}>dt {element.price}</Text>

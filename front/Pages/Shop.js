@@ -17,7 +17,7 @@ export default function Shop({ navigation }) {
   const categories = [
     {
       id: 1,
-      name: "Kitshen",
+      name: "Kitchen",
       photo_url:
         "https://img.freepik.com/premium-vector/set-kitchen-equipment-icon_353337-739.jpg",
     },
