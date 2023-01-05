@@ -14,7 +14,7 @@ import profile from "../assets/profile.png";
 
 // Tab ICons...
 import home from "../assets/home.png";
-import Shop from "../assets/Shop.png";
+import shop from "../assets/Shop.png";
 import notifications from "../assets/bell.png";
 import settings from "../assets/settings.png";
 import logout from "../assets/logout.png";
@@ -27,9 +27,10 @@ import photo from "../assets/photo.jpg";
 
 import { useNavigation } from "@react-navigation/native";
 import Home from "../Pages/Home";
+import Shop from "../Pages/Shop";
 import TabBar from "./TabBar";
 
-export default function SideBbar() {
+export default function SideBbar({navigation}) {
   const [Page, SetPage] = useState("Home");
   const [currentTab, setCurrentTab] = useState("Home");
   // To get the curretn Status of menu ...
@@ -66,14 +67,9 @@ export default function SideBbar() {
           >
             Hello Jenna{" "}
           </Text>
-          <Text
-            style={{
-              marginTop: 6,
-              color: "white",
-            }}
-          >
-            View Profile
-          </Text>
+        <Text>
+          View Profil
+        </Text>
         </TouchableOpacity>
 
         <View style={{ flexGrow: 1, marginTop: 50 }}>
@@ -82,7 +78,7 @@ export default function SideBbar() {
           }
 
           {TabButton(currentTab, setCurrentTab, "Home", home)}
-          {TabButton(currentTab, setCurrentTab, "Shop", Shop)}
+          {TabButton(currentTab, setCurrentTab, "Shop", shop)}
           {TabButton(currentTab, setCurrentTab, "Notifications", notifications)}
           {TabButton(currentTab, setCurrentTab, "Settings", settings)}
         </View>
@@ -103,7 +99,7 @@ export default function SideBbar() {
           left: 0,
           right: 0,
           paddingHorizontal: 15,
-          paddingVertical: 20,
+          paddingVertical: 0,
           borderRadius: showMenu ? 15 : 0,
           // Transforming View...
           transform: [{ scale: scaleValue }, { translateX: offsetValue }],
@@ -170,7 +166,7 @@ export default function SideBbar() {
             {currentTab}
           </Text>
         </Animated.View>
-        <TabBar />
+        <TabBar navigation={navigation}/>
         {/* navigation={navigation} */}
       </Animated.View>
     </SafeAreaView>
@@ -200,7 +196,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           navigation.navigate("Log in");
         }
       }}
-      LogOut
+
       // onPress={() => navigation.navigate("Profil")}
     >
       <View
