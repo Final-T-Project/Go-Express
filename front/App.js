@@ -20,7 +20,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Log in">
+      <Stack.Navigator initialRouteName="Create an account">
 
         <Stack.Screen name="Log in" component={LogInSignIn} />
         <Stack.Screen name="Home" component={Home} />

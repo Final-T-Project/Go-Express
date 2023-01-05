@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View ,TextInput ,Button} from 'react-native';
+import { StyleSheet, Text, View ,TextInput ,Button, TouchableWithoutFeedback , Keyboard} from 'react-native';
 import { useState } from 'react';
 
 
@@ -87,39 +87,43 @@ export default function App() {
   ///-------------------------------------------------------------------> The Sign up / Sign In structure page  <--------------------------------------------///
 
   return (<>
-
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     <View style={css.container}>
     {/** ---------------------------------------------------NAME INPUT -----------------------------------------------*/}
+    <View style={css.box}>
     <Text style={{marginTop:20,textAlign:"left",fontSize:20,fontWeight:'bold'}}>Name</Text>
     <TextInput
-        style={{height: 50,fontSize:15,borderColor:'black',borderWidth:1,padding:10,width:350,borderRadius:100,alignItems:'center'}}
+         style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
         placeholder="Your Name here"  onChangeText={(text) => setValue({ ...value, nameUser: text })}
         />
  
       <Text style={{marginTop:40,textAlign:"left",fontSize:20,fontWeight:'bold'}}>Email</Text>
       {/** ---------------------------------------------------EMAIL INPUT -----------------------------------------------*/}
       <TextInput
-        style={{height: 50,fontSize:15,borderColor:'black',borderWidth:1,padding:10,width:350,borderRadius:100,alignItems:'center'}}
+         style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
         placeholder="Your Email here"  onChangeText={(text) => setValue({ ...value, email: text })}
         />
         <Text style={{marginTop:40,textAlign:"left",fontSize:20,fontWeight:'bold'}}>Password</Text>
         {/** ---------------------------------------------------PASSWORD INPUT -----------------------------------------------*/}
        <TextInput  secureTextEntry={true}
-        style={{height: 50,fontSize:15,borderColor:'black',borderWidth:1,padding:10,width:350,borderRadius:100,alignItems:'center'}}
+         style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
         placeholder="Your password here"  onChangeText={(text) => setValue({ ...value, password: text })}
         />
         {/** ---------------------------------------------------CONfirm PAssword INPUT -----------------------------------------------*/}
         <Text style={{marginTop:40,textAlign:"left",fontSize:20,fontWeight:'bold'}}>Confirm password</Text>
     <TextInput secureTextEntry={true}
-        style={{height: 50,fontSize:15,borderColor:'black',borderWidth:1,padding:10,width:350,borderRadius:100,alignItems:'center'}}
+         style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
         placeholder="Confirm your password"  onChangeText={(text) => setValue({ ...value, confirmPassword: text })}
         />
 
         {/** ---------------------------------------------------BUTTONS  -----------------------------------------------*/}
-     <Text style={{borderRadius:20,marginTop:20,backgroundColor:'black',color:'white',padding:10}} onPress={handleSignIn}> Create an account </Text> 
+     <Text style={{fontSize:17,fontWeight:'500',borderBottomLeftRadius:120,borderRadius:18,backgroundColor:'#F96A27',color:'white',padding:15,marginTop:30,textAlign:'center',width:250}} onPress={()=>{handleLogIn()}} onPress={handleSignIn}> Create an account </Text> 
       
       <StatusBar style="inverted" />
-    </View></>
+      </View>
+    </View>
+    </TouchableWithoutFeedback>
+    </>
   );
 }
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
@@ -127,7 +131,7 @@ export default function App() {
 const css = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFB897',
     alignItems: 'center',
    
     
@@ -139,7 +143,27 @@ const css = StyleSheet.create({
     marginLeft:20,
     marginTop:200,
     marginBottom:0
-  }
+  },
+  box: {
+    backgroundColor: "#FEE9E5",
+    width: 330,
+    height: 600,
+    borderBottomLeftRadius:120,
+    
+   
+
+    alignItems:'center',
+    justifyContent: "center",
+
+    shadowColor: "black",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 60,
+    shadowRadius: 40,
+    elevation: 20,
+  },
 });
 
 
