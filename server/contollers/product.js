@@ -10,14 +10,16 @@ module.exports = {
       },
       req.body.sellIerd,
       req.body.buyerId,
-      req.body.name,
+      req.body.product_name,
       req.body.category,
       req.body.price,
       req.body.description,
       req.body.photo,
       req.body.quantity,
       req.body.id_user,
-      req.body.id_cart
+      req.body.id_cart,
+      req.body.productStatus,
+      req.body.Published_at
     );
   },
   // function to get Product by categories

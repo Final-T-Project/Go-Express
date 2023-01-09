@@ -33,7 +33,7 @@ export default function App() {
     >
     <NativeBaseProvider>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Log in">
+      <Stack.Navigator initialRouteName="SideBar">
         <Stack.Screen
           name="Log in"
           options={{ headerShown: false }}

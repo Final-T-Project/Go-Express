@@ -10,22 +10,25 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   ScrollView,
+  Permissions,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-
 import { Picker } from "@react-native-picker/picker";
+
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import TabBar from "../components/TabBar";
 
+import axios from "axios";
+
 const AddProduct = ({ navigation }) => {
   // state for selected name , description , price , quantity , category , image
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(1);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [category, setCategory] = useState("");
   const [image, setImage] = useState(null);
 
@@ -43,14 +46,114 @@ const AddProduct = ({ navigation }) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Image,
       allowsEditing: true,
-      quality: 1,
+      aspect: [1, 1],
+      quality: 0.5,
     });
-    // console.log(result);
+    setImage(result.uri);
+    console.log("hi", result.uri);
 
     if (!result.cancelled) {
-      setImage(result.uri);
+      let newfile = {
+        uri: result.uri,
+      };
+      uploadImage(newfile);
     }
   };
+
+  console.log("image url", image);
+
+  // function to upload image to cloudinary
+  async function uploadImage(path) {
+    try {
+      const cloudName = "ddvyi3jpk";
+      const apiKey = "473317851271237";
+      const apiSecret = "X11a5qnqfyzgMCkEoJN0Gz2cvNs";
+
+      const timestamp = Date.now().toString();
+      const publicId = `my-image-${timestamp}`;
+
+      // Form the request payload
+      const formData = new FormData();
+      formData.append("file", {
+        uri: path,
+        name: `${timestamp}.jpg`,
+        type: "image/jpeg",
+      });
+      formData.append("api_key", apiKey);
+      formData.append("timestamp", timestamp);
+      formData.append("public_id", publicId);
+
+      // Make the request to Cloudinary's API
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        formData
+      );
+
+      // Return the URL of the uploaded image
+      return response.data.secure_url;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const month = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  let date = month[new Date().getMonth()];
+
+  let posted_at =
+    date +
+    " " +
+    new Date().getDate() +
+    " " +
+    "2022" +
+    " " +
+    new Date().getHours() +
+    ":" +
+    new Date().getMinutes();
+
+  let addProduct = () => {
+    axios
+      .post(`http://192.168.103.13:5000/products/addProduct`, {
+        sellIerd: "A",
+        buyerId: "Null",
+        product_name: name,
+        category: category,
+        price: price,
+        description: description,
+        photo: image,
+        quantity: quantity,
+        id_user: "A",
+        id_cart: 2,
+        productStatus: "NotAccepted",
+        Published_at: posted_at,
+      })
+
+      .then(() => {
+        console.log("added");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // MediaManager.get()
+  //   .upload(image)
+  //   .unsigned("ahmedmejdoub")
+  //   .option("resource_type", "image");
+  //.option("upload_preset", "ahmedmejdoub")
+
   return (
     <>
       <ScrollView>
@@ -116,8 +219,8 @@ const AddProduct = ({ navigation }) => {
                   style={styles.picker}
                 >
                   <Picker.Item label="Please Select Category" />
-                  <Picker.Item label="Kitshen" value="Kitshen" />
-                  <Picker.Item label="Fourniture" value="Fourniture" />
+                  <Picker.Item label="Kitchen" value="Kitchen" />
+                  <Picker.Item label="Furniture" value="Furniture" />
                   <Picker.Item label="Garden" value="Garden" />
                   <Picker.Item label="Accessories" value="Accessories" />
                 </Picker>
@@ -158,7 +261,9 @@ const AddProduct = ({ navigation }) => {
               <TouchableOpacity>
                 <View style={styles.button}>
                   <MaterialIcons name="add" size={24} color="white" />
-                  <Text style={styles.buttonText}>Add Product</Text>
+                  <Text onPress={addProduct} style={styles.buttonText}>
+                    Add Product
+                  </Text>
                 </View>
               </TouchableOpacity>
               {/*Button Add  End */}
