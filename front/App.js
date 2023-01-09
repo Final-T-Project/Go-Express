@@ -36,7 +36,7 @@ export default function App() {
     >
     <NativeBaseProvider>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SideBar">
+      <Stack.Navigator initialRouteName="TestSignin">
        
       <Stack.Screen
           name="Log in"
