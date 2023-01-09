@@ -15,7 +15,7 @@ import SignIn from "./Pages/SignIn";
 import AddProduct from "./Pages/AddProduct"
 import TestSignin from "./Pages/TestSignin.js";
 import TestLogin from "./Pages/TestLogin.js";
-
+import Cart from "./Pages/Cart.js";
 import EditeProfil from "./Pages/EditeProfil.js";
 
 // import { PhoneAuthCredential } from 'firebase/auth';
@@ -74,6 +74,7 @@ export default function App() {
           component={AddProduct}
         />
         <Stack.Screen name="EditeProfil" component={EditeProfil}/>
+        <Stack.Screen name="Cart" component={Cart}/>
       </Stack.Navigator>
     </NavigationContainer></NativeBaseProvider></UserContext.Provider>
   );
