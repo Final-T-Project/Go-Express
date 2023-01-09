@@ -13,6 +13,9 @@ import LogInSignIn from "./Pages/LogInSignIn";
 import Home from "./Pages/Home";
 import SignIn from "./Pages/SignIn";
 import AddProduct from "./Pages/AddProduct"
+import TestSignin from "./Pages/TestSignin.js";
+import TestLogin from "./Pages/TestLogin.js";
+
 import EditeProfil from "./Pages/EditeProfil.js";
 
 // import { PhoneAuthCredential } from 'firebase/auth';
@@ -34,7 +37,8 @@ export default function App() {
     <NativeBaseProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SideBar">
-        <Stack.Screen
+       
+      <Stack.Screen
           name="Log in"
           options={{ headerShown: false }}
           component={LogInSignIn}
@@ -43,6 +47,8 @@ export default function App() {
         <Stack.Screen name="History" component={History} />
         <Stack.Screen name="Create an account" component={SignIn} />
         <Stack.Screen name="PhoneNumber Verif" component={PhoneNumber} />
+        <Stack.Screen name="TestSignin" component={TestSignin} />
+        <Stack.Screen name="TestLogin" component={TestLogin}   options={{ headerShown: false }} />
         <Stack.Screen
           name="Profil"
           options={{ headerShown: false }}

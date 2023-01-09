@@ -25,4 +25,11 @@ module.exports = {
       callback(error, results);
     });
   },
+
+  getUserProfile:function (callback,id_user){
+    const sql= `SELECT * FROM user WHERE  id_user="${id_user}"`
+    connection.query(sql,function(error,results){
+      callback(error, results);
+    })
+  }
 };

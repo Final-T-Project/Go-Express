@@ -11,16 +11,13 @@ import {
 } from "react-native";
 import { useState, useEffect } from "react";
 
-///----------------------------------------------------> Firebase stuff importation  <----------------------------------------------------------------------------///
+import axios from 'axios'
 
-import firebaseConfig from "../config/firebase"; //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  onAuthStateChanged,
-} from "firebase/auth"; // importing the auth of Firebase
-import { initializeApp } from "firebase/app";
+  ///----------------------------------------------------> Firebase stuff importation  <----------------------------------------------------------------------------///
+
+import firebaseConfig from '../config/firebase';  //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
+import { getAuth, createUserWithEmailAndPassword , onAuthStateChanged} from "firebase/auth";  // importing the auth of Firebase 
+import { initializeApp } from 'firebase/app';
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
 import { useNavigation } from "@react-navigation/native";
 
@@ -38,74 +35,72 @@ export default function App() {
     emailInput: "",
   });
 
-  const [user, setUser] = useState("");
-  const [userId, setUserId] = useState("");
+  const [user,setUser]=useState("")
+  const [userId,setUserId]=useState("")
 
-  const app = initializeApp(firebaseConfig); //  ----------->  BECH NAAMLOU INITIALIZATION LEL CONFIG TA3 EL FIREBASE W NRODOUH EL app MTE3NA
-  const auth = getAuth(app); //  ----------->  TA3TIIII AUTHORISATION LEL app MTE3EKKK BECH TNAJEM TESTAKHDEMHA KI T CREATE WALA SIGN IN LEL USER
+
+  const app = initializeApp(firebaseConfig)   //  ----------->  BECH NAAMLOU INITIALIZATION LEL CONFIG TA3 EL FIREBASE W NRODOUH EL app MTE3NA
+  const auth=getAuth(app)   //  ----------->  TA3TIIII AUTHORISATION LEL app MTE3EKKK BECH TNAJEM TESTAKHDEMHA KI T CREATE WALA SIGN IN LEL USER
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
+  
+///----------------------------------------------------> USE NAVIGATE APPLICATION <----------------------------------------------------------------------------///
+  const Navigation=useNavigation()
+///----------------------------------------------------------------------------------------------------------------------------------------------///
 
-  ///----------------------------------------------------> USE NAVIGATE APPLICATION <----------------------------------------------------------------------------///
-  const Navigation = useNavigation();
-  ///----------------------------------------------------------------------------------------------------------------------------------------------///
+///----------------------------------------------------> function for handling the creating the account <-----------------------------------------///
 
-  ///----------------------------------------------------> function for handling the creating the account <-----------------------------------------///
-  useEffect(() => {
-    console.log(auth.currentUser);
-    const EmailConfirmed = auth.onAuthStateChanged((user) => {
-      if (!user?.emailVerified) {
-        setValue({ ...value, emailConfirmation: false });
-      } else {
-        setValue({ ...value, emailConfirmation: true });
-      }
-    });
 
-    // unsubscribe from the listener when the component unmounts
-    return () => EmailConfirmed();
-  }, []);
 
-  const handleSignIn = () => {
-    if (value.confirmPassword !== value.password) {
-      // alert("Passwords do not match");
+
+
+
+const handleSignIn=()=>{
+    if( value.confirmPassword !== value.password){
+      alert("Passwords do not match")
     }
-    if (
-      !value.nameUser.length ||
-      !value.email.length ||
-      !value.password.length ||
-      !value.confirmPassword.length
-    ) {
-      alert("fill all the inputs !!!");
-    } else {
-      createUserWithEmailAndPassword(auth, value.email, value.password) //  -----------> TA3MEL CREATION L USER JDID BEL EMAIL WEL PASSWORD ILI KTEBTHOM
-        .then((userCredential) => {
-          //  ----------->  BAAD EL CREATION TA3 EL USER FEL FIREBASE , EL FIREBASE YRAJA3 OBJET ESMOU (userCredential) FIH INFO AL USER
-          Navigation.navigate("SideBar");
-          setUser(userCredential.user); //  ---------->  Setting the user object (containing the detail of the athentication information )
-          setUserId(user.uid); //  ----------->  Setting the user Id ( that takin from the User Objet )
-          //console.log(user)
-        })
-        .then(() => {
-          alert("USER ADDED");
-          console.log(userId);
-          // auth.currentUser.sendEmailVerification();
-          alert("Email sent for confirmation");
-
-          //Navigation.navigate("PhoneNumber Verif",{name:value.nameUser,email:value.email})
-        })
-        .catch((error) => {
-          if (
-            !value.nameUser.length ||
-            !value.email.length ||
-            !value.password.length ||
-            !value.confirmPassword.length
-          ) {
-            alert("fill all the inputs !!!");
-          } else {
-            alert(error);
-          }
-        });
+    if ( !value.nameUser.length || !value.email.length || !value.password.length || !value.confirmPassword.length){
+      alert ('fill all the inputs !!!')
     }
-  };
+    else{
+    createUserWithEmailAndPassword(auth,value.email,value.password)    //  -----------> TA3MEL CREATION L USER JDID BEL EMAIL WEL PASSWORD ILI KTEBTHOM
+    .then((userCredential)=>{         //  ----------->  BAAD EL CREATION TA3 EL USER FEL FIREBASE , EL FIREBASE YRAJA3 OBJET ESMOU (userCredential) FIH INFO AL USER
+      setUser(userCredential.user)   //  ---------->  Setting the user object (containing the detail of the athentication information )
+      setUserId(user.uid)            //  ----------->  Setting the user Id ( that takin from the User Objet )
+      
+      
+      axios.post("http://192.168.104.29:5000/users/addUser",{id_user:userCredential.user.uid,name:value.nameUser,email:value.email})
+      .then(()=>{
+        console.log("user added to dataBase")
+      })
+      .catch((err)=>{
+        alert(err)
+      })
+
+    })
+    .then(()=>{                    
+      alert("YEYYY USER ADDED")
+      console.log(userId)
+      alert("Email sent for confirmation")
+      
+     
+        //Navigation.navigate("PhoneNumber Verif",{name:value.nameUser,email:value.email})
+     }
+    )
+    .catch((error)=>{
+        if( value.confirmPassword !== value.password){
+          alert("Passwords do not match")
+        }
+        if ( !value.nameUser.length || !value.email.length || !value.password.length || !value.confirmPassword.length){
+            alert ('fill all the inputs !!!')
+        }else {
+          alert(error)
+        }
+    })
+
+  }}
+
+
+
 
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
 

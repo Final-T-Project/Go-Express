@@ -1,17 +1,8 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  Image,
-  ImageBackground,
-  Keyboard,
-  TouchableWithoutFeedback,
-} from "react-native";
-import { useState, useRef } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View ,TextInput ,Button , Image,ImageBackground , Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { useState,useRef } from 'react';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 ///----------------------------------------------------> Firebase stuff importation  <----------------------------------------------------------------------------///
 
@@ -63,21 +54,31 @@ export default function App() {
 
   ///----------------------------------------------------> function for handling the Sign In to te account <-----------------------------------------///
   const handleLogIn = () => {
-    signInWithEmailAndPassword(auth, value.email, value.password) //  -----------> METHOD FEL FIREBASE TA3MEL BIHA EL SIGN IN (TET2AKED MEL EMAIL WEL PASSWORD)
+    if (!value.email.length || !value.password.length) {
+      alert("Please fill all information");
+    }else {
+       signInWithEmailAndPassword(auth, value.email, value.password) //  -----------> METHOD FEL FIREBASE TA3MEL BIHA EL SIGN IN (TET2AKED MEL EMAIL WEL PASSWORD)
       .then((userCredential) => {
         //  ----------->  KIMA FEL CREATION , EL FIREBASE YRAJA3LEK OBJECT BAAD MA TEM 3AMALEYET EL SIGN IN CORRECTLY
         alert(
           "YYEYYYY CREDENTIAL ARE CORRECT , NOW YOU WILL BE IN THE HOME PAGE"
         );
-        console.log("test", userCredential);
+        console.log("user Id current------->"+userCredential.user.uid);
         setValue({ ...value, error: "" });
         setValue({ ...value, emailError: false });
+
+        AsyncStorage.setItem('userData',JSON.stringify({
+          userId: userCredential.user.uid,
+        }));
+
+        
+      })
+
+      .then(()=>{
         Navigation.navigate("SideBar");
       })
+
       .catch((error) => {
-        if (!value.email.length || !value.password.length) {
-          alert("Please fill all information");
-        }
         setValue({ ...value, error: error.code });
         if (
           error.code === "auth/invalid-email" ||
@@ -99,6 +100,7 @@ export default function App() {
         }
       });
   };
+}
 
   const forgetPassword = () => {
     if (value.email.length < 5) {
@@ -115,18 +117,13 @@ export default function App() {
           console.log(error);
         });
     }
-  };
+    
+  }
+   
 
-  const testGoogle = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
+  
+  
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
   ///-------------------------------------------------------------------> The Sign up / Sign In structure page  <--------------------------------------------///
@@ -355,14 +352,14 @@ export default function App() {
         </View>
       </TouchableWithoutFeedback>
     </>
-  );
-}
+  )}
+
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
 const css = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFB897",
+    backgroundColor: "#FEE9E5",
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
@@ -372,21 +369,14 @@ const css = StyleSheet.create({
     backgroundColor: "#FEE9E5",
     width: 330,
     height: 550,
-    borderBottomLeftRadius: 120,
-    marginLeft: 30,
-    marginTop: 100,
+
+    marginLeft:41,
+    marginTop:100,
+  
 
     alignItems: "center",
     justifyContent: "center",
 
-    shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 60,
-    shadowRadius: 40,
-    elevation: 20,
   },
   textParam: {
     backgroundColor: "#FEE9E5",
