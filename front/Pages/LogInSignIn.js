@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View ,TextInput ,Button , Image,ImageBackground , Keyboard, TouchableWithoutFeedback} from 'react-native';
+import { StyleSheet, Text, View ,TextInput ,Button , Image,ImageBackground , Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { useState,useRef } from 'react';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 ///----------------------------------------------------> Firebase stuff importation  <----------------------------------------------------------------------------///
 
@@ -46,21 +47,31 @@ export default function App() {
 
   ///----------------------------------------------------> function for handling the Sign In to te account <-----------------------------------------///
   const handleLogIn = () => {
-    signInWithEmailAndPassword(auth, value.email, value.password) //  -----------> METHOD FEL FIREBASE TA3MEL BIHA EL SIGN IN (TET2AKED MEL EMAIL WEL PASSWORD)
+    if (!value.email.length || !value.password.length) {
+      alert("Please fill all information");
+    }else {
+       signInWithEmailAndPassword(auth, value.email, value.password) //  -----------> METHOD FEL FIREBASE TA3MEL BIHA EL SIGN IN (TET2AKED MEL EMAIL WEL PASSWORD)
       .then((userCredential) => {
         //  ----------->  KIMA FEL CREATION , EL FIREBASE YRAJA3LEK OBJECT BAAD MA TEM 3AMALEYET EL SIGN IN CORRECTLY
         alert(
           "YYEYYYY CREDENTIAL ARE CORRECT , NOW YOU WILL BE IN THE HOME PAGE"
         );
-        console.log(userCredential);
+        console.log("user Id current------->"+userCredential.user.uid);
         setValue({ ...value, error: "" });
         setValue({ ...value, emailError: false });
+
+        AsyncStorage.setItem('userData',JSON.stringify({
+          userId: userCredential.user.uid,
+        }));
+
+        
+      })
+
+      .then(()=>{
         Navigation.navigate("SideBar");
       })
+
       .catch((error) => {
-        if (!value.email.length || !value.password.length) {
-          alert("Please fill all information");
-        }
         setValue({ ...value, error: error.code });
         if (
           error.code === "auth/invalid-email" ||
@@ -101,45 +112,52 @@ export default function App() {
     })
     }
     
-  }
+  }}
+   
 
-  const testGoogle=()=>{
-    signInWithPopup(auth,provider).then((result)=>{
-      console.log(result)
-    }).catch((error)=>{
-      console.log(error)
-    })
-  }
+
+  
   
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
   ///-------------------------------------------------------------------> The Sign up / Sign In structure page  <--------------------------------------------///
 
-  return (<>
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+  return (
+  <>
+
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={css.container} onPress={()=>Keyboard.dismiss()}>
       <ImageBackground style={{flex: 1,width:500,width:1000}}
       >
 
       <View style={css.box}>
         <Image source={require("../assets/Group 1 copy.png")} style={{marginTop:50,width:10,height:10}}/>
-          <Text style={css.textParam}  > (LOGO HERE) </Text>
+          <Image source={require('../assets/LogoApp.png')} style={{height:70,width:70}}/>
           <Text style={{marginTop:20,textAlign:"left",fontSize:20,fontWeight:'bold',marginRight:210,marginBottom:8}}>Email</Text>
           {/** ---------------------------------------------------EMAIL INPUT -----------------------------------------------*/}
 
           <View style={{ alignItems: 'center',}}>
           {value.emailError===false?<TextInput 
-            style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
-            placeholder="Your Email here"  keyboardType="email-address"  onChangeText={(text) => setValue({ ...value, email: text })} ref={emailRef}
+            style={{backgroundColor:"white",height: 50,fontSize:17,padding:10,width:350,borderRadius:18,alignItems:'center' , shadowColor: "black",
+            shadowOffset: {
+              width: 0,
+              height: 0,
+            },
+            shadowOpacity: 60,
+            shadowRadius: 40,
+            elevation: 10}}
+            placeholder="Your Email here"  keyboardType="email-address" onChangeText={(text) =>{ setValue({ ...value, email: text })}} ref={emailRef}
             />:<TextInput
             style={{height: 50,fontSize:17,borderColor:'red',borderWidth:2,padding:10,width:290,borderRadius:18,alignItems:'center',color:'red'}}
-            placeholder="Your Email here"  keyboardType="email-address"  onChangeText={(text) => setValue({ ...value, email: text })} ref={emailRef} defaultValue="Your Email is wrong" onFocus={()=>setValue({...value,emailError:false})}
+            placeholder="Your Email here"  keyboardType="email-address"  onChangeText={(text) =>{setValue({ ...value, email: text }) 
+            setValue({...value,emailError:false})
+          } } ref={emailRef} defaultValue="Your Email is wrong" onFocus={()=>setValue({...value,emailError:false})}
             />}
 
             
             <Text
               style={{
-                marginTop: 40,
+                marginTop: 20,
                 textAlign: "left",
                 fontSize: 20,
                 fontWeight: "bold",
@@ -163,10 +181,20 @@ export default function App() {
                     borderColor: "red",
                     borderWidth: 2,
                     padding: 10,
-                    width: 290,
+                    width: 350,
                     borderRadius: 18,
                     alignItems: "center",
                     color: "red",
+
+                    shadowColor: "black",
+                    shadowOffset: {
+                      width: 0,
+                      height: 0,
+                    },
+                    shadowOpacity: 60,
+                    shadowRadius: 40,
+                    elevation: 10
+              
                   }}
                   placeholder="Your password here"
                   onChangeText={(text) =>
@@ -180,13 +208,20 @@ export default function App() {
                   style={{
                     backgroundColor: "white",
                     height: 50,
-                    fontSize: 17,
-                    borderColor: "black",
-                    borderWidth: 1,
+                    fontSize: 17,            
                     padding: 10,
-                    width: 290,
+                    width: 350,
                     borderRadius: 18,
                     alignItems: "center",
+
+                    shadowColor: "black",
+                    shadowOffset: {
+                      width: 0,
+                      height: 0,
+                    },
+                    shadowOpacity: 60,
+                    shadowRadius: 40,
+                    elevation: 10
                   }}
                   placeholder="Your password here"
                   onChangeText={(text) =>
@@ -256,21 +291,31 @@ export default function App() {
                 style={{
                   fontSize: 17,
                   fontWeight: "500",
-                  borderBottomLeftRadius: 120,
+                  borderRadius:18,
                   borderRadius: 18,
                   backgroundColor: "#F96A27",
                   color: "white",
                   padding: 15,
                   marginTop: 30,
                   textAlign: "center",
-                  width: 150,
+                  width: 350,
+
+                  shadowColor: "red",
+                    shadowOffset: {
+                      width: 10,
+                      height: 0,
+                    },
+                    shadowOpacity: 10,
+                    shadowRadius: 10,
+                    elevation: 10
                 }}
                 onPress={() => {
                   handleLogIn();
+                  console.log("the email is"+value.email)
+                  console.log("the password is"+value.password)
                 }}
               >
-                {" "}
-                Log in{" "}
+                Log in
               </Text>
             </View>
 
@@ -297,6 +342,7 @@ export default function App() {
       </ImageBackground>
       </View>
       </TouchableWithoutFeedback>
+  
     </>
   );
 }
@@ -305,7 +351,7 @@ export default function App() {
 const css = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFB897",
+    backgroundColor: "#FEE9E5",
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
@@ -315,7 +361,7 @@ const css = StyleSheet.create({
     backgroundColor: "#FEE9E5",
     width: 330,
     height: 550,
-    borderBottomLeftRadius:120,
+
     marginLeft:41,
     marginTop:100,
   
@@ -323,14 +369,6 @@ const css = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
 
-    shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 60,
-    shadowRadius: 40,
-    elevation: 20,
   },
   textParam: {
     backgroundColor:'#FEE9E5',

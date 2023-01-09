@@ -13,6 +13,8 @@ import LogInSignIn from "./Pages/LogInSignIn";
 import Home from "./Pages/Home";
 import SignIn from "./Pages/SignIn";
 import AddProduct from "./Pages/AddProduct"
+import TestSignin from "./Pages/TestSignin.js";
+import TestLogin from "./components/TestLogin.js";
 
 
 // import { PhoneAuthCredential } from 'firebase/auth';
@@ -24,7 +26,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Log in">
+      <Stack.Navigator initialRouteName="LogInSignIn">
         <Stack.Screen
           name="Log in"
           options={{ headerShown: false }}
@@ -34,6 +36,8 @@ export default function App() {
         <Stack.Screen name="History" component={History} />
         <Stack.Screen name="Create an account" component={SignIn} />
         <Stack.Screen name="PhoneNumber Verif" component={PhoneNumber} />
+        <Stack.Screen name="TestSignin" component={TestSignin} />
+        <Stack.Screen name="TestLogin" component={TestLogin}   options={{ headerShown: false }} />
         <Stack.Screen
           name="Profil"
           options={{ headerShown: false }}

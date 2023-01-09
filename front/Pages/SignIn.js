@@ -2,12 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View ,TextInput ,Button, TouchableWithoutFeedback , Keyboard ,ScrollView} from 'react-native';
 import { useState , useEffect } from 'react';
 
-
+import axios from 'axios'
 
   ///----------------------------------------------------> Firebase stuff importation  <----------------------------------------------------------------------------///
 
 import firebaseConfig from '../config/firebase';  //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
-import { getAuth, createUserWithEmailAndPassword , sendEmailVerification , onAuthStateChanged} from "firebase/auth";  // importing the auth of Firebase 
+import { getAuth, createUserWithEmailAndPassword , onAuthStateChanged} from "firebase/auth";  // importing the auth of Firebase 
 import { initializeApp } from 'firebase/app';
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
 import { useNavigation } from '@react-navigation/native';
@@ -41,19 +41,8 @@ export default function App() {
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
 ///----------------------------------------------------> function for handling the creating the account <-----------------------------------------///
-useEffect(() => {
-  console.log(auth.currentUser)
-  const EmailConfirmed = auth.onAuthStateChanged((user) => {
-    if (!user?.emailVerified) {
-      setValue({...value,emailConfirmation:false})
-    }else{
-      setValue({...value,emailConfirmation:true})
-    }
-  });
 
-  // unsubscribe from the listener when the component unmounts
-  return () => EmailConfirmed();
-}, []);
+
 
 
 
@@ -70,13 +59,20 @@ const handleSignIn=()=>{
     .then((userCredential)=>{         //  ----------->  BAAD EL CREATION TA3 EL USER FEL FIREBASE , EL FIREBASE YRAJA3 OBJET ESMOU (userCredential) FIH INFO AL USER
       setUser(userCredential.user)   //  ---------->  Setting the user object (containing the detail of the athentication information )
       setUserId(user.uid)            //  ----------->  Setting the user Id ( that takin from the User Objet )
-      //console.log(user)
+      
+      
+      axios.post("http://192.168.104.29:5000/users/addUser",{id_user:userCredential.user.uid,name:value.nameUser,email:value.email})
+      .then(()=>{
+        console.log("user added to dataBase")
+      })
+      .catch((err)=>{
+        alert(err)
+      })
 
     })
     .then(()=>{                    
       alert("YEYYY USER ADDED")
       console.log(userId)
-      auth.currentUser.sendEmailVerification()
       alert("Email sent for confirmation")
       
      
