@@ -22,26 +22,17 @@ export const ProductCard = () => {
   console.log("knhjn", product);
 
   return (
-    <>
+    <Grid container spacing={3}>
       {product.map((element) => (
-        <Box>
-          <CardContent>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%",
-                width: 300,
-                flexDirection: "column",
-              }}
-            >
+        <Grid>
+          <CardContent sx={{}}>
+            <Box>
               <Avatar
                 sx={{
                   justifyContent: "center",
                   alignContent: "center",
-                  height: 200,
-                  width: 280,
+                  height: 300,
+                  width: 300,
                   borderRadius: 2,
                 }}
                 alt="Product"
@@ -78,16 +69,16 @@ export const ProductCard = () => {
                 }}
               >
                 <Link href={"/product/id"} as={`/product/${element.id_product}`}>
-                  <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
+                  <Typography color="textSecondary" display="inline" sx={{ pl: 5 }} variant="body2">
                     <FontAwesomeIcon icon={faEye} /> View Detail
                   </Typography>
                 </Link>
               </Grid>
             </Grid>
           </Box>
-        </Box>
+        </Grid>
       ))}
-    </>
+    </Grid>
   );
 };
 

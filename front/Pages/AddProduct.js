@@ -59,7 +59,6 @@ const AddProduct = ({ navigation }) => {
       uploadImage(newfile);
     }
   };
-
   console.log("image url", image);
 
   // function to upload image to cloudinary
@@ -77,7 +76,7 @@ const AddProduct = ({ navigation }) => {
       formData.append("file", {
         uri: path,
         name: `${timestamp}.jpg`,
-        type: "image/jpeg",
+        type: "image/png",
       });
       formData.append("api_key", apiKey);
       formData.append("timestamp", timestamp);

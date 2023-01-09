@@ -37,61 +37,73 @@ export default function SideBbar({ navigation }) {
   const closeButtonOffset = useRef(new Animated.Value(0)).current;
 
   return (
-    <SafeAreaView  style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* blaset el contenue mta el side bar */}
-     <ImageBackground  source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673040221/ekher_wba4yg.png"}} resizeMode="cover" style={styles.image}>
-      <View  style={{ justifyContent: "flex-start", padding: 30 }}>
-      
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Profil");
-          }}
-        >
-          <Image
-            source={profile}
-            style={{
-              width: 90,
-              height: 90,
-              borderRadius: 60,
-              marginTop: 10,
-            }}
-          ></Image>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: "bold",
-              color: "white",
-              marginTop: 10,
+      <ImageBackground
+        source={{
+          uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673040221/ekher_wba4yg.png",
+        }}
+        resizeMode="cover"
+        style={styles.image}
+      >
+        <View style={{ justifyContent: "flex-start", padding: 20 }}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Profil");
             }}
           >
-            Hello Jenna{" "}
-          </Text>
-          <Text
-            style={{
-              fontSize: 15,
-              // fontWeight: "bold",
-              color: "white",
-              marginTop: 10,
-            }}
-          >
-            View Profil
-          </Text>
-        </TouchableOpacity>
+            <Image
+              source={{
+                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1671027251/tenue-classe-pour-homme_qvxxka.jpg",
+              }}
+              style={{
+                width: 90,
+                height: 90,
+                borderRadius: 7,
+                marginTop: 10,
+                marginLeft: 23,
+              }}
+            ></Image>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                color: "white",
+                marginTop: 10,
+              }}
+            >
+              Hello Ahmed{" "}
+            </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                // fontWeight: "bold",
+                color: "white",
+                marginTop: 10,
+              }}
+            >
+              View Profil
+            </Text>
+          </TouchableOpacity>
 
-        <View style={{ flexGrow: 1, marginTop: 60 }}>
-          {
-            // Tab Bar Buttons....
-          }
+          <View style={{ flexGrow: 1, marginTop: 60 }}>
+            {
+              // Tab Bar Buttons....
+            }
 
-          {TabButton(currentTab, setCurrentTab, "Feedback", home)}
-          {TabButton(currentTab, setCurrentTab, "Notification", notifications)}
-          {TabButton(currentTab, setCurrentTab, "Cart", cart)}
-          {TabButton(currentTab, setCurrentTab, "Chat", chat)}
+            {TabButton(currentTab, setCurrentTab, "Feedback", home)}
+            {TabButton(
+              currentTab,
+              setCurrentTab,
+              "Notification",
+              notifications
+            )}
+            {TabButton(currentTab, setCurrentTab, "Cart", cart)}
+            {TabButton(currentTab, setCurrentTab, "Chat", chat)}
+          </View>
+          <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
         </View>
-        <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
-      
-      </View>
-  </ImageBackground>
+      </ImageBackground>
       {
         // Over lay View...
       }
@@ -253,8 +265,8 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: "center",
-    width:"100%",
-    height:"100%"
-  }
+    width: "100%",
+    height: "100%",
+  },
 });
 //side bar
