@@ -172,6 +172,7 @@ export default function SideBbar({ navigation }) {
           >
             {currentTab}
           </Text> */}
+          
         </Animated.View>
         <TabBar navigation={navigation} />
         {/* navigation={navigation} */}
