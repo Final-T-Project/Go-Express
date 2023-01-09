@@ -165,6 +165,33 @@ function Feedback({ Product }) {
 
 export default function Profil() {
   const [showContent, setShowContent] = useState('Product');
+  const [userInfo,setUserInfo]=useState("")
+
+  const [userData,setUserData]=useState([])
+
+  AsyncStorage.getItem('userData').then((res)=>{
+    setUserInfo(JSON.parse(res))
+    //console.log("------->"+userInfo.userId)
+  }).then(/*console
+  .log("Im userInfo from Profile---------->"+userInfo.userId)*/
+ )
+
+ useEffect(() => {
+  axios
+    .get(`http://192.168.104.23:5000/users/getUserPorfile/${userInfo.userId}`)
+    .then((response) => {
+      console.log("********User Name*********",response.data[0].name)
+      setUserData(response.data[0]);
+      // const obj=JSON.parse(response)
+      // console.log("*****************"+obj)
+
+    })
+    .catch((error)=>{
+      alert(error)
+    })
+    },[])
+
+
   return (
     <>
       <View >

@@ -2,6 +2,18 @@ import { StyleSheet, Text, View ,TextInput ,Button , Image,ImageBackground , Key
 
 
 function TestLogin() {
+
+    const [value, setValue] = useState({
+        nameUser: "",
+        email: "", //         TO STORE THE EMAIL INPUT
+        password: "", //   TO STORE THE PASSWORD INPUT
+    
+        error: "", // ST7A9ITHECH LHA9 AMAAA TAJEM TESTHA9HA
+    
+        emailConfirmation: false,
+        emailInput: "",
+      });
+
   return (
     <View style={css.constainer}>
         <View style={css.box}>
