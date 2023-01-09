@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  ImageBackground,
 } from "react-native";
 import profile from "../assets/profile.png";
 // Tab ICons...
@@ -36,9 +37,11 @@ export default function SideBbar({ navigation }) {
   const closeButtonOffset = useRef(new Animated.Value(0)).current;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView  style={styles.container}>
       {/* blaset el contenue mta el side bar */}
-      <View style={{ justifyContent: "flex-start", padding: 30 }}>
+     <ImageBackground  source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673040221/ekher_wba4yg.png"}} resizeMode="cover" style={styles.image}>
+      <View  style={{ justifyContent: "flex-start", padding: 30 }}>
+      
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Profil");
@@ -50,7 +53,7 @@ export default function SideBbar({ navigation }) {
               width: 90,
               height: 90,
               borderRadius: 60,
-              marginTop: 30,
+              marginTop: 10,
             }}
           ></Image>
           <Text
@@ -86,8 +89,9 @@ export default function SideBbar({ navigation }) {
           {TabButton(currentTab, setCurrentTab, "Chat", chat)}
         </View>
         <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
+      
       </View>
-
+  </ImageBackground>
       {
         // Over lay View...
       }
@@ -207,7 +211,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           flexDirection: "row",
           alignItems: "center",
           paddingVertical: 8,
-          backgroundColor: currentTab == title ? "white" : "transparent",
+          backgroundColor: currentTab == title ? "" : "transparent",
           paddingLeft: 13,
           paddingRight: 35,
           borderRadius: 10,
@@ -228,7 +232,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
             fontSize: 15,
             fontWeight: "bold",
             paddingLeft: 15,
-            color: currentTab == title ? "black" : "white",
+            color: currentTab == title ? "white" : "white",
           }}
         >
           {title}
@@ -245,5 +249,11 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
+  image: {
+    flex: 1,
+    justifyContent: "center",
+    width:"100%",
+    height:"100%"
+  }
 });
 //side bar
