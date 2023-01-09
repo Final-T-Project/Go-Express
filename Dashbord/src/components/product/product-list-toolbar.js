@@ -26,11 +26,6 @@ export const ProductListToolbar = () => (
       <Typography sx={{ m: 1 }} variant="h4">
         Products
       </Typography>
-      <Box sx={{ m: 1 }}>
-        <Button color="primary" variant="contained">
-          Add products
-        </Button>
-      </Box>
     </Box>
     <Box sx={{ mt: 3 }}>
       <Card>

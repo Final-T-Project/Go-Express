@@ -64,7 +64,7 @@ export default function Shop({ navigation }) {
         <FlatList
           data={categories}
           renderItem={renderCategory}
-          keyExtractor={(item) => `${item.id}`}
+          // keyExtractor={(item) => `${item.id}`}
         />
         <TabBar navigation={navigation} />
       </View>

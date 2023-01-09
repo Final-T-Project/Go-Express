@@ -110,7 +110,11 @@ const TabBar = ({ navigation }) => {
             marginStart: 30,
           }}
         >
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("History");
+            }}
+          >
             <Image
               style={{ width: 30, height: 30 }}
               source={{
@@ -185,6 +189,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "",
+    marginTop: 20,
   },
   button: {
     width: 60,

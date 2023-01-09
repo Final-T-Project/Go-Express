@@ -17,10 +17,49 @@ module.exports = {
     }, req.params.id_user);
   },
 
-  GetAllProducts: function (req, res) {
-    admin.getAllProduct(function (err, results) {
+  // function to all product pusplished by the user wher status is "not accepted"
+  GetAllProductsNotAccepted: function (req, res) {
+    admin.getAllProductNotAccepted(function (err, results) {
       if (err) res.status(500).send(err);
       else res.json(results);
     });
+  },
+  // function to get one Product
+  GetOneProduct: function (req, res) {
+    admin.getOneProduct(function (err, results) {
+      if (err) res.status(500).send(err);
+      else res.json(results);
+    }, req.params.id_product);
+  },
+  // function to change the product status
+  UpdateProductState: function (req, res) {
+    admin.updateProductState(
+      function (err, results) {
+        if (err) res.status(500).send(err);
+        else res.json(results);
+      },
+      req.params.id_product,
+      req.body.productStatus
+    );
+  },
+
+  // function to update the product price
+  UpdateProductPrice: function (req, res) {
+    admin.updateProductPrice(
+      function (err, results) {
+        if (err) res.status(500).send(err);
+        else res.json(results);
+      },
+
+      req.body.price,
+      req.params.id_product
+    );
+  },
+  // function to delete product
+  DeleteProduct: function (req, res) {
+    admin.deleteProduct(function (err, results) {
+      if (err) res.status(500).send(err);
+      else res.json(results);
+    }, req.params.id_product);
   },
 };

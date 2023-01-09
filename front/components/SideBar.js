@@ -19,7 +19,7 @@ import chat from "../assets/chat.png";
 import logout from "../assets/logout.png";
 import menu from "../assets/menu.png";
 import close from "../assets/close.png";
-// import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import TabBar from "../components/TabBar";
 
 export default function SideBbar({ navigation }) {
@@ -40,9 +40,10 @@ export default function SideBbar({ navigation }) {
       {/* blaset el contenue mta el side bar */}
       <View style={{ justifyContent: "flex-start", padding: 30 }}>
         <TouchableOpacity
-        onPress={() => {navigation.navigate("Profil")}}
+          onPress={() => {
+            navigation.navigate("Profil");
+          }}
         >
-          
           <Image
             source={profile}
             style={{
@@ -61,7 +62,6 @@ export default function SideBbar({ navigation }) {
             }}
           >
             Hello Jenna{" "}
-           
           </Text>
           <Text
             style={{
@@ -124,7 +124,7 @@ export default function SideBbar({ navigation }) {
             onPress={() => {
               // Do Actions Here....
               // Scaling the view...
-              
+
               Animated.timing(scaleValue, {
                 toValue: showMenu ? 1 : 0.88,
                 duration: 300,
@@ -168,7 +168,6 @@ export default function SideBbar({ navigation }) {
           >
             {currentTab}
           </Text> */}
-          
         </Animated.View>
         <TabBar navigation={navigation} />
         {/* navigation={navigation} */}
@@ -179,15 +178,14 @@ export default function SideBbar({ navigation }) {
 
 // For multiple Buttons...
 const TabButton = (currentTab, setCurrentTab, title, image) => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
       onPress={() => {
         if (title == "Feedback") {
           setCurrentTab("Feedback");
-          
+
           //  navigation.navigate("Home");
-    
         } else if (title == "Notification") {
           setCurrentTab("Notification");
           // navigation.navigate("Shop");
@@ -198,7 +196,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
         } else if (title == "Settings") {
           setCurrentTab("Settings");
         } else {
-           //navigation.navigate("Log in");
+          navigation.navigate("Log in");
         }
       }}
       LogOut
@@ -235,7 +233,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
         >
           {title}
         </Text>
-      </View> 
+      </View>
     </TouchableOpacity>
   );
 };
@@ -248,4 +246,4 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
 });
-//side bar 
+//side bar

@@ -16,13 +16,14 @@ import AddProduct from "./Pages/AddProduct";
 
 // import { PhoneAuthCredential } from 'firebase/auth';
 import PhoneNumber from "./Pages/PhoneNumber";
+// import EmailConfirmation from "./components/EmailConfirmation.js";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Log in">
+      <Stack.Navigator initialRouteName="SideBar">
         <Stack.Screen
           name="Log in"
           options={{ headerShown: false }}

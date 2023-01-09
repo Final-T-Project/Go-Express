@@ -14,11 +14,12 @@ import { useNavigation } from "@react-navigation/native";
 export default function Products({ route }) {
   const navigation = useNavigation();
 
+  //state to store all the product by category
   let [product, setProduct] = useState([]);
 
   // function to get all product by categories
   useEffect(() => {
-    axios.get(`http://192.168.103.20:5000/products/${item}`).then((result) => {
+    axios.get(`http://192.168.103.13:5000/products/${item}`).then((result) => {
       setProduct(result.data);
       console.log(result.data);
     });
@@ -35,9 +36,9 @@ export default function Products({ route }) {
     >
       {/* { props: item.id_product } */}
       <View style={styles.container}>
-        <Image style={styles.photo} source={{ uri: item.photo }} />
+        <Image style={styles.photo} source={{ uri: item.photo_product }} />
 
-        <Text style={styles.title}>{item.name}</Text>
+        <Text style={styles.title}>{item.product_name}</Text>
         <Text style={styles.price}>{item.price} dt</Text>
       </View>
     </TouchableHighlight>
