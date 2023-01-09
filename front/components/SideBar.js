@@ -200,7 +200,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
         } else if (title == "Settings") {
           setCurrentTab("Settings");
         } else {
-          navigation.navigate("Log in");
+          navigation.navigate("TestLogin");
         }
       }}
       LogOut
