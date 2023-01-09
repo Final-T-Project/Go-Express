@@ -13,16 +13,25 @@ import LogInSignIn from "./Pages/LogInSignIn";
 import Home from "./Pages/Home";
 import SignIn from "./Pages/SignIn";
 import AddProduct from "./Pages/AddProduct"
-
+import EditeProfil from "./Pages/EditeProfil.js";
 
 // import { PhoneAuthCredential } from 'firebase/auth';
 import PhoneNumber from "./Pages/PhoneNumber";
+import { NativeBaseProvider } from "native-base";
 // import EmailConfirmation from "./components/EmailConfirmation.js";
-
+import { UserContext } from "./UserContext.js";
+import { useContext,useState } from "react";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [showContent, setShowContent] = useState('');
   return (
+    <UserContext.Provider
+      value={{
+       showContent ,setShowContent
+      }}
+    >
+    <NativeBaseProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Log in">
         <Stack.Screen
@@ -58,7 +67,8 @@ export default function App() {
           options={{ headerShown: false }}
           component={AddProduct}
         />
+        <Stack.Screen name="EditeProfil" component={EditeProfil}/>
       </Stack.Navigator>
-    </NavigationContainer>
+    </NavigationContainer></NativeBaseProvider></UserContext.Provider>
   );
 }
