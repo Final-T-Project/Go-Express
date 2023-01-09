@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import TabBar from "../components/TabBar";
 import {
   StyleSheet,
   Text,
@@ -24,6 +25,7 @@ const height = Dimensions.get("window").height;
 function Product() {
   const imgWidth = Dimensions.get('screen').width * 0.33333;
   return (
+    
     <View style={{}}>
       <View
         style={{
@@ -163,11 +165,11 @@ function Feedback({ Product }) {
   );
 }
 
-export default function Profil() {
+export default function Profil({navigation}) {
   const [showContent, setShowContent] = useState('Product');
   return (
-    <>
-      <View >
+    <SafeAreaView>
+     
         <ScrollView>
           <View>
             
@@ -222,6 +224,7 @@ export default function Profil() {
             </Text>
       </View>
          {/* bar */}
+         <SafeAreaView>
          <View style={{ marginTop: -50,backgroundColor:"white"}}>
               <View style={styles.profileContentButtonsView}>
                 <TouchableOpacity
@@ -259,10 +262,11 @@ export default function Profil() {
               ) : (
                 <Feedback Product={new Array(23).fill(1)} />
               )}
-            </View>
+            </View></SafeAreaView>
         </ScrollView>
-      </View>
-    </>
+      
+      <TabBar navigation={navigation}/>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({

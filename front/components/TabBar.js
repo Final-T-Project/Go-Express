@@ -126,8 +126,8 @@ const {showContent,setShowContent}=useContext(UserContext)
           <TouchableOpacity
             onPress={() => {
              
-              navigation.navigate("SideBar")
-              return(setShowContent('Home'))
+              navigation.navigate("Cart")
+              return(setShowContent('history'))
             }}
           >
         <FontAwesome name="history" size={24} color={ showContent === 'history'?"#ED5C00":"#b0aeae"} />
