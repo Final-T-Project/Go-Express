@@ -1,8 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import TabBar from "../components/TabBar";
-import axios from "axios";
-
 import {
   TouchableHighlight,
   StyleSheet,
@@ -18,7 +16,12 @@ import {
   TextInput,
   Alert,
 } from "react-native";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect } from "react";
+import axios from "axios";
+// #ED5C00 orange
+// #373E5A khrawi
+// #F2F2F2
 import {
   TextArea,
   Box,
@@ -39,20 +42,20 @@ function Product() {
   // state to save user information
   const [userData, setUserData] = useState([]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://192.168.103.13:5000/users/getUserPorfile/A`)
-  //     .then((response) => {
-  //       setUserData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       alert(error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`http://192.168.103.13:5000/users/getUserProduct/A`)
+      .then((response) => {
+        setUserData(response.data);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
 
   // console.log("data", userData);
   return (
-    <SafeAreaView>
+    <View style={{}}>
       <View
         style={{
           flexDirection: "row",
@@ -101,7 +104,7 @@ function Product() {
           />
         </View> */}
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 // feedback side
@@ -281,7 +284,33 @@ export default function Profil({ navigation }) {
       });
   }, []);
 
-  console.log("data", userDataProfile);
+  // console.log("data", userDataProfile);
+  const [userInfo, setUserInfo] = useState("");
+  const [userData, setUserData] = useState([]);
+
+  AsyncStorage.getItem("userData")
+    .then((res) => {
+      setUserInfo(JSON.parse(res));
+      //console.log("------->"+userInfo.userId)
+    })
+    .then /*console
+  .log("Im userInfo from Profile---------->"+userInfo.userId)*/
+    ();
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://192.168.104.23:5000/users/getUserPorfile/${userInfo.userId}`)
+  //     .then((response) => {
+  //       console.log("********User Name*********", response.data[0].name);
+  //       setUserData(response.data[0]);
+  //       // const obj=JSON.parse(response)
+  //       // console.log("*****************"+obj)
+  //     })
+  //     .catch((error) => {
+  //       alert(error);
+  //     });
+  // }, []);
+
   return (
     <>
       <View>
@@ -306,7 +335,7 @@ export default function Profil({ navigation }) {
                   width: 100,
                   height: 100,
                   // borderRadius: 100,
-                  marginTop: -150,
+                  marginTop: -130,
                   left: 20,
                   borderRadius: 4,
                 }}

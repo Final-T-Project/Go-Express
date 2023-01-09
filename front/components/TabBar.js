@@ -123,8 +123,9 @@ const TabBar = ({ navigation }) => {
         >
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("SideBar");
-              return setShowContent("Home");
+             
+              navigation.navigate("Cart")
+              return(setShowContent('history'))
             }}
           >
             <FontAwesome
