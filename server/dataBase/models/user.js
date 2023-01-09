@@ -26,10 +26,16 @@ module.exports = {
     });
   },
 
-  getUserProfile:function (callback,id_user){
-    const sql= `SELECT * FROM user WHERE  id_user="${id_user}"`
-    connection.query(sql,function(error,results){
+  getUserProfile: function (callback, id_user) {
+    const sql = `SELECT * FROM user WHERE  id_user="${id_user}"`;
+    connection.query(sql, function (error, results) {
       callback(error, results);
-    })
-  }
+    });
+  },
+  getUserProduct: function (callback, id_user) {
+    const sql = `SELECT * FROM product INNER JOIN user ON product.user_id_user = user.id_user WHERE id_user="${id_user}"`;
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  },
 };

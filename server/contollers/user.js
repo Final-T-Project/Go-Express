@@ -29,12 +29,17 @@ module.exports = {
     );
   },
 
-  GetUserProfile: function (req,res){
-    users.getUserProfile(
-      function(err,result){
-        if ( err ) res.status(500).send(err);
-        else res.json(result)
-      },req.params.id_user
-    )
-  }
+  GetUserProfile: function (req, res) {
+    users.getUserProfile(function (err, result) {
+      if (err) res.status(500).send(err);
+      else res.json(result);
+    }, req.params.id_user);
+  },
+
+  GetUserProduct: function (req, res) {
+    users.getUserProduct(function (err, result) {
+      if (err) res.status(500).send(err);
+      else res.json(result);
+    }, req.params.id_user);
+  },
 };
