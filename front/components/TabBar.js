@@ -1,4 +1,4 @@
-import { useState ,useContext} from "react";
+import { useState, useContext } from "react";
 import {
   View,
   Image,
@@ -15,28 +15,30 @@ import {
 import SideBbar from "./SideBar";
 import { UserContext } from "../UserContext";
 import React from "react";
-import { FontAwesome,Entypo,MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  FontAwesome,
+  Entypo,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("window");
 
-
 const TabBar = ({ navigation }) => {
-const {showContent,setShowContent}=useContext(UserContext)
+  const { showContent, setShowContent } = useContext(UserContext);
   return (
     <SafeAreaView
       style={{
         flex: 1,
-        top: height -38,
+        top: height - 38,
         flexDirection: "column",
         width: width,
         position: "absolute",
-        
       }}
     >
       <View
         style={{
           alignSelf: "center",
-        
+
           width: 70,
           height: 70,
           borderRadius: 35,
@@ -45,25 +47,24 @@ const {showContent,setShowContent}=useContext(UserContext)
           right: -4,
         }}
       >
-       
         <TouchableOpacity>
           {/* kamiouna */}
-          
+
           <View
-        style={{
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          marginStart:-5,
-          top:64,
-          backgroundColor:'#373E5A',
-          width:60,
-         marginTop:-9,
-          height:50
-        }}>
-        <MaterialCommunityIcons name="truck-fast" size={24} color="white" />
-        </View>
-       
+            style={{
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              marginStart: -5,
+              top: 64,
+              backgroundColor: "#373E5A",
+              width: 60,
+              marginTop: -9,
+              height: 50,
+            }}
+          >
+            <MaterialCommunityIcons name="truck-fast" size={24} color="white" />
+          </View>
         </TouchableOpacity>
       </View>
       <View
@@ -86,12 +87,9 @@ const {showContent,setShowContent}=useContext(UserContext)
           justifyContent: "space-between",
           paddingVertical: 10,
           paddingHorizontal: 25,
-          borderBottomLeftRadius:15,
-       
-
+          borderBottomLeftRadius: 15,
         }}
       >
-        
         <View
           style={{
             flexDirection: "column",
@@ -101,14 +99,15 @@ const {showContent,setShowContent}=useContext(UserContext)
         >
           <TouchableOpacity
             onPress={() => {
-             
-              navigation.navigate("SideBar")
-              return(setShowContent('Home'))
+              navigation.navigate("SideBar");
+              return setShowContent("Home");
             }}
           >
-        
-            <FontAwesome name="home" size={24} color={ showContent === 'Home'?"#ED5C00":"#b0aeae"} />
-          
+            <FontAwesome
+              name="home"
+              size={24}
+              color={showContent === "Home" ? "#ED5C00" : "#b0aeae"}
+            />
           </TouchableOpacity>
           {/* <Text style={{ justifyContent: "center", alignItems: "center" }}>
             Home
@@ -120,7 +119,6 @@ const {showContent,setShowContent}=useContext(UserContext)
             alignItems: "center",
             justifyContent: "center",
             marginStart: 10,
-            
           }}
         >
           <TouchableOpacity
@@ -130,7 +128,11 @@ const {showContent,setShowContent}=useContext(UserContext)
               return(setShowContent('history'))
             }}
           >
-        <FontAwesome name="history" size={24} color={ showContent === 'history'?"#ED5C00":"#b0aeae"} />
+            <FontAwesome
+              name="history"
+              size={24}
+              color={showContent === "history" ? "#ED5C00" : "#b0aeae"}
+            />
           </TouchableOpacity>
         </View>
         <View
@@ -139,20 +141,20 @@ const {showContent,setShowContent}=useContext(UserContext)
             alignItems: "center",
             justifyContent: "center",
             marginStart: 70,
-           
           }}
         >
-          
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Shop")
-              return (setShowContent("shop"))
+              navigation.navigate("Shop");
+              return setShowContent("shop");
             }}
           >
-            <Entypo name="shop" size={24} color={ showContent === 'shop'?"#ED5C00":"#b0aeae"} />
-           
+            <Entypo
+              name="shop"
+              size={24}
+              color={showContent === "shop" ? "#ED5C00" : "#b0aeae"}
+            />
           </TouchableOpacity>
-          
         </View>
         <View
           style={{
@@ -164,12 +166,15 @@ const {showContent,setShowContent}=useContext(UserContext)
         >
           <TouchableOpacity
             onPress={() => {
-          
-              navigation.navigate("AddProduct")
-              return  setShowContent('AddProduct')
+              navigation.navigate("AddProduct");
+              return setShowContent("AddProduct");
             }}
           >
-            <MaterialCommunityIcons name="archive-plus"  size={24} color={ showContent === 'AddProduct'?"#ED5C00":"#b0aeae"} />
+            <MaterialCommunityIcons
+              name="archive-plus"
+              size={24}
+              color={showContent === "AddProduct" ? "#ED5C00" : "#b0aeae"}
+            />
           </TouchableOpacity>
         </View>
       </View>
