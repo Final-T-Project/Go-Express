@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View ,TextInput ,Button , Image,ImageBackground , Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
-
+import {useState} from "react"
 
 function TestLogin() {
 
@@ -16,6 +16,12 @@ function TestLogin() {
 
   return (
     <View style={css.constainer}>
+        <ImageBackground
+                  style={{ width: '100%', height: '100%' }}
+                  source={{
+                    uri: `https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673040221/ekher_wba4yg.png`
+                  }}
+                >
         <View style={css.box}>
             <Text style={{textAlign:'center',fontSize:25,marginTop:30,fontWeight:'bold',}}>Register</Text>
             <View style={{display: 'flex', flexDirection: 'row',marginTop:20, alignItems: 'center', justifyContent: 'center'}}>
@@ -46,6 +52,7 @@ function TestLogin() {
 
 
         </View>
+        </ImageBackground>
     </View>
   )
 }
@@ -63,8 +70,11 @@ const css = StyleSheet.create({
     box:{
         backgroundColor:'white',
         width:370,
-        height:500,
+        height:600,
         borderRadius:4,
+        marginLeft:20,
+        marginTop:15,
+
 
         
         shadowColor: "black",
@@ -82,7 +92,7 @@ const css = StyleSheet.create({
     },
     buttonStyle:{
         backgroundColor:'#F96332',
-        width:170,
+        width:180,
         height:50,
         alignItems: 'center',
         justifyContent: 'center',

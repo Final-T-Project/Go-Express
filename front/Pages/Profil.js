@@ -14,6 +14,9 @@ import {
   TextInput,
   Alert,
 } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from "react";
+import axios from 'axios'
 // #ED5C00 orange
 // #373E5A khrawi
 // #F2F2F2
