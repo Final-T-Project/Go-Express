@@ -89,6 +89,7 @@ export default function TestLogin() {
 
   //-----------------------------------------------------------------------------------------------------------
   return (
+    
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     <View style={css.constainer}>
         <ImageBackground
@@ -105,7 +106,7 @@ export default function TestLogin() {
                 <Image source={require('../assets/google-plus.png')} style={{width:35,height:35,marginLeft:30,marginRight:40}} />
             </View>
 
-            <View style={{justifyContent: 'center',alignItems:'center',marginTop:50}}>
+            <View style={{justifyContent: 'center',alignItems:'center',marginTop:100}}>
                 {!value.emailError?<TextInput keyboardType="email-address"
                         style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'#9d9d9e',borderWidth:1,padding:10,width:330,borderRadius:50,alignItems:'center',}}
                         placeholder="  ✉️   Your Email here..."  onChangeText={(text) => setValue({ ...value, email: text })} 
@@ -126,18 +127,19 @@ export default function TestLogin() {
                         />}
             </View>
 
-            <View style={{alignItems:'center',marginTop:70}} onPress={()=>handleLogIn()}>
+            <View style={{alignItems:'center',marginTop:40}} onPress={()=>handleLogIn()}>
             <View style={css.buttonStyle} onPress={()=>handleLogIn()}>
                 <Text style={{color:'white',alignItems: 'center',fontWeight:'400',fontSize:17}} onPress={()=>handleLogIn()}>Confirm</Text>
             </View>
             </View>
 
-            <Text style={{fontSize:15,marginTop:60,fontWeight:'600',textAlign:'center'}} >Forget my password ?<Text style={{color:'#F96332'}}> tap here</Text></Text>
+            <Text style={{fontSize:15,marginTop:60,fontWeight:'600',textAlign:'center'}} onPress={()=>Navigation.navigate("TestSignin")} >Forget my password ?<Text style={{color:'#F96332'}}> tap here</Text></Text>
 
         </View>
         </ImageBackground>
     </View>
     </TouchableWithoutFeedback>
+  
   )
 }
 

@@ -36,7 +36,7 @@ export default function App() {
     >
     <NativeBaseProvider>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="TestSignin">
+      <Stack.Navigator initialRouteName="TestLogin">
        
       <Stack.Screen
           name="Log in"
@@ -47,7 +47,7 @@ export default function App() {
         <Stack.Screen name="History" component={History} />
         <Stack.Screen name="Create an account" component={SignIn} />
         <Stack.Screen name="PhoneNumber Verif" component={PhoneNumber} />
-        <Stack.Screen name="TestSignin" component={TestSignin} />
+        <Stack.Screen name="TestSignin" component={TestSignin}   />
         <Stack.Screen name="TestLogin" component={TestLogin}   options={{ headerShown: false }} />
         <Stack.Screen
           name="Profil"

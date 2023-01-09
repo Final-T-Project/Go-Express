@@ -15,20 +15,21 @@ function TestLogin() {
       });
 
   return (
-    <View style={css.constainer}>
+      <View style={css.constainer}>
         <ImageBackground
                   style={{ width: '100%', height: '100%' }}
                   source={{
-                    uri: `https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673040221/ekher_wba4yg.png`
+                      uri: `https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673040221/ekher_wba4yg.png`
                   }}
-                >
+                  >
+        <ScrollView>
         <View style={css.box}>
             <Text style={{textAlign:'center',fontSize:25,marginTop:30,fontWeight:'bold',}}>Register</Text>
             <View style={{display: 'flex', flexDirection: 'row',marginTop:20, alignItems: 'center', justifyContent: 'center'}}>
                 <Image source={require('../assets/facebook.png')} style={{width:35,height:35,marginLeft:40,marginRight:40}}/>
                 <Image source={require('../assets/google-plus.png')} style={{width:35,height:35,marginLeft:40,marginRight:40}} />
             </View>
-            <Text style={{textAlign:'center',fontSize:19,marginTop:20,fontWeight:'400',}}>or be classical</Text>
+            <Text style={{textAlign:'center',fontSize:19,marginTop:80,fontWeight:'400',}}>or be classical</Text>
             <View style={{justifyContent: 'center',alignItems:'center'}}>
                 <TextInput
                     style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'#9d9d9e',borderWidth:1,padding:10,width:330,borderRadius:50,alignItems:'center',marginTop:20}}
@@ -52,6 +53,7 @@ function TestLogin() {
 
 
         </View>
+    </ScrollView>
         </ImageBackground>
     </View>
   )
@@ -73,7 +75,7 @@ const css = StyleSheet.create({
         height:600,
         borderRadius:4,
         marginLeft:20,
-        marginTop:15,
+        marginTop:70,
 
 
         
