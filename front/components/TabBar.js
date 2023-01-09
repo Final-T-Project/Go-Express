@@ -1,3 +1,4 @@
+import { useState ,useContext} from "react";
 import {
   View,
   Image,
@@ -9,26 +10,33 @@ import {
   Alert,
   Dimensions,
   SafeAreaView,
+  Pressable,
 } from "react-native";
 import SideBbar from "./SideBar";
+import { UserContext } from "../UserContext";
 import React from "react";
+import { FontAwesome,Entypo,MaterialCommunityIcons } from '@expo/vector-icons';
+
 const { width, height } = Dimensions.get("window");
 
+
 const TabBar = ({ navigation }) => {
+const {showContent,setShowContent}=useContext(UserContext)
   return (
     <SafeAreaView
       style={{
         flex: 1,
-        top: height - 70,
+        top: height -38,
         flexDirection: "column",
         width: width,
         position: "absolute",
+        
       }}
     >
       <View
         style={{
           alignSelf: "center",
-          backgroundColor: "#ea580c",
+        
           width: 70,
           height: 70,
           borderRadius: 35,
@@ -37,27 +45,31 @@ const TabBar = ({ navigation }) => {
           right: -4,
         }}
       >
+       
         <TouchableOpacity>
-          <View style={[styles.button, styles.actionBtn]}>
-            <Image
-              style={{ width: 50, height: 50 }}
-              resizeMode="contain"
-              source={{
-                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1672869590/Sans_titre-removebg-preview_pqpw3d.png",
-              }}
-              onPress={() => {
-                Alert.alert("ok");
-              }}
-            />
-          </View>
+          {/* kamiouna */}
+          
+          <View
+        style={{
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          marginStart:-5,
+          top:64,
+          backgroundColor:'#373E5A',
+          width:60,
+         marginTop:-9,
+          height:50
+        }}>
+        <MaterialCommunityIcons name="truck-fast" size={24} color="white" />
+        </View>
+       
         </TouchableOpacity>
       </View>
       <View
         style={{
           position: "absolute",
-          backgroundColor: "#ffedd5",
-          border: 2,
-          radius: 3,
+          backgroundColor: "#f0f0f0",
           shadowOpacity: 0.3,
           shadowRadius: 3,
           shadowOffset: {
@@ -69,15 +81,17 @@ const TabBar = ({ navigation }) => {
           style: { marginVertical: 5 },
           bottom: 0,
           width: "100%",
-          height: 70,
+          height: 50,
           flexDirection: "row",
           justifyContent: "space-between",
           paddingVertical: 10,
           paddingHorizontal: 25,
-          borderTopLeftRadius: 40,
-          borderTopRightRadius: 40,
+          borderBottomLeftRadius:15,
+       
+
         }}
       >
+        
         <View
           style={{
             flexDirection: "column",
@@ -87,94 +101,77 @@ const TabBar = ({ navigation }) => {
         >
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("SideBar");
+             
+              navigation.navigate("SideBar")
+              return(setShowContent('Home'))
             }}
           >
-            <Image
-              style={{ width: 30, height: 30 }}
-              source={{
-                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/c_scale,w_512/v1672864683/home_nobecd.png",
-              }}
-            ></Image>
+        
+            <FontAwesome name="home" size={24} color={ showContent === 'Home'?"#ED5C00":"#b0aeae"} />
+          
           </TouchableOpacity>
-          <Text style={{ justifyContent: "center", alignItems: "center" }}>
+          {/* <Text style={{ justifyContent: "center", alignItems: "center" }}>
             Home
-          </Text>
+          </Text> */}
         </View>
-
         <View
           style={{
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            marginStart: 30,
-          }}
-        >
-          <TouchableOpacity>
-            <Image
-              style={{ width: 30, height: 30 }}
-              source={{
-                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1672864774/history_xdugiz.png",
-              }}
-            />
-          </TouchableOpacity>
-          <Text style={{ justifyContent: "center", alignItems: "center" }}>
-            history
-          </Text>
-        </View>
-
-        <View
-          style={{
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginStart: 85,
+            marginStart: 10,
+            
           }}
         >
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Shop");
+             
+              navigation.navigate("SideBar")
+              return(setShowContent('Home'))
             }}
           >
-            <Image
-              source={{
-                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1672920615/store_whb5qi.png",
-              }}
-              style={{ marginHorizontal: 16, width: 30, height: 30 }}
-              containerStyle={{ marginHorizontal: 16 }}
-            />
+        <FontAwesome name="history" size={24} color={ showContent === 'history'?"#ED5C00":"#b0aeae"} />
           </TouchableOpacity>
-          <Text style={{ justifyContent: "center", alignItems: "center" }}>
-            Shop
-          </Text>
         </View>
         <View
           style={{
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "flex-end",
+            justifyContent: "center",
+            marginStart: 70,
+           
+          }}
+        >
+          
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Shop")
+              return (setShowContent("shop"))
+            }}
+          >
+            <Entypo name="shop" size={24} color={ showContent === 'shop'?"#ED5C00":"#b0aeae"} />
+           
+          </TouchableOpacity>
+          
+        </View>
+        <View
+          style={{
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            marginStart: 5,
           }}
         >
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("AddProduct");
+          
+              navigation.navigate("AddProduct")
+              return  setShowContent('AddProduct')
             }}
           >
-            <Image
-              source={{
-                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1672910617/add-product_pnbr3t.png",
-              }}
-              style={{ marginHorizontal: 16, width: 30, height: 30 }}
-              containerStyle={{ marginHorizontal: 16 }}
-            />
+            <MaterialCommunityIcons name="archive-plus"  size={24} color={ showContent === 'AddProduct'?"#ED5C00":"#b0aeae"} />
           </TouchableOpacity>
-          <Text style={{ justifyContent: "center", alignItems: "center" }}>
-            {" "}
-            Add{" "}
-          </Text>
         </View>
-
-        {/* </View> */}
       </View>
     </SafeAreaView>
   );
