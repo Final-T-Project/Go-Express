@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
-import { Avatar, Box, Card, CardContent, Divider, Grid, Typography } from "@mui/material";
+import { Avatar, Box, Card, CardContent, Divider, Grid, Typography, TableRow } from "@mui/material";
 import { Clock as ClockIcon } from "../../icons/clock";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faEye } from "@fortawesome/free-solid-svg-icons";
-
+import Link from "next/link";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -13,49 +13,46 @@ export const ProductCard = () => {
 
   // function to get all products
   useEffect(() => {
-    axios.get(`http://localhost:5000/admin/getallproduct`).then((result) => {
+    axios.get(`http://localhost:5000/admin/getallproductnotaccepted`).then((result) => {
       setProduct(result.data);
       console.log(result.data);
     });
   }, []);
 
+  console.log("knhjn", product);
+
   return (
     <>
       {product.map((element) => (
-        <Card
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            height: 400,
-          }}
-        >
+        <Box>
           <CardContent>
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                pb: 3,
+                alignItems: "center",
+                height: "100%",
                 width: 300,
+                flexDirection: "column",
               }}
             >
               <Avatar
                 sx={{
                   justifyContent: "center",
+                  alignContent: "center",
                   height: 200,
                   width: 280,
-                  pb: 5,
+                  borderRadius: 2,
                 }}
                 alt="Product"
-                src={element.photo}
+                src={element.photo_product}
                 variant="square"
               />
+
+              <Typography align="center" color="textPrimary" gutterBottom variant="h5">
+                {element.product_name}
+              </Typography>
             </Box>
-            <Typography align="center" color="textPrimary" gutterBottom variant="h5">
-              {element.name}
-            </Typography>
-            <Typography align="center" color="textPrimary" variant="body1">
-              product.description
-            </Typography>
           </CardContent>
           <Box sx={{ flexGrow: 1 }} />
           <Divider />
@@ -70,7 +67,7 @@ export const ProductCard = () => {
               >
                 <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
                   <FontAwesomeIcon icon={faClock} />
-                  Published at :
+                  Published at :{element.Published_at}
                 </Typography>
               </Grid>
               <Grid
@@ -80,13 +77,15 @@ export const ProductCard = () => {
                   display: "flex",
                 }}
               >
-                <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
-                  <FontAwesomeIcon icon={faEye} /> View Detail
-                </Typography>
+                <Link href={"/product/id"} as={`/product/${element.id_product}`}>
+                  <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
+                    <FontAwesomeIcon icon={faEye} /> View Detail
+                  </Typography>
+                </Link>
               </Grid>
             </Grid>
           </Box>
-        </Card>
+        </Box>
       ))}
     </>
   );

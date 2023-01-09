@@ -6,9 +6,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 ///----------------------------------------------------> Firebase stuff importation  <----------------------------------------------------------------------------///
 
-import firebaseConfig from '../config/firebase';  //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
-import { getAuth, createUserWithEmailAndPassword ,signInWithEmailAndPassword , sendPasswordResetEmail, GoogleAuthProvider , signInWithPopup} from "firebase/auth";  // importing the auth of Firebase 
-import { initializeApp } from 'firebase/app';
+import firebaseConfig from "../config/firebase"; //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  // GoogleAuthProvider,
+  // signInWithPopup,
+} from "firebase/auth"; // importing the auth of Firebase
+import { initializeApp } from "firebase/app";
 
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
 import { useNavigation } from "@react-navigation/native";
@@ -34,7 +41,7 @@ export default function App() {
   const app = initializeApp(firebaseConfig); //  ----------->  BECH NAAMLOU INITIALIZATION LEL CONFIG TA3 EL FIREBASE W NRODOUH EL app MTE3NA
   const auth = getAuth(app); //  ----------->  TA3TIIII AUTHORISATION LEL app MTE3EKKK BECH TNAJEM TESTAKHDEMHA KI T CREATE WALA SIGN IN LEL USER
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
-  const provider = new GoogleAuthProvider()
+  // const provider = new GoogleAuthProvider();
 
   ///----------------------------------------------------> USE NAVIGATE APPLICATION <----------------------------------------------------------------------------///
   const Navigation = useNavigation();
@@ -93,26 +100,25 @@ export default function App() {
         }
       });
   };
+}
 
   const forgetPassword = () => {
     if (value.email.length < 5) {
       alert("Write your Email");
-    } 
-  
-    else {
-      sendPasswordResetEmail(auth,value.email)
-    .then(()=>{
-      alert("Email send")
-    })
-    .catch((error)=>{
-      if (error.code==="auth/user-not-found"){
-        alert(" You don't have an account :)), create an account first")
-      }
-      console.log(error)
-    })
+    } else {
+      sendPasswordResetEmail(auth, value.email)
+        .then(() => {
+          alert("Email send");
+        })
+        .catch((error) => {
+          if (error.code === "auth/user-not-found") {
+            alert(" You don't have an account :)), create an account first");
+          }
+          console.log(error);
+        });
     }
     
-  }}
+  }
    
 
 
@@ -123,229 +129,231 @@ export default function App() {
   ///-------------------------------------------------------------------> The Sign up / Sign In structure page  <--------------------------------------------///
 
   return (
-  <>
-
+    <>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={css.container} onPress={()=>Keyboard.dismiss()}>
-      <ImageBackground style={{flex: 1,width:500,width:1000}}
-      >
-
-      <View style={css.box}>
-        <Image source={require("../assets/Group 1 copy.png")} style={{marginTop:50,width:10,height:10}}/>
-          <Image source={require('../assets/LogoApp.png')} style={{height:70,width:70}}/>
-          <Text style={{marginTop:20,textAlign:"left",fontSize:20,fontWeight:'bold',marginRight:210,marginBottom:8}}>Email</Text>
-          {/** ---------------------------------------------------EMAIL INPUT -----------------------------------------------*/}
-
-          <View style={{ alignItems: 'center',}}>
-          {value.emailError===false?<TextInput 
-            style={{backgroundColor:"white",height: 50,fontSize:17,padding:10,width:350,borderRadius:18,alignItems:'center' , shadowColor: "black",
-            shadowOffset: {
-              width: 0,
-              height: 0,
-            },
-            shadowOpacity: 60,
-            shadowRadius: 40,
-            elevation: 10}}
-            placeholder="Your Email here"  keyboardType="email-address" onChangeText={(text) =>{ setValue({ ...value, email: text })}} ref={emailRef}
-            />:<TextInput
-            style={{height: 50,fontSize:17,borderColor:'red',borderWidth:2,padding:10,width:290,borderRadius:18,alignItems:'center',color:'red'}}
-            placeholder="Your Email here"  keyboardType="email-address"  onChangeText={(text) =>{setValue({ ...value, email: text }) 
-            setValue({...value,emailError:false})
-          } } ref={emailRef} defaultValue="Your Email is wrong" onFocus={()=>setValue({...value,emailError:false})}
-            />}
-
-            
-            <Text
-              style={{
-                marginTop: 20,
-                textAlign: "left",
-                fontSize: 20,
-                fontWeight: "bold",
-                marginRight: 170,
-                marginBottom: 8,
-              }}
-              ref={passwordTitle}
-            >
-              Password
-            </Text>
-            {/** ---------------------------------------------------PASSWORD INPUT -----------------------------------------------*/}
-
-            <View style={{ alignItems: "center" }}>
-              {value.passwordError ? (
-                <TextInput
-                  secureTextEntry={value.passwordHide}
-                  style={{
-                    backgroundColor: "white",
-                    height: 50,
-                    fontSize: 17,
-                    borderColor: "red",
-                    borderWidth: 2,
-                    padding: 10,
-                    width: 350,
-                    borderRadius: 18,
-                    alignItems: "center",
-                    color: "red",
-
-                    shadowColor: "black",
-                    shadowOffset: {
-                      width: 0,
-                      height: 0,
-                    },
-                    shadowOpacity: 60,
-                    shadowRadius: 40,
-                    elevation: 10
-              
-                  }}
-                  placeholder="Your password here"
-                  onChangeText={(text) =>
-                    setValue({ ...value, password: text })
-                  }
-                  ref={passwordRef}
-                />
-              ) : (
-                <TextInput
-                  secureTextEntry={value.passwordHide}
-                  style={{
-                    backgroundColor: "white",
-                    height: 50,
-                    fontSize: 17,            
-                    padding: 10,
-                    width: 350,
-                    borderRadius: 18,
-                    alignItems: "center",
-
-                    shadowColor: "black",
-                    shadowOffset: {
-                      width: 0,
-                      height: 0,
-                    },
-                    shadowOpacity: 60,
-                    shadowRadius: 40,
-                    elevation: 10
-                  }}
-                  placeholder="Your password here"
-                  onChangeText={(text) =>
-                    setValue({ ...value, password: text })
-                  }
-                  ref={passwordRef}
-                />
-              )}
-            </View>
-
-            {!value.password.length ? null : value.passwordHide === true ? (
+        <View style={css.container} onPress={() => Keyboard.dismiss()}>
+          <ImageBackground style={{ flex: 1, width: 500, width: 1000 }}>
+            <View style={css.box}>
+              <Image
+                source={require("../assets/Group 1 copy.png")}
+                style={{ marginTop: 50, width: 10, height: 10 }}
+              />
+              <Text style={css.textParam}> (LOGO HERE) </Text>
               <Text
-                style={{ textAlign: "center" }}
-                onPress={() =>
-                  setValue({ ...value, passwordHide: !value.passwordHide })
-                }
+                style={{
+                  marginTop: 20,
+                  textAlign: "left",
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  marginRight: 210,
+                  marginBottom: 8,
+                }}
               >
-                Show password
+                Email
               </Text>
-            ) : (
-              <Text
-                style={{ textAlign: "center" }}
-                onPress={() =>
-                  setValue({ ...value, passwordHide: !value.passwordHide })
-                }
-              >
-                hide password
-              </Text>
-            )}
+              {/** ---------------------------------------------------EMAIL INPUT -----------------------------------------------*/}
 
-            {/*<View style={{marginLeft:150,backgroundColor:'red'}} onPress={()=>console.log('-------------->zdfzfvzrff')}>
+              <View style={{ alignItems: "center" }}>
+                {value.emailError === false ? (
+                  <TextInput
+                    style={{
+                      backgroundColor: "white",
+                      height: 50,
+                      fontSize: 17,
+                      borderColor: "black",
+                      borderWidth: 1,
+                      padding: 10,
+                      width: 290,
+                      borderRadius: 18,
+                      alignItems: "center",
+                    }}
+                    placeholder="Your Email here"
+                    keyboardType="email-address"
+                    onChangeText={(text) => setValue({ ...value, email: text })}
+                    ref={emailRef}
+                  />
+                ) : (
+                  <TextInput
+                    style={{
+                      height: 50,
+                      fontSize: 17,
+                      borderColor: "red",
+                      borderWidth: 2,
+                      padding: 10,
+                      width: 290,
+                      borderRadius: 18,
+                      alignItems: "center",
+                      color: "red",
+                    }}
+                    placeholder="Your Email here"
+                    keyboardType="email-address"
+                    onChangeText={(text) => setValue({ ...value, email: text })}
+                    ref={emailRef}
+                    defaultValue="Your Email is wrong"
+                    onFocus={() => setValue({ ...value, emailError: false })}
+                  />
+                )}
+
+                <Text
+                  style={{
+                    marginTop: 40,
+                    textAlign: "left",
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    marginRight: 170,
+                    marginBottom: 8,
+                  }}
+                  ref={passwordTitle}
+                >
+                  Password
+                </Text>
+                {/** ---------------------------------------------------PASSWORD INPUT -----------------------------------------------*/}
+
+                <View style={{ alignItems: "center" }}>
+                  {value.passwordError ? (
+                    <TextInput
+                      secureTextEntry={value.passwordHide}
+                      style={{
+                        backgroundColor: "white",
+                        height: 50,
+                        fontSize: 17,
+                        borderColor: "red",
+                        borderWidth: 2,
+                        padding: 10,
+                        width: 290,
+                        borderRadius: 18,
+                        alignItems: "center",
+                        color: "red",
+                      }}
+                      placeholder="Your password here"
+                      onChangeText={(text) =>
+                        setValue({ ...value, password: text })
+                      }
+                      ref={passwordRef}
+                    />
+                  ) : (
+                    <TextInput
+                      secureTextEntry={value.passwordHide}
+                      style={{
+                        backgroundColor: "white",
+                        height: 50,
+                        fontSize: 17,
+                        borderColor: "black",
+                        borderWidth: 1,
+                        padding: 10,
+                        width: 290,
+                        borderRadius: 18,
+                        alignItems: "center",
+                      }}
+                      placeholder="Your password here"
+                      onChangeText={(text) =>
+                        setValue({ ...value, password: text })
+                      }
+                      ref={passwordRef}
+                    />
+                  )}
+                </View>
+
+                {!value.password.length ? null : value.passwordHide === true ? (
+                  <Text
+                    style={{ textAlign: "center" }}
+                    onPress={() =>
+                      setValue({ ...value, passwordHide: !value.passwordHide })
+                    }
+                  >
+                    Show password
+                  </Text>
+                ) : (
+                  <Text
+                    style={{ textAlign: "center" }}
+                    onPress={() =>
+                      setValue({ ...value, passwordHide: !value.passwordHide })
+                    }
+                  >
+                    hide password
+                  </Text>
+                )}
+
+                {/*<View style={{marginLeft:150,backgroundColor:'red'}} onPress={()=>console.log('-------------->zdfzfvzrff')}>
           <Image source={eye} style={{width:25,height:25}}  onPress={()=>console.log('-------------->zdfzfvzrff')}/>
   </View>*/}
 
-            {value.error === "auth/wrong-password" ? (
-              <Text
-                style={{
-                  marginTop: 0,
-                  textAlign: "center",
-                  fontSize: 17,
-                  fontWeight: "400",
-                  color: "red",
-                }}
-                onPress={() => Navigation.navigate("Create an account")}
-              >
-                Wrong password
-              </Text>
-            ) : null}
-            <Text
-              style={{
-                marginTop: 40,
-                textAlign: "center",
-                fontSize: 17,
-                fontWeight: "400",
-              }}
-              onPress={() => Navigation.navigate("Create an account")}
-            >
-              Don't have an account,{" "}
-              <Text style={{ color: "#40946C", fontWeight: "bold" }}>
-                sign in :
-              </Text>
-            </Text>
+                {value.error === "auth/wrong-password" ? (
+                  <Text
+                    style={{
+                      marginTop: 0,
+                      textAlign: "center",
+                      fontSize: 17,
+                      fontWeight: "400",
+                      color: "red",
+                    }}
+                    onPress={() => Navigation.navigate("Create an account")}
+                  >
+                    Wrong password
+                  </Text>
+                ) : null}
+                <Text
+                  style={{
+                    marginTop: 40,
+                    textAlign: "center",
+                    fontSize: 17,
+                    fontWeight: "400",
+                  }}
+                  onPress={() => Navigation.navigate("Create an account")}
+                >
+                  Don't have an account,{" "}
+                  <Text style={{ color: "#40946C", fontWeight: "bold" }}>
+                    sign in :
+                  </Text>
+                </Text>
 
-            {/** ---------------------------------------------------BUTTONS Sign in  -----------------------------------------------*/}
-            <View style={{ alignItems: "center" }}>
-              <Text
-                style={{
-                  fontSize: 17,
-                  fontWeight: "500",
-                  borderRadius:18,
-                  borderRadius: 18,
-                  backgroundColor: "#F96A27",
-                  color: "white",
-                  padding: 15,
-                  marginTop: 30,
-                  textAlign: "center",
-                  width: 350,
+                {/** ---------------------------------------------------BUTTONS Sign in  -----------------------------------------------*/}
+                <View style={{ alignItems: "center" }}>
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      fontWeight: "500",
+                      borderBottomLeftRadius: 120,
+                      borderRadius: 18,
+                      backgroundColor: "#F96A27",
+                      color: "white",
+                      padding: 15,
+                      marginTop: 30,
+                      textAlign: "center",
+                      width: 150,
+                    }}
+                    onPress={() => {
+                      handleLogIn();
+                    }}
+                  >
+                    {" "}
+                    Log in{" "}
+                  </Text>
+                </View>
 
-                  shadowColor: "red",
-                    shadowOffset: {
-                      width: 10,
-                      height: 0,
-                    },
-                    shadowOpacity: 10,
-                    shadowRadius: 10,
-                    elevation: 10
-                }}
-                onPress={() => {
-                  handleLogIn();
-                  console.log("the email is"+value.email)
-                  console.log("the password is"+value.password)
-                }}
-              >
-                Log in
-              </Text>
+                <Text
+                  style={{
+                    marginTop: 10,
+                    textAlign: "center",
+                    fontSize: 17,
+                    fontWeight: "600",
+                  }}
+                  onPress={() => forgetPassword()}
+                >
+                  Forget password ?
+                </Text>
+
+                <StatusBar style="inverted" />
+              </View>
+
+              <StatusBar style="inverted" />
             </View>
-
-            <Text
-              style={{
-                marginTop: 10,
-                textAlign: "center",
-                fontSize: 17,
-                fontWeight: "600",
-              }}
-              onPress={() => forgetPassword()}
-            >
-              Forget password ?
-            </Text>
-
-            <StatusBar style="inverted" />
-          </View>
-
-        
-
-          <StatusBar style="inverted" />
-         
+          </ImageBackground>
         </View>
-      </ImageBackground>
-      </View>
       </TouchableWithoutFeedback>
-  
     </>
-  );
-}
+  )}
+
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
 const css = StyleSheet.create({
@@ -371,15 +379,14 @@ const css = StyleSheet.create({
 
   },
   textParam: {
-    backgroundColor:'#FEE9E5',
-    fontSize:25,
-    fontWeight:'bold',
-    marginLeft:0,
-    marginTop:-50,
-    marginBottom:10,
-    textAlign:'center',
-    width:250,
-    height:35,
-  }
+    backgroundColor: "#FEE9E5",
+    fontSize: 25,
+    fontWeight: "bold",
+    marginLeft: 0,
+    marginTop: -50,
+    marginBottom: 10,
+    textAlign: "center",
+    width: 250,
+    height: 35,
+  },
 });
-

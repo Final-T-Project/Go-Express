@@ -1,6 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View ,TextInput ,Button, TouchableWithoutFeedback , Keyboard ,ScrollView} from 'react-native';
-import { useState , useEffect } from 'react';
+import { StatusBar } from "expo-status-bar";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ScrollView,
+} from "react-native";
+import { useState, useEffect } from "react";
 
 import axios from 'axios'
 
@@ -10,22 +19,20 @@ import firebaseConfig from '../config/firebase';  //  ----------->  T IMPORTIIII
 import { getAuth, createUserWithEmailAndPassword , onAuthStateChanged} from "firebase/auth";  // importing the auth of Firebase 
 import { initializeApp } from 'firebase/app';
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
-import { useNavigation } from '@react-navigation/native';
-
+import { useNavigation } from "@react-navigation/native";
 
 export default function App() {
-
   ///----------------------------------------------------> States <----------------------------------------------------------------------------///
   const [value, setValue] = useState({
-    nameUser:"",
-    email: "",        //         TO STORE THE EMAIL INPUT
-    password: "",    //   TO STORE THE PASSWORD INPUT
-    confirmPassword:"",
+    nameUser: "",
+    email: "", //         TO STORE THE EMAIL INPUT
+    password: "", //   TO STORE THE PASSWORD INPUT
+    confirmPassword: "",
 
-    error: "",       // ST7A9ITHECH LHA9 AMAAA TAJEM TESTHA9HA  
-    
-    emailConfirmation:false,
-    emailInput:"",
+    error: "", // ST7A9ITHECH LHA9 AMAAA TAJEM TESTHA9HA
+
+    emailConfirmation: false,
+    emailInput: "",
   });
 
   const [user,setUser]=useState("")
@@ -93,67 +100,167 @@ const handleSignIn=()=>{
   }}
 
 
-  ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
+
+  ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
   ///----------------------------------------------------> function for handling the Sign In to te account <-----------------------------------------///
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
-
-
-
   ///-------------------------------------------------------------------> The Sign up / Sign In structure page  <--------------------------------------------///
 
-  return (<>
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-    
-    <View style={css.container}>
-    {/** ---------------------------------------------------NAME INPUT -----------------------------------------------*/}
-    <View style={css.box}>
-    <Text style={{marginTop:20,textAlign:"left",fontSize:20,fontWeight:'bold'}}>Name</Text>
-    <TextInput
-         style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
-        placeholder="Your Name here"  onChangeText={(text) => setValue({ ...value, nameUser: text })}
-        />
- 
-      <Text style={{marginTop:40,textAlign:"left",fontSize:20,fontWeight:'bold'}}>Email</Text>
-      {/** ---------------------------------------------------EMAIL INPUT -----------------------------------------------*/}
-      <TextInput keyboardType="email-address" 
-         style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
-        placeholder="Your Email here"  onChangeText={(text) => setValue({ ...value, email: text })}
-        />
+  return (
+    <>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={css.container}>
+          {/** ---------------------------------------------------NAME INPUT -----------------------------------------------*/}
+          <View style={css.box}>
+            <Text
+              style={{
+                marginTop: 20,
+                textAlign: "left",
+                fontSize: 20,
+                fontWeight: "bold",
+              }}
+            >
+              Name
+            </Text>
+            <TextInput
+              style={{
+                backgroundColor: "white",
+                height: 50,
+                fontSize: 17,
+                borderColor: "black",
+                borderWidth: 1,
+                padding: 10,
+                width: 290,
+                borderRadius: 18,
+                alignItems: "center",
+              }}
+              placeholder="Your Name here"
+              onChangeText={(text) => setValue({ ...value, nameUser: text })}
+            />
 
-        
-        {!value.emailConfirmation?<Text style={{color:'red'}}> Email not confirmed yet </Text>:<Text style={{color:'green'}}> Email Confirmed, you can create your account</Text>}
-        
-        
-        <Text style={{marginTop:40,textAlign:"left",fontSize:20,fontWeight:'bold'}}>Password</Text>
-        {/** ---------------------------------------------------PASSWORD INPUT -----------------------------------------------*/}
-       <TextInput  secureTextEntry={true}
-         style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
-        placeholder="Your password here"  onChangeText={(text) => setValue({ ...value, password: text })}
-        />
-        {/** ---------------------------------------------------CONfirm PAssword INPUT -----------------------------------------------*/}
-        <Text style={{marginTop:40,textAlign:"left",fontSize:20,fontWeight:'bold'}}>Confirm password</Text>
-    <TextInput secureTextEntry={true}
-         style={{backgroundColor:"white",height: 50,fontSize:17,borderColor:'black',borderWidth:1,padding:10,width:290,borderRadius:18,alignItems:'center'}}
-        placeholder="Confirm your password"  onChangeText={(text) => setValue({ ...value, confirmPassword: text })}
-        />
+            <Text
+              style={{
+                marginTop: 40,
+                textAlign: "left",
+                fontSize: 20,
+                fontWeight: "bold",
+              }}
+            >
+              Email
+            </Text>
+            {/** ---------------------------------------------------EMAIL INPUT -----------------------------------------------*/}
+            <TextInput
+              keyboardType="email-address"
+              style={{
+                backgroundColor: "white",
+                height: 50,
+                fontSize: 17,
+                borderColor: "black",
+                borderWidth: 1,
+                padding: 10,
+                width: 290,
+                borderRadius: 18,
+                alignItems: "center",
+              }}
+              placeholder="Your Email here"
+              onChangeText={(text) => setValue({ ...value, email: text })}
+            />
 
-        {/** ---------------------------------------------------BUTTONS  -----------------------------------------------*/}
-     <Text style={{fontSize:17,fontWeight:'500',borderBottomLeftRadius:120,borderRadius:18,backgroundColor:'#F96A27',color:'white',padding:15,marginTop:30,textAlign:'center',width:250}} onPress={()=>{
-      handleSignIn()
-      }}> Create an account </Text> 
-     
+            {/* {!value.emailConfirmation ? (
+              <Text style={{ color: "red" }}> Email not confirmed yet </Text>
+            ) : (
+              <Text style={{ color: "green" }}>
+                {" "}
+                Email Confirmed, you can create your account
+              </Text>
+            )} */}
 
-      
-      <StatusBar style="inverted" />
-      </View>
-      
-    </View>
-    
-  
-    </TouchableWithoutFeedback>
+            <Text
+              style={{
+                marginTop: 40,
+                textAlign: "left",
+                fontSize: 20,
+                fontWeight: "bold",
+              }}
+            >
+              Password
+            </Text>
+            {/** ---------------------------------------------------PASSWORD INPUT -----------------------------------------------*/}
+            <TextInput
+              secureTextEntry={true}
+              style={{
+                backgroundColor: "white",
+                height: 50,
+                fontSize: 17,
+                borderColor: "black",
+                borderWidth: 1,
+                padding: 10,
+                width: 290,
+                borderRadius: 18,
+                alignItems: "center",
+              }}
+              placeholder="Your password here"
+              onChangeText={(text) => setValue({ ...value, password: text })}
+            />
+            {/** ---------------------------------------------------CONfirm PAssword INPUT -----------------------------------------------*/}
+            <Text
+              style={{
+                marginTop: 40,
+                textAlign: "left",
+                fontSize: 20,
+                fontWeight: "bold",
+              }}
+            >
+              Confirm password
+            </Text>
+            <TextInput
+              secureTextEntry={true}
+              style={{
+                backgroundColor: "white",
+                height: 50,
+                fontSize: 17,
+                borderColor: "black",
+                borderWidth: 1,
+                padding: 10,
+                width: 290,
+                borderRadius: 18,
+                alignItems: "center",
+              }}
+              placeholder="Confirm your password"
+              onChangeText={(text) =>
+                setValue({ ...value, confirmPassword: text })
+              }
+            />
+
+            {/** ---------------------------------------------------BUTTONS  -----------------------------------------------*/}
+            <Text
+              style={{
+                fontSize: 17,
+                fontWeight: "500",
+                borderBottomLeftRadius: 120,
+                borderRadius: 18,
+                backgroundColor: "#F96A27",
+                color: "white",
+                padding: 15,
+                marginTop: 30,
+                textAlign: "center",
+                width: 250,
+              }}
+              onPress={() => {
+                handleSignIn();
+              }}
+            >
+              {" "}
+              Create an account{" "}
+            </Text>
+
+            <StatusBar style="inverted" />
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
     </>
   );
 }
@@ -162,28 +269,24 @@ const handleSignIn=()=>{
 const css = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFB897',
-    alignItems: 'center',
-   
-    
+    backgroundColor: "#FFB897",
+    alignItems: "center",
   },
   textParam: {
-    fontSize:30,
-    fontWeight:'bold',
-    textAlign:'left',
-    marginLeft:20,
-    marginTop:200,
-    marginBottom:0
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "left",
+    marginLeft: 20,
+    marginTop: 200,
+    marginBottom: 0,
   },
   box: {
     backgroundColor: "#FEE9E5",
     width: 330,
     height: 600,
-    borderBottomLeftRadius:120,
-    
-   
+    borderBottomLeftRadius: 120,
 
-    alignItems:'center',
+    alignItems: "center",
     justifyContent: "center",
 
     shadowColor: "black",
@@ -196,6 +299,3 @@ const css = StyleSheet.create({
     elevation: 20,
   },
 });
-
-
-

@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  ImageBackground,
 } from "react-native";
 import profile from "../assets/profile.png";
 // Tab ICons...
@@ -19,7 +20,7 @@ import chat from "../assets/chat.png";
 import logout from "../assets/logout.png";
 import menu from "../assets/menu.png";
 import close from "../assets/close.png";
-// import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import TabBar from "../components/TabBar";
 
 export default function SideBbar({ navigation }) {
@@ -36,20 +37,23 @@ export default function SideBbar({ navigation }) {
   const closeButtonOffset = useRef(new Animated.Value(0)).current;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView  style={styles.container}>
       {/* blaset el contenue mta el side bar */}
-      <View style={{ justifyContent: "flex-start", padding: 30 }}>
+     <ImageBackground  source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673040221/ekher_wba4yg.png"}} resizeMode="cover" style={styles.image}>
+      <View  style={{ justifyContent: "flex-start", padding: 30 }}>
+      
         <TouchableOpacity
-        onPress={() => {navigation.navigate("Profil")}}
+          onPress={() => {
+            navigation.navigate("Profil");
+          }}
         >
-          
           <Image
             source={profile}
             style={{
               width: 90,
               height: 90,
               borderRadius: 60,
-              marginTop: 30,
+              marginTop: 10,
             }}
           ></Image>
           <Text
@@ -61,7 +65,6 @@ export default function SideBbar({ navigation }) {
             }}
           >
             Hello Jenna{" "}
-           
           </Text>
           <Text
             style={{
@@ -86,8 +89,9 @@ export default function SideBbar({ navigation }) {
           {TabButton(currentTab, setCurrentTab, "Chat", chat)}
         </View>
         <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
+      
       </View>
-
+  </ImageBackground>
       {
         // Over lay View...
       }
@@ -124,7 +128,7 @@ export default function SideBbar({ navigation }) {
             onPress={() => {
               // Do Actions Here....
               // Scaling the view...
-              
+
               Animated.timing(scaleValue, {
                 toValue: showMenu ? 1 : 0.88,
                 duration: 300,
@@ -168,7 +172,6 @@ export default function SideBbar({ navigation }) {
           >
             {currentTab}
           </Text> */}
-          
         </Animated.View>
         <TabBar navigation={navigation} />
         {/* navigation={navigation} */}
@@ -179,15 +182,14 @@ export default function SideBbar({ navigation }) {
 
 // For multiple Buttons...
 const TabButton = (currentTab, setCurrentTab, title, image) => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
       onPress={() => {
         if (title == "Feedback") {
           setCurrentTab("Feedback");
-          
+
           //  navigation.navigate("Home");
-    
         } else if (title == "Notification") {
           setCurrentTab("Notification");
           // navigation.navigate("Shop");
@@ -198,7 +200,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
         } else if (title == "Settings") {
           setCurrentTab("Settings");
         } else {
-           //navigation.navigate("Log in");
+          navigation.navigate("Log in");
         }
       }}
       LogOut
@@ -209,7 +211,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           flexDirection: "row",
           alignItems: "center",
           paddingVertical: 8,
-          backgroundColor: currentTab == title ? "white" : "transparent",
+          backgroundColor: currentTab == title ? "" : "transparent",
           paddingLeft: 13,
           paddingRight: 35,
           borderRadius: 10,
@@ -230,12 +232,12 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
             fontSize: 15,
             fontWeight: "bold",
             paddingLeft: 15,
-            color: currentTab == title ? "black" : "white",
+            color: currentTab == title ? "white" : "white",
           }}
         >
           {title}
         </Text>
-      </View> 
+      </View>
     </TouchableOpacity>
   );
 };
@@ -247,5 +249,11 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
+  image: {
+    flex: 1,
+    justifyContent: "center",
+    width:"100%",
+    height:"100%"
+  }
 });
-//side bar 
+//side bar

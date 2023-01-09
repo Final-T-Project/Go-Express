@@ -77,6 +77,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cart` (
     FOREIGN KEY (`user_id_user`)
     REFERENCES `mydb`.`user` (`id_user`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -152,14 +153,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
   `id_product` INT NOT NULL AUTO_INCREMENT,
   `sellIerd` VARCHAR(60) CHARACTER SET 'utf8mb3' NULL DEFAULT 'Null',
   `buyerId` VARCHAR(60) NULL DEFAULT 'Null',
-  `name` VARCHAR(45) NOT NULL,
+  `product_name` VARCHAR(45) NULL DEFAULT NULL,
   `category` ENUM('Kitchen', 'Garden', 'Furniture', 'Accessories') NOT NULL,
   `price` INT NOT NULL,
   `description` VARCHAR(600) NOT NULL,
-  `photo` VARCHAR(300) NOT NULL,
+  `photo_product` VARCHAR(300) NOT NULL,
   `quantity` INT NOT NULL DEFAULT '1',
   `user_id_user` VARCHAR(50) NOT NULL,
   `cart_id_cart` INT NOT NULL,
+  `productStatus` ENUM('Accepted', 'NotAccepted') NULL DEFAULT 'NotAccepted',
+  `Published_at` VARCHAR(500) NULL DEFAULT NULL,
   PRIMARY KEY (`id_product`),
   INDEX `fk_product_user_idx` (`user_id_user` ASC) VISIBLE,
   INDEX `fk_product_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
@@ -170,6 +173,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
     FOREIGN KEY (`user_id_user`)
     REFERENCES `mydb`.`user` (`id_user`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 46
 DEFAULT CHARACTER SET = utf8mb3;
 
 
