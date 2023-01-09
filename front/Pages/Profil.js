@@ -13,7 +13,7 @@ import {
   Dimensions,
  Button,
   TextInput,
-  Alert,
+  Alert,KeyboardAvoidingView,
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from "react";
@@ -57,6 +57,7 @@ function Product() {
 function Info({navigation}) {
   const imgWidth = Dimensions.get('screen').width * 0.33333;
   return (
+   
     <View
     
     style={{backgroundColor:"white", height: 480,alignItems:"center",padding:20}}
@@ -198,8 +199,12 @@ export default function Profil({navigation}) {
 
 
   return (
+    
     <SafeAreaView>
-     
+     <KeyboardAvoidingView
+    style={styles.container}
+    behavior="padding"
+  >
         <ScrollView>
           <View>
             
@@ -225,7 +230,7 @@ export default function Profil({navigation}) {
                 >
                 </Image>
                 </View>
-         </View>
+         </View> 
          <View>
          
           {/* user name */}
@@ -295,7 +300,7 @@ export default function Profil({navigation}) {
             </View></SafeAreaView>
         </ScrollView>
       
-      <TabBar navigation={navigation}/>
+      <TabBar navigation={navigation}/></KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

@@ -36,7 +36,7 @@ export default function App() {
     >
     <NativeBaseProvider>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="TestSignin">
+      <Stack.Navigator initialRouteName="Profil">
        
       <Stack.Screen
           name="Log in"
