@@ -14,7 +14,7 @@ import {
   Dimensions,
   Button,
   TextInput,
-  Alert,
+  Alert,KeyboardAvoidingView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
@@ -111,6 +111,7 @@ function Product() {
 function Info({ navigation }) {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
   return (
+   
     <View
       style={{
         backgroundColor: "white",
