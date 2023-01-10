@@ -14,13 +14,12 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Picker } from "@react-native-picker/picker";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import TabBar from "../components/TabBar";
-
 import axios from "axios";
 
 const AddProduct = ({ navigation }) => {
@@ -40,60 +39,6 @@ const AddProduct = ({ navigation }) => {
   const onPlus = () => {
     setQuantity(quantity + 1);
   };
-
-  // function to pick image from device and store it in image variable
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Image,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 0.5,
-    });
-    setImage(result.uri);
-    console.log("hi", result.uri);
-
-    if (!result.cancelled) {
-      let newfile = {
-        uri: result.uri,
-      };
-      uploadImage(newfile);
-    }
-  };
-  // console.log("image url", image);
-
-  // function to upload image to cloudinary
-  async function uploadImage(path) {
-    try {
-      const cloudName = "ddvyi3jpk";
-      const apiKey = "473317851271237";
-      const apiSecret = "X11a5qnqfyzgMCkEoJN0Gz2cvNs";
-
-      const timestamp = Date.now().toString();
-      const publicId = `my-image-${timestamp}`;
-
-      // Form the request payload
-      const formData = new FormData();
-      formData.append("file", {
-        uri: path,
-        name: `${timestamp}.jpg`,
-        type: "image/png",
-      });
-      formData.append("api_key", apiKey);
-      formData.append("timestamp", timestamp);
-      formData.append("public_id", publicId);
-
-      // Make the request to Cloudinary's API
-      const response = await axios.post(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        formData
-      );
-
-      // Return the URL of the uploaded image
-      return response.data.secure_url;
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   const month = [
     "January",
@@ -122,22 +67,50 @@ const AddProduct = ({ navigation }) => {
     ":" +
     new Date().getMinutes();
 
-  let addProduct = () => {
+  // state to save id connected user
+  const [idUser, setIdUser] = useState("");
+
+  AsyncStorage.getItem("userData").then((res) => {
+    setIdUser(JSON.parse(res));
+    // console.log(res);
+  });
+
+  // function to pick image from device and store it in image variable
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Image,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    setImage(result.uri);
+    console.log("hi", result.uri);
+
+    if (!result.cancelled) {
+      let newfile = {
+        uri: result.uri,
+      };
+      // uploadImage(newfile);
+    }
+  };
+
+  let addProduct = async () => {
+    const imageUrl = await uploadImage();
     if (!name.length || !description.length || !price.length) {
       alert("Please fill all information");
     } else {
       const adressIp = `192.168.103.8`;
       axios
         .post(`http://${adressIp}:5000/products/addProduct`, {
-          sellIerd: "A",
+          sellIerd: idUser.userId,
           buyerId: "Null",
           product_name: name,
           category: category,
           price: price,
           description: description,
-          photo: image,
+          photo: imageUrl,
           quantity: quantity,
-          id_user: "A",
+          id_user: idUser.userId,
           id_cart: 2,
           productStatus: "NotAccepted",
           Published_at: posted_at,
@@ -152,7 +125,6 @@ const AddProduct = ({ navigation }) => {
     }
   };
 
-  console.log(typeof price);
   return (
     <>
       <ScrollView>
@@ -207,7 +179,7 @@ const AddProduct = ({ navigation }) => {
                   onBlur={handleBlur("price")}
                   onChangeText={(number) => setPrice(number)}
                 />
-                {price.length === 0 || typeof price !== Number ? (
+                {price.length === 0 ? (
                   <Text style={styles.error}>Price is required</Text>
                 ) : null}
                 {/* {typeof price !== Number ? (

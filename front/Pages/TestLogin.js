@@ -61,10 +61,11 @@ export default function TestLogin() {
               userId: userCredential.user.uid,
             })
           );
+          return userCredential.user.uid;
         })
 
-        .then(() => {
-          Navigation.navigate("SideBar");
+        .then((id) => {
+          Navigation.navigate("SideBar", { id });
         })
 
         .catch((error) => {
@@ -97,9 +98,8 @@ export default function TestLogin() {
 
   //-----------------------------------------------------------------------------------------------------------
   return (
-    
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-    <View style={css.constainer}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={css.constainer}>
         <ImageBackground
           style={{ width: "100%", height: "100%" }}
           source={{
@@ -281,7 +281,6 @@ export default function TestLogin() {
               </Text>
             </Text>
 
-
             <Text
               style={{
                 fontSize: 15,
@@ -291,20 +290,13 @@ export default function TestLogin() {
               }}
             >
               Forget my password ?
-              <Text
-                
-                style={{ color: "#F96332" }}
-              >
-                {" "}
-                tap here
-              </Text>
+              <Text style={{ color: "#F96332" }}> tap here</Text>
             </Text>
           </View>
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
-  
-  )
+  );
 }
 
 const css = StyleSheet.create({
