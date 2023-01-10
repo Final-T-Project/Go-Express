@@ -36,16 +36,29 @@ import EditeProfil from "./EditeProfil";
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
+const adressIp = `192.168.104.22`;
+
+
 function Product() {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
 
   // state to save user information
   const [userDataProduct, setUserDataProduct] = useState([]);
+  const [idUser,setIdUser]= useState("")
+
 
   useEffect(() => {
     const adressIp = `192.168.104.14`;
+
+    
+  AsyncStorage.getItem("userData")
+  .then((res) => {
+    setIdUser(JSON.parse(res));
+    
+  })
+  .then(()=>{
     axios
-      .get(`http://${adressIp}:5000/users/getUserProduct/A`)
+      .get(`http://${adressIp}:5000/users/getUserProduct/${idUser.userId}`)
       .then((response) => {
         setUserDataProduct(response.data);
       })
@@ -53,6 +66,9 @@ function Product() {
         alert(error);
       });
   }, []);
+  })
+
+    
 
   // console.log("data", userData);
   return (
@@ -126,7 +142,35 @@ function Product() {
                   style={{fontSize: 22, color: COLOURS.black}}
                 /></TouchableOpacity> */}
 // feedback side
-function Info({ navigation,userDataProfile }) {
+function Info({ navigation }) {
+  
+  const [userDataProfile, setUserDataProfile] = useState([]);
+
+  const [idUser,setIdUser]=useState({})
+
+  AsyncStorage.getItem("userData")
+  .then((res) => {
+    setIdUser(JSON.parse(res));
+  })
+  
+  console.log("------- from Info ------>"+idUser.userId)
+
+     
+  useEffect(() => {
+   
+    axios
+    .get(`http://${adressIp}:5000/users/getUserPorfile/${idUser.userId}`)
+  .then((response) => {
+    setUserDataProfile(response.data);
+    console.log(response.data)
+  })
+  .catch((error) => {
+    alert(error);
+  });
+},[]);
+
+
+
   const imgWidth = Dimensions.get("screen").width * 0.33333;
   return (
    
@@ -161,7 +205,13 @@ function Info({ navigation,userDataProfile }) {
                 }}
                 style={{ width: 22, height: 22, marginRight: 20 }}
               ></Image>
-              <Text
+              {userDataProfile.map((element)=>{
+                if ( element.phone_number ){
+                  return (
+                    <>
+                    
+                      <Text
+                key={element.id_user}
                 fontSize="md"
                 color="#1C2765"
                 colorScheme="darkBlue"
@@ -169,8 +219,29 @@ function Info({ navigation,userDataProfile }) {
                 marginLeft={2}
                 rounded="4"
               >
-                27414994
+                {element.phone_number}
               </Text>
+                    </>
+                  )
+                }else{
+                  return (
+                    <>
+                      <Text
+                key={element.id_user}
+                fontSize="md"
+                color="#1C2765"
+                colorScheme="darkBlue"
+                variant="solid"
+                marginLeft={2}
+                rounded="4"
+              >
+                there is no number
+              </Text>
+                    </>
+                  )
+                }
+              })}
+              
             </HStack>
             <HStack marginTop={5}>
               <Image
@@ -315,10 +386,9 @@ export default function Profil({ navigation }) {
   })
   
    
-      //console.log(idUser.userId)
+      console.log(idUser.userId)
      
       useEffect(() => {
-        const adressIp = `192.168.104.14`;
         axios
         .get(`http://${adressIp}:5000/users/getUserPorfile/${idUser.userId}`)
       .then((response) => {
@@ -464,11 +534,11 @@ export default function Profil({ navigation }) {
               </TouchableOpacity>
             </View>
             {showContent === "Product" ? (
-              <Product Product={new Array(13).fill(1)} />
+              <Product Product={new Array(13).fill(1)} idUser={idUser}/>
             ) : showContent === "Info" ? (
-              <Info userDataProfile={userDataProfile}/>
+              <Info userDataProfile={userDataProfile} idUser={idUser.userId}/>
             ) : (
-              <Feedback Product={new Array(23).fill(1)} />
+              <Feedback Product={new Array(23).fill(1)} idUser={idUser} />
             )}
           </View>
         </ScrollView>

@@ -439,7 +439,7 @@ export default function Cart ({navigation}){
                   </View>
                 </View>
                 <HStack space={6}>
-      <Checkbox value="orange"colorScheme="orange" accessibilityLabel="This is a dummy checkbox" />
+      <Checkbox value="orange" colorScheme="orange" accessibilityLabel="This is a dummy checkbox" />
       
     </HStack>
               

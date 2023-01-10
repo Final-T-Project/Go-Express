@@ -36,6 +36,8 @@ export default function SideBbar({ navigation }) {
   const scaleValue = useRef(new Animated.Value(1)).current;
   const closeButtonOffset = useRef(new Animated.Value(0)).current;
 
+  
+
   return (
     <SafeAreaView style={styles.container}>
       {/* blaset el contenue mta el side bar */}

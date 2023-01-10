@@ -52,7 +52,7 @@ function TestLogin() {
       setUserId(user.uid)            //  ----------->  Setting the user Id ( that takin from the User Objet )
       
       
-      axios.post("http://192.168.1.16:5000/users/addUser",{id_user:userCredential.user.uid,name:value.nameUser,email:value.email})
+      axios.post("http://192.168.104.14:5000/users/addUser",{id_user:userCredential.user.uid,name:value.nameUser,email:value.email})
       .then(()=>{
         console.log("user added to dataBase")
       })
