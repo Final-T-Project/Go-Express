@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TabBar from "../components/TabBar";
 import {
   TouchableHighlight,
@@ -14,14 +14,12 @@ import {
   Dimensions,
   Button,
   TextInput,
-  Alert,KeyboardAvoidingView,
+  Alert,
+  KeyboardAvoidingView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect } from "react";
 import axios from "axios";
-// #ED5C00 orange
-// #373E5A khrawi
-// #F2F2F2
+
 import {
   TextArea,
   Box,
@@ -36,100 +34,95 @@ import EditeProfil from "./EditeProfil";
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
-function Product() {
+// feedback side
+function Feedback(props) {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
-
-  // state to save user information
-  const [userDataProduct, setUserDataProduct] = useState([]);
-
-  useEffect(() => {
-    const adressIp = `192.168.104.14`;
+  // state to save feedback text
+  const [FeedBackText, setFeedBackText] = useState("");
+  let AddFeedback = () => {
+    const adressIp = `192.168.103.8`;
     axios
-      .get(`http://${adressIp}:5000/users/getUserProduct/A`)
-      .then((response) => {
-        setUserDataProduct(response.data);
+      .post(`http://${adressIp}:5000/feedback/addFeedback`, {
+        details: FeedBackText,
+        id_user: props.idUser,
       })
-      .catch((error) => {
-        alert(error);
+      .catch((err) => {
+        console.log(err);
       });
-  }, []);
+  };
 
-  // console.log("data", userData);
   return (
-    <View style={{}}>
+    <View
+      style={{
+        flexDirection: "row",
+        flexWrap: "wrap",
+        flex: 1,
+        alignItems: "center",
+        height: 500,
+        justifyContent: "center",
+      }}
+    >
+      <View>
+        <View>
+          <Text
+            style={{
+              color: "#373E5A",
+              fontSize: 16,
+              fontWeight: "bold",
+              marginTop: 60,
+              alignContent: "center",
+            }}
+          >
+            Your Feedback is ower key to Satisfy your needs
+          </Text>
+        </View>
+        <View
+          style={{
+            marginTop: 80,
+          }}
+        >
+          <NativeBaseProvider>
+            <Box alignItems="center">
+              <TextArea
+                h={130}
+                size="xl"
+                placeholder="Feedback Placeholder"
+                w="800"
+                maxW="300"
+                backgroundColor={"#fafafa"}
+                borderColor={"#ED5C00"}
+                onChangeText={(text) => setFeedBackText(text)}
+              />
+            </Box>
+          </NativeBaseProvider>
+        </View>
+      </View>
       <View
         style={{
-          flexDirection: "row",
-          flexWrap: "wrap",
-          height: "100%",
-          alignItems: "flex-start",
+          marginTop: 350,
+          width: 80,
+          height: 80,
+          right: 0,
         }}
       >
-        {userDataProduct.map((element) => (
-          <ScrollView>
-            <Image
-              style={{
-                borderRadius: 15,
-                width: imgWidth,
-                height: imgWidth,
-              }}
-              source={{ uri: element.photo_product }}
-            />
-
-            <Text
-              style={{
-                textAlign: "center",
-                color: "#444444",
-              }}
-            >
-              {" "}
-              {element.product_name}
-            </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                color: "#444444",
-              }}
-            >
-              {element.price} dt
-            </Text>
-          </ScrollView>
-        ))}
-        {/* <View>
-          <Image
-            style={{ width: imgWidth, height: imgWidth }}
-            source={{
-              uri: `https://previews.123rf.com/images/seamartini/seamartini1809/seamartini180901112/109734896-barber-shop-haircut-salon-vector-retro-poster-man-with-beard-and-mustaches-haircut-made-with-scissor.jpg`,
-              uri: `https://res.cloudinary.com/dn9qfvg2p/image/upload/v1672929961/abstract-colorful-gradient-animation-background-free-video_ekl2hf.jpg`,
-            }}
-          />
-        </View> */}
+        <Button
+          color={"#ED5C00"}
+          title="Send"
+          onPress={() => {
+            Alert.alert(
+              "Your Feedback was send we will take it into considiretion."
+            );
+            AddFeedback();
+          }}
+        />
       </View>
     </View>
   );
 }
-          {/* <View
-                tyle={{
-                    backgroundColor: "red",
-                    height: 40,
-                    alignItems: "center",
-                    padding: 0,
-                  }}
-                >
-                <HStack>
-        <EditeProfil />
-      </HStack></View> */}
-      {/* <TouchableOpacity
-      >
-                <MaterialCommunityIcons
-                  name="lead-pencil"
-                  style={{fontSize: 22, color: COLOURS.black}}
-                /></TouchableOpacity> */}
-// feedback side
-function Info({ navigation,userDataProfile }) {
+
+function Info({ navigation, userDataProfile }) {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
   return (
-   
     <View
       style={{
         backgroundColor: "white",
@@ -215,145 +208,94 @@ function Info({ navigation,userDataProfile }) {
     </View>
   );
 }
-// feedback side
-function Feedback({ Product }) {
+// product side
+function Product(props) {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
+  // state to save user information
+  const [userDataProduct, setUserDataProduct] = useState([]);
 
-  const [FeedBackText, setFeedBackText] = useState("");
-
-  let AddFeedback = () => {
-    const adressIp = `192.168.104.14`;
+  useEffect(() => {
+    // console.log("the id from prduct : ", props.idUser);
     axios
-      .post(`http://${adressIp}:5000/feedback/addFeedback`, {
-        details: FeedBackText,
-        id_user: "A",
+      .get(`http://192.168.103.8:5000/users/getUserProduct/${props.idUser}`)
+      .then((response) => {
+        setUserDataProduct(response.data);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        alert(error);
       });
-  };
+  }, []);
 
+  // console.log("data", userData);
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        flexWrap: "wrap",
-        flex: 1,
-        alignItems: "center",
-        height: 500,
-        justifyContent: "center",
-      }}
-    >
-      <View>
-        <View>
-          <Text
-            style={{
-              color: "#373E5A",
-              fontSize: 16,
-              fontWeight: "bold",
-              marginTop: 60,
-              alignContent: "center",
-            }}
-          >
-            Your Feedback is ower key to Satisfy your needs
-          </Text>
-        </View>
-        <View
-          style={{
-            marginTop: 80,
-          }}
-        >
-          <NativeBaseProvider>
-            <Box alignItems="center">
-              <TextArea
-                h={130}
-                size="xl"
-                placeholder="Feedback Placeholder"
-                w="800"
-                maxW="300"
-                backgroundColor={"#fafafa"}
-                borderColor={"#ED5C00"}
-                onChangeText={(text) => setFeedBackText(text)}
-              />
-            </Box>
-          </NativeBaseProvider>
-        </View>
-      </View>
+    <View>
       <View
         style={{
-          marginTop: 350,
-          width: 80,
-          height: 80,
-          right: 0,
+          flexDirection: "row",
+          flexWrap: "wrap",
+          height: "100%",
+          alignItems: "flex-start",
         }}
       >
-        <Button
-          color={"#ED5C00"}
-          title="Send"
-          onPress={() => {
-            Alert.alert(
-              "Your Feedback was send we will take it into considiretion."
-            );
-            AddFeedback();
-          }}
-        />
+        {userDataProduct.map((element) => (
+          <ScrollView>
+            <Image
+              style={{
+                borderRadius: 15,
+                width: imgWidth,
+                height: imgWidth,
+              }}
+              source={{ uri: element.photo_product }}
+            />
+
+            <Text
+              style={{
+                textAlign: "center",
+                color: "#444444",
+              }}
+            >
+              {" "}
+              {element.product_name}
+            </Text>
+            <Text
+              style={{
+                textAlign: "center",
+                color: "#444444",
+              }}
+            >
+              {element.price} dt
+            </Text>
+          </ScrollView>
+        ))}
       </View>
     </View>
   );
 }
 
-export default function Profil({ navigation }) {
-  const [showContent, setShowContent] = useState("Product");
+export default function Profil({ navigation, route }) {
+  const [showContent, setShowContent] = useState("FeedBack");
+
   // state to save user information
   const [userDataProfile, setUserDataProfile] = useState([]);
+  // state to save id connected user
+  const [idUser, setIdUser] = useState("");
 
-  const [idUser,setIdUser]=useState("")
-
-  AsyncStorage.getItem("userData")
-  .then((res) => {
-    setIdUser(JSON.parse(res));
-  })
-  
-   
-      //console.log(idUser.userId)
-     
-      useEffect(() => {
-        const adressIp = `192.168.104.14`;
-        axios
-        .get(`http://${adressIp}:5000/users/getUserPorfile/${idUser.userId}`)
+  useEffect(() => {
+    setIdUser(route.params.idToSend);
+    console.log("test", route.params.idToSend);
+    axios
+      .get(
+        `http://192.168.103.8:5000/users/getUserPorfile/${route.params.idToSend}`
+      )
       .then((response) => {
         setUserDataProfile(response.data);
-        console.log(response.data)
+        // console.log(response.data);
       })
+
       .catch((error) => {
         alert(error);
       });
-  },[]);
-   
-
-    
-
-    
-
-  // console.log("data", userDataProfile);
-  // const [userInfo, setUserInfo] = useState("");
-  // const [userData, setUserData] = useState([]);
-
-  
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://192.168.104.23:5000/users/getUserPorfile/${userInfo.userId}`)
-  //     .then((response) => {
-  //       console.log("********User Name*********", response.data[0].name);
-  //       setUserData(response.data[0]);
-  //       // const obj=JSON.parse(response)
-  //       // console.log("*****************"+obj)
-  //     })
-  //     .catch((error) => {
-  //       alert(error);
-  //     });
-  // }, []);
+  }, []);
 
   return (
     <>
@@ -371,32 +313,32 @@ export default function Profil({ navigation }) {
           </View>
           <View>
             <View>
-              {userDataProfile.map((element)=>{
+              {userDataProfile.map((element) => {
                 return (
-                <>
-                <Image
-                source={{
-                  uri: element.photo,
-                }}
-                style={{
-                  width: 100,
-                  height: 100,
-                  // borderRadius: 100,
-                  marginTop: -130,
-                  left: 20,
-                  borderRadius: 20,
-                  shadowColor: "black",
-                    shadowOffset: {
-                      width: 5,
-                      height: 5,
-                    },
-                    shadowOpacity:'100%',
-                    shadowRadius: 20,
-                    elevation: 20,
-                }}
-              ></Image>
-                </>
-                )
+                  <>
+                    <Image
+                      source={{
+                        uri: element.photo,
+                      }}
+                      style={{
+                        width: 100,
+                        height: 100,
+                        // borderRadius: 100,
+                        marginTop: -130,
+                        left: 20,
+                        borderRadius: 20,
+                        shadowColor: "black",
+                        shadowOffset: {
+                          width: 5,
+                          height: 5,
+                        },
+                        shadowOpacity: "100%",
+                        shadowRadius: 20,
+                        elevation: 20,
+                      }}
+                    ></Image>
+                  </>
+                );
               })}
             </View>
           </View>
@@ -405,7 +347,7 @@ export default function Profil({ navigation }) {
           {userDataProfile.map((element) => (
             <View>
               <Text
-              key={element.id_user}
+                key={element.id_user}
                 style={{
                   fontSize: 20,
                   fontWeight: "bold",
@@ -419,7 +361,6 @@ export default function Profil({ navigation }) {
 
               {/* user ville */}
               <Text
-              
                 style={{
                   fontSize: 15,
                   top: -110,
@@ -438,11 +379,11 @@ export default function Profil({ navigation }) {
               <TouchableOpacity
                 style={{
                   ...styles.showContentButton,
-                  borderBottomWidth: showContent === "Product" ? 2 : 0,
+                  borderBottomWidth: showContent === "FeedBack" ? 2 : 0,
                 }}
-                onPress={() => setShowContent("Product")}
+                onPress={() => setShowContent("FeedBack")}
               >
-                <Text style={styles.showContentButtonText}>Product</Text>
+                <Text style={styles.showContentButtonText}>FeedBack</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
@@ -456,19 +397,19 @@ export default function Profil({ navigation }) {
               <TouchableOpacity
                 style={{
                   ...styles.showContentButton,
-                  borderBottomWidth: showContent === "Feedback" ? 2 : 0,
+                  borderBottomWidth: showContent === "Product" ? 2 : 0,
                 }}
-                onPress={() => setShowContent("Feedback")}
+                onPress={() => setShowContent("Product")}
               >
-                <Text style={styles.showContentButtonText}>FeedBack</Text>
+                <Text style={styles.showContentButtonText}>Product</Text>
               </TouchableOpacity>
             </View>
             {showContent === "Product" ? (
-              <Product Product={new Array(13).fill(1)} />
+              <Product idUser={idUser} />
             ) : showContent === "Info" ? (
-              <Info userDataProfile={userDataProfile}/>
+              <Info userDataProfile={userDataProfile} />
             ) : (
-              <Feedback Product={new Array(23).fill(1)} />
+              <Feedback idUser={idUser} />
             )}
           </View>
         </ScrollView>

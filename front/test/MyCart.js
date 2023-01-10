@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,25 +6,20 @@ import {
   TouchableOpacity,
   Image,
   ToastAndroid,
-} from 'react-native';
-import {
-  Box,
-  Center,
-  HStack,
-  Checkbox
-} from "native-base";
-import EditeAdress from 'front/Pages/EditeAdress.js';
-import { FontAwesome5 } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {COLOURS, Items} from '../database/Database';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+} from "react-native";
+import { Box, Center, HStack, Checkbox } from "native-base";
+import EditeAdress from "front/Pages/EditeAdress.js";
+import { FontAwesome5 } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { COLOURS, Items } from "../database/Database";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const MyCart = ({navigation}) => {
+const MyCart = ({ navigation }) => {
   const [product, setProduct] = useState();
   const [total, setTotal] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation.addListener("focus", () => {
       getDataFromDB();
     });
 
@@ -33,11 +28,11 @@ const MyCart = ({navigation}) => {
 
   //get data from local DB by ID
   const getDataFromDB = async () => {
-    let items = await AsyncStorage.getItem('cartItems');
+    let items = await AsyncStorage.getItem("cartItems");
     items = JSON.parse(items);
     let productData = [];
     if (items) {
-      Items.forEach(data => {
+      Items.forEach((data) => {
         if (items.includes(data.id)) {
           productData.push(data);
           return;
@@ -52,7 +47,7 @@ const MyCart = ({navigation}) => {
   };
 
   //get total price of all items in the cart
-  const getTotal = productData => {
+  const getTotal = (productData) => {
     let total = 0;
     for (let index = 0; index < productData.length; index++) {
       let productPrice = productData[index].productPrice;
@@ -63,8 +58,8 @@ const MyCart = ({navigation}) => {
 
   //remove data from Cart
 
-  const removeItemFromCart = async id => {
-    let itemArray = await AsyncStorage.getItem('cartItems');
+  const removeItemFromCart = async (id) => {
+    let itemArray = await AsyncStorage.getItem("cartItems");
     itemArray = JSON.parse(itemArray);
     if (itemArray) {
       let array = itemArray;
@@ -73,7 +68,7 @@ const MyCart = ({navigation}) => {
           array.splice(index, 1);
         }
 
-        await AsyncStorage.setItem('cartItems', JSON.stringify(array));
+        await AsyncStorage.setItem("cartItems", JSON.stringify(array));
         getDataFromDB();
       }
     }
@@ -83,79 +78,87 @@ const MyCart = ({navigation}) => {
 
   const checkOut = async () => {
     try {
-      await AsyncStorage.removeItem('cartItems');
+      await AsyncStorage.removeItem("cartItems");
     } catch (error) {
       return error;
     }
 
-    ToastAndroid.show('Items will be Deliverd SOON!', ToastAndroid.SHORT);
+    ToastAndroid.show("Items will be Deliverd SOON!", ToastAndroid.SHORT);
 
-    navigation.navigate('Home');
+    navigation.navigate("Home");
   };
 
   const renderProducts = (data, index) => {
     return (
       <TouchableOpacity
         key={data.key}
-        onPress={() => navigation.navigate('ProductInfo', {productID: data.id})}
+        onPress={() =>
+          navigation.navigate("ProductInfo", { productID: data.id })
+        }
         style={{
-          width: '100%',
+          width: "100%",
           height: 100,
           marginVertical: 6,
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
         <View
           style={{
-            width: '30%',
+            width: "30%",
             height: 100,
             padding: 14,
-            justifyContent: 'center',
-            alignItems: 'center',
+            justifyContent: "center",
+            alignItems: "center",
             backgroundColor: COLOURS.backgroundLight,
             borderRadius: 10,
             marginRight: 22,
-          }}>
+          }}
+        >
           <Image
             source={data.productImage}
             style={{
-              width: '100%',
-              height: '100%',
-              resizeMode: 'contain',
+              width: "100%",
+              height: "100%",
+              resizeMode: "contain",
             }}
           />
         </View>
         <View
           style={{
             flex: 1,
-            height: '100%',
-            justifyContent: 'space-around',
-          }}>
+            height: "100%",
+            justifyContent: "space-around",
+          }}
+        >
           <View style={{}}>
             <Text
               style={{
                 fontSize: 14,
-                maxWidth: '100%',
+                maxWidth: "100%",
                 color: COLOURS.black,
-                fontWeight: '600',
+                fontWeight: "600",
                 letterSpacing: 1,
-              }}>
+              }}
+            >
               {data.productName}
             </Text>
             <View
               style={{
                 marginTop: 4,
-                flexDirection: 'row',
-                alignItems: 'center',
+                flexDirection: "row",
+                alignItems: "center",
                 opacity: 0.6,
-              }}>
+              }}
+            >
               <Text
                 style={{
                   fontSize: 14,
-                  fontWeight: '400',
-                  maxWidth: '85%',
+                  fontWeight: "400",
+                  maxWidth: "85%",
                   marginRight: 4,
-                }}>
+                }}
+              >
                 &#8377;{data.productPrice}
               </Text>
               <Text>
@@ -166,15 +169,17 @@ const MyCart = ({navigation}) => {
           </View>
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <View
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
               <View
                 style={{
                   borderRadius: 100,
@@ -183,7 +188,8 @@ const MyCart = ({navigation}) => {
                   borderWidth: 1,
                   borderColor: COLOURS.backgroundMedium,
                   opacity: 0.5,
-                }}>
+                }}
+              >
                 <MaterialCommunityIcons
                   name="minus"
                   style={{
@@ -201,7 +207,8 @@ const MyCart = ({navigation}) => {
                   borderWidth: 1,
                   borderColor: COLOURS.backgroundMedium,
                   opacity: 0.5,
-                }}>
+                }}
+              >
                 <MaterialCommunityIcons
                   name="plus"
                   style={{
@@ -566,22 +573,24 @@ const MyCart = ({navigation}) => {
   return (
     <View
       style={{
-        width: '100%',
-        height: '100%',
+        width: "100%",
+        height: "100%",
         backgroundColor: COLOURS.white,
-        position: 'relative',
-      }}>
+        position: "relative",
+      }}
+    >
       <ScrollView>
         <View
           style={{
-            width: '100%',
-            flexDirection: 'row',
+            width: "100%",
+            flexDirection: "row",
             paddingTop: 16,
             paddingHorizontal: 16,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-            {/* the button to go back to the shopping list */}
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          {/* the button to go back to the shopping list */}
           {/* <TouchableOpacity onPress={() => navigation.goBack()}>
             <MaterialCommunityIcons
               name="chevron-left"
@@ -594,158 +603,167 @@ const MyCart = ({navigation}) => {
               }}
             />
           </TouchableOpacity> */}
-         <Center> <Text
-            style={{
+          <Center>
+            {" "}
+            <Text
+              style={{
                 fontSize: 24,
                 color: COLOURS.black,
-                fontWeight: '600',
-                fontSize:24,
-                marginLeft:90
-              }}>
-            Order Details
-          </Text>
-                </Center>
+                fontWeight: "600",
+                fontSize: 24,
+                marginLeft: 90,
+              }}
+            >
+              Order Details
+            </Text>
+          </Center>
           <View></View>
         </View>
         <Text
           style={{
             fontSize: 20,
             color: COLOURS.black,
-            fontWeight: '500',
+            fontWeight: "500",
             letterSpacing: 1,
             paddingTop: 20,
             paddingLeft: 16,
             marginBottom: 10,
-          }}>
+          }}
+        >
           My Cart
         </Text>
-       {/* Delivery Location */}
-        <View> 
-    <HStack>
-        <View
-            style={{
-                paddingHorizontal: 16,
-                marginVertical: 10,
-              }}>
-                  <Box >
-            
-            </Box>
-            <Text
-              style={{
-                  fontSize: 16,
-                  color: COLOURS.black,
-                  fontWeight: '500',
-                  letterSpacing: 1,
-                  marginBottom: 20,
-              }}>
-              Delivery Location
-            </Text>
+        {/* Delivery Location */}
+        <View>
+          <HStack>
             <View
               style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-              }}>
+                paddingHorizontal: 16,
+                marginVertical: 10,
+              }}
+            >
+              <Box></Box>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: COLOURS.black,
+                  fontWeight: "500",
+                  letterSpacing: 1,
+                  marginBottom: 20,
+                }}
+              >
+                Delivery Location
+              </Text>
               <View
                 style={{
-                    flexDirection: 'row',
-                    width: '80%',
-                    alignItems: 'center',
-                  }}>
-                 
-                              <View
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View
                   style={{
-                    color: COLOURS.blue,
-                    backgroundColor: COLOURS.backgroundLight,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: 12,
-                    borderRadius: 10,
-                    marginRight: 18,
-                  }}>
-                  <MaterialCommunityIcons
-                    name="truck-delivery-outline"
+                    flexDirection: "row",
+                    width: "80%",
+                    alignItems: "center",
+                  }}
+                >
+                  <View
                     style={{
-                      fontSize: 20,
-                      color: "#373E5A",
+                      color: COLOURS.blue,
+                      backgroundColor: COLOURS.backgroundLight,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: 12,
+                      borderRadius: 10,
+                      marginRight: 18,
                     }}
-                  />
+                  >
+                    <MaterialCommunityIcons
+                      name="truck-delivery-outline"
+                      style={{
+                        fontSize: 20,
+                        color: "#373E5A",
+                      }}
+                    />
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: COLOURS.black,
+                        fontWeight: "500",
+                      }}
+                    >
+                      User Adress
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        color: COLOURS.black,
+                        fontWeight: "400",
+                        lineHeight: 20,
+                        opacity: 0.5,
+                      }}
+                    >
+                      User Ville
+                    </Text>
+                  </View>
+                  <EditeAdress />
                 </View>
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: COLOURS.black,
-                      fontWeight: '500',
-                    }}>
-                    User Adress
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      color: COLOURS.black,
-                      fontWeight: '400',
-                      lineHeight: 20,
-                      opacity: 0.5,
-                    }}>
-                   User Ville
-                  </Text>
-                </View> 
-                <EditeAdress />
-
-   
-     
               </View>
-
-    
             </View>
-          </View>
           </HStack>
           {/* Payment Method */}
           <View
             style={{
               paddingHorizontal: 16,
               marginVertical: 10,
-            }}>
+            }}
+          >
             <Text
               style={{
                 fontSize: 16,
                 color: COLOURS.black,
-                fontWeight: '500',
+                fontWeight: "500",
                 letterSpacing: 1,
                 marginBottom: 20,
-              }}>
+              }}
+            >
               Payment Method
             </Text>
             <View
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
               <View
                 style={{
-                  flexDirection: 'row',
-                  width: '80%',
-                  alignItems: 'center',
-                }}>
+                  flexDirection: "row",
+                  width: "80%",
+                  alignItems: "center",
+                }}
+              >
                 <View
                   style={{
                     color: COLOURS.blue,
                     backgroundColor: COLOURS.backgroundLight,
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    alignItems: "center",
+                    justifyContent: "center",
                     padding: 12,
                     borderRadius: 10,
                     marginRight: 18,
-                  }}>
+                  }}
+                >
                   <Text
                     style={{
                       fontSize: 10,
-                      fontWeight: '900',
+                      fontWeight: "900",
                       color: "#373E5A",
                       letterSpacing: 1,
-                    }}>
+                    }}
+                  >
                     VISA
                   </Text>
                 </View>
@@ -754,8 +772,9 @@ const MyCart = ({navigation}) => {
                     style={{
                       fontSize: 14,
                       color: COLOURS.black,
-                      fontWeight: '500',
-                    }}>
+                      fontWeight: "500",
+                    }}
+                  >
                     Visa Classic
                   </Text>
                   {/* <Text
@@ -771,49 +790,55 @@ const MyCart = ({navigation}) => {
                 </View>
               </View>
               <HStack space={6}>
-    <Checkbox value="orange"colorScheme="orange" accessibilityLabel="This is a dummy checkbox" />
-    
-  </HStack>
-            
+                <Checkbox
+                  value="orange"
+                  colorScheme="orange"
+                  accessibilityLabel="This is a dummy checkbox"
+                />
+              </HStack>
             </View>
           </View>
           <View
             style={{
               paddingHorizontal: 16,
               marginVertical: 10,
-            }}>
+            }}
+          >
             <View
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
               <View
                 style={{
-                  flexDirection: 'row',
-                  width: '80%',
-                  alignItems: 'center',
-                }}>
+                  flexDirection: "row",
+                  width: "80%",
+                  alignItems: "center",
+                }}
+              >
                 <View
                   style={{
                     color: COLOURS.blue,
                     backgroundColor: COLOURS.backgroundLight,
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    alignItems: "center",
+                    justifyContent: "center",
                     padding: 12,
                     borderRadius: 10,
                     marginRight: 18,
-                  }}>
-                     <FontAwesome5 name="money-bill" size={19} color="#373E5A" /> 
-                  
+                  }}
+                >
+                  <FontAwesome5 name="money-bill" size={19} color="#373E5A" />
                 </View>
                 <View>
                   <Text
                     style={{
                       fontSize: 14,
                       color: COLOURS.black,
-                      fontWeight: '500',
-                    }}>
+                      fontWeight: "500",
+                    }}
+                  >
                     Pay Cash
                   </Text>
                   {/* <Text
@@ -829,10 +854,12 @@ const MyCart = ({navigation}) => {
                 </View>
               </View>
               <HStack space={6}>
-    <Checkbox value="orange" colorScheme="orange" accessibilityLabel="This is a dummy checkbox"/>
-    
-  </HStack>
-            
+                <Checkbox
+                  value="orange"
+                  colorScheme="orange"
+                  accessibilityLabel="This is a dummy checkbox"
+                />
+              </HStack>
             </View>
           </View>
           {/* total prise */}
@@ -841,130 +868,143 @@ const MyCart = ({navigation}) => {
               paddingHorizontal: 16,
               marginTop: 40,
               marginBottom: 80,
-            }}>
+            }}
+          >
             <Text
               style={{
                 fontSize: 16,
                 color: COLOURS.black,
-                fontWeight: '500',
+                fontWeight: "500",
                 letterSpacing: 1,
                 marginBottom: 20,
-              }}>
+              }}
+            >
               Order Info
             </Text>
             <View
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
                 marginBottom: 8,
-              }}>
+              }}
+            >
               <Text
                 style={{
                   fontSize: 12,
-                  fontWeight: '400',
-                  maxWidth: '80%',
+                  fontWeight: "400",
+                  maxWidth: "80%",
                   color: COLOURS.black,
                   opacity: 0.5,
-                }}>
+                }}
+              >
                 Subtotal
               </Text>
               <Text
                 style={{
                   fontSize: 12,
-                  fontWeight: '400',
+                  fontWeight: "400",
                   color: COLOURS.black,
                   opacity: 0.8,
-                }}>
+                }}
+              >
                 {total}.00dt
               </Text>
             </View>
             <View
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
                 marginBottom: 22,
-              }}>
+              }}
+            >
               <Text
                 style={{
                   fontSize: 12,
-                  fontWeight: '400',
-                  maxWidth: '80%',
+                  fontWeight: "400",
+                  maxWidth: "80%",
                   color: COLOURS.black,
                   opacity: 0.5,
-                }}>
+                }}
+              >
                 Shipping Tax
               </Text>
               <Text
                 style={{
                   fontSize: 12,
-                  fontWeight: '400',
+                  fontWeight: "400",
                   color: COLOURS.black,
                   opacity: 0.8,
-                }}>
+                }}
+              >
                 {total / 20}
                 dt
               </Text>
             </View>
             <View
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
               <Text
                 style={{
                   fontSize: 12,
-                  fontWeight: '400',
-                  maxWidth: '80%',
+                  fontWeight: "400",
+                  maxWidth: "80%",
                   color: COLOURS.black,
                   opacity: 0.5,
-                }}>
+                }}
+              >
                 Total
               </Text>
               <Text
                 style={{
                   fontSize: 18,
-                  fontWeight: '500',
+                  fontWeight: "500",
                   color: COLOURS.black,
-                }}>
-               {total + total / 20}
-               dt
+                }}
+              >
+                {total + total / 20}
+                dt
               </Text>
             </View>
           </View>
-          
         </View>
       </ScrollView>
 
       <View
         style={{
-          position: 'absolute',
+          position: "absolute",
           bottom: 10,
-          height: '8%',
-          width: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
+          height: "8%",
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <TouchableOpacity
           onPress={() => (total != 0 ? checkOut() : null)}
           style={{
-            width: '86%',
-            height: '90%',
+            width: "86%",
+            height: "90%",
             backgroundColor: "#373E5A",
             borderRadius: 20,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Text
             style={{
               fontSize: 12,
-              fontWeight: '500',
+              fontWeight: "500",
               letterSpacing: 1,
               color: COLOURS.white,
-              textTransform: 'uppercase',
-            }}>
+              textTransform: "uppercase",
+            }}
+          >
             CHECKOUT ({total + total / 20} )
           </Text>
         </TouchableOpacity>

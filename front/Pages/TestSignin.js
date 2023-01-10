@@ -13,12 +13,14 @@ import {
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/core";
 
-import axios from 'axios'
-import firebaseConfig from '../config/firebase';  //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
-import { getAuth, createUserWithEmailAndPassword , onAuthStateChanged} from "firebase/auth";  // importing the auth of Firebase 
-import { initializeApp } from 'firebase/app';
-
-
+import axios from "axios";
+import firebaseConfig from "../config/firebase"; //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth"; // importing the auth of Firebase
+import { initializeApp } from "firebase/app";
 
 function TestLogin() {
   const [value, setValue] = useState({
@@ -33,53 +35,55 @@ function TestLogin() {
   });
   const Navigation = useNavigation();
 
-  const [user,setUser]=useState("")
-  const [userId,setUserId]=useState("")
+  const [user, setUser] = useState("");
+  const [userId, setUserId] = useState("");
 
-  const app = initializeApp(firebaseConfig)   //  ----------->  BECH NAAMLOU INITIALIZATION LEL CONFIG TA3 EL FIREBASE W NRODOUH EL app MTE3NA
-  const auth=getAuth(app)  
+  const app = initializeApp(firebaseConfig); //  ----------->  BECH NAAMLOU INITIALIZATION LEL CONFIG TA3 EL FIREBASE W NRODOUH EL app MTE3NA
+  const auth = getAuth(app);
 
+  const handleSignIn = () => {
+    if (
+      !value.nameUser.length ||
+      !value.email.length ||
+      !value.password.length
+    ) {
+      alert("fill all the inputs !!!");
+    } else {
+      createUserWithEmailAndPassword(auth, value.email, value.password) //  -----------> TA3MEL CREATION L USER JDID BEL EMAIL WEL PASSWORD ILI KTEBTHOM
+        .then((userCredential) => {
+          //  ----------->  BAAD EL CREATION TA3 EL USER FEL FIREBASE , EL FIREBASE YRAJA3 OBJET ESMOU (userCredential) FIH INFO AL USER
+          setUser(userCredential.user); //  ---------->  Setting the user object (containing the detail of the athentication information )
+          setUserId(user.uid); //  ----------->  Setting the user Id ( that takin from the User Objet )
 
-  const handleSignIn=()=>{
-   
-    if ( !value.nameUser.length || !value.email.length || !value.password.length){
-      alert ('fill all the inputs !!!')
+          axios
+            .post("http://192.168.103.8:5000/users/addUser", {
+              id_user: userCredential.user.uid,
+              name: value.nameUser,
+              email: value.email,
+            })
+            .then(() => {
+              console.log("user added to dataBase");
+            })
+            .catch((err) => {
+              alert(err);
+            });
+        })
+        .then(() => {
+          alert("YEYYY USER ADDED");
+          console.log("------>" + userId);
+          Navigation.navigate("SideBar");
+
+          //Navigation.navigate("PhoneNumber Verif",{name:value.nameUser,email:value.email})
+        })
+        .catch((err) => {
+          if (err.code === "auth/email-already-in-use") {
+            alert("The email is already used ");
+          } else {
+            alert(err);
+          }
+        });
     }
-    else{
-    createUserWithEmailAndPassword(auth,value.email,value.password)    //  -----------> TA3MEL CREATION L USER JDID BEL EMAIL WEL PASSWORD ILI KTEBTHOM
-    .then((userCredential)=>{         //  ----------->  BAAD EL CREATION TA3 EL USER FEL FIREBASE , EL FIREBASE YRAJA3 OBJET ESMOU (userCredential) FIH INFO AL USER
-      setUser(userCredential.user)   //  ---------->  Setting the user object (containing the detail of the athentication information )
-      setUserId(user.uid)            //  ----------->  Setting the user Id ( that takin from the User Objet )
-      
-      
-      axios.post("http://192.168.1.16:5000/users/addUser",{id_user:userCredential.user.uid,name:value.nameUser,email:value.email})
-      .then(()=>{
-        console.log("user added to dataBase")
-      })
-      .catch((err)=>{
-        alert(err)
-      })
-
-    })
-    .then(()=>{                    
-      alert("YEYYY USER ADDED")
-      console.log("------>"+userId)
-      Navigation.navigate("SideBar")
-      
-     
-        //Navigation.navigate("PhoneNumber Verif",{name:value.nameUser,email:value.email})
-     }
-    )
-    .catch((err)=>{
-        if ( err.code==="auth/email-already-in-use"){
-            alert('The email is already used ')
-        }else{
-            alert(err)
-        }
-    })
-
-  }}
-
+  };
 
   return (
     <View style={css.constainer}>
@@ -210,7 +214,7 @@ function TestLogin() {
                     fontWeight: "400",
                     fontSize: 17,
                   }}
-                  onPress={() => handleSignIn() }
+                  onPress={() => handleSignIn()}
                 >
                   create account{" "}
                 </Text>

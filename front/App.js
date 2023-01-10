@@ -15,7 +15,7 @@ import TestLogin from "./Pages/TestLogin.js";
 import EditeProfil from "./Pages/EditeProfil.js";
 import EditeAdress from "./Pages/EditeAdress.js";
 import PhoneNumber from "./Pages/PhoneNumber";
-import { NativeBaseProvider } from "native-base"
+import { NativeBaseProvider } from "native-base";
 import { UserContext } from "./UserContext.js";
 import { useContext, useState } from "react";
 import Shopping from "./Pages/Shopping.js";
@@ -34,33 +34,59 @@ export default function App() {
     >
       <NativeBaseProvider>
         <NavigationContainer>
-
-          <Stack.Navigator initialRouteName="SideBar" screenOptions={{
-            headerTintColor:"white",
-            headerStyle:{
-               backgroundColor:"#ED5C00"
-            }
-          }}>
-                <Stack.Screen name="Log in"options={{ headerShown: false }} component={LogInSignIn}  />
-                {/* <Stack.Screen name="Home" component={Home} /> */}
-                <Stack.Screen name="History" component={History} />
-                <Stack.Screen name="Create an account" component={SignIn} />
-                <Stack.Screen name="PhoneNumber Verif" component={PhoneNumber} />
-                <Stack.Screen  name="TestSignin"component={TestSignin}  options={{ headerShown: false }} />
-                <Stack.Screen name="TestLogin" component={TestLogin} options={{ headerShown: false }}/>
-                <Stack.Screen name="Profil"  options={{ headerShown: false }} component={Profil} />
-                {/* <Stack.Screen name="TabBar" component={TabBar} /> */}
-                <Stack.Screen name="SideBar" options={{ headerShown: false }} component={SideBar} />
-                <Stack.Screen name="Shop"  component={Shop} />
-                <Stack.Screen name="Products" component={Products} />
-                <Stack.Screen name="ProductDetails" component={ProductDetails} />
-                {/* <Stack.Screen name="Email Confiramtion" component={EmailConfirmation} /> */}
-                <Stack.Screen name="AddProduct" options={{ headerShown: false }} component={AddProduct} />
-                <Stack.Screen name="EditeProfil" component={EditeProfil} />
-                <Stack.Screen name="EditeAdress" component={EditeAdress} />
-                <Stack.Screen name="Shopping" component={Shopping} />
-                <Stack.Screen name="MyCart"  component={MyCart} />
-                <Stack.Screen name="ProductInfo"  component={ProductInfo} />
+          <Stack.Navigator
+            initialRouteName="TestLogin"
+            screenOptions={{
+              headerTintColor: "white",
+              headerStyle: {
+                backgroundColor: "#ED5C00",
+              },
+            }}
+          >
+            <Stack.Screen
+              name="Log in"
+              options={{ headerShown: false }}
+              component={LogInSignIn}
+            />
+            {/* <Stack.Screen name="Home" component={Home} /> */}
+            <Stack.Screen name="History" component={History} />
+            <Stack.Screen name="Create an account" component={SignIn} />
+            <Stack.Screen name="PhoneNumber Verif" component={PhoneNumber} />
+            <Stack.Screen
+              name="TestSignin"
+              component={TestSignin}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="TestLogin"
+              component={TestLogin}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Profil"
+              options={{ headerShown: false }}
+              component={Profil}
+            />
+            {/* <Stack.Screen name="TabBar" component={TabBar} /> */}
+            <Stack.Screen
+              name="SideBar"
+              options={{ headerShown: false }}
+              component={SideBar}
+            />
+            <Stack.Screen name="Shop" component={Shop} />
+            <Stack.Screen name="Products" component={Products} />
+            <Stack.Screen name="ProductDetails" component={ProductDetails} />
+            {/* <Stack.Screen name="Email Confiramtion" component={EmailConfirmation} /> */}
+            <Stack.Screen
+              name="AddProduct"
+              options={{ headerShown: false }}
+              component={AddProduct}
+            />
+            <Stack.Screen name="EditeProfil" component={EditeProfil} />
+            <Stack.Screen name="EditeAdress" component={EditeAdress} />
+            <Stack.Screen name="Shopping" component={Shopping} />
+            <Stack.Screen name="MyCart" component={MyCart} />
+            <Stack.Screen name="ProductInfo" component={ProductInfo} />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>
