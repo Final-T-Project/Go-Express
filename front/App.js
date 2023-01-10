@@ -37,14 +37,15 @@ export default function App() {
     >
       <NativeBaseProvider>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Cart" screenOptions={{
-            headerTintColor:"white",
-            headerStyle:{
-               backgroundColor:"#f14e24"
-            }
-
-            
-          }}>
+          <Stack.Navigator
+            initialRouteName="SideBar"
+            screenOptions={{
+              headerTintColor: "white",
+              headerStyle: {
+                backgroundColor: "#f14e24",
+              },
+            }}
+          >
             <Stack.Screen
               name="Log in"
               options={{ headerShown: false }}
