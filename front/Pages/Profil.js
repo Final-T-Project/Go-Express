@@ -43,7 +43,7 @@ function Product() {
   const [userDataProduct, setUserDataProduct] = useState([]);
 
   useEffect(() => {
-    const adressIp = `192.168.103.8`;
+    const adressIp = `192.168.104.14`;
     axios
       .get(`http://${adressIp}:5000/users/getUserProduct/A`)
       .then((response) => {
@@ -126,7 +126,7 @@ function Product() {
                   style={{fontSize: 22, color: COLOURS.black}}
                 /></TouchableOpacity> */}
 // feedback side
-function Info({ navigation }) {
+function Info({ navigation,userDataProfile }) {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
   return (
    
@@ -222,7 +222,7 @@ function Feedback({ Product }) {
   const [FeedBackText, setFeedBackText] = useState("");
 
   let AddFeedback = () => {
-    const adressIp = `192.168.103.8`;
+    const adressIp = `192.168.104.14`;
     axios
       .post(`http://${adressIp}:5000/feedback/addFeedback`, {
         details: FeedBackText,
@@ -307,26 +307,39 @@ export default function Profil({ navigation }) {
   // state to save user information
   const [userDataProfile, setUserDataProfile] = useState([]);
 
-  useEffect(() => {
-    const adressIp = `192.168.1.18`;
-    axios
-      .get(`http://${adressIp}:5000/users/getUserPorfile/A`)
+  const [idUser,setIdUser]=useState("")
+
+  AsyncStorage.getItem("userData")
+  .then((res) => {
+    setIdUser(JSON.parse(res));
+  })
+  
+   
+      //console.log(idUser.userId)
+     
+      useEffect(() => {
+        const adressIp = `192.168.104.14`;
+        axios
+        .get(`http://${adressIp}:5000/users/getUserPorfile/${idUser.userId}`)
       .then((response) => {
         setUserDataProfile(response.data);
+        console.log(response.data)
       })
       .catch((error) => {
         alert(error);
       });
-  }, []);
+  },[]);
+   
+
+    
+
+    
 
   // console.log("data", userDataProfile);
-  const [userInfo, setUserInfo] = useState("");
-  const [userData, setUserData] = useState([]);
+  // const [userInfo, setUserInfo] = useState("");
+  // const [userData, setUserData] = useState([]);
 
-  AsyncStorage.getItem("userData").then((res) => {
-    setUserInfo(JSON.parse(res));
-    // console.log("------->" + userInfo.userId);
-  });
+  
 
   // useEffect(() => {
   //   axios
@@ -358,9 +371,12 @@ export default function Profil({ navigation }) {
           </View>
           <View>
             <View>
-              <Image
+              {userDataProfile.map((element)=>{
+                return (
+                <>
+                <Image
                 source={{
-                  uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1671027251/tenue-classe-pour-homme_qvxxka.jpg",
+                  uri: element.photo,
                 }}
                 style={{
                   width: 100,
@@ -368,9 +384,20 @@ export default function Profil({ navigation }) {
                   // borderRadius: 100,
                   marginTop: -130,
                   left: 20,
-                  borderRadius: 4,
+                  borderRadius: 20,
+                  shadowColor: "black",
+                    shadowOffset: {
+                      width: 5,
+                      height: 5,
+                    },
+                    shadowOpacity:'100%',
+                    shadowRadius: 20,
+                    elevation: 20,
                 }}
               ></Image>
+                </>
+                )
+              })}
             </View>
           </View>
           {/* user name */}
@@ -378,6 +405,7 @@ export default function Profil({ navigation }) {
           {userDataProfile.map((element) => (
             <View>
               <Text
+              key={element.id_user}
                 style={{
                   fontSize: 20,
                   fontWeight: "bold",
@@ -391,6 +419,7 @@ export default function Profil({ navigation }) {
 
               {/* user ville */}
               <Text
+              
                 style={{
                   fontSize: 15,
                   top: -110,
@@ -437,7 +466,7 @@ export default function Profil({ navigation }) {
             {showContent === "Product" ? (
               <Product Product={new Array(13).fill(1)} />
             ) : showContent === "Info" ? (
-              <Info />
+              <Info userDataProfile={userDataProfile}/>
             ) : (
               <Feedback Product={new Array(23).fill(1)} />
             )}
