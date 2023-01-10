@@ -14,7 +14,7 @@ import {
   Dimensions,
   Button,
   TextInput,
-  Alert,
+  Alert,KeyboardAvoidingView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
@@ -108,10 +108,28 @@ function Product() {
     </View>
   );
 }
+          {/* <View
+                tyle={{
+                    backgroundColor: "red",
+                    height: 40,
+                    alignItems: "center",
+                    padding: 0,
+                  }}
+                >
+                <HStack>
+        <EditeProfil />
+      </HStack></View> */}
+      {/* <TouchableOpacity
+      >
+                <MaterialCommunityIcons
+                  name="lead-pencil"
+                  style={{fontSize: 22, color: COLOURS.black}}
+                /></TouchableOpacity> */}
 // feedback side
 function Info({ navigation }) {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
   return (
+   
     <View
       style={{
         backgroundColor: "white",
