@@ -61,10 +61,11 @@ export default function TestLogin() {
               userId: userCredential.user.uid,
             })
           );
+          return userCredential.user.uid;
         })
 
-        .then(() => {
-          Navigation.navigate("SideBar");
+        .then((id) => {
+          Navigation.navigate("SideBar", { id });
         })
 
         .catch((error) => {
@@ -265,12 +266,12 @@ export default function TestLogin() {
             <Text
               style={{
                 fontSize: 15,
-                marginTop: 60,
+                marginTop: 20,
                 fontWeight: "600",
                 textAlign: "center",
               }}
             >
-              Forget my password ?
+              You don't have account
               <Text
                 onPress={() => Navigation.navigate("TestSignin")}
                 style={{ color: "#F96332" }}
@@ -278,6 +279,18 @@ export default function TestLogin() {
                 {" "}
                 tap here
               </Text>
+            </Text>
+
+            <Text
+              style={{
+                fontSize: 15,
+                marginTop: 60,
+                fontWeight: "600",
+                textAlign: "center",
+              }}
+            >
+              Forget my password ?
+              <Text style={{ color: "#F96332" }}> tap here</Text>
             </Text>
           </View>
         </ImageBackground>
@@ -296,10 +309,10 @@ const css = StyleSheet.create({
   box: {
     backgroundColor: "white",
     width: 370,
-    height: 620,
+    height: 600,
     borderRadius: 4,
     marginLeft: 20,
-    marginTop: 150,
+    marginTop: 50,
 
     shadowColor: "black",
     shadowOffset: {

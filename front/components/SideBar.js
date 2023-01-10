@@ -12,6 +12,7 @@ import {
   ImageBackground,
 } from "react-native";
 import profile from "../assets/profile.png";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // Tab ICons...
 import home from "../assets/feedback.png";
 import cart from "front/assets/shopping-cart-empty-side-view.png";
@@ -22,19 +23,42 @@ import menu from "../assets/menu.png";
 import close from "../assets/close.png";
 import { useNavigation } from "@react-navigation/native";
 import TabBar from "../components/TabBar";
+import { useEffect } from "react";
+import axios from "axios";
 
-export default function SideBbar({ navigation }) {
+export default function SideBbar({ navigation, route }) {
   const [Page, SetPage] = useState("Home");
   const [currentTab, setCurrentTab] = useState("Home");
   // To get the curretn Status of menu ...
   const [showMenu, setShowMenu] = useState(false);
-
   // Animated Properties...
 
   const offsetValue = useRef(new Animated.Value(0)).current;
   // Scale Intially must be One...
   const scaleValue = useRef(new Animated.Value(1)).current;
   const closeButtonOffset = useRef(new Animated.Value(0)).current;
+
+  // state to save user data
+  const [userDataProfile, setUserDataProfile] = useState([]);
+  // state to ssave id to send it to profile componnent
+  const [idToSend, setIdToSend] = useState("");
+
+ 
+  useEffect(() => {
+    console.log("the id: ", route.params.id);  // from login 
+    setIdToSend(route.params.id);
+    axios
+      .get(`http://192.168.103.8:5000/users/getUserPorfile/${route.params.id}`)
+      .then((response) => {
+        setUserDataProfile(response.data);
+        console.log("user_data", response.data);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
+
+  // console.log("huhuh", ahmed);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,63 +70,67 @@ export default function SideBbar({ navigation }) {
         resizeMode="cover"
         style={styles.image}
       >
-        <View style={{ justifyContent: "flex-start", padding: 20 }}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Profil");
-            }}
-          >
-            <Image
-              source={{
-                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1671027251/tenue-classe-pour-homme_qvxxka.jpg",
-              }}
-              style={{
-                width: 90,
-                height: 90,
-                borderRadius: 7,
-                marginTop: 10,
-                marginLeft: 23,
-              }}
-            ></Image>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "bold",
-                color: "white",
-                marginTop: 10,
+        {userDataProfile.map((element) => (
+          <View style={{ justifyContent: "flex-start", padding: 20 }}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Profil", { idToSend });
               }}
             >
-              Hello Ahmed{" "}
-            </Text>
-            <Text
-              style={{
-                fontSize: 15,
-                // fontWeight: "bold",
-                color: "white",
-                marginTop: 10,
-              }}
-            >
-              View Profil
-            </Text>
-          </TouchableOpacity>
+              <Image
+                source={{
+                  uri: element.photo,
+                }}
+                style={{
+                  width: 90,
+                  height: 90,
+                  borderRadius: 7,
+                  marginTop: 10,
+                  marginLeft: 23,
+                }}
+              ></Image>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: "white",
+                  marginTop: 10,
+                }}
+              >
+                Hello {element.name}{" "}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  // fontWeight: "bold",
+                  color: "white",
+                  marginTop: 10,
+                }}
+              >
+                View Profil
+              </Text>
+            </TouchableOpacity>
 
-          <View style={{ flexGrow: 1, marginTop: 60 }}>
-            {
-              // Tab Bar Buttons....
-            }
+            <View style={{ flexGrow: 1, marginTop: 60 }}>
+              {
+                // Tab Bar Buttons....
+              }
 
-            {TabButton(currentTab, setCurrentTab, "Feedback", home)}
-            {TabButton(
-              currentTab,
-              setCurrentTab,
-              "Notification",
-              notifications
-            )}
-            {TabButton(currentTab, setCurrentTab, "Cart", cart)}
-            {TabButton(currentTab, setCurrentTab, "Chat", chat)}
+              {TabButton(currentTab, setCurrentTab, "Feedback", home)}
+              {TabButton(
+                currentTab,
+                setCurrentTab,
+                "Notification",
+                notifications
+              )}
+              {TabButton(currentTab, setCurrentTab, "Cart", cart)}
+              {TabButton(currentTab, setCurrentTab, "Chat", chat)}
+            </View>
+            <View>
+              {TabButton(currentTab, setCurrentTab, "LogOut", logout)}
+            </View>
           </View>
-          <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
-        </View>
+        ))}
       </ImageBackground>
       {
         // Over lay View...
@@ -184,7 +212,6 @@ export default function SideBbar({ navigation }) {
           >
             {currentTab}
           </Text> */}
-          
         </Animated.View>
         <TabBar navigation={navigation} />
         {/* navigation={navigation} */}
