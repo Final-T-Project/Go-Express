@@ -97,8 +97,9 @@ export default function TestLogin() {
 
   //-----------------------------------------------------------------------------------------------------------
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={css.constainer}>
+    
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    <View style={css.constainer}>
         <ImageBackground
           style={{ width: "100%", height: "100%" }}
           source={{
@@ -265,6 +266,25 @@ export default function TestLogin() {
             <Text
               style={{
                 fontSize: 15,
+                marginTop: 20,
+                fontWeight: "600",
+                textAlign: "center",
+              }}
+            >
+              You don't have account
+              <Text
+                onPress={() => Navigation.navigate("TestSignin")}
+                style={{ color: "#F96332" }}
+              >
+                {" "}
+                tap here
+              </Text>
+            </Text>
+
+
+            <Text
+              style={{
+                fontSize: 15,
                 marginTop: 60,
                 fontWeight: "600",
                 textAlign: "center",
@@ -272,7 +292,7 @@ export default function TestLogin() {
             >
               Forget my password ?
               <Text
-                onPress={() => Navigation.navigate("TestSignin")}
+                
                 style={{ color: "#F96332" }}
               >
                 {" "}
@@ -283,7 +303,8 @@ export default function TestLogin() {
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
-  );
+  
+  )
 }
 
 const css = StyleSheet.create({
@@ -296,10 +317,10 @@ const css = StyleSheet.create({
   box: {
     backgroundColor: "white",
     width: 370,
-    height: 620,
+    height: 600,
     borderRadius: 4,
     marginLeft: 20,
-    marginTop: 150,
+    marginTop: 50,
 
     shadowColor: "black",
     shadowOffset: {
