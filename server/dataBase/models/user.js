@@ -33,7 +33,7 @@ module.exports = {
     });
   },
   getUserProduct: function (callback, id_user) {
-    const sql = `SELECT * FROM product INNER JOIN user ON product.user_id_user = user.id_user WHERE id_user="${id_user}"`;
+    const sql = `SELECT * FROM product INNER JOIN user ON product.user_id_user = user.id_user  WHERE id_user="${id_user}" AND productStatus ="Accepted"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });

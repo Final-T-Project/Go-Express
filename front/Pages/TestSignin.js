@@ -238,7 +238,7 @@ const css = StyleSheet.create({
     width: 370,
     height: 600,
     borderRadius: 4,
-    marginLeft: 20,
+    marginLeft: 23,
     marginTop: 150,
     padding: 50,
     shadowColor: "black",

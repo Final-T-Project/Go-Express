@@ -62,4 +62,11 @@ module.exports = {
       else res.json(results);
     }, req.params.id_product);
   },
+
+  GetAllFeedBack: function (req, res) {
+    admin.getAllFeedBack(function (err, results) {
+      if (err) res.status(500).send(err);
+      else res.json(results);
+    });
+  },
 };

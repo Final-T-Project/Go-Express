@@ -14,7 +14,7 @@ import {
   Dimensions,
   Button,
   TextInput,
-  Alert,
+  Alert,KeyboardAvoidingView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
@@ -40,13 +40,14 @@ function Product() {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
 
   // state to save user information
-  const [userData, setUserData] = useState([]);
+  const [userDataProduct, setUserDataProduct] = useState([]);
 
   useEffect(() => {
+    const adressIp = `192.168.104.14`;
     axios
-      .get(`http://192.168.104.14:5000/users/getUserProduct/`)
+      .get(`http://${adressIp}:5000/users/getUserProduct/A`)
       .then((response) => {
-        setUserData(response.data);
+        setUserDataProduct(response.data);
       })
       .catch((error) => {
         alert(error);
@@ -64,7 +65,7 @@ function Product() {
           alignItems: "flex-start",
         }}
       >
-        {userData.map((element) => (
+        {userDataProduct.map((element) => (
           <ScrollView>
             <Image
               style={{
@@ -107,10 +108,28 @@ function Product() {
     </View>
   );
 }
+          {/* <View
+                tyle={{
+                    backgroundColor: "red",
+                    height: 40,
+                    alignItems: "center",
+                    padding: 0,
+                  }}
+                >
+                <HStack>
+        <EditeProfil />
+      </HStack></View> */}
+      {/* <TouchableOpacity
+      >
+                <MaterialCommunityIcons
+                  name="lead-pencil"
+                  style={{fontSize: 22, color: COLOURS.black}}
+                /></TouchableOpacity> */}
 // feedback side
 function Info({ navigation,userDataProfile }) {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
   return (
+   
     <View
       style={{
         backgroundColor: "white",
@@ -199,6 +218,21 @@ function Info({ navigation,userDataProfile }) {
 // feedback side
 function Feedback({ Product }) {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
+
+  const [FeedBackText, setFeedBackText] = useState("");
+
+  let AddFeedback = () => {
+    const adressIp = `192.168.104.14`;
+    axios
+      .post(`http://${adressIp}:5000/feedback/addFeedback`, {
+        details: FeedBackText,
+        id_user: "A",
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <View
       style={{
@@ -239,7 +273,7 @@ function Feedback({ Product }) {
                 maxW="300"
                 backgroundColor={"#fafafa"}
                 borderColor={"#ED5C00"}
-                // on change get the text that the user is typing to send it
+                onChangeText={(text) => setFeedBackText(text)}
               />
             </Box>
           </NativeBaseProvider>
@@ -256,12 +290,12 @@ function Feedback({ Product }) {
         <Button
           color={"#ED5C00"}
           title="Send"
-          onPress={() =>
+          onPress={() => {
             Alert.alert(
               "Your Feedback was send we will take it into considiretion."
-            )
-          }
-          //add the axios to create a feedback
+            );
+            AddFeedback();
+          }}
         />
       </View>
     </View>
@@ -280,10 +314,13 @@ export default function Profil({ navigation }) {
     setIdUser(JSON.parse(res));
   })
   
-    useEffect(() => {
+   
       //console.log(idUser.userId)
-      axios
-      .get(`http://192.168.104.14:5000/users/getUserPorfile/${idUser.userId}`)
+     
+      useEffect(() => {
+        const adressIp = `192.168.104.14`;
+        axios
+        .get(`http://${adressIp}:5000/users/getUserPorfile/${idUser.userId}`)
       .then((response) => {
         setUserDataProfile(response.data);
         console.log(response.data)
@@ -299,8 +336,8 @@ export default function Profil({ navigation }) {
     
 
   // console.log("data", userDataProfile);
-  const [userInfo, setUserInfo] = useState("");
-  const [userData, setUserData] = useState([]);
+  // const [userInfo, setUserInfo] = useState("");
+  // const [userData, setUserData] = useState([]);
 
   
 
