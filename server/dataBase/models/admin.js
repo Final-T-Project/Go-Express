@@ -51,4 +51,10 @@ module.exports = {
       callback(error, results);
     });
   },
+  getAllFeedBack: function (callback) {
+    const sql = `SELECT * FROM feedback  INNER JOIN user ON feedback.user_id_user = user.id_user`;
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  },
 };

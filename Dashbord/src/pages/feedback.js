@@ -13,7 +13,7 @@ const Page = () => {
 
   // function to get all feedback
   useEffect(() => {
-    axios.get(`http://localhost:5000/feedback/getallfeedback`).then((result) => {
+    axios.get(`http://localhost:5000/admin/getallfeedback`).then((result) => {
       setFeedback(result.data);
       console.log(result.data);
     });

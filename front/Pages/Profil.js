@@ -40,13 +40,14 @@ function Product() {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
 
   // state to save user information
-  const [userData, setUserData] = useState([]);
+  const [userDataProduct, setUserDataProduct] = useState([]);
 
   useEffect(() => {
+    const adressIp = `192.168.103.8`;
     axios
-      .get(`http://192.168.103.13:5000/users/getUserProduct/A`)
+      .get(`http://${adressIp}:5000/users/getUserProduct/A`)
       .then((response) => {
-        setUserData(response.data);
+        setUserDataProduct(response.data);
       })
       .catch((error) => {
         alert(error);
@@ -64,7 +65,7 @@ function Product() {
           alignItems: "flex-start",
         }}
       >
-        {userData.map((element) => (
+        {userDataProduct.map((element) => (
           <ScrollView>
             <Image
               style={{
@@ -199,6 +200,21 @@ function Info({ navigation }) {
 // feedback side
 function Feedback({ Product }) {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
+
+  const [FeedBackText, setFeedBackText] = useState("");
+
+  let AddFeedback = () => {
+    const adressIp = `192.168.103.8`;
+    axios
+      .post(`http://${adressIp}:5000/feedback/addFeedback`, {
+        details: FeedBackText,
+        id_user: "A",
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <View
       style={{
@@ -239,7 +255,7 @@ function Feedback({ Product }) {
                 maxW="300"
                 backgroundColor={"#fafafa"}
                 borderColor={"#ED5C00"}
-                // on change get the text that the user is typing to send it
+                onChangeText={(text) => setFeedBackText(text)}
               />
             </Box>
           </NativeBaseProvider>
@@ -256,12 +272,12 @@ function Feedback({ Product }) {
         <Button
           color={"#ED5C00"}
           title="Send"
-          onPress={() =>
+          onPress={() => {
             Alert.alert(
               "Your Feedback was send we will take it into considiretion."
-            )
-          }
-          //add the axios to create a feedback
+            );
+            AddFeedback();
+          }}
         />
       </View>
     </View>
@@ -274,8 +290,9 @@ export default function Profil({ navigation }) {
   const [userDataProfile, setUserDataProfile] = useState([]);
 
   useEffect(() => {
+    const adressIp = `192.168.1.18`;
     axios
-      .get(`http://192.168.103.13:5000/users/getUserPorfile/A`)
+      .get(`http://${adressIp}:5000/users/getUserPorfile/A`)
       .then((response) => {
         setUserDataProfile(response.data);
       })
@@ -288,14 +305,10 @@ export default function Profil({ navigation }) {
   const [userInfo, setUserInfo] = useState("");
   const [userData, setUserData] = useState([]);
 
-  AsyncStorage.getItem("userData")
-    .then((res) => {
-      setUserInfo(JSON.parse(res));
-      //console.log("------->"+userInfo.userId)
-    })
-    .then /*console
-  .log("Im userInfo from Profile---------->"+userInfo.userId)*/
-    ();
+  AsyncStorage.getItem("userData").then((res) => {
+    setUserInfo(JSON.parse(res));
+    // console.log("------->" + userInfo.userId);
+  });
 
   // useEffect(() => {
   //   axios
