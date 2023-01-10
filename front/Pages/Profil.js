@@ -44,7 +44,7 @@ function Product() {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.103.13:5000/users/getUserProduct/`)
+      .get(`http://192.168.104.14:5000/users/getUserProduct/`)
       .then((response) => {
         setUserData(response.data);
       })
@@ -283,7 +283,7 @@ export default function Profil({ navigation }) {
     useEffect(() => {
       //console.log(idUser.userId)
       axios
-      .get(`http://192.168.1.16:5000/users/getUserPorfile/${idUser.userId}`)
+      .get(`http://192.168.104.14:5000/users/getUserPorfile/${idUser.userId}`)
       .then((response) => {
         setUserDataProfile(response.data);
         console.log(response.data)
