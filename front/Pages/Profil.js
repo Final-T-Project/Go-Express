@@ -31,6 +31,7 @@ import {
   HStack,
 } from "native-base";
 import EditeProfil from "./EditeProfil";
+import { EmailAuthCredential } from "@firebase/auth";
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
@@ -125,24 +126,19 @@ function Feedback(props) {
   );
 }
 
-function Info({ navigation }) {
+function Info({ navigation,id }) {
   
   const [userDataProfile, setUserDataProfile] =  useState([]);
 
   const [idUser,setIdUser]=useState({})
-
-  AsyncStorage.getItem("userData")
-  .then((res) => {
-    setIdUser(JSON.parse(res));
-  })
   
-  console.log("------- from Info ------>"+idUser.userId)
+  //console.log("------- from Info ------>"+idUser.userId)
 
      
   useEffect(() => {
    
     axios
-    .get(`http://${adressIp}:5000/users/getUserPorfile/${idUser.userId}`)
+    .get(`http://${adressIp}:5000/users/getUserPorfile/${id}`)
   .then((response) => {
     setUserDataProfile(response.data);
     console.log(response.data)
@@ -217,7 +213,7 @@ function Info({ navigation }) {
                 marginLeft={2}
                 rounded="4"
               >
-                there is no number
+                there is no number 🛑
               </Text>
                     </>
                   )
@@ -232,6 +228,10 @@ function Info({ navigation }) {
                 }}
                 style={{ width: 22, height: 22, marginRight: 20 }}
               ></Image>
+
+            {userDataProfile.map((element)=>{
+              if ( element.email ){
+              return (
               <Text
                 fontSize="md"
                 color="#1C2765"
@@ -240,8 +240,28 @@ function Info({ navigation }) {
                 marginLeft={2}
                 rounded="4"
               >
-                cipidre@gmail.com
+                {element.email}
               </Text>
+              )
+              } else {
+                return (
+                  <Text
+                    fontSize="md"
+                    color="#1C2765"
+                    colorScheme="darkBlue"
+                    variant="solid"
+                    marginLeft={2}
+                    rounded="4"
+                  >
+                    You don't have an email 🛑
+                  </Text>
+                  )
+              }
+            }
+            )
+          }
+
+
             </HStack>
             <Box>
               <HStack marginTop={5}>
@@ -251,15 +271,38 @@ function Info({ navigation }) {
                   }}
                   style={{ width: 22, height: 22, marginRight: 20 }}
                 ></Image>
-                <Text
-                  fontSize="md"
-                  color="#1C2765"
-                  colorScheme="darkBlue"
-                  variant="solid"
-                  rounded="4"
-                >
-                  mourouj 5 ,rue de cipidre
-                </Text>
+
+              {userDataProfile.map((element)=>{
+                if ( element.adress){
+                    return (
+                    <Text
+                      fontSize="md"
+                      color="#1C2765"
+                      colorScheme="darkBlue"
+                      variant="solid"
+                      rounded="4"
+                    >
+                      {element.adress}
+                    </Text>
+                    )
+                } else {
+                  return (
+                    <Text
+                      fontSize="md"
+                      color="#1C2765"
+                      colorScheme="darkBlue"
+                      variant="solid"
+                      rounded="4"
+                    >
+                      Please update your adress 
+                    </Text>
+                    )
+                }
+              }
+              )
+            }
+
+
               </HStack>
             </Box>
           </VStack>
@@ -495,7 +538,7 @@ export default function Profil({ navigation, route }) {
             {showContent === "Product" ? (
               <Product idUser={idUser} />
             ) : showContent === "Info" ? (
-              <Info userDataProfile={userDataProfile} />
+              <Info id={idUser} />
             ) : (
               <Feedback idUser={idUser} />
             )}
