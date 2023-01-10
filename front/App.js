@@ -17,7 +17,7 @@ import TestSignin from "./Pages/TestSignin.js";
 import TestLogin from "./Pages/TestLogin.js";
 import Cart from "./Pages/Cart.js";
 import EditeProfil from "./Pages/EditeProfil.js";
-
+import EditeAdress from "./Pages/EditeAdress.js";
 // import { PhoneAuthCredential } from 'firebase/auth';
 import PhoneNumber from "./Pages/PhoneNumber";
 import { NativeBaseProvider } from "native-base";
@@ -37,7 +37,14 @@ export default function App() {
     >
       <NativeBaseProvider>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="TestLogin">
+          <Stack.Navigator initialRouteName="Cart" screenOptions={{
+            headerTintColor:"white",
+            headerStyle:{
+               backgroundColor:"#f14e24"
+            }
+
+            
+          }}>
             <Stack.Screen
               name="Log in"
               options={{ headerShown: false }}
@@ -83,6 +90,7 @@ export default function App() {
             />
             <Stack.Screen name="EditeProfil" component={EditeProfil} />
             <Stack.Screen name="Cart" component={Cart} />
+            <Stack.Screen name="EditeAdress" component={EditeAdress} />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

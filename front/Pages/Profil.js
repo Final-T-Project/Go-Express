@@ -107,6 +107,23 @@ function Product() {
     </View>
   );
 }
+          {/* <View
+                tyle={{
+                    backgroundColor: "red",
+                    height: 40,
+                    alignItems: "center",
+                    padding: 0,
+                  }}
+                >
+                <HStack>
+        <EditeProfil />
+      </HStack></View> */}
+      {/* <TouchableOpacity
+      >
+                <MaterialCommunityIcons
+                  name="lead-pencil"
+                  style={{fontSize: 22, color: COLOURS.black}}
+                /></TouchableOpacity> */}
 // feedback side
 function Info({ navigation }) {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
