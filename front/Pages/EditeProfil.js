@@ -23,7 +23,7 @@ import {
 } from 'native-base';
 const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Image,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       quality: 1,
     });
@@ -37,6 +37,11 @@ let EditeProfil = () => {
   const [placement, setPlacement] = useState(undefined);
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState(null);
+
+  const [name,setName]=useState("")
+  const [email,setEmail]=useState("")
+  const [adress,setAdress]=useState("")
+  const [phoneNUmber,setPhoneNumber]=useState("")
 
   const openModal = (placement) => {
     setOpen(true);
@@ -66,32 +71,32 @@ let EditeProfil = () => {
           <Modal.CloseButton />
           <Modal.Header>
             <Center>
-              <Text color={'#F14E24'} bold>Personal Information</Text>
+              <Text color={'#F14E24'} bold fontSize={"20"}>Personal Information</Text>
             </Center>
           </Modal.Header>
           <Modal.Body>
           <FormControl>
             
               <FormControl.Label >Image</FormControl.Label>
-              <Button backgroundColor={"#373E5A"} onPress={pickImage} >Pick a image</Button>
+              <Button backgroundColor={"#373E5A"} onPress={pickImage} >Pick image</Button>
                 {image && <Image source={{ uri: image }} />}
             </FormControl>
           <FormControl>
             
               <FormControl.Label fontStyle={{color :"#373E5A"}}>Name</FormControl.Label>
-              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} />
+              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} fontSize={'20'} onChange={(changed)=>{setName(changed)}}/>
             </FormControl>
             <FormControl>
             <FormControl>
               <FormControl.Label>Email</FormControl.Label>
-              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} />
+              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} fontSize={'20'} onChange={(changed)=>{setEmail(changed)}}/>
             </FormControl>
               <FormControl.Label>Adress</FormControl.Label>
-              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} />
+              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} fontSize={'20'} onChange={(changed)=>{setAdress(changed)}}/>
             </FormControl>
             <FormControl>
               <FormControl.Label>Phone number </FormControl.Label>
-              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} />
+              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} fontSize={'20'} onChange={(changed)=>{setPhoneNumber(changed)}}/>
             </FormControl>
           </Modal.Body>
           <Modal.Footer>
