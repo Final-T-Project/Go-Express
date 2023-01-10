@@ -44,7 +44,7 @@ function Product() {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.103.13:5000/users/getUserProduct/A`)
+      .get(`http://192.168.103.13:5000/users/getUserProduct/`)
       .then((response) => {
         setUserData(response.data);
       })
@@ -108,7 +108,7 @@ function Product() {
   );
 }
 // feedback side
-function Info({ navigation }) {
+function Info({ navigation,userDataProfile }) {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
   return (
     <View
@@ -273,29 +273,36 @@ export default function Profil({ navigation }) {
   // state to save user information
   const [userDataProfile, setUserDataProfile] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get(`http://192.168.103.13:5000/users/getUserPorfile/A`)
+  const [idUser,setIdUser]=useState("")
+
+  AsyncStorage.getItem("userData")
+  .then((res) => {
+    setIdUser(JSON.parse(res));
+  })
+  
+    useEffect(() => {
+      //console.log(idUser.userId)
+      axios
+      .get(`http://192.168.1.16:5000/users/getUserPorfile/${idUser.userId}`)
       .then((response) => {
         setUserDataProfile(response.data);
+        console.log(response.data)
       })
       .catch((error) => {
         alert(error);
       });
-  }, []);
+  },[]);
+   
+
+    
+
+    
 
   // console.log("data", userDataProfile);
   const [userInfo, setUserInfo] = useState("");
   const [userData, setUserData] = useState([]);
 
-  AsyncStorage.getItem("userData")
-    .then((res) => {
-      setUserInfo(JSON.parse(res));
-      //console.log("------->"+userInfo.userId)
-    })
-    .then /*console
-  .log("Im userInfo from Profile---------->"+userInfo.userId)*/
-    ();
+  
 
   // useEffect(() => {
   //   axios
@@ -327,9 +334,12 @@ export default function Profil({ navigation }) {
           </View>
           <View>
             <View>
-              <Image
+              {userDataProfile.map((element)=>{
+                return (
+                <>
+                <Image
                 source={{
-                  uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1671027251/tenue-classe-pour-homme_qvxxka.jpg",
+                  uri: element.photo,
                 }}
                 style={{
                   width: 100,
@@ -337,9 +347,20 @@ export default function Profil({ navigation }) {
                   // borderRadius: 100,
                   marginTop: -130,
                   left: 20,
-                  borderRadius: 4,
+                  borderRadius: 20,
+                  shadowColor: "black",
+                    shadowOffset: {
+                      width: 5,
+                      height: 5,
+                    },
+                    shadowOpacity:'100%',
+                    shadowRadius: 20,
+                    elevation: 20,
                 }}
               ></Image>
+                </>
+                )
+              })}
             </View>
           </View>
           {/* user name */}
@@ -347,6 +368,7 @@ export default function Profil({ navigation }) {
           {userDataProfile.map((element) => (
             <View>
               <Text
+              key={element.id_user}
                 style={{
                   fontSize: 20,
                   fontWeight: "bold",
@@ -360,6 +382,7 @@ export default function Profil({ navigation }) {
 
               {/* user ville */}
               <Text
+              
                 style={{
                   fontSize: 15,
                   top: -110,
@@ -406,7 +429,7 @@ export default function Profil({ navigation }) {
             {showContent === "Product" ? (
               <Product Product={new Array(13).fill(1)} />
             ) : showContent === "Info" ? (
-              <Info />
+              <Info userDataProfile={userDataProfile}/>
             ) : (
               <Feedback Product={new Array(23).fill(1)} />
             )}
