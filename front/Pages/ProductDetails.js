@@ -19,7 +19,7 @@ export default function Products({ route }) {
         <Image style={styles.image} source={{ uri: element.photo_product }} />
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{element.product_name}</Text>
-          <Text style={styles.price}>dt {element.price}</Text>
+          <Text style={styles.price}>{element.price} dt</Text>
           <Text style={styles.description}>{element.description}</Text>
           <Button style={styles.button} title="Add to cart" />
         </View>

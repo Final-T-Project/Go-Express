@@ -59,7 +59,7 @@ const AddProduct = ({ navigation }) => {
       uploadImage(newfile);
     }
   };
-  console.log("image url", image);
+  // console.log("image url", image);
 
   // function to upload image to cloudinary
   async function uploadImage(path) {
@@ -123,36 +123,36 @@ const AddProduct = ({ navigation }) => {
     new Date().getMinutes();
 
   let addProduct = () => {
-    axios
-      .post(`http://192.168.103.13:5000/products/addProduct`, {
-        sellIerd: "A",
-        buyerId: "Null",
-        product_name: name,
-        category: category,
-        price: price,
-        description: description,
-        photo: image,
-        quantity: quantity,
-        id_user: "A",
-        id_cart: 2,
-        productStatus: "NotAccepted",
-        Published_at: posted_at,
-      })
+    if (!name.length || !description.length || !price.length) {
+      alert("Please fill all information");
+    } else {
+      const adressIp = `192.168.103.8`;
+      axios
+        .post(`http://${adressIp}:5000/products/addProduct`, {
+          sellIerd: "A",
+          buyerId: "Null",
+          product_name: name,
+          category: category,
+          price: price,
+          description: description,
+          photo: image,
+          quantity: quantity,
+          id_user: "A",
+          id_cart: 2,
+          productStatus: "NotAccepted",
+          Published_at: posted_at,
+        })
 
-      .then(() => {
-        console.log("added");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then(() => {
+          console.log("added");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
-  // MediaManager.get()
-  //   .upload(image)
-  //   .unsigned("ahmedmejdoub")
-  //   .option("resource_type", "image");
-  //.option("upload_preset", "ahmedmejdoub")
-
+  console.log(typeof price);
   return (
     <>
       <ScrollView>
@@ -164,109 +164,123 @@ const AddProduct = ({ navigation }) => {
               price: "",
               image: "",
               quantity: 1,
+              category: "",
             }}
             validationSchema={Yup.object().shape({
-              name: Yup.string().required("Le nom est requis"),
-              description: Yup.string().required("La description est requise"),
-              price: Yup.number().required("Le prix est requis"),
-              quantity: Yup.number(),
+              name: Yup.string().required(""),
+              description: Yup.string().required(""),
+              price: Yup.number().required("Price is required"),
             })}
           >
-            <View style={styles.form}>
-              {/*image  start */}
-
-              {/* <View style={styles.form_image}>
-                <Image
-                  style={styles.image}
-                  source={require("../assets/go.png")}
+            {/* {formik} */}
+            {({ errors, touched, handleBlur }) => (
+              <View style={styles.form}>
+                {/*Name  Start */}
+                <Text style={styles.label}>Product Name :</Text>
+                <TextInput
+                  mode="outlined"
+                  style={styles.input}
+                  onChangeText={(text) => setName(text)}
                 />
-              </View> */}
-              {/*image  end */}
+                {name.length === 0 ? (
+                  <Text style={styles.error}>Name is required</Text>
+                ) : null}
 
-              {/*Name  Start */}
-              <Text style={styles.label}>Product Name :</Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => setName(text)}
-              />
-              {/*Name  End */}
+                {/*Name  End */}
 
-              {/*Description  start */}
-              <Text style={styles.label}>Description :</Text>
-              <TextInput
-                style={styles.inputDescription}
-                onChangeText={(text) => setDescription(text)}
-              />
-              {/*Description  End */}
+                {/*Description  start */}
+                <Text style={styles.label}>Description :</Text>
+                <TextInput
+                  style={styles.inputDescription}
+                  onChangeText={(text) => setDescription(text)}
+                />
+                {description.length === 0 ? (
+                  <Text style={styles.error}>Description is required</Text>
+                ) : null}
 
-              {/*Price  Start */}
-              <Text style={styles.label}>Unit Price:</Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(number) => setPrice(number)}
-              />
-              {/*Price  End */}
+                {/*Description  End */}
 
-              {/*Category  Start */}
-              <Text style={styles.label}>Category:</Text>
-              <View style={styles.input}>
-                <Picker
-                  selectedValue={category}
-                  onValueChange={(value) => setCategory(value)}
-                  // mode="dropdown"
-                  mode="dialog"
-                  style={styles.picker}
-                >
-                  <Picker.Item label="Please Select Category" />
-                  <Picker.Item label="Kitchen" value="Kitchen" />
-                  <Picker.Item label="Furniture" value="Furniture" />
-                  <Picker.Item label="Garden" value="Garden" />
-                  <Picker.Item label="Accessories" value="Accessories" />
-                </Picker>
-              </View>
-              {/*Category  End */}
+                {/*Price  Start */}
+                <Text style={styles.label}>Unit Price:</Text>
+                <TextInput
+                  style={styles.input}
+                  onBlur={handleBlur("price")}
+                  onChangeText={(number) => setPrice(number)}
+                />
+                {price.length === 0 || typeof price !== Number ? (
+                  <Text style={styles.error}>Price is required</Text>
+                ) : null}
+                {/* {typeof price !== Number ? (
+                  <Text style={styles.error}>Price must be a number </Text>
+                ) : null} */}
 
-              {/*Quantity  Start */}
-              <Text style={styles.label}>Quantity:</Text>
-              <View style={styles.quantityContainer}>
-                <Pressable onPress={onMinus} style={styles.quantityButton}>
-                  <Text style={styles.quantityInput}>-</Text>
-                </Pressable>
+                {/*Price  End */}
 
-                <Text>{quantity}</Text>
+                {/*Category  Start */}
+                <Text style={styles.label}>Category:</Text>
+                <View style={styles.input}>
+                  <Picker
+                    selectedValue={category}
+                    onValueChange={(value) => setCategory(value)}
+                    // mode="dropdown"
+                    mode="dialog"
+                    style={styles.picker}
+                    onBlur={handleBlur("category")}
+                  >
+                    <Picker.Item label="Please Select Category" />
+                    <Picker.Item label="Kitchen" value="Kitchen" />
+                    <Picker.Item label="Furniture" value="Furniture" />
+                    <Picker.Item label="Garden" value="Garden" />
+                    <Picker.Item label="Accessories" value="Accessories" />
+                  </Picker>
+                  {category === "Please Select Category" ? (
+                    <Text style={styles.error}> Category is required </Text>
+                  ) : null}
+                </View>
+                {/*Category  End */}
 
-                <Pressable onPress={onPlus} style={styles.quantityButton}>
-                  <Text style={styles.quantityInput}>+</Text>
-                </Pressable>
-              </View>
+                {/*Quantity  Start */}
+                <Text style={styles.label}>Quantity:</Text>
+                <View style={styles.quantityContainer}>
+                  <Pressable onPress={onMinus} style={styles.quantityButton}>
+                    <Text style={styles.quantityInput}>-</Text>
+                  </Pressable>
 
-              {/* Quantity  End */}
-              <View style={styles.container}>
-                <Text style={styles.Price_label}>
-                  Total Price : {price * quantity} dt{" "}
-                </Text>
-              </View>
+                  <Text>{quantity}</Text>
 
-              {/*Image  start */}
+                  <Pressable onPress={onPlus} style={styles.quantityButton}>
+                    <Text style={styles.quantityInput}>+</Text>
+                  </Pressable>
+                </View>
 
-              <View>
-                <Button title="Pick a image " onPress={pickImage} />
-                {image && <Image source={{ uri: image }} />}
-              </View>
-
-              {/*Image  End */}
-
-              {/*Button Add  Start */}
-              <TouchableOpacity>
-                <View style={styles.button}>
-                  <MaterialIcons name="add" size={24} color="white" />
-                  <Text onPress={addProduct} style={styles.buttonText}>
-                    Add Product
+                {/* Quantity  End */}
+                <View style={styles.container}>
+                  <Text style={styles.Price_label}>
+                    Total Price : {price * quantity} dt{" "}
                   </Text>
                 </View>
-              </TouchableOpacity>
-              {/*Button Add  End */}
-            </View>
+
+                {/*Image  start */}
+
+                <View>
+                  <Button title="Pick a image " onPress={pickImage} />
+                  {image && <Image source={{ uri: image }} />}
+                </View>
+
+                {/*Image  End */}
+
+                {/*Button Add  Start */}
+                <TouchableOpacity>
+                  <View style={styles.button}>
+                    <MaterialIcons name="add" size={24} color="white" />
+                    <Text onPress={addProduct} style={styles.buttonText}>
+                      Add Product
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                {/*Button Add  End */}
+              </View>
+            )}
           </Formik>
         </View>
       </ScrollView>
@@ -279,7 +293,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    height: 700,
+    height: "100%",
     justifyContent: "center",
   },
   form: {
@@ -350,6 +364,7 @@ const styles = StyleSheet.create({
 
   error: {
     color: "red",
+    marginTop: -10,
     marginBottom: 10,
   },
   quantityContainer: {

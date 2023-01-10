@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`feedback` (
   `etoile` ENUM('1', '2', '3', '4', '5') NOT NULL,
   `details` VARCHAR(400) NULL DEFAULT '0',
   `user_id_user` VARCHAR(50) NOT NULL,
-  `serves_id_serves` INT NOT NULL,
+  `serves_id_serves` NULL DEFAULT '0',
   PRIMARY KEY (`id_feedback`),
   INDEX `fk_feedBack_user1_idx` (`user_id_user` ASC) VISIBLE,
   INDEX `fk_feedBack_serves1_idx` (`serves_id_serves` ASC) VISIBLE,

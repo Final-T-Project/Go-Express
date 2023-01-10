@@ -19,7 +19,8 @@ export default function Products({ route }) {
 
   // function to get all product by categories
   useEffect(() => {
-    axios.get(`http://192.168.103.13:5000/products/${item}`).then((result) => {
+    const adressIp = `192.168.103.8`;
+    axios.get(`http://${adressIp}:5000/products/${item}`).then((result) => {
       setProduct(result.data);
       console.log(result.data);
     });
