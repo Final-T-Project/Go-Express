@@ -77,9 +77,9 @@ export default function SideBbar({ navigation, route }) {
         resizeMode="cover"
         style={styles.image}
       >
-        {userDataProfile.map((element) => (
           
           <View style={{ justifyContent: "flex-start", padding: 20 }}>
+            {userDataProfile.map((element) => (
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate("Profil", { idToSend });
@@ -118,6 +118,8 @@ export default function SideBbar({ navigation, route }) {
                 View Profil
               </Text>
             </TouchableOpacity>
+            ))}
+            
 
             <View style={{ flexGrow: 1, marginTop: 60 }}>
               {
@@ -140,7 +142,7 @@ export default function SideBbar({ navigation, route }) {
           </View>
 
 
-        ))}
+        
       </ImageBackground>
       {
         // Over lay View...
