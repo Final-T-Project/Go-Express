@@ -11,13 +11,13 @@ import {
   Animated,
   ToastAndroid,
 } from 'react-native';
-// import {COLOURS, Items} from '../database/Database';
+import {COLOURS, Items} from '../database/Database';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Shopping ({route, navigation})  {
-//   const {productID} = route.params;
+const ProductInfo = ({route, navigation}) => {
+  const {productID} = route.params;
 
   const [product, setProduct] = useState({});
 
@@ -27,24 +27,24 @@ export default function Shopping ({route, navigation})  {
 
   let position = Animated.divide(scrollX, width);
 
-//   useEffect(() => {
-//     const unsubscribe = navigation.addListener('focus', () => {
-//       getDataFromDB();
-//     });
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getDataFromDB();
+    });
 
-//     return unsubscribe;
-//   }, [navigation]);
+    return unsubscribe;
+  }, [navigation]);
 
   //get product data by productID
 
-//   const getDataFromDB = async () => {
-//     for (let index = 0; index < Items.length; index++) {
-//       if (Items[index].id == productID) {
-//         await setProduct(Items[index]);
-//         return;
-//       }
-//     }
-//   };
+  const getDataFromDB = async () => {
+    for (let index = 0; index < Items.length; index++) {
+      if (Items[index].id == productID) {
+        await setProduct(Items[index]);
+        return;
+      }
+    }
+  };
 
   //add to cart
 
@@ -136,7 +136,7 @@ export default function Shopping ({route, navigation})  {
               paddingLeft: 16,
             }}>
             <TouchableOpacity onPress={() => navigation.goBack('Home')}>
-              <Entypo
+              {/* <Entypo
                 name="chevron-left"
                 style={{
                   fontSize: 18,
@@ -145,7 +145,7 @@ export default function Shopping ({route, navigation})  {
                   backgroundColor: COLOURS.white,
                   borderRadius: 10,
                 }}
-              />
+              /> */}
             </TouchableOpacity>
           </View>
           <FlatList
@@ -183,7 +183,7 @@ export default function Shopping ({route, navigation})  {
                       style={{
                         width: '16%',
                         height: 2.4,
-                        backgroundColor: COLOURS.black,
+                        backgroundColor: "#ED5C00",
                         opacity,
                         marginHorizontal: 4,
                         borderRadius: 100,
@@ -208,7 +208,7 @@ export default function Shopping ({route, navigation})  {
               name="shopping-cart"
               style={{
                 fontSize: 18,
-                color: COLOURS.blue,
+                color: "#ED5C00",
                 marginRight: 6,
               }}
             />
@@ -229,7 +229,7 @@ export default function Shopping ({route, navigation})  {
             }}>
             <Text
               style={{
-                fontSize: 24,
+                fontSize: 20,
                 fontWeight: '600',
                 letterSpacing: 0.5,
                 marginVertical: 4,
@@ -238,7 +238,7 @@ export default function Shopping ({route, navigation})  {
               }}>
               {product.productName}
             </Text>
-            <Ionicons
+            {/* <Ionicons
               name="link-outline"
               style={{
                 fontSize: 24,
@@ -247,7 +247,7 @@ export default function Shopping ({route, navigation})  {
                 padding: 8,
                 borderRadius: 100,
               }}
-            />
+            /> */}
           </View>
           <Text
             style={{
@@ -263,7 +263,7 @@ export default function Shopping ({route, navigation})  {
             }}>
             {product.description}
           </Text>
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -306,7 +306,7 @@ export default function Shopping ({route, navigation})  {
                 color: COLOURS.backgroundDark,
               }}
             />
-          </View>
+          </View> */}
           <View
             style={{
               paddingHorizontal: 16,
@@ -319,10 +319,10 @@ export default function Shopping ({route, navigation})  {
                 color: COLOURS.black,
                 marginBottom: 4,
               }}>
-              &#8377; {product.productPrice}.00
+           Price :{product.productPrice} dt
             </Text>
             <Text>
-              Tax Rate 2%~ &#8377;{product.productPrice / 20} (&#8377;
+              Tax Rate 2% {product.productPrice / 20} (
               {product.productPrice + product.productPrice / 20})
             </Text>
           </View>
@@ -343,7 +343,7 @@ export default function Shopping ({route, navigation})  {
           style={{
             width: '86%',
             height: '90%',
-            backgroundColor: COLOURS.blue,
+            backgroundColor: "#373E5A",
             borderRadius: 20,
             justifyContent: 'center',
             alignItems: 'center',
@@ -362,131 +362,6 @@ export default function Shopping ({route, navigation})  {
       </View>
     </View>
   );
-}
-const COLOURS = {
-    white: '#ffffff',
-    black: '#000000',
-    green: '#00AC76',
-    red: '#C04345',
-    blue: '#0043F9',
-    backgroundLight: '#F0F0F3',
-    backgroundMedium: '#B9B9B9',
-    backgroundDark: '#777777',
-  };
-const styles = {
-    top: {
-      marginBottom: 'auto',
-      marginTop: 0,
-    },
-    bottom: {
-      marginBottom: 0,
-      marginTop: 'auto',
-    },
-    left: {
-      marginLeft: 0,
-      marginRight: 'auto',
-    },
-    right: {},
-    center: {},
-  };
-  export const Items = [
-    {
-      id: 1,
-      category: 'product',
-      productName: 'MI Super Bass Bluetooth Wireless Headphones',
-      productPrice: 1799,
-      description:
-        'Up to 20 hours battery life | Super powerful Bass | 40mm dynamic driver | Pressure less ear muffs | Bluetooth 5.0 | Voice control',
-      isOff: true,
-      offPercentage: 10,
-    //   productImage: require('../database/images/products/Mi1.png'),
-      isAvailable: true,
-      productImageList: [
-        // require('../database/images/products/Mi1.png'),
-        // require('../database/images/products/Mi2.png'),
-        // require('../database/images/products/Mi3.png'),
-      ],
-    },
-    {
-      id: 2,
-      category: 'product',
-      productName: 'boAt Rockerz 450 Bluetooth Headphone',
-      productPrice: 1499,
-      description:
-        'boAt Rockerz 450 M is an on-ear wireless headset that has been ergonomically designed to meet the needs of music lovers.',
-      isOff: false,
-    //   productImage: require('../database/images/products/boat1.png'),
-      isAvailable: true,
-      productImageList: [
-        // require('../database/images/products/boat1.png'),
-        // require('../database/images/products/boat2.png'),
-        // require('../database/images/products/boat3.png'),
-      ],
-    },
-    {
-      id: 3,
-      category: 'accessory',
-      productName: 'boAt Airdopes 441',
-      productPrice: 1999,
-      description:
-        'Bluetooth: It has Bluetooth v5.0 with a range of 10m and is compatible with Android & iOS',
-      isOff: true,
-      offPercentage: 18,
-    //   productImage: require('../database/images/accessories/boatairpods1.png'),
-      isAvailable: true,
-      productImageList: [
-        // require('../database/images/accessories/boatairpods1.png'),
-        // require('../database/images/accessories/boatairpods2.png'),
-        // require('../database/images/accessories/boatairpods3.png'),
-      ],
-    },
-    {
-      id: 4,
-      category: 'accessory',
-      productName: 'boAt Bassheads 242',
-      productPrice: 399,
-      description:
-        'Fly into your workouts with precise tones that inspire and energize your system with its HD sound, all the time.',
-      isOff: false,
-    //   productImage: require('../database/images/accessories/boatbassheads1.png'),
-      isAvailable: true,
-      productImageList: [
-        // require('../database/images/accessories/boatbassheads1.png'),
-        // require('../database/images/accessories/boatbassheads2.png'),
-        // require('../database/images/accessories/boatbassheads3.png'),
-      ],
-    },
-    {
-      id: 5,
-      category: 'accessory',
-      productName: 'boAt Rockerz 255 Pro+',
-      productPrice: 1499,
-      description:
-        'The unbeatable boAt signature sound shines through no matter what are you playing courtesy its 10mm drivers.',
-      isOff: false,
-    //   productImage: require('../database/images/accessories/boatrockerz1.png'),
-      isAvailable: false,
-      productImageList: [
-        // require('../database/images/accessories/boatrockerz1.png'),
-        // require('../database/images/accessories/boatrockerz2.png'),
-        // require('../database/images/accessories/boatrockerz3.png'),
-      ],
-    },
-    {
-      id: 6,
-      category: 'accessory',
-      productName: 'Boult Audio AirBass Propods TWS',
-      productPrice: 1299,
-      description:
-        'One Touch Control & Voice Assistant: With one multifunction button, you can play/pause, previous/next track and answer/hang-up calls.Voice assistant function lets you access siri/Google Assistant',
-      isOff: false,
-    //   productImage: require('../database/images/accessories/boultairbass1.png'),
-      isAvailable: true,
-      productImageList: [
-        // require('../database/images/accessories/boultairbass1.png'),
-        // require('../database/images/accessories/boultairbass2.png'),
-        // require('../database/images/accessories/boultairbass3.png'),
-      ],
-    },
-  ];
+};
 
+export default ProductInfo;
