@@ -389,6 +389,7 @@ export default function Profil({ navigation }) {
       console.log(idUser.userId)
      
       useEffect(() => {
+
         axios
         .get(`http://${adressIp}:5000/users/getUserPorfile/${idUser.userId}`)
       .then((response) => {
