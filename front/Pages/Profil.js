@@ -374,6 +374,7 @@ export default function Profil({ navigation, route }) {
           <View>
             <View>
               {userDataProfile.map((element) => {
+                if (element.photo){
                 return (
                   <>
                     <Image
@@ -399,6 +400,33 @@ export default function Profil({ navigation, route }) {
                     ></Image>
                   </>
                 );
+                    }else {
+                      return (
+                      <>
+                        <Image
+                          source={{
+                            uri: `https://invisiblechildren.com/wp-content/uploads/2012/07/facebook-profile-picture-no-pic-avatar.jpg`,
+                          }}
+                          style={{
+                            width: 100,
+                            height: 100,
+                            // borderRadius: 100,
+                            marginTop: -130,
+                            left: 20,
+                            borderRadius: 20,
+                            shadowColor: "black",
+                            shadowOffset: {
+                              width: 5,
+                              height: 5,
+                            },
+                            shadowOpacity: "100%",
+                            shadowRadius: 20,
+                            elevation: 20,
+                          }}
+                        ></Image>
+                      </>
+                    );}
+
               })}
             </View>
           </View>

@@ -78,6 +78,7 @@ export default function SideBbar({ navigation, route }) {
         style={styles.image}
       >
         {userDataProfile.map((element) => (
+          
           <View style={{ justifyContent: "flex-start", padding: 20 }}>
             <TouchableOpacity
               onPress={() => {
@@ -137,6 +138,8 @@ export default function SideBbar({ navigation, route }) {
               {TabButton(currentTab, setCurrentTab, "LogOut", logout)}
             </View>
           </View>
+
+
         ))}
       </ImageBackground>
       {
