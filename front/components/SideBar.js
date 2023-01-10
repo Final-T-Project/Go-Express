@@ -79,7 +79,9 @@ export default function SideBbar({ navigation, route }) {
       >
           
           <View style={{ justifyContent: "flex-start", padding: 20 }}>
-            {userDataProfile.map((element) => (
+            {userDataProfile.map((element) => {
+              if (element.photo){
+                return(
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate("Profil", { idToSend });
@@ -118,8 +120,52 @@ export default function SideBbar({ navigation, route }) {
                 View Profil
               </Text>
             </TouchableOpacity>
-            ))}
-            
+                )} else {
+                  return(
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Profil", { idToSend });
+              }}
+            >
+              <Image
+                source={{
+                  uri: `https://invisiblechildren.com/wp-content/uploads/2012/07/facebook-profile-picture-no-pic-avatar.jpg`,
+                }}
+                style={{
+                  width: 90,
+                  height: 90,
+                  borderRadius: 7,
+                  marginTop: 10,
+                  marginLeft: 23,
+                }}
+              ></Image>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: "white",
+                  marginTop: 10,
+                }}
+              >
+                Hello {element.name}{" "}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  // fontWeight: "bold",
+                  color: "white",
+                  marginTop: 10,
+                }}
+              >
+                View Profil
+              </Text>
+            </TouchableOpacity>
+                )
+
+                }
+
+              })}
+
 
             <View style={{ flexGrow: 1, marginTop: 60 }}>
               {
