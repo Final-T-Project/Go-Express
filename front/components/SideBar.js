@@ -43,9 +43,8 @@ export default function SideBbar({ navigation, route }) {
   // state to ssave id to send it to profile componnent
   const [idToSend, setIdToSend] = useState("");
 
- 
   useEffect(() => {
-    console.log("the id: ", route.params.id);  // from login 
+    console.log("the id: ", route.params.id); // from login
     setIdToSend(route.params.id);
     axios
       .get(`http://192.168.103.8:5000/users/getUserPorfile/${route.params.id}`)

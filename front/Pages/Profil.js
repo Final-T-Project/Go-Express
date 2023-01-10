@@ -282,7 +282,7 @@ export default function Profil({ navigation, route }) {
 
   useEffect(() => {
     setIdUser(route.params.idToSend);
-
+    console.log("test", route.params.idToSend);
     axios
       .get(
         `http://192.168.103.8:5000/users/getUserPorfile/${route.params.idToSend}`
