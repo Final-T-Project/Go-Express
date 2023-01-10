@@ -7,6 +7,19 @@ import {
   Image,
   ToastAndroid,
 } from 'react-native';
+import {
+    TextArea,
+    Box,
+    Center,
+    NativeBaseProvider,
+    extendTheme,
+    InputRightAddon,
+    VStack,
+    HStack,
+    Checkbox
+  } from "native-base";
+  import { FontAwesome5 } from '@expo/vector-icons';
+  import EditeAdress from './EditeAdress';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import {COLOURS, Items} from '../database/Database';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -238,26 +251,28 @@ export default function Cart ({navigation}){
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+              {/* the button to go back to the shopping list */}
+            {/* <TouchableOpacity onPress={() => navigation.goBack()}> */}
               <MaterialCommunityIcons
                 name="chevron-left"
                 style={{
                   fontSize: 18,
                   color: COLOURS.backgroundDark,
                   padding: 12,
-                  backgroundColor:"#F2F2F2",
+                  backgroundColor: COLOURS.backgroundLight,
                   borderRadius: 12,
                 }}
               />
-            </TouchableOpacity>
-            <Text
+            {/* </TouchableOpacity> */}
+           <Center> <Text
               style={{
-                fontSize: 14,
-                color: COLOURS.black,
-                fontWeight: '400',
-              }}>
+                  fontSize: 14,
+                  color: COLOURS.black,
+                  fontWeight: '400',
+                }}>
               Order Details
             </Text>
+                  </Center>
             <View></View>
           </View>
           <Text
@@ -272,41 +287,44 @@ export default function Cart ({navigation}){
             }}>
             My Cart
           </Text>
-          {/* <View style={{paddingHorizontal: 16}}>
-            {product ? product.map(renderProducts) : null}
-          </View> */}
-          <View>
-            <View
+         {/* Delivery Location */}
+          <View> 
+      <HStack>
+          <View
               style={{
-                paddingHorizontal: 16,
-                marginVertical: 10,
-              }}>
+                  paddingHorizontal: 16,
+                  marginVertical: 10,
+                }}>
+                    <Box >
+              
+              </Box>
               <Text
                 style={{
-                  fontSize: 16,
-                  color: COLOURS.black,
-                  fontWeight: '500',
-                  letterSpacing: 1,
-                  marginBottom: 20,
+                    fontSize: 16,
+                    color: COLOURS.black,
+                    fontWeight: '500',
+                    letterSpacing: 1,
+                    marginBottom: 20,
                 }}>
                 Delivery Location
               </Text>
               <View
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
                 }}>
                 <View
                   style={{
-                    flexDirection: 'row',
-                    width: '80%',
-                    alignItems: 'center',
-                  }}>
-                  <View
+                      flexDirection: 'row',
+                      width: '80%',
+                      alignItems: 'center',
+                    }}>
+                   
+                                <View
                     style={{
-                      color: "COLOURS.blue",
-                      backgroundColor: "COLOURS.backgroundLight",
+                      color: COLOURS.blue,
+                      backgroundColor: COLOURS.backgroundLight,
                       alignItems: 'center',
                       justifyContent: 'center',
                       padding: 12,
@@ -316,8 +334,8 @@ export default function Cart ({navigation}){
                     <MaterialCommunityIcons
                       name="truck-delivery-outline"
                       style={{
-                        fontSize: 18,
-                        color: "#ED5C00",
+                        fontSize: 20,
+                        color: "#373E5A",
                       }}
                     />
                   </View>
@@ -340,14 +358,18 @@ export default function Cart ({navigation}){
                       }}>
                      User Ville
                     </Text>
-                  </View>
+                  </View> 
+                  <EditeAdress />
+
+     
+       
                 </View>
-                <MaterialCommunityIcons
-                  name="chevron-right"
-                  style={{fontSize: 22, color: COLOURS.black}}
-                />
+
+      
               </View>
             </View>
+            </HStack>
+            {/* Payment Method */}
             <View
               style={{
                 paddingHorizontal: 16,
@@ -389,7 +411,7 @@ export default function Cart ({navigation}){
                       style={{
                         fontSize: 10,
                         fontWeight: '900',
-                        color: "#ED5C00",
+                        color: "#373E5A",
                         letterSpacing: 1,
                       }}>
                       VISA
@@ -404,7 +426,7 @@ export default function Cart ({navigation}){
                       }}>
                       Visa Classic
                     </Text>
-                    <Text
+                    {/* <Text
                       style={{
                         fontSize: 12,
                         color: COLOURS.black,
@@ -413,15 +435,75 @@ export default function Cart ({navigation}){
                         opacity: 0.5,
                       }}>
                       ****-9092
-                    </Text>
+                    </Text> */}
                   </View>
                 </View>
-                <MaterialCommunityIcons
-                  name="chevron-right"
-                  style={{fontSize: 22, color: COLOURS.black}}
-                />
+                <HStack space={6}>
+      <Checkbox value="orange"colorScheme="orange" accessibilityLabel="This is a dummy checkbox" />
+      
+    </HStack>
+              
               </View>
             </View>
+            <View
+              style={{
+                paddingHorizontal: 16,
+                marginVertical: 10,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    width: '80%',
+                    alignItems: 'center',
+                  }}>
+                  <View
+                    style={{
+                      color: COLOURS.blue,
+                      backgroundColor: COLOURS.backgroundLight,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: 12,
+                      borderRadius: 10,
+                      marginRight: 18,
+                    }}>
+                       <FontAwesome5 name="money-bill" size={19} color="#373E5A" /> 
+                    
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: COLOURS.black,
+                        fontWeight: '500',
+                      }}>
+                      Pay Cash
+                    </Text>
+                    {/* <Text
+                      style={{
+                        fontSize: 12,
+                        color: COLOURS.black,
+                        fontWeight: '400',
+                        lineHeight: 20,
+                        opacity: 0.5,
+                      }}>
+                      ****-9092
+                    </Text> */}
+                  </View>
+                </View>
+                <HStack space={6}>
+      <Checkbox value="orange" colorScheme="orange" accessibilityLabel="This is a dummy checkbox"/>
+      
+    </HStack>
+              
+              </View>
+            </View>
+            {/* total prise */}
             <View
               style={{
                 paddingHorizontal: 16,
@@ -462,7 +544,7 @@ export default function Cart ({navigation}){
                     color: COLOURS.black,
                     opacity: 0.8,
                   }}>
-                 {total}.00
+                  {total}.00dt
                 </Text>
               </View>
               <View
@@ -490,6 +572,7 @@ export default function Cart ({navigation}){
                     opacity: 0.8,
                   }}>
                   {total / 20}
+                  dt
                 </Text>
               </View>
               <View
@@ -514,10 +597,12 @@ export default function Cart ({navigation}){
                     fontWeight: '500',
                     color: COLOURS.black,
                   }}>
-                  {total + total / 20}
+                 {total + total / 20}
+                 dt
                 </Text>
               </View>
             </View>
+            
           </View>
         </ScrollView>
   
@@ -535,7 +620,7 @@ export default function Cart ({navigation}){
             style={{
               width: '86%',
               height: '90%',
-              backgroundColor: "#ED5C00",
+              backgroundColor: "#373E5A",
               borderRadius: 20,
               justifyContent: 'center',
               alignItems: 'center',
@@ -556,12 +641,112 @@ export default function Cart ({navigation}){
     );
 }
 const COLOURS = {
-    white: '#ffffff',
-    black: '#000000',
-    green: '#00AC76',
-    red: '#C04345',
-    blue: '#0043F9',
-    backgroundLight: '#F0F0F3',
-    backgroundMedium: '#B9B9B9',
-    backgroundDark: '#777777',
-  };
+  white: '#ffffff',
+  black: '#000000',
+  green: '#00AC76',
+  red: '#C04345',
+  blue: '#0043F9',
+  backgroundLight: '#F0F0F3',
+  backgroundMedium: '#B9B9B9',
+  backgroundDark: '#777777',
+};
+export const Items = [
+  {
+    id: 1,
+    category: 'product',
+    productName: 'MI Super Bass Bluetooth Wireless Headphones',
+    productPrice: 1799,
+    description:
+      'Up to 20 hours battery life | Super powerful Bass | 40mm dynamic driver | Pressure less ear muffs | Bluetooth 5.0 | Voice control',
+    isOff: true,
+    offPercentage: 10,
+  //   productImage: require('../database/images/products/Mi1.png'),
+    isAvailable: true,
+    productImageList: [
+      // require('../database/images/products/Mi1.png'),
+      // require('../database/images/products/Mi2.png'),
+      // require('../database/images/products/Mi3.png'),
+    ],
+  },
+  {
+    id: 2,
+    category: 'product',
+    productName: 'boAt Rockerz 450 Bluetooth Headphone',
+    productPrice: 1499,
+    description:
+      'boAt Rockerz 450 M is an on-ear wireless headset that has been ergonomically designed to meet the needs of music lovers.',
+    isOff: false,
+  //   productImage: require('../database/images/products/boat1.png'),
+    isAvailable: true,
+    productImageList: [
+      // require('../database/images/products/boat1.png'),
+      // require('../database/images/products/boat2.png'),
+      // require('../database/images/products/boat3.png'),
+    ],
+  },
+  {
+    id: 3,
+    category: 'accessory',
+    productName: 'boAt Airdopes 441',
+    productPrice: 1999,
+    description:
+      'Bluetooth: It has Bluetooth v5.0 with a range of 10m and is compatible with Android & iOS',
+    isOff: true,
+    offPercentage: 18,
+  //   productImage: require('../database/images/accessories/boatairpods1.png'),
+    isAvailable: true,
+    productImageList: [
+      // require('../database/images/accessories/boatairpods1.png'),
+      // require('../database/images/accessories/boatairpods2.png'),
+      // require('../database/images/accessories/boatairpods3.png'),
+    ],
+  },
+  {
+    id: 4,
+    category: 'accessory',
+    productName: 'boAt Bassheads 242',
+    productPrice: 399,
+    description:
+      'Fly into your workouts with precise tones that inspire and energize your system with its HD sound, all the time.',
+    isOff: false,
+  //   productImage: require('../database/images/accessories/boatbassheads1.png'),
+    isAvailable: true,
+    productImageList: [
+      // require('../database/images/accessories/boatbassheads1.png'),
+      // require('../database/images/accessories/boatbassheads2.png'),
+      // require('../database/images/accessories/boatbassheads3.png'),
+    ],
+  },
+  {
+    id: 5,
+    category: 'accessory',
+    productName: 'boAt Rockerz 255 Pro+',
+    productPrice: 1499,
+    description:
+      'The unbeatable boAt signature sound shines through no matter what are you playing courtesy its 10mm drivers.',
+    isOff: false,
+  //   productImage: require('../database/images/accessories/boatrockerz1.png'),
+    isAvailable: false,
+    productImageList: [
+      // require('../database/images/accessories/boatrockerz1.png'),
+      // require('../database/images/accessories/boatrockerz2.png'),
+      // require('../database/images/accessories/boatrockerz3.png'),
+    ],
+  },
+  {
+    id: 6,
+    category: 'accessory',
+    productName: 'Boult Audio AirBass Propods TWS',
+    productPrice: 1299,
+    description:
+      'One Touch Control & Voice Assistant: With one multifunction button, you can play/pause, previous/next track and answer/hang-up calls.Voice assistant function lets you access siri/Google Assistant',
+    isOff: false,
+  //   productImage: require('../database/images/accessories/boultairbass1.png'),
+    isAvailable: true,
+    productImageList: [
+      // require('../database/images/accessories/boultairbass1.png'),
+      // require('../database/images/accessories/boultairbass2.png'),
+      // require('../database/images/accessories/boultairbass3.png'),
+    ],
+  },
+];
