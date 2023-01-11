@@ -44,14 +44,12 @@ export default function TestLogin() {
   //------------------------------------------| Handle Login Function |---------------------------------------->
 
   const handleLogIn = () => {
-    if (!value.email.length || !value.password.length) {
-      alert("Please fill all information");
-    } else {
+
       signInWithEmailAndPassword(auth, value.email, value.password) //  -----------> METHOD FEL FIREBASE TA3MEL BIHA EL SIGN IN (TET2AKED MEL EMAIL WEL PASSWORD)
         .then((userCredential) => {
           //  ----------->  KIMA FEL CREATION , EL FIREBASE YRAJA3LEK OBJECT BAAD MA TEM 3AMALEYET EL SIGN IN CORRECTLY
-          alert("YYEYYYY CREDENTIAL ARE CORRECT");
-          console.log("user Id current------->" + userCredential.user.uid);
+          console.log("------------> YYEYYYY CREDENTIAL ARE CORRECT");
+          console.log("********** user Id current ***********" + userCredential.user.uid);
           setValue({ ...value, error: "" });
           setValue({ ...value, emailError: false });
 
@@ -93,7 +91,7 @@ export default function TestLogin() {
             }
           }
         });
-    }
+    
   };
 
   const forgetPassword = () => {
@@ -262,7 +260,7 @@ export default function TestLogin() {
               )}
             </View>
 
-{/** ------------------------------------BUTTON CONFIRM ------------------------------------- */}
+{/** ------------------------------------ BUTTON CONFIRM ------------------------------------- */}
 
             {value.email.length && value.password.length ?<View
               style={{ alignItems: "center", marginTop: 70 }}
@@ -281,7 +279,8 @@ export default function TestLogin() {
                   Confirm
                 </Text>
               </View>
-            </View>:<View
+            </View>:
+            <View
               style={{ alignItems: "center", marginTop: 70 }}
               onPress={() => handleLogIn()}
             >
