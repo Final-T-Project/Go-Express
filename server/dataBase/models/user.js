@@ -12,15 +12,14 @@ module.exports = {
   // function to update user
   update: function (
     callback,
-    name,
-    gender,
-    adress,
     photo,
+    name,
     ville,
-    phone_number,
+    adress,
+    phoneNumber,
     id_user
   ) {
-    const sql = `UPDATE user SET name="${name}",gender="${gender}",adress="${adress}",photo="${photo}",ville="${ville}", phone_number="${phone_number}" WHERE id_user="${id_user}"`;
+    const sql = `UPDATE user SET name="${name}",adress="${adress}",photo="${photo}",ville="${ville}", phone_number="${phoneNumber}" WHERE id_user="${id_user}"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });

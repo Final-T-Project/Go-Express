@@ -161,7 +161,7 @@ function Info({ navigation,id }) {
       }}
     >
       <HStack>
-        <EditeProfil />
+        <EditeProfil id={id}/>
       </HStack>
       <Center>
         <Box
