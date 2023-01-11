@@ -1,8 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View ,TextInput ,Button , Image,ImageBackground , Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
-import { useState,useRef } from 'react';
+import { StatusBar } from "expo-status-bar";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  Image,
+  ImageBackground,
+  Keyboard,
+  TouchableWithoutFeedback,
+  ScrollView,
+} from "react-native";
+import { useState, useRef } from "react";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 ///----------------------------------------------------> Firebase stuff importation  <----------------------------------------------------------------------------///
 
@@ -56,51 +67,52 @@ export default function App() {
   const handleLogIn = () => {
     if (!value.email.length || !value.password.length) {
       alert("Please fill all information");
-    }else {
-       signInWithEmailAndPassword(auth, value.email, value.password) //  -----------> METHOD FEL FIREBASE TA3MEL BIHA EL SIGN IN (TET2AKED MEL EMAIL WEL PASSWORD)
-      .then((userCredential) => {
-        //  ----------->  KIMA FEL CREATION , EL FIREBASE YRAJA3LEK OBJECT BAAD MA TEM 3AMALEYET EL SIGN IN CORRECTLY
-        alert(
-          "YYEYYYY CREDENTIAL ARE CORRECT , NOW YOU WILL BE IN THE HOME PAGE"
-        );
-        console.log("user Id current------->"+userCredential.user.uid);
-        setValue({ ...value, error: "" });
-        setValue({ ...value, emailError: false });
-
-        AsyncStorage.setItem('userData',JSON.stringify({
-          userId: userCredential.user.uid,
-        }));
-
-        
-      })
-
-      .then(()=>{
-        Navigation.navigate("SideBar");
-      })
-
-      .catch((error) => {
-        setValue({ ...value, error: error.code });
-        if (
-          error.code === "auth/invalid-email" ||
-          error.code === "auth/user-not-found"
-        ) {
-          //alert("Ekteb EMAIL shihhh ya hajjj")
-          setValue({ ...value, emailError: true });
-          emailRef.current.focus();
-          return;
-        }
-        if (error.code === "auth/wrong-password") {
-          setValue({ ...value, error: "auth/wrong-password" });
-          setValue({ ...value, passwordError: true });
+    } else {
+      signInWithEmailAndPassword(auth, value.email, value.password) //  -----------> METHOD FEL FIREBASE TA3MEL BIHA EL SIGN IN (TET2AKED MEL EMAIL WEL PASSWORD)
+        .then((userCredential) => {
+          //  ----------->  KIMA FEL CREATION , EL FIREBASE YRAJA3LEK OBJECT BAAD MA TEM 3AMALEYET EL SIGN IN CORRECTLY
+          alert(
+            "YYEYYYY CREDENTIAL ARE CORRECT , NOW YOU WILL BE IN THE HOME PAGE"
+          );
+          console.log("user Id current------->" + userCredential.user.uid);
+          setValue({ ...value, error: "" });
           setValue({ ...value, emailError: false });
-          console.log("------------------>" + value.error);
-          passwordRef.current.focus();
-        } else {
-          console.log(error.message);
-        }
-      });
+
+          AsyncStorage.setItem(
+            "userData",
+            JSON.stringify({
+              userId: userCredential.user.uid,
+            })
+          );
+        })
+
+        .then(() => {
+          Navigation.navigate("SideBar");
+        })
+
+        .catch((error) => {
+          setValue({ ...value, error: error.code });
+          if (
+            error.code === "auth/invalid-email" ||
+            error.code === "auth/user-not-found"
+          ) {
+            //alert("Ekteb EMAIL shihhh ya hajjj")
+            setValue({ ...value, emailError: true });
+            emailRef.current.focus();
+            return;
+          }
+          if (error.code === "auth/wrong-password") {
+            setValue({ ...value, error: "auth/wrong-password" });
+            setValue({ ...value, passwordError: true });
+            setValue({ ...value, emailError: false });
+            console.log("------------------>" + value.error);
+            passwordRef.current.focus();
+          } else {
+            console.log(error.message);
+          }
+        });
+    }
   };
-}
 
   const forgetPassword = () => {
     if (value.email.length < 5) {
@@ -117,13 +129,8 @@ export default function App() {
           console.log(error);
         });
     }
-    
-  }
-   
+  };
 
-
-  
-  
   ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
   ///-------------------------------------------------------------------> The Sign up / Sign In structure page  <--------------------------------------------///
@@ -352,7 +359,8 @@ export default function App() {
         </View>
       </TouchableWithoutFeedback>
     </>
-  )}
+  );
+}
 
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
 
@@ -370,13 +378,11 @@ const css = StyleSheet.create({
     width: 330,
     height: 550,
 
-    marginLeft:41,
-    marginTop:100,
-  
+    marginLeft: 41,
+    marginTop: 100,
 
     alignItems: "center",
     justifyContent: "center",
-
   },
   textParam: {
     backgroundColor: "#FEE9E5",
