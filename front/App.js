@@ -35,7 +35,7 @@ export default function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Shop"
+            initialRouteName="MyCart"
             screenOptions={{
               headerTintColor: "white",
               headerStyle: {
