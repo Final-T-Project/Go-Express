@@ -35,10 +35,10 @@ import { EmailAuthCredential } from "@firebase/auth";
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
+import IPADRESS from "../config/IPADRESS";
 
 
-
-const adressIp = `192.168.43.203`;
+const adressIp = IPADRESS;
 
 
 // feedback side

@@ -22,9 +22,11 @@ import {
 } from "firebase/auth"; // importing the auth of Firebase
 import { initializeApp } from "firebase/app";
 
+import IPADRESS from "../config/IPADRESS";
 
 
-const IPADRESS = `192.168.1.16`
+
+
 
 
 
