@@ -387,6 +387,7 @@ export default function Profil({ navigation, route }) {
     setIdUser(route.params.idToSend);
     console.log("test", route.params.idToSend);
     axios
+
       .get(
         `http://${adressIp}:5000/users/getUserPorfile/${route.params.idToSend}`
       )
