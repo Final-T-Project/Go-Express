@@ -127,23 +127,23 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 -- Table `mydb`.`feedback`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`feedback` (
-  `id_feedback` INT NOT NULL AUTO_INCREMENT,
-  `etoile` ENUM('1', '2', '3', '4', '5') NOT NULL,
-  `details` VARCHAR(400) NULL DEFAULT '0',
-  `user_id_user` VARCHAR(50) NOT NULL,
-  `serves_id_serves` NULL DEFAULT '0',
-  PRIMARY KEY (`id_feedback`),
-  INDEX `fk_feedBack_user1_idx` (`user_id_user` ASC) VISIBLE,
-  INDEX `fk_feedBack_serves1_idx` (`serves_id_serves` ASC) VISIBLE,
-  CONSTRAINT `fk_feedBack_serves1`
-    FOREIGN KEY (`serves_id_serves`)
-    REFERENCES `mydb`.`serves` (`id_serves`),
-  CONSTRAINT `fk_feedBack_user1`
-    FOREIGN KEY (`user_id_user`)
-    REFERENCES `mydb`.`user` (`id_user`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
+-- CREATE TABLE IF NOT EXISTS `mydb`.`feedback` (
+--   `id_feedback` INT NOT NULL AUTO_INCREMENT,
+--   `etoile` ENUM('1', '2', '3', '4', '5') NOT NULL,
+--   `details` VARCHAR(400) NULL DEFAULT '0',
+--   `user_id_user` VARCHAR(50) NOT NULL,
+--   `serves_id_serves` NULL DEFAULT '0',
+--   PRIMARY KEY (`id_feedback`),
+--   INDEX `fk_feedBack_user1_idx` (`user_id_user` ASC) VISIBLE,
+--   INDEX `fk_feedBack_serves1_idx` (`serves_id_serves` ASC) VISIBLE,
+--   CONSTRAINT `fk_feedBack_serves1`
+--     FOREIGN KEY (`serves_id_serves`)
+--     REFERENCES `mydb`.`serves` (`id_serves`),
+--   CONSTRAINT `fk_feedBack_user1`
+--     FOREIGN KEY (`user_id_user`)
+--     REFERENCES `mydb`.`user` (`id_user`))
+-- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
