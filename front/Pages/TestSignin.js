@@ -56,7 +56,7 @@ function TestLogin() {
           setUserId(user.uid); //  ----------->  Setting the user Id ( that takin from the User Objet )
 
           axios
-            .post("http://192.168.103.8:5000/users/addUser", {
+            .post("http://192.168.103.12:5000/users/addUser", {
               id_user: userCredential.user.uid,
               name: value.nameUser,
               email: value.email,

@@ -21,8 +21,8 @@ import { useContext, useState } from "react";
 import Shopping from "./Pages/Shopping.js";
 import MyCart from "./test/MyCart.js";
 import ProductInfo from "./test/ProductInfo.js";
+import ImageDetails from "./Pages/ImageDetails"
 const Stack = createNativeStackNavigator();
-
 export default function App() {
   const [showContent, setShowContent] = useState("");
   return (
@@ -35,7 +35,7 @@ export default function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="TestLogin"
+            initialRouteName="Shop"
             screenOptions={{
               headerTintColor: "white",
               headerStyle: {
@@ -87,6 +87,7 @@ export default function App() {
             <Stack.Screen name="Shopping" component={Shopping} />
             <Stack.Screen name="MyCart" component={MyCart} />
             <Stack.Screen name="ProductInfo" component={ProductInfo} />
+            <Stack.Screen name="ImageDetails" component={ImageDetails} />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>
