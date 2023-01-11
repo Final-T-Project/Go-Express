@@ -23,7 +23,11 @@ import {
 } from 'native-base';
 import axios from 'axios'
 
-const IPADRESS = `192.168.43.203`;
+import IPADRESS from "../config/IPADRESS";
+
+
+
+
 
 
 const pickImage = async () => {
