@@ -9,15 +9,23 @@ import {
   StyleSheet,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-
 const { width, height } = Dimensions.get("screen");
-const ITEM_WIDTH =  width;
+const ITEM_WIDTH = width;
 const ITEM_HEIGHT = 300;
+
+
+
+
+
+
+
+
+
 
 const images = [
   "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673395210/keskes-1170x657_fjay25.jpg",
   "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673395210/IMG_0009-min_h3rrpw.jpg",
-  "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673395210/IMG_0035-min_vk9db9.jpg"
+  "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673395210/IMG_0035-min_vk9db9.jpg",
 ];
 
 const data = images.map((image, index) => ({
@@ -27,7 +35,7 @@ const data = images.map((image, index) => ({
     Math.random() * 40
   )}.jpg`,
 }));
-export default function technology() {
+export default function Technology() {
   const scrollX = React.useRef(new Animated.Value(0)).current;
   return (
     <View style={styles.container}>
@@ -59,7 +67,6 @@ export default function technology() {
               <View
                 style={{
                   borderRadius: 14,
-                  
 
                   shadowColor: "#000",
 
@@ -82,8 +89,6 @@ export default function technology() {
                     overflow: "hidden",
                     alignItems: "center",
                     borderRadius: 14,
-                   
-                     
                   }}
                 >
                   <Animated.Image
@@ -94,22 +99,13 @@ export default function technology() {
                       resizeMode: "cover",
                       transform: [
                         {
-                             translateX, 
-                      }],
-                      
+                          translateX,
+                        },
+                      ],
                     }}
                   />
                 </View>
               </View>
-
-              {/* <Image
-                source={{ uri: item.avatar_url }}
-                style={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: 60,
-                }}
-              /> */}
             </View>
           );
         }}

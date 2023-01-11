@@ -22,11 +22,7 @@ import {
 } from "firebase/auth"; // importing the auth of Firebase
 import { initializeApp } from "firebase/app";
 
-
-
-const IPADRESS = `192.168.1.16`
-
-
+const IPADRESS = `192.168.1.18`;
 
 function TestLogin() {
   const [value, setValue] = useState({
@@ -90,10 +86,6 @@ function TestLogin() {
         });
     }
   };
-
-
-
-
 
   return (
     <View style={css.constainer}>

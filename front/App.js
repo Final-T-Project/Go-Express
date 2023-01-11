@@ -20,8 +20,8 @@ import { UserContext } from "./UserContext.js";
 import { useContext, useState } from "react";
 import Shopping from "./Pages/Shopping.js";
 import MyCart from "./test/MyCart.js";
-import ProductInfo from "./test/ProductInfo.js";
-import ImageDetails from "./Pages/ImageDetails"
+import ProductInfo from "./Pages/ProductInfo.js";
+import ImageDetails from "./Pages/ImageDetails";
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [showContent, setShowContent] = useState("");

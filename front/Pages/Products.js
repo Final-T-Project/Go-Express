@@ -11,29 +11,24 @@ import {
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
-export default function Products({ route }) {
-  const navigation = useNavigation();
+export default function Products({ route, navigation }) {
+  const item = route.params.category;
 
   //state to store all the product by category
   let [product, setProduct] = useState([]);
 
   // function to get all product by categories
   useEffect(() => {
-    const adressIp = `192.168.103.8`;
+    const adressIp = `192.168.1.18`;
     axios.get(`http://${adressIp}:5000/products/${item}`).then((result) => {
       setProduct(result.data);
-      console.log(result.data);
     });
   }, []);
 
-  const item = route.params.props;
-  console.log("category:", item);
-  console.log(product);
-
-  const renderRecipes = ({ item }) => (
+  const renderProducts = ({ item }) => (
     <TouchableHighlight
       underlayColor="#FFAD62"
-      onPress={() => navigation.navigate("ProductDetails", { props: item })}
+      onPress={() => navigation.navigate("ProductInfo", { element: item })}
     >
       {/* { props: item.id_product } */}
       <View style={styles.container}>
@@ -51,7 +46,7 @@ export default function Products({ route }) {
         showsVerticalScrollIndicator={false}
         numColumns={2}
         data={product}
-        renderItem={renderRecipes}
+        renderItem={renderProducts}
       />
     </View>
   );

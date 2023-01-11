@@ -99,7 +99,7 @@ const AddProduct = ({ navigation }) => {
     if (!name.length || !description.length || !price.length) {
       alert("Please fill all information");
     } else {
-      const adressIp = `192.168.103.8`;
+      const adressIp = `192.168.1.18`;
       axios
         .post(`http://${adressIp}:5000/products/addProduct`, {
           sellIerd: idUser.userId,

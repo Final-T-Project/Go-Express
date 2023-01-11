@@ -15,20 +15,17 @@ import { COLOURS, Items } from "../database/Database";
 import Entypo from "react-native-vector-icons/Entypo";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Wiem from "../Pages/ImageDetails"
-
-
+import Wiem from "./ImageDetails";
 
 const ProductInfo = ({ route, navigation }) => {
-  // const { productID } = route.params;
+  const width = Dimensions.get("window").width;
+  const scrollX = new Animated.Value(0);
+
+  console.log(route.params.element);
 
   const [product, setProduct] = useState({});
 
-  const width = Dimensions.get("window").width;
-
-  const scrollX = new Animated.Value(0);
   //add to cart
-
   const addToCart = async (id) => {
     let itemArray = await AsyncStorage.getItem("cartItems");
     itemArray = JSON.parse(itemArray);
@@ -70,13 +67,10 @@ const ProductInfo = ({ route, navigation }) => {
         position: "relative",
       }}
     >
-      <StatusBar
-        backgroundColor={"red"}
-        barStyle="dark-content"
-      />
+      <StatusBar backgroundColor={"red"} barStyle="dark-content" />
       <ScrollView>
-          <Wiem/>
-        
+        <Wiem />
+
         <View
           style={{
             paddingHorizontal: 16,
@@ -160,7 +154,6 @@ const ProductInfo = ({ route, navigation }) => {
             >
               Price :{product.productPrice} dt
             </Text>
-           
           </View>
         </View>
       </ScrollView>
