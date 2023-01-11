@@ -46,117 +46,92 @@ const Home = ({navigation}) => {
   //create an product reusable card
 
   const ProductCard = ({data}) => {
-    return (
-      <TouchableOpacity
-        onPress={() => navigation.navigate('ProductInfo', {productID: data.id})}
-        style={{
-          width: '48%',
-          marginVertical: 14,
-        }}>
-        <View
-          style={{
-            width: '100%',
-            height: 100,
-            borderRadius: 10,
-            backgroundColor: COLOURS.backgroundLight,
-            position: 'relative',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: 8,
-          }}>
-          {data.isOff ? (
-            <View
-              style={{
-                position: 'absolute',
-                width: '20%',
-                height: '24%',
-                backgroundColor: COLOURS.green,
-                top: 0,
-                left: 0,
-                borderTopLeftRadius: 10,
-                borderBottomRightRadius: 10,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: COLOURS.white,
-                  fontWeight: 'bold',
-                  letterSpacing: 1,
-                }}>
-                {data.offPercentage}%
-              </Text>
-            </View>
-          ) : null}
-          <Image
-            source={data.productImage}
-            style={{
-              width: '80%',
-              height: '80%',
-              resizeMode: 'contain',
-            }}
-          />
-        </View>
-        <Text
-          style={{
-            fontSize: 12,
-            color: COLOURS.black,
-            fontWeight: '600',
-            marginBottom: 2,
-          }}>
-          {data.productName}
-        </Text>
-        {data.category == 'accessory' ? (
-          data.isAvailable ? (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <FontAwesome
-                name="circle"
-                style={{
-                  fontSize: 12,
-                  marginRight: 6,
-                  color: COLOURS.green,
-                }}
-              />
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: COLOURS.green,
-                }}>
-                Available
-              </Text>
-            </View>
-          ) : (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <FontAwesome
-                name="circle"
-                style={{
-                  fontSize: 12,
-                  marginRight: 6,
-                  color: COLOURS.red,
-                }}
-              />
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: COLOURS.red,
-                }}>
-                Unavailable
-              </Text>
-            </View>
-          )
-        ) : null}
-        <Text>&#8377; {data.productPrice}</Text>
-      </TouchableOpacity>
-    );
+    // return (
+    //   <TouchableOpacity
+    //     onPress={() => navigation.navigate('ProductInfo', {productID: data.id})}
+    //     style={{
+    //       width: '48%',
+    //       marginVertical: 14,
+    //     }}>
+    //     <View
+    //       style={{
+    //         width: '100%',
+    //         height: 100,
+    //         borderRadius: 10,
+    //         backgroundColor: COLOURS.backgroundLight,
+    //         position: 'relative',
+    //         justifyContent: 'center',
+    //         alignItems: 'center',
+    //         marginBottom: 8,
+    //       }}>
+         
+    //       <Image
+    //         source={data.productImage}
+    //         style={{
+    //           width: '80%',
+    //           height: '80%',
+    //           resizeMode: 'contain',
+    //         }}
+    //       />
+    //     </View>
+    //     <Text
+    //       style={{
+    //         fontSize: 12,
+    //         color: COLOURS.black,
+    //         fontWeight: '600',
+    //         marginBottom: 2,
+    //       }}>
+    //       {data.productName}
+    //     </Text>
+       
+    //         <View
+    //           style={{
+    //             flexDirection: 'row',
+    //             alignItems: 'center',
+    //           }}>
+    //           <FontAwesome
+    //             name="circle"
+    //             style={{
+    //               fontSize: 12,
+    //               marginRight: 6,
+    //               color: COLOURS.green,
+    //             }}
+    //           />
+    //           <Text
+    //             style={{
+    //               fontSize: 12,
+    //               color: COLOURS.green,
+    //             }}>
+    //             Available
+    //           </Text>
+    //         </View>
+    //       ) : (
+    //         <View
+    //           style={{
+    //             flexDirection: 'row',
+    //             alignItems: 'center',
+    //           }}>
+    //           <FontAwesome
+    //             name="circle"
+    //             style={{
+    //               fontSize: 12,
+    //               marginRight: 6,
+    //               color: COLOURS.red,
+    //             }}
+    //           />
+    //           <Text
+    //             style={{
+    //               fontSize: 12,
+    //               color: COLOURS.red,
+    //             }}>
+    //             Unavailable
+    //           </Text>
+    //         </View>
+    //       )
+    //     ) : null}
+    //     <Text>&#8377; {data.productPrice}</Text>
+    //   </TouchableOpacity>
+    // );
   };
 
   return (
@@ -164,18 +139,20 @@ const Home = ({navigation}) => {
       style={{
         width: '100%',
         height: '100%',
-        backgroundColor: COLOURS.white,
+        backgroundColor: "white",
+        
       }}>
-      <StatusBar backgroundColor={"COLOURS.white"} barStyle="dark-content" />
+      <StatusBar backgroundColor={"white"} barStyle="dark-content" /> 
       {/* <ImageBackground
         source={{
           uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673369313/output-onlinepngtools_vy4dmt.png",
         }}
         resizeMode="cover"
-       
+        blurRadius ={80}
       > */}
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View
+        {/* cart icon */}
+        {/* <View
           style={{
             width: '100%',
             flexDirection: 'row',
@@ -207,9 +184,9 @@ const Home = ({navigation}) => {
               }}
             />
           </TouchableOpacity>
-        </View>
+        </View> */}
         {/* intro */}
-        <View
+        {/* <View
           style={{
             marginBottom: 10,
             padding: 16,
@@ -244,15 +221,19 @@ const Home = ({navigation}) => {
               letterSpacing: 1,
               lineHeight: 24,
             }}>
-            Audio Shop.
+            Real Estate Shop.
             {'\n'}This shop offers both products and services
           </Text>
-        </View>
+        </View> */}
         {/* kitchen categorie */}
         <View
           style={{
             padding: 16,
           }}>
+                  {/* <TouchableOpacity
+        // onPress={() => navigation.navigate('ProductInfo')}
+       
+      > */}
           <View
             style={{
               flexDirection: 'row',
@@ -284,6 +265,7 @@ const Home = ({navigation}) => {
                 number of kitchen categorie 
               </Text>
             </View>
+            <TouchableOpacity>
             <Text
               style={{
                 fontSize: 14,
@@ -291,9 +273,9 @@ const Home = ({navigation}) => {
                 fontWeight: '400',
               }}>
               SeeAll
-            </Text>
+            </Text></TouchableOpacity>
           </View>
-          <ScrollView horizontal={true}>
+          
           <View
             style={{
               flexDirection: 'row',
@@ -302,18 +284,45 @@ const Home = ({navigation}) => {
              
             }}>
               
-            {products.map(data => {
-              return <ProductCard data={data} key={data.id} />;
-            })}
+       
           </View>
-          </ScrollView>
+          <View style={{height:10}}></View>
+       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <Image
+            source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673384114/quattro_4-1170x657_tjv7ca.jpg"}}
+            style={{
+              width: 330,
+              height: 250,
+              top:1,
+              borderColor:"#1C2765",
+              borderWidth:2,
+              borderRadius:20
+            }}
+          />
+          <View style={{width:10}}></View>
+            <Image
+            source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673391337/frikha-1170x657_qrga5u.jpg"}}
+            style={{
+              width: 330,
+              height: 250,
+              top:1,
+              borderColor:"#1C2765",
+              borderWidth:2,
+              borderRadius:20
+            }}
+          />
+       </ScrollView>
+      {/* </TouchableOpacity> */}
         </View>
         {/* Furniture categorie */}
-        <View
+         <View
           style={{
             padding: 16,
-            
           }}>
+                  {/* <TouchableOpacity
+        // onPress={() => navigation.navigate('ProductInfo')}
+       
+      > */}
           <View
             style={{
               flexDirection: 'row',
@@ -327,12 +336,12 @@ const Home = ({navigation}) => {
               }}>
               <Text
                 style={{
-                  fontSize: 18,
+                  fontSize: 20,
                   color: COLOURS.black,
                   fontWeight: '500',
                   letterSpacing: 1,
                 }}>
-               Furniture 
+               Furniture
               </Text>
               <Text
                 style={{
@@ -345,6 +354,7 @@ const Home = ({navigation}) => {
                 number of Furniture categorie 
               </Text>
             </View>
+            <TouchableOpacity>
             <Text
               style={{
                 fontSize: 14,
@@ -352,9 +362,9 @@ const Home = ({navigation}) => {
                 fontWeight: '400',
               }}>
               SeeAll
-            </Text>
+            </Text></TouchableOpacity>
           </View>
-          <ScrollView horizontal={true}>
+          
           <View
             style={{
               flexDirection: 'row',
@@ -363,17 +373,46 @@ const Home = ({navigation}) => {
              
             }}>
               
-            {products.map(data => {
-              return <ProductCard data={data} key={data.id} />;
-            })}
+       
           </View>
-          </ScrollView>
+          <View style={{height:10}}></View>
+         
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <Image
+            source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673389221/090122_m_super_furniture_bedroom_1_izwngi.jpg"}}
+            style={{
+              width: 330,
+              height: 250,
+              top:1,
+              borderColor:"#1C2765",
+              borderWidth:2,
+              borderRadius:20
+            }}
+          />
+          <View style={{width:10}}></View>
+            <Image
+            source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673391185/csm_Website_Vorschaubild_COR_Haus_product_news_2021__13__44d4652b2b_vteght.jpg"}}
+            style={{
+              width: 330,
+              height: 250,
+              top:1,
+              borderColor:"#1C2765",
+              borderWidth:2,
+              borderRadius:20
+            }}
+          />
+       </ScrollView>
+      {/* </TouchableOpacity> */}
         </View>
-        {/*Garden categorie  */}
+        {/*Accessories categorie   */}
         <View
           style={{
             padding: 16,
           }}>
+                  {/* <TouchableOpacity
+        // onPress={() => navigation.navigate('ProductInfo')}
+       
+      > */}
           <View
             style={{
               flexDirection: 'row',
@@ -387,12 +426,12 @@ const Home = ({navigation}) => {
               }}>
               <Text
                 style={{
-                  fontSize: 18,
+                  fontSize: 20,
                   color: COLOURS.black,
                   fontWeight: '500',
                   letterSpacing: 1,
                 }}>
-               Garden 
+               Accessories
               </Text>
               <Text
                 style={{
@@ -402,9 +441,10 @@ const Home = ({navigation}) => {
                   opacity: 0.5,
                   marginLeft: 10,
                 }}>
-                number of Garden categorie 
+                nb Accessories  
               </Text>
             </View>
+            <TouchableOpacity>
             <Text
               style={{
                 fontSize: 14,
@@ -412,9 +452,9 @@ const Home = ({navigation}) => {
                 fontWeight: '400',
               }}>
               SeeAll
-            </Text>
+            </Text></TouchableOpacity>
           </View>
-          <ScrollView horizontal={true}>
+          
           <View
             style={{
               flexDirection: 'row',
@@ -423,17 +463,46 @@ const Home = ({navigation}) => {
              
             }}>
               
-            {products.map(data => {
-              return <ProductCard data={data} key={data.id} />;
-            })}
+       
           </View>
-          </ScrollView>
+         <View style={{height:10}}></View>
+         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <Image
+            source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673389632/IMG_0176_rolt48.jpg"}}
+            style={{
+              width: 330,
+              height: 250,
+              top:1,
+              borderColor:"#1C2765",
+              borderWidth:2,
+              borderRadius:20
+            }}
+          />
+          <View style={{width:10}}></View>
+            <Image
+            source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673390679/sugo-guilin-lampscape-purificateur-air-design-led-01_p8lrml.jpg"}}
+            style={{
+              width: 330,
+              height: 250,
+              top:1,
+              borderColor:"#1C2765",
+              borderWidth:2,
+              borderRadius:20
+            }}
+          />
+       </ScrollView>
+          
+      {/* </TouchableOpacity> */}
         </View>
-        {/* Accessories categorie */}
+        {/* Garden categorie*/}
         <View
           style={{
             padding: 16,
           }}>
+                  {/* <TouchableOpacity
+        // onPress={() => navigation.navigate('ProductInfo')}
+       
+      > */}
           <View
             style={{
               flexDirection: 'row',
@@ -447,12 +516,12 @@ const Home = ({navigation}) => {
               }}>
               <Text
                 style={{
-                  fontSize: 18,
+                  fontSize: 20,
                   color: COLOURS.black,
                   fontWeight: '500',
                   letterSpacing: 1,
                 }}>
-               Accessories 
+               Garden
               </Text>
               <Text
                 style={{
@@ -462,9 +531,10 @@ const Home = ({navigation}) => {
                   opacity: 0.5,
                   marginLeft: 10,
                 }}>
-                number of Accessories categorie 
+                nb Garden  
               </Text>
             </View>
+            <TouchableOpacity>
             <Text
               style={{
                 fontSize: 14,
@@ -472,9 +542,9 @@ const Home = ({navigation}) => {
                 fontWeight: '400',
               }}>
               SeeAll
-            </Text>
+            </Text></TouchableOpacity>
           </View>
-          <ScrollView horizontal={true}>
+          
           <View
             style={{
               flexDirection: 'row',
@@ -483,11 +553,35 @@ const Home = ({navigation}) => {
              
             }}>
               
-            {products.map(data => {
-              return <ProductCard data={data} key={data.id} />;
-            })}
+       
           </View>
-          </ScrollView>
+         <View style={{height:10}}></View>
+         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <Image
+            source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673390071/empty-modern-colorful-rattan-furniture-outdoor-garden-weave-table-set-with-round-table-four-chairs-with-pillows-green-concrete-floor_36367-2813_fhaci8.jpg"}}
+            style={{
+              width: 330,
+              height: 250,
+              top:1,
+              borderColor:"#1C2765",
+              borderWidth:2,
+              borderRadius:20
+            }}
+          />
+          <View style={{width:10}}></View>
+            <Image
+            source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673390338/umbrosa_lnvmfd.jpg"}}
+            style={{
+              width: 330,
+              height: 250,
+              top:1,
+              borderColor:"#1C2765",
+              borderWidth:2,
+              borderRadius:20
+            }}
+          />
+       </ScrollView>
+      {/* </TouchableOpacity> */}
         </View>
       </ScrollView>
     {/* </ImageBackground> */}
