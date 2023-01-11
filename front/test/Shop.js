@@ -58,135 +58,92 @@ const Home = ({ navigation }) => {
 
   console.log("testo", product);
   //create an product reusable card
+
   const ProductCard = ({ data }) => {
-    return (
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("ProductInfo", { productID: data.id })
-        }
-        style={{
-          width: "40%",
-          marginVertical: 14,
-        }}
-      >
-        <View
-          style={{
-            width: "100%",
-            height: 100,
-            borderRadius: 10,
-            backgroundColor: COLOURS.backgroundLight,
-            position: "relative",
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: 8,
-          }}
-        >
-          {/* {product.map ((element)=>( */}
-          <View
-            style={{
-              position: "absolute",
-              width: "20%",
-              height: "24%",
-              backgroundColor: COLOURS.green,
-              top: 0,
-              left: 0,
-              borderTopLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 12,
-                color: COLOURS.white,
-                fontWeight: "bold",
-                letterSpacing: 1,
-              }}
-            >
-              10%
-            </Text>
-          </View>
-
-          <Image
-            source={{
-              uri: data.photo_product,
-            }}
-            // source={{
-            //   uri: "https://res.cloudinary.com/ddvyi3jpk/image/upload/v1673390179/Mi1_vhyu9h.png",
-            // }}
-            style={{
-              width: "80%",
-              height: "80%",
-              resizeMode: "contain",
-            }}
-          />
-        </View>
-
-        <Text
-          style={{
-            fontSize: 12,
-            color: COLOURS.black,
-            fontWeight: "600",
-            marginBottom: 2,
-          }}
-        >
-          {data.product_name}
-          MI Super Bass Bluetooth Wireless Headphones
-        </Text>
-        {data.category == "accessory" ? (
-          data.isAvailable ? (
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <FontAwesome
-                style={{
-                  fontSize: 12,
-                  marginRight: 6,
-                  color: COLOURS.green,
-                }}
-              />
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: COLOURS.green,
-                }}
-              >
-                Available
-              </Text>
-            </View>
-          ) : (
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <FontAwesome
-                name="circle"
-                style={{
-                  fontSize: 12,
-                  marginRight: 6,
-                  color: COLOURS.red,
-                }}
-              />
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: COLOURS.red,
-                }}
-              >
-                Unavailable
-              </Text>
-            </View>
-          )
-        ) : null}
-        <Text> {data.price} dt </Text>
-      </TouchableOpacity>
-    );
+    // return (
+    //   <TouchableOpacity
+    //     onPress={() => navigation.navigate('ProductInfo', {productID: data.id})}
+    //     style={{
+    //       width: '48%',
+    //       marginVertical: 14,
+    //     }}>
+    //     <View
+    //       style={{
+    //         width: '100%',
+    //         height: 100,
+    //         borderRadius: 10,
+    //         backgroundColor: COLOURS.backgroundLight,
+    //         position: 'relative',
+    //         justifyContent: 'center',
+    //         alignItems: 'center',
+    //         marginBottom: 8,
+    //       }}>
+    //       <Image
+    //         source={data.productImage}
+    //         style={{
+    //           width: '80%',
+    //           height: '80%',
+    //           resizeMode: 'contain',
+    //         }}
+    //       />
+    //     </View>
+    //     <Text
+    //       style={{
+    //         fontSize: 12,
+    //         color: COLOURS.black,
+    //         fontWeight: '600',
+    //         marginBottom: 2,
+    //       }}>
+    //       {data.productName}
+    //     </Text>
+    //         <View
+    //           style={{
+    //             flexDirection: 'row',
+    //             alignItems: 'center',
+    //           }}>
+    //           <FontAwesome
+    //             name="circle"
+    //             style={{
+    //               fontSize: 12,
+    //               marginRight: 6,
+    //               color: COLOURS.green,
+    //             }}
+    //           />
+    //           <Text
+    //             style={{
+    //               fontSize: 12,
+    //               color: COLOURS.green,
+    //             }}>
+    //             Available
+    //           </Text>
+    //         </View>
+    //       ) : (
+    //         <View
+    //           style={{
+    //             flexDirection: 'row',
+    //             alignItems: 'center',
+    //           }}>
+    //           <FontAwesome
+    //             name="circle"
+    //             style={{
+    //               fontSize: 12,
+    //               marginRight: 6,
+    //               color: COLOURS.red,
+    //             }}
+    //           />
+    //           <Text
+    //             style={{
+    //               fontSize: 12,
+    //               color: COLOURS.red,
+    //             }}>
+    //             Unavailable
+    //           </Text>
+    //         </View>
+    //       )
+    //     ) : null}
+    //     <Text>&#8377; {data.productPrice}</Text>
+    //   </TouchableOpacity>
+    // );
   };
 
   return (
@@ -194,19 +151,20 @@ const Home = ({ navigation }) => {
       style={{
         width: "100%",
         height: "100%",
-        backgroundColor: COLOURS.white,
+        backgroundColor: "white",
       }}
     >
-      <StatusBar backgroundColor={"COLOURS.white"} barStyle="dark-content" />
+      <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       {/* <ImageBackground
         source={{
           uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673369313/output-onlinepngtools_vy4dmt.png",
         }}
         resizeMode="cover"
-       
+        blurRadius ={80}
       > */}
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View
+        {/* cart icon */}
+        {/* <View
           style={{
             width: "100%",
             flexDirection: "row",
@@ -239,9 +197,9 @@ const Home = ({ navigation }) => {
               }}
             />
           </TouchableOpacity>
-        </View>
+        </View> */}
         {/* intro */}
-        <View
+        {/* <View
           style={{
             marginBottom: 10,
             padding: 16,
@@ -278,18 +236,21 @@ const Home = ({ navigation }) => {
               fontWeight: "400",
               letterSpacing: 1,
               lineHeight: 24,
-            }}
-          >
-            Audio Shop.
-            {"\n"}This shop offers both products and services
+            }}>
+            Real Estate Shop.
+            {'\n'}This shop offers both products and services
           </Text>
-        </View>
+        </View> */}
         {/* kitchen categorie */}
         <View
           style={{
             padding: 16,
           }}
         >
+          {/* <TouchableOpacity
+        // onPress={() => navigation.navigate('ProductInfo')}
+       
+      > */}
           <View
             style={{
               flexDirection: "row",
@@ -325,29 +286,57 @@ const Home = ({ navigation }) => {
                 {dataLength.length} Product
               </Text>
             </View>
-            <Text
-              style={{
-                fontSize: 14,
-                color: COLOURS.blue,
-                fontWeight: "400",
-              }}
-            >
-              SeeAll
-            </Text>
+            <TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: COLOURS.blue,
+                  fontWeight: "400",
+                }}
+              >
+                SeeAll
+              </Text>
+            </TouchableOpacity>
           </View>
-          <ScrollView horizontal={true}>
-            <View
-              style={{
-                flexDirection: "row",
-                flexWrap: "wrap",
-                justifyContent: "space-between",
+
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+            }}
+          ></View>
+          <View style={{ height: 10 }}></View>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <Image
+              source={{
+                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673384114/quattro_4-1170x657_tjv7ca.jpg",
               }}
-            >
-              {product.map((element) => {
-                return <ProductCard data={element} key={element.id} />;
-              })}
-            </View>
+              style={{
+                width: 330,
+                height: 250,
+                top: 1,
+                borderColor: "#1C2765",
+                borderWidth: 2,
+                borderRadius: 20,
+              }}
+            />
+            <View style={{ width: 10 }}></View>
+            <Image
+              source={{
+                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673391337/frikha-1170x657_qrga5u.jpg",
+              }}
+              style={{
+                width: 330,
+                height: 250,
+                top: 1,
+                borderColor: "#1C2765",
+                borderWidth: 2,
+                borderRadius: 20,
+              }}
+            />
           </ScrollView>
+          {/* </TouchableOpacity> */}
         </View>
         {/* Furniture categorie */}
         <View
@@ -355,6 +344,10 @@ const Home = ({ navigation }) => {
             padding: 16,
           }}
         >
+          {/* <TouchableOpacity
+        // onPress={() => navigation.navigate('ProductInfo')}
+       
+      > */}
           <View
             style={{
               flexDirection: "row",
@@ -370,7 +363,7 @@ const Home = ({ navigation }) => {
             >
               <Text
                 style={{
-                  fontSize: 18,
+                  fontSize: 20,
                   color: COLOURS.black,
                   fontWeight: "500",
                   letterSpacing: 1,
@@ -390,101 +383,69 @@ const Home = ({ navigation }) => {
                 number of Furniture categorie
               </Text>
             </View>
-            <Text
-              style={{
-                fontSize: 14,
-                color: COLOURS.blue,
-                fontWeight: "400",
-              }}
-            >
-              SeeAll
-            </Text>
-          </View>
-          <ScrollView horizontal={true}>
-            <View
-              style={{
-                flexDirection: "row",
-                flexWrap: "wrap",
-                justifyContent: "space-between",
-              }}
-            >
-              {products.map((data) => {
-                return <ProductCard data={data} key={data.id} />;
-              })}
-            </View>
-          </ScrollView>
-        </View>
-        {/*Garden categorie  */}
-        <View
-          style={{
-            padding: 16,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 18,
-                  color: COLOURS.black,
-                  fontWeight: "500",
-                  letterSpacing: 1,
-                }}
-              >
-                Garden
-              </Text>
+            <TouchableOpacity>
               <Text
                 style={{
                   fontSize: 14,
-                  color: COLOURS.black,
+                  color: COLOURS.blue,
                   fontWeight: "400",
-                  opacity: 0.5,
-                  marginLeft: 10,
                 }}
               >
-                number of Garden categorie
+                SeeAll
               </Text>
-            </View>
-            <Text
-              style={{
-                fontSize: 14,
-                color: COLOURS.blue,
-                fontWeight: "400",
-              }}
-            >
-              SeeAll
-            </Text>
+            </TouchableOpacity>
           </View>
-          <ScrollView horizontal={true}>
-            <View
-              style={{
-                flexDirection: "row",
-                flexWrap: "wrap",
-                justifyContent: "space-between",
+
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+            }}
+          ></View>
+          <View style={{ height: 10 }}></View>
+
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <Image
+              source={{
+                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673389221/090122_m_super_furniture_bedroom_1_izwngi.jpg",
               }}
-            >
-              {products.map((data) => {
-                return <ProductCard data={data} key={data.id} />;
-              })}
-            </View>
+              style={{
+                width: 330,
+                height: 250,
+                top: 1,
+                borderColor: "#1C2765",
+                borderWidth: 2,
+                borderRadius: 20,
+              }}
+            />
+            <View style={{ width: 10 }}></View>
+            <Image
+              source={{
+                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673391185/csm_Website_Vorschaubild_COR_Haus_product_news_2021__13__44d4652b2b_vteght.jpg",
+              }}
+              style={{
+                width: 330,
+                height: 250,
+                top: 1,
+                borderColor: "#1C2765",
+                borderWidth: 2,
+                borderRadius: 20,
+              }}
+            />
           </ScrollView>
+          {/* </TouchableOpacity> */}
         </View>
-        {/* Accessories categorie */}
+        {/*Accessories categorie   */}
         <View
           style={{
             padding: 16,
           }}
         >
+          {/* <TouchableOpacity
+        // onPress={() => navigation.navigate('ProductInfo')}
+       
+      > */}
           <View
             style={{
               flexDirection: "row",
@@ -500,7 +461,7 @@ const Home = ({ navigation }) => {
             >
               <Text
                 style={{
-                  fontSize: 18,
+                  fontSize: 20,
                   color: COLOURS.black,
                   fontWeight: "500",
                   letterSpacing: 1,
@@ -517,32 +478,158 @@ const Home = ({ navigation }) => {
                   marginLeft: 10,
                 }}
               >
-                number of Accessories categorie
+                nb Accessories
               </Text>
             </View>
-            <Text
-              style={{
-                fontSize: 14,
-                color: COLOURS.blue,
-                fontWeight: "400",
-              }}
-            >
-              SeeAll
-            </Text>
+            <TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: COLOURS.blue,
+                  fontWeight: "400",
+                }}
+              >
+                SeeAll
+              </Text>
+            </TouchableOpacity>
           </View>
-          <ScrollView horizontal={true}>
+
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+            }}
+          ></View>
+          <View style={{ height: 10 }}></View>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <Image
+              source={{
+                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673389632/IMG_0176_rolt48.jpg",
+              }}
+              style={{
+                width: 330,
+                height: 250,
+                top: 1,
+                borderColor: "#1C2765",
+                borderWidth: 2,
+                borderRadius: 20,
+              }}
+            />
+            <View style={{ width: 10 }}></View>
+            <Image
+              source={{
+                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673390679/sugo-guilin-lampscape-purificateur-air-design-led-01_p8lrml.jpg",
+              }}
+              style={{
+                width: 330,
+                height: 250,
+                top: 1,
+                borderColor: "#1C2765",
+                borderWidth: 2,
+                borderRadius: 20,
+              }}
+            />
+          </ScrollView>
+
+          {/* </TouchableOpacity> */}
+        </View>
+        {/* Garden categorie*/}
+        <View
+          style={{
+            padding: 16,
+          }}
+        >
+          {/* <TouchableOpacity
+        // onPress={() => navigation.navigate('ProductInfo')}
+       
+      > */}
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <View
               style={{
                 flexDirection: "row",
-                flexWrap: "wrap",
-                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
-              {products.map((data) => {
-                return <ProductCard data={data} key={data.id} />;
-              })}
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: COLOURS.black,
+                  fontWeight: "500",
+                  letterSpacing: 1,
+                }}
+              >
+                Garden
+              </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: COLOURS.black,
+                  fontWeight: "400",
+                  opacity: 0.5,
+                  marginLeft: 10,
+                }}
+              >
+                nb Garden
+              </Text>
             </View>
+            <TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: COLOURS.blue,
+                  fontWeight: "400",
+                }}
+              >
+                SeeAll
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+            }}
+          ></View>
+          <View style={{ height: 10 }}></View>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <Image
+              source={{
+                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673390071/empty-modern-colorful-rattan-furniture-outdoor-garden-weave-table-set-with-round-table-four-chairs-with-pillows-green-concrete-floor_36367-2813_fhaci8.jpg",
+              }}
+              style={{
+                width: 330,
+                height: 250,
+                top: 1,
+                borderColor: "#1C2765",
+                borderWidth: 2,
+                borderRadius: 20,
+              }}
+            />
+            <View style={{ width: 10 }}></View>
+            <Image
+              source={{
+                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673390338/umbrosa_lnvmfd.jpg",
+              }}
+              style={{
+                width: 330,
+                height: 250,
+                top: 1,
+                borderColor: "#1C2765",
+                borderWidth: 2,
+                borderRadius: 20,
+              }}
+            />
           </ScrollView>
+          {/* </TouchableOpacity> */}
         </View>
       </ScrollView>
       {/* </ImageBackground> */}

@@ -12,35 +12,32 @@ export const COLOURS = {
 export const Items = [
   {
     id: 1,
-    category: "product",
+    category: "kitchen",
     productName: "MI Super Bass Bluetooth Wireless Headphones",
     productPrice: 1799,
     description:
       "Up to 20 hours battery life | Super powerful Bass | 40mm dynamic driver | Pressure less ear muffs | Bluetooth 5.0 | Voice control",
-    isOff: true,
-    offPercentage: 10,
-    productImage: require("../database/images/products/Mi1.png"),
-    isAvailable: true,
+    productImage: require("../database/images/kitchen/Mi1.png"),
     productImageList: [
-      require("../database/images/products/Mi1.png"),
-      require("../database/images/products/Mi2.png"),
-      require("../database/images/products/Mi3.png"),
+      require("../database/images/kitchen/Mi1.png"),
+      require("../database/images/kitchen/Mi2.png"),
+      require("../database/images/kitchen/Mi3.png"),
     ],
   },
   {
     id: 2,
-    category: "product",
+    category: "kitchen",
     productName: "boAt Rockerz 450 Bluetooth Headphone",
     productPrice: 1499,
     description:
       "boAt Rockerz 450 M is an on-ear wireless headset that has been ergonomically designed to meet the needs of music lovers.",
     isOff: false,
-    productImage: require("../database/images/products/boat1.png"),
+    productImage: require("../database/images/kitchen/boat1.png"),
     isAvailable: true,
     productImageList: [
-      require("../database/images/products/boat1.png"),
-      require("../database/images/products/boat2.png"),
-      require("../database/images/products/boat3.png"),
+      require("../database/images/kitchen/boat1.png"),
+      require("../database/images/kitchen/boat2.png"),
+      require("../database/images/kitchen/boat3.png"),
     ],
   },
   {

@@ -20,11 +20,11 @@ module.exports = {
         if (err) res.status(500).send(err);
         else res.json(results);
       },
-      req.body.name,
-      req.body.gender,
-      req.body.adress,
       req.body.photo,
+      req.body.name,
       req.body.ville,
+      req.body.adress,
+      req.body.phoneNumber,
       req.params.id_user
     );
   },

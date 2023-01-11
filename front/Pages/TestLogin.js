@@ -96,6 +96,24 @@ export default function TestLogin() {
     }
   };
 
+  const forgetPassword = () => {
+    if (value.email.length < 5) {
+      alert("Write your Email");
+    } else {
+      sendPasswordResetEmail(auth, value.email)
+        .then(() => {
+          alert("Email send with a link to confirm it's you");
+        })
+        .catch((error) => {
+          if (error.code === "auth/user-not-found") {
+            alert(" You don't have an account :)), create an account first");
+          }
+          console.log(error);
+        });
+    }
+    
+  }
+
   //-----------------------------------------------------------------------------------------------------------
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -288,9 +306,10 @@ export default function TestLogin() {
                 fontWeight: "600",
                 textAlign: "center",
               }}
+              
             >
               Forget my password ?
-              <Text style={{ color: "#F96332" }}> tap here</Text>
+              <Text style={{ color: "#F96332" }} onPress={() => forgetPassword()}> tap here</Text>
             </Text>
           </View>
         </ImageBackground>

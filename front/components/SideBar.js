@@ -26,7 +26,13 @@ import TabBar from "../components/TabBar";
 import { useEffect } from "react";
 import axios from "axios";
 
+
+const IPADRESS = `192.168.43.203`
+
+
+
 export default function SideBbar({ navigation, route }) {
+
   const [Page, SetPage] = useState("Home");
   const [currentTab, setCurrentTab] = useState("Home");
   // To get the curretn Status of menu ...
@@ -38,6 +44,8 @@ export default function SideBbar({ navigation, route }) {
   const scaleValue = useRef(new Animated.Value(1)).current;
   const closeButtonOffset = useRef(new Animated.Value(0)).current;
 
+  
+
   // state to save user data
   const [userDataProfile, setUserDataProfile] = useState([]);
   // state to ssave id to send it to profile componnent
@@ -47,7 +55,7 @@ export default function SideBbar({ navigation, route }) {
     console.log("the id: ", route.params.id); // from login
     setIdToSend(route.params.id);
     axios
-      .get(`http://192.168.103.8:5000/users/getUserPorfile/${route.params.id}`)
+      .get(`http://${IPADRESS}:5000/users/getUserPorfile/${route.params.id}`)
       .then((response) => {
         setUserDataProfile(response.data);
         console.log("user_data", response.data);
@@ -69,8 +77,11 @@ export default function SideBbar({ navigation, route }) {
         resizeMode="cover"
         style={styles.image}
       >
-        {userDataProfile.map((element) => (
+          
           <View style={{ justifyContent: "flex-start", padding: 20 }}>
+            {userDataProfile.map((element) => {
+              if (element.photo){
+                return(
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate("Profil", { idToSend });
@@ -109,6 +120,52 @@ export default function SideBbar({ navigation, route }) {
                 View Profil
               </Text>
             </TouchableOpacity>
+                )} else {
+                  return(
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Profil", { idToSend });
+              }}
+            >
+              <Image
+                source={{
+                  uri: `https://invisiblechildren.com/wp-content/uploads/2012/07/facebook-profile-picture-no-pic-avatar.jpg`,
+                }}
+                style={{
+                  width: 90,
+                  height: 90,
+                  borderRadius: 7,
+                  marginTop: 10,
+                  marginLeft: 23,
+                }}
+              ></Image>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: "white",
+                  marginTop: 10,
+                }}
+              >
+                Hello {element.name}{" "}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  // fontWeight: "bold",
+                  color: "white",
+                  marginTop: 10,
+                }}
+              >
+                View Profil
+              </Text>
+            </TouchableOpacity>
+                )
+
+                }
+
+              })}
+
 
             <View style={{ flexGrow: 1, marginTop: 60 }}>
               {
@@ -122,14 +179,16 @@ export default function SideBbar({ navigation, route }) {
                 "Notification",
                 notifications
               )}
-              {TabButton(currentTab, setCurrentTab, "Cart", cart)}
+              {TabButton(currentTab, setCurrentTab, "MyCart", cart)}
               {TabButton(currentTab, setCurrentTab, "Chat", chat)}
             </View>
             <View>
               {TabButton(currentTab, setCurrentTab, "LogOut", logout)}
             </View>
           </View>
-        ))}
+
+
+        
       </ImageBackground>
       {
         // Over lay View...
@@ -232,8 +291,8 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
         } else if (title == "Notification") {
           setCurrentTab("Notification");
           // navigation.navigate("Shop");
-        } else if (title == "Cart") {
-          setCurrentTab("Cart");
+        } else if (title == "MyCart") {
+          setCurrentTab("MyCart");
         } else if (title == "Chat") {
           setCurrentTab("Chat");
         } else if (title == "Settings") {

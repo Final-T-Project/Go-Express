@@ -21,9 +21,14 @@ import {
   Text,
   Image
 } from 'native-base';
+import axios from 'axios'
+
+const IPADRESS = `192.168.43.203`;
+
+
 const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Image,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       quality: 1,
     });
@@ -33,15 +38,31 @@ const pickImage = async () => {
       setImage(result.uri);
     }
   };
-let EditeProfil = () => {
+let EditeProfil = ({id}) => {
   const [placement, setPlacement] = useState(undefined);
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState(null);
+
+  const [name,setName]=useState("")
+  const [ville,setVille]=useState("")
+  const [adress,setAdress]=useState("")
+  const [phoneNumber,setPhoneNumber]=useState("")
 
   const openModal = (placement) => {
     setOpen(true);
     setPlacement(placement);
   };
+
+  const saveUpdate=()=>{
+    axios.put(`http://${IPADRESS}:5000/users/updateUser/${id}`,{"photo":"https://assets.materialup.com/uploads/b78ca002-cd6c-4f84-befb-c09dd9261025/preview.png","name":name,"ville":ville,"adress":adress,"phoneNumber":phoneNumber})
+    .then(()=>{
+      alert("profile updated")
+      setOpen(false);
+    })
+    .catch((error)=>{
+      alert(name)
+    })
+  }
 
   return (
     <>
@@ -66,32 +87,32 @@ let EditeProfil = () => {
           <Modal.CloseButton />
           <Modal.Header>
             <Center>
-              <Text color={'#F14E24'} bold>Personal Information</Text>
+              <Text color={'#F14E24'} bold fontSize={"20"}>Personal Information</Text>
             </Center>
           </Modal.Header>
           <Modal.Body>
           <FormControl>
             
               <FormControl.Label >Image</FormControl.Label>
-              <Button backgroundColor={"#373E5A"} onPress={pickImage} >Pick a image</Button>
+              <Button backgroundColor={"#373E5A"} onPress={pickImage} >Pick image</Button>
                 {image && <Image source={{ uri: image }} />}
             </FormControl>
           <FormControl>
             
               <FormControl.Label fontStyle={{color :"#373E5A"}}>Name</FormControl.Label>
-              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} />
+              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} fontSize={'20'} onChangeText={(changed)=>{setName(changed)}}/>
             </FormControl>
             <FormControl>
             <FormControl>
-              <FormControl.Label>Email</FormControl.Label>
-              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} />
+              <FormControl.Label>ville</FormControl.Label>
+              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} fontSize={'20'} onChangeText={(changed)=>{setVille(changed)}}/>
             </FormControl>
               <FormControl.Label>Adress</FormControl.Label>
-              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} />
+              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} fontSize={'20'} onChangeText={(changed)=>{setAdress(changed)}}/>
             </FormControl>
             <FormControl>
               <FormControl.Label>Phone number </FormControl.Label>
-              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} />
+              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} fontSize={'20'} onChangeText={(changed)=>{setPhoneNumber(changed)}}/>
             </FormControl>
           </Modal.Body>
           <Modal.Footer>
@@ -108,7 +129,8 @@ let EditeProfil = () => {
               <Button
                 backgroundColor={'#F14E24'}
                 onPress={() => {
-                  setOpen(false);
+                  saveUpdate()
+                  
                 }}
               >
                 Save
