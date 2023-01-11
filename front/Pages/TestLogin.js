@@ -262,7 +262,9 @@ export default function TestLogin() {
               )}
             </View>
 
-            <View
+{/** ------------------------------------BUTTON CONFIRM ------------------------------------- */}
+
+            {value.email.length && value.password.length ?<View
               style={{ alignItems: "center", marginTop: 70 }}
               onPress={() => handleLogIn()}
             >
@@ -279,7 +281,25 @@ export default function TestLogin() {
                   Confirm
                 </Text>
               </View>
-            </View>
+            </View>:<View
+              style={{ alignItems: "center", marginTop: 70 }}
+              onPress={() => handleLogIn()}
+            >
+              <View style={css.buttonStyleNo} onPress={() => handleLogIn()}>
+                <Text
+                  style={{
+                    color: "white",
+                    alignItems: "center",
+                    fontWeight: "400",
+                    fontSize: 17,
+                  }}
+                >
+                  Confirm
+                </Text>
+              </View>
+            </View>}
+
+{/** ----------------------------------------------------------------------------------------- */}
 
             <Text
               style={{
@@ -350,4 +370,12 @@ const css = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 500,
   },
+  buttonStyleNo: {
+    backgroundColor: "#fcad92",
+    width: 170,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 500,
+  }
 });
