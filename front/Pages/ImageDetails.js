@@ -27,7 +27,7 @@ const data = images.map((image, index) => ({
     Math.random() * 40
   )}.jpg`,
 }));
-export default function technology() {
+export default function ImageDetails() {
   const scrollX = React.useRef(new Animated.Value(0)).current;
   return (
     <View style={styles.container}>
