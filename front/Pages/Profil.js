@@ -38,7 +38,7 @@ const height = Dimensions.get("window").height;
 
 
 
-const adressIp = `192.168.1.16`;
+const adressIp = `192.168.43.203`;
 
 
 // feedback side
