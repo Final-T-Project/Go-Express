@@ -22,6 +22,12 @@ import {
 } from "firebase/auth"; // importing the auth of Firebase
 import { initializeApp } from "firebase/app";
 
+
+
+const IPADRESS = `192.168.1.16`
+
+
+
 function TestLogin() {
   const [value, setValue] = useState({
     nameUser: "",
@@ -56,7 +62,7 @@ function TestLogin() {
           setUserId(user.uid); //  ----------->  Setting the user Id ( that takin from the User Objet )
 
           axios
-            .post("http://192.168.103.12:5000/users/addUser", {
+            .post(`http://${IPADRESS}:5000/users/addUser`, {
               id_user: userCredential.user.uid,
               name: value.nameUser,
               email: value.email,
@@ -84,6 +90,10 @@ function TestLogin() {
         });
     }
   };
+
+
+
+
 
   return (
     <View style={css.constainer}>

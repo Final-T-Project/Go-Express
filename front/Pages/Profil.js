@@ -31,8 +31,15 @@ import {
   HStack,
 } from "native-base";
 import EditeProfil from "./EditeProfil";
+import { EmailAuthCredential } from "@firebase/auth";
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
+
+
+
+
+const adressIp = `192.168.43.203`;
+
 
 // feedback side
 function Feedback(props) {
@@ -40,7 +47,6 @@ function Feedback(props) {
   // state to save feedback text
   const [FeedBackText, setFeedBackText] = useState("");
   let AddFeedback = () => {
-    const adressIp = `192.168.103.8`;
     axios
       .post(`http://${adressIp}:5000/feedback/addFeedback`, {
         details: FeedBackText,
@@ -120,7 +126,30 @@ function Feedback(props) {
   );
 }
 
-function Info({ navigation, userDataProfile }) {
+function Info({ navigation,id }) {
+  
+  const [userDataProfile, setUserDataProfile] =  useState([]);
+
+  const [idUser,setIdUser]=useState({})
+  
+  //console.log("------- from Info ------>"+idUser.userId)
+
+     
+  useEffect(() => {
+   
+    axios
+    .get(`http://${adressIp}:5000/users/getUserPorfile/${id}`)
+  .then((response) => {
+    setUserDataProfile(response.data);
+    console.log(response.data)
+  })
+  .catch((error) => {
+    alert(error);
+  });
+},[]);
+
+
+
   const imgWidth = Dimensions.get("screen").width * 0.33333;
   return (
     <View
@@ -132,7 +161,7 @@ function Info({ navigation, userDataProfile }) {
       }}
     >
       <HStack>
-        <EditeProfil />
+        <EditeProfil id={id}/>
       </HStack>
       <Center>
         <Box
@@ -154,7 +183,13 @@ function Info({ navigation, userDataProfile }) {
                 }}
                 style={{ width: 22, height: 22, marginRight: 20 }}
               ></Image>
-              <Text
+              {userDataProfile.map((element)=>{
+                if ( element.phone_number ){
+                  return (
+                    <>
+                    
+                      <Text
+                key={element.id_user}
                 fontSize="md"
                 color="#1C2765"
                 colorScheme="darkBlue"
@@ -162,8 +197,29 @@ function Info({ navigation, userDataProfile }) {
                 marginLeft={2}
                 rounded="4"
               >
-                27414994
+                {element.phone_number}
               </Text>
+                    </>
+                  )
+                }else{
+                  return (
+                    <>
+                      <Text
+                key={element.id_user}
+                fontSize="md"
+                color="#1C2765"
+                colorScheme="darkBlue"
+                variant="solid"
+                marginLeft={2}
+                rounded="4"
+              >
+                there is no number 🛑
+              </Text>
+                    </>
+                  )
+                }
+              })}
+              
             </HStack>
             <HStack marginTop={5}>
               <Image
@@ -172,6 +228,10 @@ function Info({ navigation, userDataProfile }) {
                 }}
                 style={{ width: 22, height: 22, marginRight: 20 }}
               ></Image>
+
+            {userDataProfile.map((element)=>{
+              if ( element.email ){
+              return (
               <Text
                 fontSize="md"
                 color="#1C2765"
@@ -180,8 +240,28 @@ function Info({ navigation, userDataProfile }) {
                 marginLeft={2}
                 rounded="4"
               >
-                cipidre@gmail.com
+                {element.email}
               </Text>
+              )
+              } else {
+                return (
+                  <Text
+                    fontSize="md"
+                    color="#1C2765"
+                    colorScheme="darkBlue"
+                    variant="solid"
+                    marginLeft={2}
+                    rounded="4"
+                  >
+                    You don't have an email 🛑
+                  </Text>
+                  )
+              }
+            }
+            )
+          }
+
+
             </HStack>
             <Box>
               <HStack marginTop={5}>
@@ -191,15 +271,38 @@ function Info({ navigation, userDataProfile }) {
                   }}
                   style={{ width: 22, height: 22, marginRight: 20 }}
                 ></Image>
-                <Text
-                  fontSize="md"
-                  color="#1C2765"
-                  colorScheme="darkBlue"
-                  variant="solid"
-                  rounded="4"
-                >
-                  mourouj 5 ,rue de cipidre
-                </Text>
+
+              {userDataProfile.map((element)=>{
+                if ( element.adress){
+                    return (
+                    <Text
+                      fontSize="md"
+                      color="#1C2765"
+                      colorScheme="darkBlue"
+                      variant="solid"
+                      rounded="4"
+                    >
+                      {element.adress}
+                    </Text>
+                    )
+                } else {
+                  return (
+                    <Text
+                      fontSize="md"
+                      color="#1C2765"
+                      colorScheme="darkBlue"
+                      variant="solid"
+                      rounded="4"
+                    >
+                      Please update your adress 
+                    </Text>
+                    )
+                }
+              }
+              )
+            }
+
+
               </HStack>
             </Box>
           </VStack>
@@ -285,7 +388,7 @@ export default function Profil({ navigation, route }) {
     console.log("test", route.params.idToSend);
     axios
       .get(
-        `http://192.168.103.8:5000/users/getUserPorfile/${route.params.idToSend}`
+        `http://${adressIp}:5000/users/getUserPorfile/${route.params.idToSend}`
       )
       .then((response) => {
         setUserDataProfile(response.data);
@@ -314,6 +417,7 @@ export default function Profil({ navigation, route }) {
           <View>
             <View>
               {userDataProfile.map((element) => {
+                if (element.photo){
                 return (
                   <>
                     <Image
@@ -339,6 +443,33 @@ export default function Profil({ navigation, route }) {
                     ></Image>
                   </>
                 );
+                    }else {
+                      return (
+                      <>
+                        <Image
+                          source={{
+                            uri: `https://invisiblechildren.com/wp-content/uploads/2012/07/facebook-profile-picture-no-pic-avatar.jpg`,
+                          }}
+                          style={{
+                            width: 100,
+                            height: 100,
+                            // borderRadius: 100,
+                            marginTop: -130,
+                            left: 20,
+                            borderRadius: 20,
+                            shadowColor: "black",
+                            shadowOffset: {
+                              width: 5,
+                              height: 5,
+                            },
+                            shadowOpacity: "100%",
+                            shadowRadius: 20,
+                            elevation: 20,
+                          }}
+                        ></Image>
+                      </>
+                    );}
+
               })}
             </View>
           </View>
@@ -407,7 +538,7 @@ export default function Profil({ navigation, route }) {
             {showContent === "Product" ? (
               <Product idUser={idUser} />
             ) : showContent === "Info" ? (
-              <Info userDataProfile={userDataProfile} />
+              <Info id={idUser} />
             ) : (
               <Feedback idUser={idUser} />
             )}
