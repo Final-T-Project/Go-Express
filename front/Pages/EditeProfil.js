@@ -110,7 +110,7 @@ let EditeProfil = ({id}) => {
             <FormControl>
               <FormControl.Label>ville</FormControl.Label>
               <Input backgroundColor={'muted.100'} borderColor={'muted.200'} fontSize={'20'} onChangeText={(changed)=>{setVille(changed)}}/>
-            </FormControl>
+            </FormControl> 
               <FormControl.Label>Adress</FormControl.Label>
               <Input backgroundColor={'muted.100'} borderColor={'muted.200'} fontSize={'20'} onChangeText={(changed)=>{setAdress(changed)}}/>
             </FormControl>

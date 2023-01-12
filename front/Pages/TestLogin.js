@@ -247,7 +247,7 @@ export default function TestLogin() {
                 />
               ) : (
                 <TextInput
-                  secureTextEntry={true}
+                  secureTextEntry={value.passwordHide}
                   style={{
                     backgroundColor: "white",
                     height: 50,
@@ -267,7 +267,27 @@ export default function TestLogin() {
                 />
               )}
             </View>
+            {!value.password.length ? null : value.passwordHide === true ? (
+                  <Text
+                    style={{ textAlign: "center" }}
+                    onPress={() =>
+                      setValue({ ...value, passwordHide: !value.passwordHide })
+                    }
+                  >
+                    Show password
+                  </Text>
+                ) : (
+                  <Text
+                    style={{ textAlign: "center" }}
+                    onPress={() =>
+                      setValue({ ...value, passwordHide: !value.passwordHide })
+                    }
+                  >
+                    hide password
+                  </Text>
+                )}
             
+
 
             {valueError.length?<View style={{alignItems:'center',marginTop:30,borderRaduis:50}}>
             <View style={{backgroundColor:"#F96332",height:40,width:300,alignItems:"center",justifyContent: "center",borderRaduis:50}}>
