@@ -120,7 +120,7 @@ const MyCart = ({ navigation }) => {
             borderWidth:2
           }}
         >
-          <StatusBar backgroundColor={"white"} barStyle="dark-content" />
+          {/* <StatusBar backgroundColor={"white"} barStyle="dark-content" /> */}
           <Image
             source={data.productImage}
             style={{
@@ -219,7 +219,7 @@ const MyCart = ({ navigation }) => {
         backgroundColor: "white",
         position: 'relative',
       }}>
-        <StatusBar backgroundColor={"white"} barStyle="dark-content" />
+        {/* <StatusBar backgroundColor={"white"} barStyle="dark-content" /> */}
       <ScrollView>
         <View
           style={{
