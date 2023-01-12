@@ -87,7 +87,6 @@ function TestLogin() {
 
 
         .then((id) => {
-          alert("YEYYY USER ADDED");
           console.log("------>" + userId);
 
 
