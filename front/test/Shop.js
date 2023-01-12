@@ -14,7 +14,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import axios from "axios";
 
-const Home = ({ navigation }) => {
+const Shop = ({ navigation }) => {
   const [products, setProducts] = useState([]);
   const [accessory, setAccessory] = useState([]);
 
@@ -637,4 +637,4 @@ const Home = ({ navigation }) => {
   );
 };
 
-export default Home;
+export default Shop;

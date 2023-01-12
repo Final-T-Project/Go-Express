@@ -15,6 +15,7 @@ import { COLOURS, Items } from "../database/Database";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const MyCart = ({ navigation }) => {
+  
   const [product, setProduct] = useState();
   const [total, setTotal] = useState(null);
 
@@ -90,6 +91,7 @@ const MyCart = ({ navigation }) => {
 
   const renderProducts = (data, index) => {
     return (
+      
       <TouchableOpacity
         key={data.key}
         onPress={() =>
@@ -103,6 +105,7 @@ const MyCart = ({ navigation }) => {
           alignItems: "center",
         }}
       >
+        
         <View
           style={{
             width: "30%",
@@ -117,6 +120,7 @@ const MyCart = ({ navigation }) => {
             borderWidth:2
           }}
         >
+          <StatusBar backgroundColor={"white"} barStyle="dark-content" />
           <Image
             source={data.productImage}
             style={{
@@ -215,6 +219,7 @@ const MyCart = ({ navigation }) => {
         backgroundColor: "white",
         position: 'relative',
       }}>
+        <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <ScrollView>
         <View
           style={{

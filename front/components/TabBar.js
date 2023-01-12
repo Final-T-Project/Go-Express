@@ -12,7 +12,6 @@ import {
   SafeAreaView,
   Pressable,
 } from "react-native";
-import SideBbar from "./SideBar";
 import { UserContext } from "../UserContext";
 import React from "react";
 import {
@@ -47,7 +46,12 @@ const TabBar = ({ navigation }) => {
           right: -4,
         }}
       >
-        <TouchableOpacity>
+        <TouchableOpacity
+         onPress={() => {
+          navigation.navigate("Serves");
+          return setShowContent("truck-fast");
+        }}
+        >
           {/* kamiouna */}
 
           <View
