@@ -10,7 +10,7 @@ module.exports = {
       },
       req.body.sellIerd,
       req.body.buyerId,
-      req.body.product_name,
+      req.body.name,
       req.body.category,
       req.body.price,
       req.body.description,
@@ -22,12 +22,45 @@ module.exports = {
       req.body.Published_at
     );
   },
+
+  AddProductPhoto: function (req, res) {
+    product.addProductPhoto(
+      function (err, result) {
+        if (err) res.status(500).send(err);
+        else res.json(result);
+      },
+      req.body.photo1,
+      req.body.photo2,
+      req.body.photo3,
+      req.body.idproduct
+    );
+  },
+
+  GetProductPhoto: function (req, res) {
+    product.getProductPhoto(function (err, results) {
+      if (err) res.status(500).send(err);
+      else res.json(results);
+    }, req.params.id_product);
+  },
+
+  GetLastProductId: function (req, res) {
+    product.getLastProductId(function (err, result) {
+      if (err) res.status(500).send(err);
+      else res.send(result);
+    });
+  },
+
+//  res.send({ id: results[0].id });
+
+
+
+
   // function to get Product by categories
 
   GetProductBycategoy: function (req, res) {
-    product.getProducts(function (err, results) {
+    product.getProducts(function (err, result) {
       if (err) res.status(500).send(err);
-      else res.json(results);
+      else res.json(result);
     }, req.params.category);
   },
 };
