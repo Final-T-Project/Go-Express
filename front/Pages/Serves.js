@@ -25,7 +25,7 @@ const Tab=React.forwardRef(({item,onItemPress},ref)=>{
         <TouchableOpacity onPress={onItemPress}>
         <View ref={ref}>
            <Text style={{color:'#373E5A',
-           fontSize:84/data.length,
+           fontSize:70/data.length,
            fontWeight:'600',
            top:-80
         //    textTransform:'uppercase'
