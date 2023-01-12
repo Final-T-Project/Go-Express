@@ -24,6 +24,8 @@ import ProductInfo from "./Pages/ProductInfo.js";
 import ImageDetails from "./Pages/ImageDetails";
 import Home from "./Pages/Home.js";
 import Serves from "./Pages/Serves.js";
+import BookService from "./Pages/BookService.js";
+
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [showContent, setShowContent] = useState("");
@@ -38,7 +40,7 @@ export default function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="TestLogin"
+            initialRouteName="BookService"
             screenOptions={{
               headerTintColor: "white",
               headerStyle: {
@@ -92,6 +94,7 @@ export default function App() {
             <Stack.Screen name="ImageDetails" component={ImageDetails} />
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Serves" component={Serves} />
+            <Stack.Screen name="BookService" component={BookService} />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

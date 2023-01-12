@@ -226,7 +226,7 @@ export default function TestLogin() {
 
               {!passwordError ? (
                 <TextInput
-                  secureTextEntry={true}
+                  secureTextEntry={value.passwordHide}
                   style={{
                     backgroundColor: "white",
                     height: 50,
@@ -293,6 +293,23 @@ export default function TestLogin() {
                   <Text style={{alignItems:"center",justifyContent: "center",fontWeight:'500'}}>{valueError}</Text>
             </View>
             </View>:null}
+            {passwordError?<Text
+              style={{
+                fontSize: 15,
+                marginTop: 15,
+                fontWeight: "600",
+                textAlign: "center",
+              }}
+            >
+              Forget your password ?
+              <Text
+                style={{ color: "#F96332" }}
+                onPress={() => forgetPassword()}
+              >
+                {" "}
+                tap here
+              </Text>
+            </Text>:null}
 {/** ------------------------------------ BUTTON CONFIRM ------------------------------------- */}
 
             {value.email.length && value.password.length ?<View
@@ -351,23 +368,10 @@ export default function TestLogin() {
               </Text>
             </Text>
 
-            <Text
-              style={{
-                fontSize: 15,
-                marginTop: 40,
-                fontWeight: "600",
-                textAlign: "center",
-              }}
-            >
-              Forget my password ?
-              <Text
-                style={{ color: "#F96332" }}
-                onPress={() => forgetPassword()}
-              >
-                {" "}
-                tap here
-              </Text>
-            </Text>
+            
+
+
+
           </View>
         </ImageBackground>
       </View>
