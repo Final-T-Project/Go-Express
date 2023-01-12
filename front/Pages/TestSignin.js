@@ -36,12 +36,14 @@ function TestLogin() {
     nameUser: "",
     email: "", //         TO STORE THE EMAIL INPUT
     password: "", //   TO STORE THE PASSWORD INPUT
+    passwordConfirm:"",
 
     error: "", // ST7A9ITHECH LHA9 AMAAA TAJEM TESTHA9HA
 
     emailConfirmation: false,
     emailInput: "",
   });
+
   const Navigation = useNavigation();
 
   const [user, setUser] = useState("");
@@ -50,14 +52,10 @@ function TestLogin() {
   const app = initializeApp(firebaseConfig); //  ----------->  BECH NAAMLOU INITIALIZATION LEL CONFIG TA3 EL FIREBASE W NRODOUH EL app MTE3NA
   const auth = getAuth(app);
 
+  const [valueError,setValueError]=useState("")
+
   const handleSignIn = () => {
-    if (
-      !value.nameUser.length ||
-      !value.email.length ||
-      !value.password.length
-    ) {
-      alert("fill all the inputs !!!");
-    } else {
+
       createUserWithEmailAndPassword(auth, value.email, value.password) //  -----------> TA3MEL CREATION L USER JDID BEL EMAIL WEL PASSWORD ILI KTEBTHOM
         .then((userCredential) => {
           //  ----------->  BAAD EL CREATION TA3 EL USER FEL FIREBASE , EL FIREBASE YRAJA3 OBJET ESMOU (userCredential) FIH INFO AL USER
@@ -89,7 +87,6 @@ function TestLogin() {
 
 
         .then((id) => {
-          alert("YEYYY USER ADDED");
           console.log("------>" + userId);
           Navigation.navigate("SideBar", { id });
 
@@ -97,12 +94,12 @@ function TestLogin() {
         })
         .catch((err) => {
           if (err.code === "auth/email-already-in-use") {
-            alert("The email is already used ");
+            setValueError("This email is already used");
           } else {
             alert(err);
           }
         });
-    }
+    
   };
 
   return (
@@ -189,14 +186,16 @@ function TestLogin() {
                 placeholder="  🙍   Your Name here..."
                 onChangeText={(text) => setValue({ ...value, nameUser: text })}
               />
+              
+              {valueError==="This email is already used" ?
               <TextInput
                 keyboardType="email-address"
                 style={{
                   backgroundColor: "white",
                   height: 50,
                   fontSize: 17,
-                  borderColor: "#9d9d9e",
-                  borderWidth: 1,
+                  borderColor: "red",
+                  borderWidth: 2,
                   padding: 10,
                   width: 330,
                   borderRadius: 50,
@@ -205,7 +204,26 @@ function TestLogin() {
                 }}
                 placeholder="  ✉️   Your Email here..."
                 onChangeText={(text) => setValue({ ...value, email: text })}
-              />
+              />:<TextInput
+              keyboardType="email-address"
+              style={{
+                backgroundColor: "white",
+                height: 50,
+                fontSize: 17,
+                borderColor: "#9d9d9e",
+                borderWidth: 1,
+                padding: 10,
+                width: 330,
+                borderRadius: 50,
+                alignItems: "center",
+                marginTop: 20,
+              }}
+              placeholder="  ✉️   Your Email here..."
+              onChangeText={(text) => setValue({ ...value, email: text })}
+            />}
+
+
+
               <TextInput
                 secureTextEntry={true}
                 style={{
@@ -223,9 +241,35 @@ function TestLogin() {
                 placeholder="  🔐   Your Password here..."
                 onChangeText={(text) => setValue({ ...value, password: text })}
               />
+
+            <TextInput
+                secureTextEntry={true}
+                style={{
+                  backgroundColor: "white",
+                  height: 50,
+                  fontSize: 17,
+                  borderColor: "#9d9d9e",
+                  borderWidth: 1,
+                  padding: 10,
+                  width: 330,
+                  borderRadius: 50,
+                  alignItems: "center",
+                  marginTop: 20,
+                }}
+                placeholder="  🔐   Confirm youor password..."
+                onChangeText={(text) => setValue({ ...value, passwordConfirm: text })}
+              />
             </View>
 
-            <View style={{ alignItems: "center", marginTop: 60 }}>
+            {valueError.length?<View style={{alignItems:'center',marginTop:30,borderRaduis:50}}>
+            <View style={{backgroundColor:"#fcad92",height:40,width:300,alignItems:"center",justifyContent: "center",borderRaduis:50}}>
+                  <Text style={{alignItems:"center",justifyContent: "center",fontWeight:'500'}}>{valueError}</Text>
+            </View>
+            </View>:null}
+
+            {/** ------------------------------------ BUTTON CONFIRM ------------------------------------- */}
+
+            {value.nameUser.length && value.email.length && value.password.length && value.passwordConfirm.length ?<View style={{ alignItems: "center", marginTop: 10 }}>
               <View style={css.buttonStyle}>
                 <Text
                   style={{
@@ -234,12 +278,36 @@ function TestLogin() {
                     fontWeight: "400",
                     fontSize: 17,
                   }}
-                  onPress={() => handleSignIn()}
+                  onPress={() => {
+                    if ( value.passwordConfirm === value.password ){
+                      handleSignIn()
+                    }else {
+                      setValueError("The password doesn't match")
+                    }
+                    
+                  }}
                 >
                   create account{" "}
                 </Text>
               </View>
-            </View>
+            </View>:<View style={{ alignItems: "center", marginTop: 60 }}>
+              <View style={css.buttonStyleNo}>
+                <Text
+                  style={{
+                    color: "white",
+                    alignItems: "center",
+                    fontWeight: "400",
+                    fontSize: 17,
+                  }}
+                  
+                >
+                  create account{" "}
+                </Text>
+              </View>
+            </View>}
+
+
+
           </View>
         </ScrollView>
       </ImageBackground>
@@ -260,10 +328,10 @@ const css = StyleSheet.create({
   box: {
     backgroundColor: "white",
     width: 370,
-    height: 600,
+    height: 700,
     borderRadius: 4,
     marginLeft: 23,
-    marginTop: 150,
+    marginTop: 80,
     padding: 50,
     shadowColor: "black",
     shadowOffset: {
@@ -286,4 +354,12 @@ const css = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 500,
   },
+  buttonStyleNo: {
+    backgroundColor: "#fcad92",
+    width: 170,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 500,
+  }
 });
