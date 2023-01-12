@@ -14,7 +14,7 @@ import {
 import profile from "../assets/profile.png";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // Tab ICons...
-import home from "../assets/feedback.png";
+
 import cart from "front/assets/shopping-cart-empty-side-view.png";
 import notifications from "front/assets/notification.png";
 import chat from "../assets/chat.png";
@@ -163,18 +163,23 @@ export default function SideBbar({ navigation, route }) {
               // Tab Bar Buttons....
             }
 
-            {TabButton(currentTab, setCurrentTab, "Feedback", home)}
-            {TabButton(
-              currentTab,
-              setCurrentTab,
-              "Notification",
-              notifications
-            )}
-            {TabButton(currentTab, setCurrentTab, "MyCart", cart)}
-            {TabButton(currentTab, setCurrentTab, "Chat", chat)}
+              {/* {TabButton(currentTab, setCurrentTab, "Feedback", feedback)} */}
+              {TabButton(
+                currentTab,
+                setCurrentTab,
+                "Notification",
+                notifications
+              )}
+              {TabButton(currentTab, setCurrentTab, "MyCart", cart)}
+              {TabButton(currentTab, setCurrentTab, "Chat", chat)}
+            </View>
+            <View>
+              {TabButton(currentTab, setCurrentTab, "LogOut", logout)}
+            </View>
           </View>
-          <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
-        </View>
+
+
+        
       </ImageBackground>
       {
         // Over lay View...

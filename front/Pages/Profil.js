@@ -16,6 +16,7 @@ import {
   TextInput,
   Alert,
   KeyboardAvoidingView,
+  StatusBar,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -65,6 +66,7 @@ function Feedback(props) {
         justifyContent: "center",
       }}
     >
+      
       <View>
         <View>
           <Text
@@ -152,6 +154,7 @@ function Info({ navigation, id }) {
         padding: 20,
       }}
     >
+
       <HStack>
         <EditeProfil id={id} />
       </HStack>
@@ -386,6 +389,7 @@ export default function Profil({ navigation, route }) {
   return (
     <>
       <View>
+      
         <ScrollView>
           <View>
             <Image
