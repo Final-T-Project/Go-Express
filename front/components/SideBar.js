@@ -62,7 +62,9 @@ export default function SideBbar({ navigation, route }) {
   // console.log("huhuh", ahmed);
 
   return (
+   
     <SafeAreaView style={styles.container}>
+       
       {/* blaset el contenue mta el side bar */}
       <ImageBackground
         source={{
@@ -265,6 +267,7 @@ export default function SideBbar({ navigation, route }) {
         <TabBar navigation={navigation} />
         {/* navigation={navigation} */}
       </Animated.View>
+      
     </SafeAreaView>
   );
 }
@@ -327,7 +330,9 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           {title}
         </Text>
       </View>
+      
     </TouchableOpacity>
+    
   );
 };
 
