@@ -1,33 +1,45 @@
-import { View, Text , StyleSheet , ScrollView, TextInput} from 'react-native'
+import { View, Text , StyleSheet , ScrollView, TextInput , TouchableOpacity} from 'react-native'
 import React from 'react'
 import { Picker } from "@react-native-picker/picker";
 import { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
+
 
 // primary color : #F14E24 
 // Secondary color : #373E5A
 
 export default function BookService() {
+    const [date, setDate] = useState(new Date(1598051730000));
+
+
 
     const [listService,setListService]=useState("")
 
     const [time,setTime]=useState("")
-    const [timeShow,setTimeShow]=useState(false)
+    const [timeShow,setTimeShow]=useState(false)   // show and hide the time window
 
     const handleTimeChange=(time)=>{
         setTime(time)
+        console.log(time)
     }
 
-   const handleShowHide=()=>{
-        setTimeShow(!timeShow)
+   const handleShow=()=>{
+        setTimeShow(true)
+    }
+   
+   
+    const handleHide=()=>{
+        setTimeShow(false)
     }
 
-
+    
 
   return (
     <View style={css.container}>
         <ScrollView>
         <View style={css.box}>
+            {/** --------------------------------TEXT ( TITLE ) --------------------------------------------- */}
             <Text style={{
                 textAlign: "center",
                 fontSize: 25,
@@ -36,7 +48,7 @@ export default function BookService() {
               }}> Bookin section 
             </Text>
 
-
+ {/** --------------------------------TEXT ( SERVICES / DROP BOX ) --------------------------------------------- */}
               <Text style={{marginTop:20,fontWeight:'600',fontSize: 20,}}> Services :</Text>
             
             <Picker
@@ -54,16 +66,29 @@ export default function BookService() {
                     <Picker.Item label="Electricity" value="" />
                   </Picker>
 
-                 
-                  <DateTimePicker
-                    isVisible={true}
-                    onConfirm={()=>handleShowHide()}
-                    onCancel={()=>handleShowHide()}
-                    mode='time'
-                    value={time}
-                    onChange={(time)=>handleTimeChange(time)}
-                    />
+ {/** --------------------------------LIGNE  --------------------------------------------- */}             
+                        <View style={{borderBottomColor: 'black', borderBottomWidth: 1,width:370,marginLeft:-20,opacity:0.2}} />
+    
 
+ {/** --------------------------------TEXT ( TIME SELECT ) --------------------------------------------- */}
+                  <Text style={{marginTop:20,fontWeight:'600',fontSize: 20,}}> Time :</Text>
+                
+                    <TouchableOpacity style={{backgroundColor:"#373E5A",width:200,height:30,color:'white',borderRadius:20,justifyContent:'center',marginTop:20}} onPress={()=>setTimeShow(true)}>
+                        <Text style={{color:'white',textAlign:'center'}}>Pick Time</Text>
+                    </TouchableOpacity>
+
+                  {timeShow?<DateTimePicker
+                    isVisible={timeShow}
+                    onConfirm={()=>setTimeShow(false)}
+                    onCancel={()=>setTimeShow(false)}
+                    mode='time'
+                    value={date}
+                    is24Hour={true}
+                    onChange={(time)=>handleTimeChange(time)}
+                    />:null}
+
+                    
+                    <View style={{marginTop:20, borderBottomColor: 'black', borderBottomWidth: 1,width:370,marginLeft:-20,opacity:0.2}} />
 
       </View>
       </ScrollView>
