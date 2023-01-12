@@ -12,7 +12,6 @@ import {
   SafeAreaView,
   Pressable,
 } from "react-native";
-import SideBbar from "./SideBar";
 import { UserContext } from "../UserContext";
 import React from "react";
 import {
@@ -29,7 +28,7 @@ const TabBar = ({ navigation }) => {
     <SafeAreaView
       style={{
         flex: 1,
-        top: height - 38,
+        top: height -80,
         flexDirection: "column",
         width: width,
         position: "absolute",
@@ -44,10 +43,15 @@ const TabBar = ({ navigation }) => {
           borderRadius: 35,
           bottom: 35,
           zIndex: 10,
-          right: -4,
+          right: -8,
         }}
       >
-        <TouchableOpacity>
+        <TouchableOpacity
+         onPress={() => {
+          navigation.navigate("Serves");
+          return setShowContent("truck-fast");
+        }}
+        >
           {/* kamiouna */}
 
           <View
@@ -118,32 +122,10 @@ const TabBar = ({ navigation }) => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            marginStart: 10,
+            marginStart:5,
           }}
         >
-          <TouchableOpacity
-            onPress={() => {
-             
-              navigation.navigate("Cart")
-              return(setShowContent('history'))
-            }}
-          >
-            <FontAwesome
-              name="history"
-              size={24}
-              color={showContent === "history" ? "#ED5C00" : "#b0aeae"}
-            />
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            marginStart: 70,
-          }}
-        >
-          <TouchableOpacity
+           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Shop");
               return setShowContent("shop");
@@ -161,7 +143,7 @@ const TabBar = ({ navigation }) => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            marginStart: 5,
+            marginStart: 70,
           }}
         >
           <TouchableOpacity
@@ -176,6 +158,30 @@ const TabBar = ({ navigation }) => {
               color={showContent === "AddProduct" ? "#ED5C00" : "#b0aeae"}
             />
           </TouchableOpacity>
+         
+        </View>
+        <View
+          style={{
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            marginStart: 5,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+             
+              navigation.navigate("History")
+              return(setShowContent('history'))
+            }}
+          >
+            <FontAwesome
+              name="history"
+              size={24}
+              color={showContent === "history" ? "#ED5C00" : "#b0aeae"}
+            />
+          </TouchableOpacity>
+          
         </View>
       </View>
     </SafeAreaView>

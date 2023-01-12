@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -21,15 +21,15 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import TabBar from "../components/TabBar";
 import axios from "axios";
+import IPADRESS from "../config/IPADRESS";
 
-const AddProduct = ({ navigation }) => {
+const AddProduct = ({ navigation, route }) => {
   // state for selected name , description , price , quantity , category , image
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(1);
   const [quantity, setQuantity] = useState(1);
   const [category, setCategory] = useState("");
-  const [image, setImage] = useState(null);
 
   // function to incriment product quantity
   const onMinus = () => {
@@ -69,56 +69,96 @@ const AddProduct = ({ navigation }) => {
 
   // state to save id connected user
   const [idUser, setIdUser] = useState("");
-
+  //function to get the id_user
   AsyncStorage.getItem("userData").then((res) => {
     setIdUser(JSON.parse(res));
     // console.log(res);
   });
 
   // function to pick image from device and store it in image variable
-  const pickImage = async () => {
+  const pickImageOne = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Image,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-    setImage(result.uri);
-    console.log("hi", result.uri);
-
+    setImageOne(result.uri);
+    console.log("image1:", result.uri);
     if (!result.cancelled) {
-      let newfile = {
+      let newfile1 = {
         uri: result.uri,
       };
-      // uploadImage(newfile);
     }
   };
 
-  let addProduct = async () => {
-    const imageUrl = await uploadImage();
+  const pickImageTow = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Image,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    setImageTow(result.uri);
+    console.log("image2:", result.uri);
+    if (!result.cancelled) {
+      let newfile2 = {
+        uri: result.uri,
+      };
+    }
+  };
+  const pickImageThree = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Image,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    setImageThree(result.uri);
+    console.log("image3:", result.uri);
+    if (!result.cancelled) {
+      let newfile3 = {
+        uri: result.uri,
+      };
+    }
+  };
+
+  const [imageOne, setImageOne] = useState(null);
+  const [imageTow, setImageTow] = useState(null);
+  const [imageThree, setImageThree] = useState(null);
+
+  let addProductDetails = () => {
     if (!name.length || !description.length || !price.length) {
       alert("Please fill all information");
     } else {
-      const adressIp = `192.168.103.8`;
       axios
-        .post(`http://${adressIp}:5000/products/addProduct`, {
+        .post(`http://${IPADRESS}:5000/products/addProduct`, {
           sellIerd: idUser.userId,
           buyerId: "Null",
-          product_name: name,
+          name: name,
           category: category,
           price: price,
           description: description,
-          photo: imageUrl,
+          photo: imageOne,
           quantity: quantity,
           id_user: idUser.userId,
           id_cart: 2,
-          productStatus: "NotAccepted",
+          productStatus: "Accepted",
           Published_at: posted_at,
         })
-
-        .then(() => {
-          console.log("added");
+        .then((result) => {
+          console.log(result.data.insertId);
+          return result.data.insertId;
         })
+        .then((id_post) => {
+          axios.post(`http://${IPADRESS}:5000/products/addProduct/photo`, {
+            photo1: imageOne,
+            photo2: imageTow,
+            photo3: imageThree,
+            idproduct: id_post,
+          });
+        })
+
         .catch((error) => {
           console.log(error);
         });
@@ -235,8 +275,16 @@ const AddProduct = ({ navigation }) => {
                 {/*Image  start */}
 
                 <View>
-                  <Button title="Pick a image " onPress={pickImage} />
-                  {image && <Image source={{ uri: image }} />}
+                  <Button title="Pick a image1 " onPress={pickImageOne} />
+                  {/* {image && <Image source={{ uri: image }} />} */}
+                </View>
+                <Text></Text>
+                <View>
+                  <Button title="Pick a image2 " onPress={pickImageTow} />
+                </View>
+                <Text></Text>
+                <View>
+                  <Button title="Pick a image3 " onPress={pickImageThree} />
                 </View>
 
                 {/*Image  End */}
@@ -245,7 +293,7 @@ const AddProduct = ({ navigation }) => {
                 <TouchableOpacity>
                   <View style={styles.button}>
                     <MaterialIcons name="add" size={24} color="white" />
-                    <Text onPress={addProduct} style={styles.buttonText}>
+                    <Text onPress={addProductDetails} style={styles.buttonText}>
                       Add Product
                     </Text>
                   </View>
