@@ -32,9 +32,11 @@ export default function TestLogin() {
     password: "", //   TO STORE THE PASSWORD INPUT
     passwordHide: true,
     emailError: false,
-    passwordError: false,
-    error: "", // ST7A9ITHECH LHA9 AMAAA TAJEM TESTHA9HA
   });
+
+  const [valueError,setError]=useState("")
+  const [ passwordError,setPasswordError]=useState(false)
+
 
   const app = initializeApp(firebaseConfig); //  ----------->  BECH NAAMLOU INITIALIZATION LEL CONFIG TA3 EL FIREBASE W NRODOUH EL app MTE3NA
   const auth = getAuth(app); //  ----------->  TA3TIIII AUTHORISATION LEL app MTE3EKKK BECH TNAJEM TESTAKHDEMHA KI T CREATE WALA SIGN IN LEL USER
@@ -44,16 +46,17 @@ export default function TestLogin() {
   //------------------------------------------| Handle Login Function |---------------------------------------->
 
   const handleLogIn = () => {
-    if (!value.email.length || !value.password.length) {
-      alert("Please fill all information");
-    } else {
+      console.log(valueError)
+      //console.log("---->",passwordError)
+
       signInWithEmailAndPassword(auth, value.email, value.password) //  -----------> METHOD FEL FIREBASE TA3MEL BIHA EL SIGN IN (TET2AKED MEL EMAIL WEL PASSWORD)
         .then((userCredential) => {
           //  ----------->  KIMA FEL CREATION , EL FIREBASE YRAJA3LEK OBJECT BAAD MA TEM 3AMALEYET EL SIGN IN CORRECTLY
-          alert("YYEYYYY CREDENTIAL ARE CORRECT");
-          console.log("user Id current------->" + userCredential.user.uid);
-          setValue({ ...value, error: "" });
+          console.log("------------> YYEYYYY CREDENTIAL ARE CORRECT");
+          console.log("********** user Id current ***********" + userCredential.user.uid);
+          setError("")
           setValue({ ...value, emailError: false });
+          setPasswordError(false)
 
           AsyncStorage.setItem(
             "userData",
@@ -75,16 +78,19 @@ export default function TestLogin() {
             error.code === "auth/user-not-found"
           ) {
             //alert("Ekteb EMAIL shihhh ya hajjj")
-            setValue({ ...value, emailError: true });
+            setValue({ ...value,emailError: true });
+            setError(" Your Email is incorrect ")
+            console.log(valueError)
             return;
           }
           if (error.code === "auth/wrong-password") {
-            setValue({ ...value, error: "auth/wrong-password" });
-            setValue({ ...value, passwordError: true });
+            setValue({ ...value,emailError: false });
+            setError(" Your password is incorrect ")
+            setPasswordError(true)
             setValue({ ...value, emailError: false });
-            console.log("----------ERROR----PASSWORD------>" + value.error);
           } else {
             if (error.code === "auth/too-many-requests") {
+              setError("Your account has been frozed for a moment, you should click on 'Forget my password'")
               alert(
                 "Your account has been frozed for a moment, you should click on 'Forget my password'"
               );
@@ -93,7 +99,7 @@ export default function TestLogin() {
             }
           }
         });
-    }
+    
   };
 
   const forgetPassword = () => {
@@ -218,7 +224,7 @@ export default function TestLogin() {
                 />
               )}
 
-              {!value.passwordError ? (
+              {!passwordError ? (
                 <TextInput
                   secureTextEntry={true}
                   style={{
@@ -240,7 +246,7 @@ export default function TestLogin() {
                 />
               ) : (
                 <TextInput
-                  secureTextEntry={true}
+                  secureTextEntry={value.passwordHide}
                   style={{
                     backgroundColor: "white",
                     height: 50,
@@ -260,9 +266,37 @@ export default function TestLogin() {
                 />
               )}
             </View>
+            {!value.password.length ? null : value.passwordHide === true ? (
+                  <Text
+                    style={{ textAlign: "center" }}
+                    onPress={() =>
+                      setValue({ ...value, passwordHide: !value.passwordHide })
+                    }
+                  >
+                    Show password
+                  </Text>
+                ) : (
+                  <Text
+                    style={{ textAlign: "center" }}
+                    onPress={() =>
+                      setValue({ ...value, passwordHide: !value.passwordHide })
+                    }
+                  >
+                    hide password
+                  </Text>
+                )}
+            
 
-            <View
-              style={{ alignItems: "center", marginTop: 70 }}
+
+            {valueError.length?<View style={{alignItems:'center',marginTop:30,borderRaduis:50}}>
+            <View style={{backgroundColor:"#fcad92",height:40,width:300,alignItems:"center",justifyContent: "center",borderRaduis:50}}>
+                  <Text style={{alignItems:"center",justifyContent: "center",fontWeight:'500'}}>{valueError}</Text>
+            </View>
+            </View>:null}
+{/** ------------------------------------ BUTTON CONFIRM ------------------------------------- */}
+
+            {value.email.length && value.password.length ?<View
+              style={{ alignItems: "center", marginTop: 30 }}
               onPress={() => handleLogIn()}
             >
               <View style={css.buttonStyle} onPress={() => handleLogIn()}>
@@ -278,7 +312,26 @@ export default function TestLogin() {
                   Confirm
                 </Text>
               </View>
-            </View>
+            </View>:
+            <View
+              style={{ alignItems: "center", marginTop: 30 }}
+              onPress={() => handleLogIn()}
+            >
+              <View style={css.buttonStyleNo} onPress={() => handleLogIn()}>
+                <Text
+                  style={{
+                    color: "white",
+                    alignItems: "center",
+                    fontWeight: "400",
+                    fontSize: 17,
+                  }}
+                >
+                  Confirm
+                </Text>
+              </View>
+            </View>}
+
+{/** ----------------------------------------------------------------------------------------- */}
 
             <Text
               style={{
@@ -301,7 +354,7 @@ export default function TestLogin() {
             <Text
               style={{
                 fontSize: 15,
-                marginTop: 60,
+                marginTop: 40,
                 fontWeight: "600",
                 textAlign: "center",
               }}
@@ -354,4 +407,12 @@ const css = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 500,
   },
+  buttonStyleNo: {
+    backgroundColor: "#fcad92",
+    width: 170,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 500,
+  }
 });
