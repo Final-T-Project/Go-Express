@@ -117,8 +117,7 @@ export default function TestLogin() {
           console.log(error);
         });
     }
-    
-  }
+  };
 
   //-----------------------------------------------------------------------------------------------------------
   return (
@@ -359,10 +358,15 @@ export default function TestLogin() {
                 fontWeight: "600",
                 textAlign: "center",
               }}
-              
             >
               Forget my password ?
-              <Text style={{ color: "#F96332" }} onPress={() => forgetPassword()}> tap here</Text>
+              <Text
+                style={{ color: "#F96332" }}
+                onPress={() => forgetPassword()}
+              >
+                {" "}
+                tap here
+              </Text>
             </Text>
           </View>
         </ImageBackground>

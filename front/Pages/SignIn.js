@@ -12,7 +12,7 @@ import {
 import { useState, useEffect } from "react";
 
 import axios from "axios";
-
+import IPADRESS from "../config/IPADRESS";
 ///----------------------------------------------------> Firebase stuff importation  <----------------------------------------------------------------------------///
 
 import firebaseConfig from "../config/firebase"; //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
@@ -71,7 +71,7 @@ export default function App() {
           setUserId(user.uid); //  ----------->  Setting the user Id ( that takin from the User Objet )
 
           axios
-            .post("http://192.168.104.29:5000/users/addUser", {
+            .post(`http://${IPADRESS}:5000/users/addUser`, {
               id_user: userCredential.user.uid,
               name: value.nameUser,
               email: value.email,

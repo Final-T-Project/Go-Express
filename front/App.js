@@ -1,10 +1,10 @@
 import * as React from "react";
+import { StatusBar } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import SideBar from "./components/SideBar.js";
 import Shop from "front/test/Shop.js";
 import Products from "./Pages/Products.js";
-import ProductDetails from "./Pages/ProductDetails.js";
 import History from "./Pages/History";
 import Profil from "./Pages/Profil";
 import LogInSignIn from "./Pages/LogInSignIn";
@@ -20,8 +20,10 @@ import { UserContext } from "./UserContext.js";
 import { useContext, useState } from "react";
 import Shopping from "./Pages/Shopping.js";
 import MyCart from "./test/MyCart.js";
-import ProductInfo from "./test/ProductInfo.js";
-import ImageDetails from "./Pages/ImageDetails"
+import ProductInfo from "./Pages/ProductInfo.js";
+import ImageDetails from "./Pages/ImageDetails";
+import Home from "./Pages/Home.js";
+import Serves from "./Pages/Serves.js";
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [showContent, setShowContent] = useState("");
@@ -32,6 +34,7 @@ export default function App() {
         setShowContent,
       }}
     >
+      <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator
@@ -44,7 +47,7 @@ export default function App() {
             }}
           >
             <Stack.Screen
-              name="Log in"
+              name="LogInSignIn"
               options={{ headerShown: false }}
               component={LogInSignIn}
             />
@@ -75,7 +78,6 @@ export default function App() {
             />
             <Stack.Screen name="Shop" component={Shop} />
             <Stack.Screen name="Products" component={Products} />
-            <Stack.Screen name="ProductDetails" component={ProductDetails} />
             {/* <Stack.Screen name="Email Confiramtion" component={EmailConfirmation} /> */}
             <Stack.Screen
               name="AddProduct"
@@ -88,6 +90,8 @@ export default function App() {
             <Stack.Screen name="MyCart" component={MyCart} />
             <Stack.Screen name="ProductInfo" component={ProductInfo} />
             <Stack.Screen name="ImageDetails" component={ImageDetails} />
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Serves" component={Serves} />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

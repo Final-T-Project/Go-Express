@@ -16,6 +16,7 @@ import {
   TextInput,
   Alert,
   KeyboardAvoidingView,
+  StatusBar,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -36,10 +37,7 @@ const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
 import IPADRESS from "../config/IPADRESS";
-
-
 const adressIp = IPADRESS;
-
 
 // feedback side
 function Feedback(props) {
@@ -68,6 +66,7 @@ function Feedback(props) {
         justifyContent: "center",
       }}
     >
+      
       <View>
         <View>
           <Text
@@ -126,29 +125,24 @@ function Feedback(props) {
   );
 }
 
-function Info({ navigation,id }) {
-  
-  const [userDataProfile, setUserDataProfile] =  useState([]);
+function Info({ navigation, id }) {
+  const [userDataProfile, setUserDataProfile] = useState([]);
 
-  const [idUser,setIdUser]=useState({})
-  
+  const [idUser, setIdUser] = useState({});
+
   //console.log("------- from Info ------>"+idUser.userId)
 
-     
   useEffect(() => {
-   
     axios
-    .get(`http://${adressIp}:5000/users/getUserPorfile/${id}`)
-  .then((response) => {
-    setUserDataProfile(response.data);
-    console.log(response.data)
-  })
-  .catch((error) => {
-    alert(error);
-  });
-},[]);
-
-
+      .get(`http://${adressIp}:5000/users/getUserPorfile/${id}`)
+      .then((response) => {
+        setUserDataProfile(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
 
   const imgWidth = Dimensions.get("screen").width * 0.33333;
   return (
@@ -160,8 +154,9 @@ function Info({ navigation,id }) {
         padding: 20,
       }}
     >
+
       <HStack>
-        <EditeProfil id={id}/>
+        <EditeProfil id={id} />
       </HStack>
       <Center>
         <Box
@@ -183,43 +178,41 @@ function Info({ navigation,id }) {
                 }}
                 style={{ width: 22, height: 22, marginRight: 20 }}
               ></Image>
-              {userDataProfile.map((element)=>{
-                if ( element.phone_number ){
-                  return (
-                    <>
-                    
-                      <Text
-                key={element.id_user}
-                fontSize="md"
-                color="#1C2765"
-                colorScheme="darkBlue"
-                variant="solid"
-                marginLeft={2}
-                rounded="4"
-              >
-                {element.phone_number}
-              </Text>
-                    </>
-                  )
-                }else{
+              {userDataProfile.map((element) => {
+                if (element.phone_number) {
                   return (
                     <>
                       <Text
-                key={element.id_user}
-                fontSize="md"
-                color="#1C2765"
-                colorScheme="darkBlue"
-                variant="solid"
-                marginLeft={2}
-                rounded="4"
-              >
-                there is no number 🛑
-              </Text>
+                        key={element.id_user}
+                        fontSize="md"
+                        color="#1C2765"
+                        colorScheme="darkBlue"
+                        variant="solid"
+                        marginLeft={2}
+                        rounded="4"
+                      >
+                        {element.phone_number}
+                      </Text>
                     </>
-                  )
+                  );
+                } else {
+                  return (
+                    <>
+                      <Text
+                        key={element.id_user}
+                        fontSize="md"
+                        color="#1C2765"
+                        colorScheme="darkBlue"
+                        variant="solid"
+                        marginLeft={2}
+                        rounded="4"
+                      >
+                        there is no number 🛑
+                      </Text>
+                    </>
+                  );
                 }
               })}
-              
             </HStack>
             <HStack marginTop={5}>
               <Image
@@ -229,39 +222,35 @@ function Info({ navigation,id }) {
                 style={{ width: 22, height: 22, marginRight: 20 }}
               ></Image>
 
-            {userDataProfile.map((element)=>{
-              if ( element.email ){
-              return (
-              <Text
-                fontSize="md"
-                color="#1C2765"
-                colorScheme="darkBlue"
-                variant="solid"
-                marginLeft={2}
-                rounded="4"
-              >
-                {element.email}
-              </Text>
-              )
-              } else {
-                return (
-                  <Text
-                    fontSize="md"
-                    color="#1C2765"
-                    colorScheme="darkBlue"
-                    variant="solid"
-                    marginLeft={2}
-                    rounded="4"
-                  >
-                    You don't have an email 🛑
-                  </Text>
-                  )
-              }
-            }
-            )
-          }
-
-
+              {userDataProfile.map((element) => {
+                if (element.email) {
+                  return (
+                    <Text
+                      fontSize="md"
+                      color="#1C2765"
+                      colorScheme="darkBlue"
+                      variant="solid"
+                      marginLeft={2}
+                      rounded="4"
+                    >
+                      {element.email}
+                    </Text>
+                  );
+                } else {
+                  return (
+                    <Text
+                      fontSize="md"
+                      color="#1C2765"
+                      colorScheme="darkBlue"
+                      variant="solid"
+                      marginLeft={2}
+                      rounded="4"
+                    >
+                      You don't have an email 🛑
+                    </Text>
+                  );
+                }
+              })}
             </HStack>
             <Box>
               <HStack marginTop={5}>
@@ -272,37 +261,33 @@ function Info({ navigation,id }) {
                   style={{ width: 22, height: 22, marginRight: 20 }}
                 ></Image>
 
-              {userDataProfile.map((element)=>{
-                if ( element.adress){
+                {userDataProfile.map((element) => {
+                  if (element.adress) {
                     return (
-                    <Text
-                      fontSize="md"
-                      color="#1C2765"
-                      colorScheme="darkBlue"
-                      variant="solid"
-                      rounded="4"
-                    >
-                      {element.adress}
-                    </Text>
-                    )
-                } else {
-                  return (
-                    <Text
-                      fontSize="md"
-                      color="#1C2765"
-                      colorScheme="darkBlue"
-                      variant="solid"
-                      rounded="4"
-                    >
-                      Please update your adress 
-                    </Text>
-                    )
-                }
-              }
-              )
-            }
-
-
+                      <Text
+                        fontSize="md"
+                        color="#1C2765"
+                        colorScheme="darkBlue"
+                        variant="solid"
+                        rounded="4"
+                      >
+                        {element.adress}
+                      </Text>
+                    );
+                  } else {
+                    return (
+                      <Text
+                        fontSize="md"
+                        color="#1C2765"
+                        colorScheme="darkBlue"
+                        variant="solid"
+                        rounded="4"
+                      >
+                        Please update your adress
+                      </Text>
+                    );
+                  }
+                })}
               </HStack>
             </Box>
           </VStack>
@@ -320,12 +305,12 @@ function Product(props) {
   useEffect(() => {
     // console.log("the id from prduct : ", props.idUser);
     axios
-      .get(`http://192.168.103.8:5000/users/getUserProduct/${props.idUser}`)
+      .get(`http://192.168.1.18:5000/users/getUserProduct/${props.idUser}`)
       .then((response) => {
         setUserDataProduct(response.data);
       })
       .catch((error) => {
-        alert(error);
+        console.log(error);
       });
   }, []);
 
@@ -404,6 +389,7 @@ export default function Profil({ navigation, route }) {
   return (
     <>
       <View>
+      
         <ScrollView>
           <View>
             <Image
@@ -418,59 +404,59 @@ export default function Profil({ navigation, route }) {
           <View>
             <View>
               {userDataProfile.map((element) => {
-                if (element.photo){
-                return (
-                  <>
-                    <Image
-                      source={{
-                        uri: element.photo,
-                      }}
-                      style={{
-                        width: 100,
-                        height: 100,
-                        // borderRadius: 100,
-                        marginTop: -130,
-                        left: 20,
-                        borderRadius: 20,
-                        shadowColor: "black",
-                        shadowOffset: {
-                          width: 5,
-                          height: 5,
-                        },
-                        shadowOpacity: "100%",
-                        shadowRadius: 20,
-                        elevation: 20,
-                      }}
-                    ></Image>
-                  </>
-                );
-                    }else {
-                      return (
-                      <>
-                        <Image
-                          source={{
-                            uri: `https://invisiblechildren.com/wp-content/uploads/2012/07/facebook-profile-picture-no-pic-avatar.jpg`,
-                          }}
-                          style={{
-                            width: 100,
-                            height: 100,
-                            // borderRadius: 100,
-                            marginTop: -130,
-                            left: 20,
-                            borderRadius: 20,
-                            shadowColor: "black",
-                            shadowOffset: {
-                              width: 5,
-                              height: 5,
-                            },
-                            shadowOpacity: "100%",
-                            shadowRadius: 20,
-                            elevation: 20,
-                          }}
-                        ></Image>
-                      </>
-                    );}
-
+                if (element.photo) {
+                  return (
+                    <>
+                      <Image
+                        source={{
+                          uri: element.photo,
+                        }}
+                        style={{
+                          width: 100,
+                          height: 100,
+                          // borderRadius: 100,
+                          marginTop: -130,
+                          left: 20,
+                          borderRadius: 20,
+                          shadowColor: "black",
+                          shadowOffset: {
+                            width: 5,
+                            height: 5,
+                          },
+                          shadowOpacity: "100%",
+                          shadowRadius: 20,
+                          elevation: 20,
+                        }}
+                      ></Image>
+                    </>
+                  );
+                } else {
+                  return (
+                    <>
+                      <Image
+                        source={{
+                          uri: `https://invisiblechildren.com/wp-content/uploads/2012/07/facebook-profile-picture-no-pic-avatar.jpg`,
+                        }}
+                        style={{
+                          width: 100,
+                          height: 100,
+                          // borderRadius: 100,
+                          marginTop: -130,
+                          left: 20,
+                          borderRadius: 20,
+                          shadowColor: "black",
+                          shadowOffset: {
+                            width: 5,
+                            height: 5,
+                          },
+                          shadowOpacity: "100%",
+                          shadowRadius: 20,
+                          elevation: 20,
+                        }}
+                      ></Image>
+                    </>
+                  );
+                }
               })}
             </View>
           </View>

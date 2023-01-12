@@ -88,8 +88,6 @@ function TestLogin() {
 
         .then((id) => {
           console.log("------>" + userId);
-
-
           Navigation.navigate("SideBar", { id });
 
           //Navigation.navigate("PhoneNumber Verif",{name:value.nameUser,email:value.email})
@@ -103,10 +101,6 @@ function TestLogin() {
         });
     
   };
-
-
-
-
 
   return (
     <View style={css.constainer}>

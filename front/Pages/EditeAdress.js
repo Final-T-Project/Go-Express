@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import {MaterialCommunityIcons} from '@expo/vector-icons';
-import React from 'react';
+import { useState } from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React from "react";
 import {
   IconButton,
   Icon,
@@ -12,8 +12,8 @@ import {
   Center,
   Text,
   useToast,
-  Box
-} from 'native-base';
+  Box,
+} from "native-base";
 let EditeAdress = () => {
   const [placement, setPlacement] = useState(undefined);
   const [open, setOpen] = useState(false);
@@ -26,39 +26,47 @@ let EditeAdress = () => {
 
   return (
     <>
-      <Stack 
+      <Stack
         direction={{
-          base: 'column',
-          md: 'row',
+          base: "column",
+          md: "row",
         }}
         marginLeft={160}
       >
         <IconButton
           icon={
-            <MaterialCommunityIcons size={20} color={'#F14E24'} name="pencil" />
+            <MaterialCommunityIcons size={20} color={"#F14E24"} name="pencil" />
           }
-          onPress={() => openModal('right')}
+          onPress={() => openModal("right")}
         >
           Right
         </IconButton>
       </Stack>
-      <Modal  isOpen={open} onClose={() => setOpen(false)} safeAreaTop={true} >
-        <Modal.Content maxWidth="380" backgroundColor={"muted.50"} opacity={2}{...styles[placement]}>
+      <Modal isOpen={open} onClose={() => setOpen(false)} safeAreaTop={true}>
+        <Modal.Content
+          maxWidth="380"
+          backgroundColor={"muted.50"}
+          opacity={2}
+          {...styles[placement]}
+        >
           <Modal.CloseButton />
           <Modal.Header>
             <Center>
-              <Text color={'#F14E24'} bold>Adress Information</Text>
+              <Text color={"#F14E24"} bold>
+                Adress Information
+              </Text>
             </Center>
           </Modal.Header>
           <Modal.Body>
-          <FormControl>
-              <FormControl.Label fontStyle={{color :"#373E5A"}}>Ville</FormControl.Label>
-              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} />
+            <FormControl>
+              <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                Ville
+              </FormControl.Label>
+              <Input backgroundColor={"muted.100"} borderColor={"muted.200"} />
             </FormControl>
             <FormControl>
-            
               <FormControl.Label>Adress</FormControl.Label>
-              <Input backgroundColor={'muted.100'} borderColor={'muted.200'} />
+              <Input backgroundColor={"muted.100"} borderColor={"muted.200"} />
             </FormControl>
           </Modal.Body>
           <Modal.Footer>
@@ -73,15 +81,17 @@ let EditeAdress = () => {
                 Cancel
               </Button>
               <Button
-                backgroundColor={'#F14E24'}
+                backgroundColor={"#F14E24"}
                 onPress={() => {
-                    toast.show({
-                        render: () => {
-                          return <Box bg="green.500" px="2" py="1" rounded="sm" mb={2}>
-                                 Your Adress Is Modified Successfully
-                                </Box>;
-                        }
-                      })
+                  toast.show({
+                    render: () => {
+                      return (
+                        <Box bg="green.500" px="2" py="1" rounded="sm" mb={2}>
+                          Your Adress Is Modified Successfully
+                        </Box>
+                      );
+                    },
+                  });
                   setOpen(false);
                 }}
               >
@@ -97,16 +107,16 @@ let EditeAdress = () => {
 
 const styles = {
   top: {
-    marginBottom: 'auto',
+    marginBottom: "auto",
     marginTop: 0,
   },
   bottom: {
     marginBottom: 0,
-    marginTop: 'auto',
+    marginTop: "auto",
   },
   left: {
     marginLeft: 0,
-    marginRight: 'auto',
+    marginRight: "auto",
   },
   right: {},
   center: {},

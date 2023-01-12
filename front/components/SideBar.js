@@ -14,7 +14,7 @@ import {
 import profile from "../assets/profile.png";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // Tab ICons...
-import home from "../assets/feedback.png";
+
 import cart from "front/assets/shopping-cart-empty-side-view.png";
 import notifications from "front/assets/notification.png";
 import chat from "../assets/chat.png";
@@ -26,16 +26,9 @@ import TabBar from "../components/TabBar";
 import { useEffect } from "react";
 import axios from "axios";
 
-
 import IPADRESS from "../config/IPADRESS";
 
-
-
-
-
-
 export default function SideBbar({ navigation, route }) {
-
   const [Page, SetPage] = useState("Home");
   const [currentTab, setCurrentTab] = useState("Home");
   // To get the curretn Status of menu ...
@@ -46,8 +39,6 @@ export default function SideBbar({ navigation, route }) {
   // Scale Intially must be One...
   const scaleValue = useRef(new Animated.Value(1)).current;
   const closeButtonOffset = useRef(new Animated.Value(0)).current;
-
-  
 
   // state to save user data
   const [userDataProfile, setUserDataProfile] = useState([]);
@@ -80,102 +71,99 @@ export default function SideBbar({ navigation, route }) {
         resizeMode="cover"
         style={styles.image}
       >
-          
-          <View style={{ justifyContent: "flex-start", padding: 20 }}>
-            {userDataProfile.map((element) => {
-              if (element.photo){
-                return(
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("Profil", { idToSend });
-              }}
-            >
-              <Image
-                source={{
-                  uri: element.photo,
-                }}
-                style={{
-                  width: 90,
-                  height: 90,
-                  borderRadius: 7,
-                  marginTop: 10,
-                  marginLeft: 23,
-                }}
-              ></Image>
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  color: "white",
-                  marginTop: 10,
-                }}
-              >
-                Hello {element.name}{" "}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  // fontWeight: "bold",
-                  color: "white",
-                  marginTop: 10,
-                }}
-              >
-                View Profil
-              </Text>
-            </TouchableOpacity>
-                )} else {
-                  return(
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("Profil", { idToSend });
-              }}
-            >
-              <Image
-                source={{
-                  uri: `https://invisiblechildren.com/wp-content/uploads/2012/07/facebook-profile-picture-no-pic-avatar.jpg`,
-                }}
-                style={{
-                  width: 90,
-                  height: 90,
-                  borderRadius: 7,
-                  marginTop: 10,
-                  marginLeft: 23,
-                }}
-              ></Image>
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  color: "white",
-                  marginTop: 10,
-                }}
-              >
-                Hello {element.name}{" "}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  // fontWeight: "bold",
-                  color: "white",
-                  marginTop: 10,
-                }}
-              >
-                View Profil
-              </Text>
-            </TouchableOpacity>
-                )
+        <View style={{ justifyContent: "flex-start", padding: 20 }}>
+          {userDataProfile.map((element) => {
+            if (element.photo) {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("Profil", { idToSend });
+                  }}
+                >
+                  <Image
+                    source={{
+                      uri: element.photo,
+                    }}
+                    style={{
+                      width: 90,
+                      height: 90,
+                      borderRadius: 7,
+                      marginTop: 10,
+                      marginLeft: 23,
+                    }}
+                  ></Image>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      color: "white",
+                      marginTop: 10,
+                    }}
+                  >
+                    Hello {element.name}{" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      // fontWeight: "bold",
+                      color: "white",
+                      marginTop: 10,
+                    }}
+                  >
+                    View Profil
+                  </Text>
+                </TouchableOpacity>
+              );
+            } else {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("Profil", { idToSend });
+                  }}
+                >
+                  <Image
+                    source={{
+                      uri: `https://invisiblechildren.com/wp-content/uploads/2012/07/facebook-profile-picture-no-pic-avatar.jpg`,
+                    }}
+                    style={{
+                      width: 90,
+                      height: 90,
+                      borderRadius: 7,
+                      marginTop: 10,
+                      marginLeft: 23,
+                    }}
+                  ></Image>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      color: "white",
+                      marginTop: 10,
+                    }}
+                  >
+                    Hello {element.name}{" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      // fontWeight: "bold",
+                      color: "white",
+                      marginTop: 10,
+                    }}
+                  >
+                    View Profil
+                  </Text>
+                </TouchableOpacity>
+              );
+            }
+          })}
 
-                }
+          <View style={{ flexGrow: 1, marginTop: 60 }}>
+            {
+              // Tab Bar Buttons....
+            }
 
-              })}
-
-
-            <View style={{ flexGrow: 1, marginTop: 60 }}>
-              {
-                // Tab Bar Buttons....
-              }
-
-              {TabButton(currentTab, setCurrentTab, "Feedback", home)}
+              {/* {TabButton(currentTab, setCurrentTab, "Feedback", feedback)} */}
               {TabButton(
                 currentTab,
                 setCurrentTab,
