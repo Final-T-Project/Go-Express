@@ -84,6 +84,7 @@ export default function TestLogin() {
             return;
           }
           if (error.code === "auth/wrong-password") {
+            setValue({ ...value,emailError: false });
             setError(" Your password is incorrect ")
             setPasswordError(true)
             setValue({ ...value, emailError: false });

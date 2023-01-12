@@ -42,6 +42,7 @@ function TestLogin() {
     emailConfirmation: false,
     emailInput: "",
   });
+
   const Navigation = useNavigation();
 
   const [user, setUser] = useState("");
@@ -50,14 +51,10 @@ function TestLogin() {
   const app = initializeApp(firebaseConfig); //  ----------->  BECH NAAMLOU INITIALIZATION LEL CONFIG TA3 EL FIREBASE W NRODOUH EL app MTE3NA
   const auth = getAuth(app);
 
+  const [valueError,setValueError]=useState("")
+
   const handleSignIn = () => {
-    if (
-      !value.nameUser.length ||
-      !value.email.length ||
-      !value.password.length
-    ) {
-      alert("fill all the inputs !!!");
-    } else {
+
       createUserWithEmailAndPassword(auth, value.email, value.password) //  -----------> TA3MEL CREATION L USER JDID BEL EMAIL WEL PASSWORD ILI KTEBTHOM
         .then((userCredential) => {
           //  ----------->  BAAD EL CREATION TA3 EL USER FEL FIREBASE , EL FIREBASE YRAJA3 OBJET ESMOU (userCredential) FIH INFO AL USER
@@ -99,12 +96,12 @@ function TestLogin() {
         })
         .catch((err) => {
           if (err.code === "auth/email-already-in-use") {
-            alert("The email is already used ");
+            setValueError(" is already used ");
           } else {
             alert(err);
           }
         });
-    }
+    
   };
 
 
@@ -195,6 +192,8 @@ function TestLogin() {
                 placeholder="  🙍   Your Name here..."
                 onChangeText={(text) => setValue({ ...value, nameUser: text })}
               />
+              
+              {!valueError.length?
               <TextInput
                 keyboardType="email-address"
                 style={{
@@ -211,7 +210,26 @@ function TestLogin() {
                 }}
                 placeholder="  ✉️   Your Email here..."
                 onChangeText={(text) => setValue({ ...value, email: text })}
-              />
+              />:<TextInput
+              keyboardType="email-address"
+              style={{
+                backgroundColor: "white",
+                height: 50,
+                fontSize: 17,
+                borderColor: "red",
+                borderWidth: 2,
+                padding: 10,
+                width: 330,
+                borderRadius: 50,
+                alignItems: "center",
+                marginTop: 20,
+              }}
+              placeholder="  ✉️   Your Email here..."
+              onChangeText={(text) => setValue({ ...value, email: text })}
+            />}
+
+
+
               <TextInput
                 secureTextEntry={true}
                 style={{
@@ -231,7 +249,15 @@ function TestLogin() {
               />
             </View>
 
-            <View style={{ alignItems: "center", marginTop: 60 }}>
+            {valueError.length?<View style={{alignItems:'center',marginTop:30,borderRaduis:50}}>
+            <View style={{backgroundColor:"#F96332",height:40,width:300,alignItems:"center",justifyContent: "center",borderRaduis:50}}>
+                  <Text style={{alignItems:"center",justifyContent: "center",fontWeight:'500'}}>{value.email+" "+ valueError}</Text>
+            </View>
+            </View>:null}
+
+            {/** ------------------------------------ BUTTON CONFIRM ------------------------------------- */}
+
+            {value.nameUser.length && value.email.length && value.password.length ?<View style={{ alignItems: "center", marginTop: 60 }}>
               <View style={css.buttonStyle}>
                 <Text
                   style={{
@@ -245,7 +271,24 @@ function TestLogin() {
                   create account{" "}
                 </Text>
               </View>
-            </View>
+            </View>:<View style={{ alignItems: "center", marginTop: 60 }}>
+              <View style={css.buttonStyleNo}>
+                <Text
+                  style={{
+                    color: "white",
+                    alignItems: "center",
+                    fontWeight: "400",
+                    fontSize: 17,
+                  }}
+                  onPress={() => handleSignIn()}
+                >
+                  create account{" "}
+                </Text>
+              </View>
+            </View>}
+
+
+
           </View>
         </ScrollView>
       </ImageBackground>
@@ -292,4 +335,12 @@ const css = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 500,
   },
+  buttonStyleNo: {
+    backgroundColor: "#fcad92",
+    width: 170,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 500,
+  }
 });
