@@ -28,7 +28,7 @@ const TabBar = ({ navigation }) => {
     <SafeAreaView
       style={{
         flex: 1,
-        top: height - 38,
+        top: height -80,
         flexDirection: "column",
         width: width,
         position: "absolute",
@@ -128,7 +128,7 @@ const TabBar = ({ navigation }) => {
           <TouchableOpacity
             onPress={() => {
              
-              navigation.navigate("Cart")
+              navigation.navigate("History")
               return(setShowContent('history'))
             }}
           >
