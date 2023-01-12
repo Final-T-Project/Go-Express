@@ -35,7 +35,8 @@ import { EmailAuthCredential } from "@firebase/auth";
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
-const adressIp = `192.168.1.18`;
+import IPADRESS from "../config/IPADRESS";
+const adressIp = IPADRESS;
 
 // feedback side
 function Feedback(props) {
@@ -306,7 +307,7 @@ function Product(props) {
         setUserDataProduct(response.data);
       })
       .catch((error) => {
-        alert(error);
+        console.log(error);
       });
   }, []);
 

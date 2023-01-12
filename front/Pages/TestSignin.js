@@ -21,8 +21,15 @@ import {
   onAuthStateChanged,
 } from "firebase/auth"; // importing the auth of Firebase
 import { initializeApp } from "firebase/app";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const IPADRESS = `192.168.1.18`;
+import IPADRESS from "../config/IPADRESS";
+
+
+
+
+
+
 
 function TestLogin() {
   const [value, setValue] = useState({
@@ -69,11 +76,22 @@ function TestLogin() {
             .catch((err) => {
               alert(err);
             });
+
+            AsyncStorage.setItem(
+              "userData",
+              JSON.stringify({
+                userId: userCredential.user.uid,
+              })
+            );
+            return userCredential.user.uid;
+
         })
-        .then(() => {
+
+
+        .then((id) => {
           alert("YEYYY USER ADDED");
           console.log("------>" + userId);
-          Navigation.navigate("SideBar");
+          Navigation.navigate("SideBar", { id });
 
           //Navigation.navigate("PhoneNumber Verif",{name:value.nameUser,email:value.email})
         })

@@ -13,15 +13,15 @@ import {
 } from "react-native";
 import { COLOURS, Items } from "../database/Database";
 import Entypo from "react-native-vector-icons/Entypo";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Wiem from "./ImageDetails";
+import SliderPhoto from "./ImageDetails";
 
 const ProductInfo = ({ route, navigation }) => {
   const width = Dimensions.get("window").width;
   const scrollX = new Animated.Value(0);
 
-  console.log(route.params.element);
+  // recived the props sended from products
+  const item = route.params.element;
 
   const [product, setProduct] = useState({});
 
@@ -69,7 +69,7 @@ const ProductInfo = ({ route, navigation }) => {
     >
       <StatusBar backgroundColor={"red"} barStyle="dark-content" />
       <ScrollView>
-        <Wiem />
+        <SliderPhoto idProduct={route.params.element.id_product} />
 
         <View
           style={{
@@ -119,7 +119,7 @@ const ProductInfo = ({ route, navigation }) => {
                 maxWidth: "84%",
               }}
             >
-              productName
+              {item.product_name}
             </Text>
           </View>
           <Text
@@ -135,9 +135,24 @@ const ProductInfo = ({ route, navigation }) => {
               marginBottom: 18,
             }}
           >
-            product.description
+            {item.description}
           </Text>
 
+          <Text
+            style={{
+              fontSize: 12,
+              color: COLOURS.black,
+              fontWeight: "400",
+              letterSpacing: 1,
+              opacity: 0.5,
+              lineHeight: 20,
+              maxWidth: "85%",
+              maxHeight: 44,
+              marginBottom: 18,
+            }}
+          >
+            Quantity:{item.quantity} Unit
+          </Text>
           <View
             style={{
               paddingHorizontal: 16,
@@ -152,7 +167,7 @@ const ProductInfo = ({ route, navigation }) => {
                 marginBottom: 4,
               }}
             >
-              Price :{product.productPrice} dt
+              Price :{item.price} dt
             </Text>
           </View>
         </View>

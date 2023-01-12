@@ -26,7 +26,7 @@ import TabBar from "../components/TabBar";
 import { useEffect } from "react";
 import axios from "axios";
 
-const IPADRESS = `192.168.1.18`;
+import IPADRESS from "../config/IPADRESS";
 
 export default function SideBbar({ navigation, route }) {
   const [Page, SetPage] = useState("Home");

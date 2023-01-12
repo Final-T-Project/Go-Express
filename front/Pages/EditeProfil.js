@@ -23,7 +23,7 @@ import {
 } from "native-base";
 import axios from "axios";
 
-const IPADRESS = `192.168.1.18`;
+import IPADRESS from "../config/IPADRESS";
 
 const pickImage = async () => {
   let result = await ImagePicker.launchImageLibraryAsync({

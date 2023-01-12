@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`feedback` (
   `etoile` ENUM('1', '2', '3', '4', '5') NOT NULL,
   `details` VARCHAR(400) NULL DEFAULT '0',
   `user_id_user` VARCHAR(50) NOT NULL,
-  `serves_id_serves` NULL DEFAULT '0',
+  `serves_id_serves` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id_feedback`),
   INDEX `fk_feedBack_user1_idx` (`user_id_user` ASC) VISIBLE,
   INDEX `fk_feedBack_serves1_idx` (`serves_id_serves` ASC) VISIBLE,
@@ -143,6 +143,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`feedback` (
     FOREIGN KEY (`user_id_user`)
     REFERENCES `mydb`.`user` (`id_user`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -157,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
   `category` ENUM('Kitchen', 'Garden', 'Furniture', 'Accessories') NOT NULL,
   `price` INT NOT NULL,
   `description` VARCHAR(600) NOT NULL,
-  `photo_product` VARCHAR(300) NOT NULL,
+  `photo_product` VARCHAR(600) NULL DEFAULT NULL,
   `quantity` INT NOT NULL DEFAULT '1',
   `user_id_user` VARCHAR(50) NOT NULL,
   `cart_id_cart` INT NOT NULL,
@@ -173,7 +174,26 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
     FOREIGN KEY (`user_id_user`)
     REFERENCES `mydb`.`user` (`id_user`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 46
+AUTO_INCREMENT = 61
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`product_photo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`product_photo` (
+  `id_Product_photo` INT NOT NULL AUTO_INCREMENT,
+  `Photo1` VARCHAR(600) NULL DEFAULT NULL,
+  `Photo2` VARCHAR(600) NULL DEFAULT NULL,
+  `Photo3` VARCHAR(600) NULL DEFAULT NULL,
+  `product_id_product` INT NOT NULL,
+  PRIMARY KEY (`id_Product_photo`),
+  INDEX `fk_Product_photo_product1_idx` (`product_id_product` ASC) VISIBLE,
+  CONSTRAINT `fk_Product_photo_product1`
+    FOREIGN KEY (`product_id_product`)
+    REFERENCES `mydb`.`product` (`id_product`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb3;
 
 

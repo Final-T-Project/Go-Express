@@ -10,12 +10,13 @@ import {
 } from "react-native";
 import { COLOURS, Items } from "../database/Database";
 import axios from "axios";
+import IPADRESS from "../config/IPADRESS";
 
 const Home = ({ navigation }) => {
   // function to get Kitchen data length
   let [KitchenData, setKitchenData] = useState([]);
   useEffect(() => {
-    axios.get(`http://192.168.1.18:5000/products/Kitchen`).then((result) => {
+    axios.get(`http://${IPADRESS}:5000/products/Kitchen`).then((result) => {
       setKitchenData(result.data);
     });
   }, []);
@@ -23,7 +24,7 @@ const Home = ({ navigation }) => {
   // function to get furniture data length
   let [furnitureData, setFurnitureData] = useState([]);
   useEffect(() => {
-    axios.get(`http://192.168.1.18:5000/products/Furniture`).then((result) => {
+    axios.get(`http://${IPADRESS}:5000/products/Furniture`).then((result) => {
       setFurnitureData(result.data);
     });
   }, []);
@@ -31,17 +32,15 @@ const Home = ({ navigation }) => {
   // function to get Accessories data length
   let [accessoriesData, setAccessoriesData] = useState([]);
   useEffect(() => {
-    axios
-      .get(`http://192.168.1.18:5000/products/Accessories`)
-      .then((result) => {
-        setFurnitureData(result.data);
-      });
+    axios.get(`http://${IPADRESS}:5000/products/Accessories`).then((result) => {
+      setFurnitureData(result.data);
+    });
   }, []);
 
   // function to get Garden data length
   let [gardenData, setGardenData] = useState([]);
   useEffect(() => {
-    axios.get(`http://192.168.1.18:5000/products/Garden`).then((result) => {
+    axios.get(`http://${IPADRESS}:5000/products/Garden`).then((result) => {
       setGardenData(result.data);
     });
   }, []);

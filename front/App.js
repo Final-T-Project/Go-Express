@@ -4,7 +4,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import SideBar from "./components/SideBar.js";
 import Shop from "front/test/Shop.js";
 import Products from "./Pages/Products.js";
-import ProductDetails from "./Pages/ProductDetails.js";
 import History from "./Pages/History";
 import Profil from "./Pages/Profil";
 import LogInSignIn from "./Pages/LogInSignIn";
@@ -35,7 +34,7 @@ export default function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Shop"
+            initialRouteName="AddProduct"
             screenOptions={{
               headerTintColor: "white",
               headerStyle: {
@@ -75,7 +74,6 @@ export default function App() {
             />
             <Stack.Screen name="Shop" component={Shop} />
             <Stack.Screen name="Products" component={Products} />
-            <Stack.Screen name="ProductDetails" component={ProductDetails} />
             {/* <Stack.Screen name="Email Confiramtion" component={EmailConfirmation} /> */}
             <Stack.Screen
               name="AddProduct"
