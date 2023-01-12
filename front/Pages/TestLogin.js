@@ -290,7 +290,7 @@ export default function TestLogin() {
 
 
             {valueError.length?<View style={{alignItems:'center',marginTop:30,borderRaduis:50}}>
-            <View style={{backgroundColor:"#F96332",height:40,width:300,alignItems:"center",justifyContent: "center",borderRaduis:50}}>
+            <View style={{backgroundColor:"#fcad92",height:40,width:300,alignItems:"center",justifyContent: "center",borderRaduis:50}}>
                   <Text style={{alignItems:"center",justifyContent: "center",fontWeight:'500'}}>{valueError}</Text>
             </View>
             </View>:null}
