@@ -19,6 +19,7 @@ let EditeAdress = () => {
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState(null);
   const toast = useToast();
+
   const openModal = (placement) => {
     setOpen(true);
     setPlacement(placement);
