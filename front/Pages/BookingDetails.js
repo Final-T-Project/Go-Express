@@ -13,7 +13,7 @@ export default function BookingDetails() {
                    
                 
 
-                            <Text style={{marginLeft:30,fontWeight:'bold',marginTop:40}}>serves : </Text>
+                            <Text style={{marginLeft:30,fontWeight:'bold',marginTop:40}}>services : </Text>
                             <View style={{marginTop:5,borderBottomColor: 'black', borderBottomWidth: 1,width:370,marginLeft:-20,opacity:0.2}} />
                             <Text style={{marginLeft:30,fontWeight:'bold',marginTop:10}}>Date : </Text>
                             <View style={{marginTop:5,borderBottomColor: 'black', borderBottomWidth: 1,width:370,marginLeft:-20,opacity:0.2}} />
@@ -24,7 +24,7 @@ export default function BookingDetails() {
                             <Text style={{marginLeft:30,fontWeight:'bold',marginTop:10}}>Price : </Text>
 
                             <View style={{alignItems:'center'}}>
-                            <TouchableOpacity style={{backgroundColor:"#F14E24",width:60,height:60,color:'white',borderRadius:100,justifyContent:'center',marginTop:60,alignItems:'center'}} onPress={()=>Navigation.navigate("MyCart")}>
+                            <TouchableOpacity style={{backgroundColor:"#F14E24",width:60,height:60,color:'white',borderRadius:100,justifyContent:'center',marginTop:190,alignItems:'center'}} onPress={()=>Navigation.navigate("MyCart")}>
                                 <Text style={{color:'white',textAlign:'center',fontSize:19,fontWeight:'500'}}>Ok</Text>
                             </TouchableOpacity>
                             </View>
