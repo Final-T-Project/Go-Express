@@ -42,7 +42,7 @@ export default function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="HistoryDetails"
+            initialRouteName="TestLogin"
             screenOptions={{
               headerTintColor: "white",
               headerStyle: {
@@ -99,19 +99,15 @@ export default function App() {
             <Stack.Screen name="HistoryDetails" component={HistoryDetails} />
           </Stack.Navigator>
         </NavigationContainer>
-    </NativeBaseProvider>
+      </NativeBaseProvider>
     </UserContext.Provider>
-  //   <NativeBaseProvider>
-  //   <View style={{ flex: 1 }}>
-  //   <StatusBar hidden={false} />
-  //   <SideBar />
-  // </View>  
-  
+    //   <NativeBaseProvider>
+    //   <View style={{ flex: 1 }}>
+    //   <StatusBar hidden={false} />
+    //   <SideBar />
+    // </View>
   );
 }
-
-
-
 
 // import React from 'react';
 
@@ -125,8 +121,7 @@ export default function App() {
 
 // import { createDrawerNavigator } from '@react-navigation/drawer';
 
-
-// // screens
+// screens
 // import MyCart from "./test/MyCart.js";;
 // import Shop from 'front/test/Shop.js';
 // import History from "./Pages/History";
@@ -192,7 +187,6 @@ export default function App() {
 //   family: null,
 //   focused: false,
 // };
-
 
 // const screens = {
 //   Home: {
