@@ -91,7 +91,7 @@ export default function BookService() {
                     style={css.picker}
                     
                   >
-                    <Picker.Item label="Please Select Category" enabled={false} opacity={0.5} color='gray' />
+                    <Picker.Item label="Please Select Counter" enabled={false} opacity={0.5} color='gray' />
                     <Picker.Item label="Moving + tidying up things" value="Moving" />
                     <Picker.Item label="Cleanig" value="Cleanig" />
                     <Picker.Item label="Plumbing" value="Plumbing" />

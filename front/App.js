@@ -99,12 +99,9 @@ export default function App() {
             <Stack.Screen name="ImageDetails" component={ImageDetails} />
             <Stack.Screen name="Home" component={yahya} />
             <Stack.Screen name="Serves" component={Serves} />
-<<<<<<< HEAD
             <Stack.Screen name="BookService" component={BookService} />
             <Stack.Screen name="Booking Details" component={BookingDetails} />
-=======
             <Stack.Screen name="HistoryDetails" component={HistoryDetails} />
->>>>>>> 9b0ec23005a25f04f3783aa8798a38be55ae7ccb
           </Stack.Navigator>
         </NavigationContainer>
     </NativeBaseProvider>
