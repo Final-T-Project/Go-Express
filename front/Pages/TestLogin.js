@@ -226,7 +226,7 @@ export default function TestLogin() {
 
               {!passwordError ? (
                 <TextInput
-                  secureTextEntry={true}
+                  secureTextEntry={value.passwordHide}
                   style={{
                     backgroundColor: "white",
                     height: 50,

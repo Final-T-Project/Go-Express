@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  StatusBar,
+  // StatusBar,
   ScrollView,
   TouchableOpacity,
   Image,
-  ImageBackground,
+  DevSettings
 } from "react-native";
+import TabBar from "../components/TabBar";
 import { COLOURS, Items } from "../database/Database";
 import axios from "axios";
 import IPADRESS from "../config/IPADRESS";
-import TabBar from "../components/TabBar";
+
 
 const Shop = ({ navigation }) => {
   // function to get Kitchen data length
@@ -63,7 +64,7 @@ const Shop = ({ navigation }) => {
           backgroundColor: "white",
         }}
       >
-        <StatusBar backgroundColor={"white"} barStyle="dark-content" />
+        {/* <StatusBar backgroundColor={"white"} barStyle="dark-content" /> */}
 
         <ScrollView showsVerticalScrollIndicator={false}>
           <View
@@ -467,6 +468,7 @@ const Shop = ({ navigation }) => {
         </ScrollView>
         {/* </ImageBackground> */}
       </View>
+      <TabBar navigation={navigation} />
     </>
   );
 };

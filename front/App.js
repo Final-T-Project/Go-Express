@@ -24,6 +24,7 @@ import ProductInfo from "./Pages/ProductInfo.js";
 import ImageDetails from "./Pages/ImageDetails";
 import yahya from "./Pages/yahya.js";
 import Serves from "./Pages/Serves.js";
+import Cart from "./Pages/Cart.js";
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [showContent, setShowContent] = useState("");
@@ -38,7 +39,7 @@ export default function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="TestLogin"
+            initialRouteName="home"
             screenOptions={{
               headerTintColor: "white",
               headerStyle: {
@@ -81,7 +82,7 @@ export default function App() {
             {/* <Stack.Screen name="Email Confiramtion" component={EmailConfirmation} /> */}
             <Stack.Screen
               name="AddProduct"
-              options={{ headerShown: false }}
+              // options={{ headerShown: false }}
               component={AddProduct}
             />
             <Stack.Screen name="EditeProfil" component={EditeProfil} />
@@ -92,6 +93,7 @@ export default function App() {
             <Stack.Screen name="ImageDetails" component={ImageDetails} />
             <Stack.Screen name="Home" component={yahya} />
             <Stack.Screen name="Serves" component={Serves} />
+            <Stack.Screen name="Cart" component={Cart} />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>
