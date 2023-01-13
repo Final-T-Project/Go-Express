@@ -32,24 +32,19 @@ const data = Object.keys(images).map((i) => ({
   ref: React.createRef(),
 }));
 
-const Tab = React.forwardRef(({ item, onItemPress }, ref) => {
-  return (
-    <TouchableOpacity onPress={onItemPress}>
-      <View ref={ref}>
-        <Text
-          style={{
-            color: "#373E5A",
-            fontSize: 84 / data.length,
-            fontWeight: "600",
-            top: -80,
-            //    textTransform:'uppercase'
-          }}
-        >
-          {item.title}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
+const Tab=React.forwardRef(({item,onItemPress},ref)=>{
+    return(
+        <TouchableOpacity onPress={onItemPress}>
+        <View ref={ref}>
+           <Text style={{color:'#373E5A',
+           fontSize:70/data.length,
+           fontWeight:'600',
+           top:-80
+        //    textTransform:'uppercase'
+           }}>{item.title}</Text>
+        </View>
+        </TouchableOpacity>
+    )
 });
 const Indicator = ({ measures, scrollX }) => {
   const inputRange = data.map((_, i) => i * width);

@@ -34,18 +34,34 @@ const MyCart = ({ navigation, route }) => {
   const [cartProducts, setCartProducts] = useState([]);
   const [productPrice, setProductPrice] = useState([]);
   //id card recived from product info
-  const id_card = route.params.idCart;
+  // const id_card = route.params.idCart;
 
   // function to get product in the cart with specifique Id
+  const [idCart, setIdCart] = useState("");
+  useEffect(() => {
+    axios
+      .get(`http://${IPADRESS}:5000/carts/getIdCart/${idUser.userId}`)
+      .then((response) => {
+        console.log("test", response.data);
+        response.data.map((element) => {
+          setIdCart(element.id_cart);
+          console.log("testoo", element.id_cart);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  //
 
   useEffect(() => {
     axios
-      .get(`http://${IPADRESS}:5000/carts/getCartProduct/${id_card}`)
+      .get(`http://${IPADRESS}:5000/carts/getCartProduct/${idCart}`)
       .then((response) => {
         console.log("tu", response.data);
         setCartProducts(response.data);
       })
-
       .catch((error) => {
         console.log(error);
       });

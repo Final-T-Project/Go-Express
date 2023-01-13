@@ -26,7 +26,7 @@ const ProductInfo = ({ route, navigation }) => {
   const item = route.params.element;
 
   const [idUser, setIdUser] = useState("");
-  const [idCart, setIdCart] = useState([]);
+  const [idCart, setIdCart] = useState("");
   //function to get the id_user
   useEffect(() => {
     AsyncStorage.getItem("userData").then((res) => {

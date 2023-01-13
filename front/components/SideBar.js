@@ -279,6 +279,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           // navigation.navigate("Shop");
         } else if (title == "MyCart") {
           setCurrentTab("MyCart");
+          navigation.navigate("Cart");
         } else if (title == "Chat") {
           setCurrentTab("Chat");
         } else if (title == "Settings") {

@@ -11,6 +11,7 @@ import {
   Dimensions,
   SafeAreaView,
   Pressable,
+  DevSetting
 } from "react-native";
 import { UserContext } from "../UserContext";
 import React from "react";
@@ -39,21 +40,19 @@ const TabBar = ({ navigation }) => {
           alignSelf: "center",
 
           width: 70,
-          height: 70,
+          height: 0,
           borderRadius: 35,
           bottom: 35,
           zIndex: 10,
-          right: -8,
+          right: -1,
         }}
       >
         <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Serves");
-            return setShowContent("truck-fast");
-          }}
+         onPress={() => {
+          navigation.navigate("Serves");
+        return setShowContent("SideBar");
+        }}
         >
-          {/* kamiouna */}
-
           <View
             style={{
               flexDirection: "column",
@@ -63,7 +62,7 @@ const TabBar = ({ navigation }) => {
               top: 64,
               backgroundColor: "#373E5A",
               width: 60,
-              marginTop: -9,
+              marginTop: -79,
               height: 50,
             }}
           >
@@ -113,19 +112,16 @@ const TabBar = ({ navigation }) => {
               color={showContent === "Home" ? "#ED5C00" : "#b0aeae"}
             />
           </TouchableOpacity>
-          {/* <Text style={{ justifyContent: "center", alignItems: "center" }}>
-            Home
-          </Text> */}
         </View>
         <View
           style={{
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            marginStart: 5,
+            marginStart:5,
           }}
         >
-          <TouchableOpacity
+           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Shop");
               return setShowContent("shop");
@@ -158,6 +154,7 @@ const TabBar = ({ navigation }) => {
               color={showContent === "AddProduct" ? "#ED5C00" : "#b0aeae"}
             />
           </TouchableOpacity>
+         
         </View>
         <View
           style={{
@@ -169,8 +166,9 @@ const TabBar = ({ navigation }) => {
         >
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("History");
-              return setShowContent("history");
+             
+              navigation.navigate("History")
+              return(setShowContent('history'))
             }}
           >
             <FontAwesome
@@ -179,6 +177,7 @@ const TabBar = ({ navigation }) => {
               color={showContent === "history" ? "#ED5C00" : "#b0aeae"}
             />
           </TouchableOpacity>
+          
         </View>
       </View>
     </SafeAreaView>

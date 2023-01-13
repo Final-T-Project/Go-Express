@@ -24,6 +24,7 @@ import ProductInfo from "./Pages/ProductInfo.js";
 import ImageDetails from "./Pages/ImageDetails";
 import Home from "./Pages/Home.js";
 import Serves from "./Pages/Serves.js";
+
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [showContent, setShowContent] = useState("");
@@ -82,7 +83,7 @@ export default function App() {
             {/* <Stack.Screen name="Email Confiramtion" component={EmailConfirmation} /> */}
             <Stack.Screen
               name="AddProduct"
-              options={{ headerShown: false }}
+              // options={{ headerShown: false }}
               component={AddProduct}
             />
             <Stack.Screen name="EditeProfil" component={EditeProfil} />
