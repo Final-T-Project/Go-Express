@@ -24,13 +24,10 @@ import ProductInfo from "./Pages/ProductInfo.js";
 import ImageDetails from "./Pages/ImageDetails";
 import yahya from "./Pages/yahya.js";
 import Serves from "./Pages/Serves.js";
-<<<<<<< HEAD
 import BookService from "./Pages/BookService.js";
 import BookingDetails from "./Pages/BookingDetails.js";
 
-=======
 import HistoryDetails from "./Pages/HistoryDetails.js";
->>>>>>> 9b0ec23005a25f04f3783aa8798a38be55ae7ccb
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [showContent, setShowContent] = useState("");
