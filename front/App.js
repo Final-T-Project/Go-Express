@@ -22,7 +22,7 @@ import Shopping from "./Pages/Shopping.js";
 import Cart from "./Pages/Cart.js";
 import ProductInfo from "./Pages/ProductInfo.js";
 import ImageDetails from "./Pages/ImageDetails";
-import Home from "./Pages/Home.js";
+import yahya from "./Pages/yahya.js";
 import Serves from "./Pages/Serves.js";
 import HistoryDetails from "./Pages/HistoryDetails.js";
 const Stack = createNativeStackNavigator();
@@ -42,7 +42,7 @@ export default function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="HistoryDetails"
+            initialRouteName="TestLogin"
             screenOptions={{
               headerTintColor: "white",
               headerStyle: {
@@ -55,7 +55,7 @@ export default function App() {
               options={{ headerShown: false }}
               component={LogInSignIn}
             />
-            {/* <Stack.Screen name="Home" component={Home} /> */}
+            <Stack.Screen name="home" component={yahya} />
             <Stack.Screen name="History" component={History} />
             <Stack.Screen name="Create an account" component={SignIn} />
             <Stack.Screen name="PhoneNumber Verif" component={PhoneNumber} />
@@ -94,7 +94,7 @@ export default function App() {
             <Stack.Screen name="Cart" component={Cart} />
             <Stack.Screen name="ProductInfo" component={ProductInfo} />
             <Stack.Screen name="ImageDetails" component={ImageDetails} />
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Home" component={yahya} />
             <Stack.Screen name="Serves" component={Serves} />
             <Stack.Screen name="HistoryDetails" component={HistoryDetails} />
           </Stack.Navigator>

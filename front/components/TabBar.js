@@ -20,6 +20,7 @@ import {
   Entypo,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import Home from "../Pages/yahya";
 
 const { width, height } = Dimensions.get("window");
 
@@ -102,8 +103,8 @@ const TabBar = ({ navigation }) => {
         >
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("SideBar");
-              return setShowContent("Home");
+              navigation.navigate("home");
+              return setShowContent("yahya");
             }}
           >
             <FontAwesome

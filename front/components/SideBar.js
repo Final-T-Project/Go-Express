@@ -13,8 +13,7 @@ import {
 } from "react-native";
 import profile from "../assets/profile.png";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// Tab ICons...
-
+import Home from "../Pages/yahya";
 import cart from "front/assets/shopping-cart-empty-side-view.png";
 import notifications from "front/assets/notification.png";
 import chat from "../assets/chat.png";
@@ -62,7 +61,9 @@ export default function SideBbar({ navigation, route }) {
   // console.log("huhuh", ahmed);
 
   return (
+   
     <SafeAreaView style={styles.container}>
+       
       {/* blaset el contenue mta el side bar */}
       <ImageBackground
         source={{
@@ -71,7 +72,7 @@ export default function SideBbar({ navigation, route }) {
         resizeMode="cover"
         style={styles.image}
       >
-        <View style={{ justifyContent: "flex-start", padding: 20 }}>
+        <View style={{ justifyContent: "flex-start"}}>
           {userDataProfile.map((element) => {
             if (element.photo) {
               return (
@@ -100,7 +101,7 @@ export default function SideBbar({ navigation, route }) {
                       marginTop: 10,
                     }}
                   >
-                    Hello {element.name}{" "}
+                     {element.name}{" "}
                   </Text>
                   <Text
                     style={{
@@ -176,10 +177,9 @@ export default function SideBbar({ navigation, route }) {
           <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
         </View>
       </ImageBackground>
-      {
-        // Over lay View...
-      }
+      
 
+      
       <Animated.View
         style={{
           flexGrow: 1,
@@ -189,7 +189,7 @@ export default function SideBbar({ navigation, route }) {
           bottom: 0,
           left: 0,
           right: 0,
-          paddingHorizontal: 15,
+          paddingHorizontal: 1,
           paddingVertical: 0,
           borderRadius: showMenu ? 15 : 0,
           // Transforming View...
@@ -236,6 +236,7 @@ export default function SideBbar({ navigation, route }) {
               setShowMenu(!showMenu);
             }}
           >
+            
             <Image
               source={showMenu ? close : menu}
               style={{
@@ -244,22 +245,19 @@ export default function SideBbar({ navigation, route }) {
                 tintColor: "#ea580c",
                 marginTop: 40,
               }}
-            ></Image>
+            />
           </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 30,
-              fontWeight: "bold",
-              color: "red",
-              paddingTop: 20,
-            }}
-          >
+         
+           
             {/* {currentTab} */}
-          </Text>
+          
         </Animated.View>
+            <Home />
+        {/* <Home  /> */}
         <TabBar navigation={navigation} />
         {/* navigation={navigation} */}
       </Animated.View>
+      
     </SafeAreaView>
   );
 }
@@ -323,16 +321,19 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           {title}
         </Text>
       </View>
+      
     </TouchableOpacity>
+    
   );
 };
 
 const styles = StyleSheet.create({
+  
   container: {
-    flex: 1,
-    backgroundColor: "#FFAD62",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
+    flex:1,
+    backgroundColor: "white",
+   
+   
   },
   image: {
     flex: 1,
