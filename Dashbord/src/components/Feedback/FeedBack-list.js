@@ -42,7 +42,7 @@ export const FeedBack = (props) => {
                 }}
                 alt="p=user"
                 // src="https://www.adobe.com/fr/express/create/media_1bb4d071398492506a1b76b3b6f9d69a5e96d7ffc.png?width=750&format=png&optimize=medium"
-                src={element.photo}
+                src={{ uri: element.photo }}
                 variant="square"
               />
             </Box>

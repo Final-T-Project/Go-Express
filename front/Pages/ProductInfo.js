@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../UserContext";
+
 import {
   View,
   Text,
@@ -13,51 +15,64 @@ import {
 } from "react-native";
 import { COLOURS, Items } from "../database/Database";
 import Entypo from "react-native-vector-icons/Entypo";
+import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SliderPhoto from "./ImageDetails";
+import IPADRESS from "../config/IPADRESS";
 
 const ProductInfo = ({ route, navigation }) => {
+  const { userId, setUserId } = useContext(UserContext);
+
+  console.log("messsage", userId);
+
   const width = Dimensions.get("window").width;
   const scrollX = new Animated.Value(0);
 
   // recived the props sended from products
   const item = route.params.element;
 
-  const [product, setProduct] = useState({});
+  console.log("test id product", item.id_product);
 
-  //add to cart
-  const addToCart = async (id) => {
-    let itemArray = await AsyncStorage.getItem("cartItems");
-    itemArray = JSON.parse(itemArray);
-    if (itemArray) {
-      let array = itemArray;
-      array.push(id);
+  const [idUser, setIdUser] = useState("");
+  const [idCart, setIdCart] = useState("");
+  //function to get the id_user
+  useEffect(() => {
+    AsyncStorage.getItem("userData").then((res) => {
+      setIdUser(JSON.parse(res));
+    });
+  }, []);
 
-      try {
-        await AsyncStorage.setItem("cartItems", JSON.stringify(array));
-        ToastAndroid.show(
-          "Item Added Successfully to cart",
-          ToastAndroid.SHORT
-        );
-        navigation.navigate("Shop");
-      } catch (error) {
-        return error;
-      }
-    } else {
-      let array = [];
-      array.push(id);
-      try {
-        await AsyncStorage.setItem("cartItems", JSON.stringify(array));
-        ToastAndroid.show(
-          "Item Added Successfully to cart",
-          ToastAndroid.SHORT
-        );
-        navigation.navigate("Shop");
-      } catch (error) {
-        return error;
-      }
-    }
+  useEffect(() => {
+    axios
+      .get(`http://${IPADRESS}:5000/carts/getIdCart/${idUser.userId}`)
+      .then((response) => {
+        console.log("test", response.data);
+        response.data.map((element) => {
+          setIdCart(element.id_cart);
+          console.log("testoo", element.id_cart);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  // console.log("test id cart ", idCart);
+
+  const AddProductToCart = (idProduct) => {
+    axios
+      .post(`http://${IPADRESS}:5000/carts/addProductTocart`, {
+        id_product: idProduct,
+        id_cart: idCart,
+      })
+      .catch((err) => {
+        alert(err);
+      })
+      .then(() => {
+        navigation.navigate("Cart", { idCart });
+      });
   };
+
   return (
     <View
       style={{
@@ -184,7 +199,7 @@ const ProductInfo = ({ route, navigation }) => {
         }}
       >
         <TouchableOpacity
-          onPress={() => addToCart(product.id)}
+          onPress={() => AddProductToCart(item.id_product)}
           style={{
             width: "86%",
             height: "90%",

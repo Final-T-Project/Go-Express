@@ -1,17 +1,31 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  Text,
   TextInput,
   Pressable,
   StyleSheet,
-  Button,
-  Image,
   Keyboard,
   TouchableWithoutFeedback,
   ScrollView,
   Permissions,
 } from "react-native";
+
+import {
+  IconButton,
+  Icon,
+  Button,
+  Modal,
+  Stack,
+  FormControl,
+  Input,
+  Center,
+  NativeBaseProvider,
+  Text,
+  Image,
+  useToast,
+  Box,
+  Select,
+} from "native-base";
 import * as ImagePicker from "expo-image-picker";
 import { Picker } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -143,7 +157,7 @@ const AddProduct = ({ navigation, route }) => {
           quantity: quantity,
           id_user: idUser.userId,
           id_cart: 2,
-          productStatus: "Accepted",
+          productStatus: "NotAccepted",
           Published_at: posted_at,
         })
         .then((result) => {
@@ -158,12 +172,17 @@ const AddProduct = ({ navigation, route }) => {
             idproduct: id_post,
           });
         })
+        .then(() => {
+          navigation.navigate();
+        })
 
         .catch((error) => {
           console.log(error);
         });
     }
   };
+
+  const toast = useToast();
 
   return (
     <>
@@ -188,7 +207,7 @@ const AddProduct = ({ navigation, route }) => {
             {({ errors, touched, handleBlur }) => (
               <View style={styles.form}>
                 {/*Name  Start */}
-                <Text style={styles.label}>Product Name :</Text>
+                {/* <Text style={styles.label}>Product Name :</Text>
                 <TextInput
                   mode="outlined"
                   style={styles.input}
@@ -196,24 +215,47 @@ const AddProduct = ({ navigation, route }) => {
                 />
                 {name.length === 0 ? (
                   <Text style={styles.error}>Name is required</Text>
-                ) : null}
+                ) : null} */}
+                <FormControl>
+                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    Product Name
+                  </FormControl.Label>
+                  <Input
+                    backgroundColor={"muted.100"}
+                    borderColor={"muted.200"}
+                    fontSize={"20"}
+                    onChangeText={(text) => setName(text)}
+                  />
+                </FormControl>
 
                 {/*Name  End */}
 
                 {/*Description  start */}
-                <Text style={styles.label}>Description :</Text>
+                {/* <Text style={styles.label}>Description :</Text>
                 <TextInput
                   style={styles.inputDescription}
                   onChangeText={(text) => setDescription(text)}
                 />
                 {description.length === 0 ? (
                   <Text style={styles.error}>Description is required</Text>
-                ) : null}
+                ) : null} */}
+
+                <FormControl>
+                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    Product Description
+                  </FormControl.Label>
+                  <Input
+                    backgroundColor={"muted.100"}
+                    borderColor={"muted.200"}
+                    fontSize={"20"}
+                    onChangeText={(text) => setDescription(text)}
+                  />
+                </FormControl>
 
                 {/*Description  End */}
 
                 {/*Price  Start */}
-                <Text style={styles.label}>Unit Price:</Text>
+                {/* <Text style={styles.label}>Unit Price:</Text>
                 <TextInput
                   style={styles.input}
                   onBlur={handleBlur("price")}
@@ -221,10 +263,22 @@ const AddProduct = ({ navigation, route }) => {
                 />
                 {price.length === 0 ? (
                   <Text style={styles.error}>Price is required</Text>
-                ) : null}
+                ) : null} */}
                 {/* {typeof price !== Number ? (
                   <Text style={styles.error}>Price must be a number </Text>
                 ) : null} */}
+
+                <FormControl>
+                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    Unit Price
+                  </FormControl.Label>
+                  <Input
+                    backgroundColor={"muted.100"}
+                    borderColor={"muted.200"}
+                    fontSize={"20"}
+                    onChangeText={(number) => setPrice(number)}
+                  />
+                </FormControl>
 
                 {/*Price  End */}
 
@@ -274,26 +328,65 @@ const AddProduct = ({ navigation, route }) => {
 
                 {/*Image  start */}
 
-                <View>
-                  <Button title="Pick a image1 " onPress={pickImageOne} />
-                  {/* {image && <Image source={{ uri: image }} />} */}
-                </View>
-                <Text></Text>
-                <View>
-                  <Button title="Pick a image2 " onPress={pickImageTow} />
-                </View>
-                <Text></Text>
-                <View>
-                  <Button title="Pick a image3 " onPress={pickImageThree} />
-                </View>
+                {/* <View>
+                  <Button title="Pick a image1 " onPress={pickImageOne} /> */}
+                {/* {image && <Image source={{ uri: image }} />} */}
+                {/* </View> */}
 
+                {/* <View>
+                  <Button title="Pick a image2 " onPress={pickImageTow} />
+                </View> */}
+
+                {/* <View>
+                  <Button title="Pick a image3 " onPress={pickImageThree} />
+                </View> */}
+
+                <FormControl>
+                  <FormControl.Label>Image One</FormControl.Label>
+                  <Button backgroundColor={"#373E5A"} onPress={pickImageOne}>
+                    Pick image1
+                  </Button>
+                </FormControl>
+
+                <FormControl>
+                  <FormControl.Label>Image Tow </FormControl.Label>
+                  <Button backgroundColor={"#373E5A"} onPress={pickImageTow}>
+                    Pick image2
+                  </Button>
+                </FormControl>
+
+                <FormControl>
+                  <FormControl.Label>Image Three</FormControl.Label>
+                  <Button backgroundColor={"#373E5A"} onPress={pickImageThree}>
+                    Pick image3
+                  </Button>
+                </FormControl>
                 {/*Image  End */}
 
                 {/*Button Add  Start */}
                 <TouchableOpacity>
                   <View style={styles.button}>
                     <MaterialIcons name="add" size={24} color="white" />
-                    <Text onPress={addProductDetails} style={styles.buttonText}>
+                    <Text
+                      onPress={() => {
+                        toast.show({
+                          render: () => {
+                            return (
+                              <Box
+                                bg="green.500"
+                                px="2"
+                                py="1"
+                                rounded="sm"
+                                mb={2}
+                              >
+                                Your product Sended to admin For confirmation.
+                              </Box>
+                            );
+                          },
+                        });
+                        addProductDetails();
+                      }}
+                    >
                       Add Product
                     </Text>
                   </View>
@@ -410,7 +503,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#FFAD62",
+    backgroundColor: "#ED5C00",
     padding: 6,
     borderRadius: 5,
     marginTop: 30,
