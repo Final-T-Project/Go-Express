@@ -40,7 +40,7 @@ export default function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="home"
+            initialRouteName="TestLogin"
             screenOptions={{
               headerTintColor: "white",
               headerStyle: {
