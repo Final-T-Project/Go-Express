@@ -66,7 +66,6 @@ function Feedback(props) {
         justifyContent: "center",
       }}
     >
-      
       <View>
         <View>
           <Text
@@ -125,12 +124,15 @@ function Feedback(props) {
   );
 }
 
-function Info({ navigation, id }) {
+function Info({ route, navigation, id }) {
   const [userDataProfile, setUserDataProfile] = useState([]);
 
-  const [idUser, setIdUser] = useState({});
+  // console.log("newData mel profile", route.params.new_data);
 
-  //console.log("------- from Info ------>"+idUser.userId)
+  // const [idUser, setIdUser] = useState({});
+
+  console.log("from Info", id);
+  // console.log(route.params.name);
 
   useEffect(() => {
     axios
@@ -154,7 +156,6 @@ function Info({ navigation, id }) {
         padding: 20,
       }}
     >
-
       <HStack>
         <EditeProfil id={id} />
       </HStack>
@@ -178,12 +179,12 @@ function Info({ navigation, id }) {
                 }}
                 style={{ width: 22, height: 22, marginRight: 20 }}
               ></Image>
-              {userDataProfile.map((element) => {
+              {userDataProfile.map((element, index) => {
                 if (element.phone_number) {
                   return (
                     <>
                       <Text
-                        key={element.id_user}
+                        key={index}
                         fontSize="md"
                         color="#1C2765"
                         colorScheme="darkBlue"
@@ -305,7 +306,7 @@ function Product(props) {
   useEffect(() => {
     // console.log("the id from prduct : ", props.idUser);
     axios
-      .get(`http://192.168.1.18:5000/users/getUserProduct/${props.idUser}`)
+      .get(`http://${IPADRESS}:5000/users/getUserProduct/${props.idUser}`)
       .then((response) => {
         setUserDataProduct(response.data);
       })
@@ -389,7 +390,6 @@ export default function Profil({ navigation, route }) {
   return (
     <>
       <View>
-      
         <ScrollView>
           <View>
             <Image

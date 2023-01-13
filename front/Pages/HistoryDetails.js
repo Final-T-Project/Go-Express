@@ -36,13 +36,15 @@ export default ({navigation})=>{
             }}
             >
 <VStack>
-    <Text style={{fontSize:20 , fontWeight: '700',margintop:10 }}
+    <Text style={{fontSize:20 , fontWeight: '700',margintop:10 ,color:'#373E5A'}}
  >Booked </Text>
-  <Text style={{fontSize:15 , fontWeight: '400' }}
+  <Text style={{fontSize:15 , fontWeight: '400', }}
  >Booked in 00/00/0000  at 00:00</Text>
  {/* <view style={{marginBottom:50}}></view> */}
- <Text style={{fontSize:20 , fontWeight: '700',margintop:10 }}> your commandes </Text>
-
+ <Text style={{fontSize:20 , fontWeight: '700',margintop:10 ,color:'#373E5A' }}> your commande</Text>
+ <Text  style={{fontSize:15 , fontWeight: '400' }}>name of the serves or product</Text>
+ <Text style={{fontSize:20 , fontWeight: '700',margintop:10,color:'#373E5A' }}> Delevery information</Text>
+ <Text style={{fontSize:15 , fontWeight: '400',margintop:10 }}> Total price</Text>
  </VStack>
             </View>
            

@@ -161,15 +161,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
   `photo_product` VARCHAR(600) NULL DEFAULT NULL,
   `quantity` INT NOT NULL DEFAULT '1',
   `user_id_user` VARCHAR(50) NOT NULL,
-  `cart_id_cart` INT NOT NULL,
   `productStatus` ENUM('Accepted', 'NotAccepted') NULL DEFAULT 'NotAccepted',
   `Published_at` VARCHAR(500) NULL DEFAULT NULL,
   PRIMARY KEY (`id_product`),
   INDEX `fk_product_user_idx` (`user_id_user` ASC) VISIBLE,
-  INDEX `fk_product_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
-  CONSTRAINT `fk_product_cart1`
-    FOREIGN KEY (`cart_id_cart`)
-    REFERENCES `mydb`.`cart` (`id_cart`),
   CONSTRAINT `fk_product_user`
     FOREIGN KEY (`user_id_user`)
     REFERENCES `mydb`.`user` (`id_user`))
@@ -220,6 +215,29 @@ CREATE TABLE IF NOT EXISTS `mydb`.`reservation` (
   CONSTRAINT `fk_reservation_user1`
     FOREIGN KEY (`user_id_user`)
     REFERENCES `mydb`.`user` (`id_user`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`products_cart`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`products_cart` (
+  `product_id_product` INT NOT NULL,
+  `cart_id_cart` INT NOT NULL,
+  PRIMARY KEY (`product_id_product`, `cart_id_cart`),
+  INDEX `fk_product_has_cart_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
+  INDEX `fk_product_has_cart_product1_idx` (`product_id_product` ASC) VISIBLE,
+  CONSTRAINT `fk_product_has_cart_product1`
+    FOREIGN KEY (`product_id_product`)
+    REFERENCES `mydb`.`product` (`id_product`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_product_has_cart_cart1`
+    FOREIGN KEY (`cart_id_cart`)
+    REFERENCES `mydb`.`cart` (`id_cart`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
