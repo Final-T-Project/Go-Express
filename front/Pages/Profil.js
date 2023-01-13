@@ -299,6 +299,16 @@ function Info({ route, navigation, id }) {
 }
 // product side
 function Product(props) {
+  const COLOURS = {
+    white: "#ffffff",
+    black: "#000000",
+    green: "#00AC76",
+    red: "#C04345",
+    blue: "#0043F9",
+    backgroundLight: "#F0F0F3",
+    backgroundMedium: "#B9B9B9",
+    backgroundDark: "#777777",
+  };
   const imgWidth = Dimensions.get("screen").width * 0.33333;
   // state to save user information
   const [userDataProduct, setUserDataProduct] = useState([]);
@@ -326,35 +336,120 @@ function Product(props) {
           alignItems: "flex-start",
         }}
       >
-        {userDataProduct.map((element) => (
-          <ScrollView>
-            <Image
+        {userDataProduct.map((element, index) => (
+          <TouchableOpacity
+            key={index}
+            // onPress={() =>
+            //   navigation.navigate("ProductInfo", { productID: data.id })
+            // }
+            style={{
+              width: "100%",
+              height: 100,
+              marginVertical: 6,
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <View
               style={{
-                borderRadius: 15,
-                width: imgWidth,
-                height: imgWidth,
-              }}
-              source={{ uri: element.photo_product }}
-            />
-
-            <Text
-              style={{
-                textAlign: "center",
-                color: "#444444",
+                width: "30%",
+                height: 100,
+                padding: 14,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: COLOURS.backgroundLight,
+                borderRadius: 10,
+                marginRight: 22,
+                borderColor: "#1C2765",
+                borderWidth: 2,
               }}
             >
-              {" "}
-              {element.product_name}
-            </Text>
-            <Text
+              <StatusBar backgroundColor={"white"} barStyle="dark-content" />
+              <Image
+                source={{ uri: element.photo_product }}
+                style={{
+                  width: "170%",
+                  width: 150,
+                  height: "130%",
+                  resizeMode: "contain",
+                }}
+              />
+            </View>
+            <View
               style={{
-                textAlign: "center",
-                color: "#444444",
+                flex: 1,
+                height: "100%",
+                justifyContent: "space-around",
               }}
             >
-              {element.price} dt
-            </Text>
-          </ScrollView>
+              <View style={{}}>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    maxWidth: "100%",
+                    color: COLOURS.black,
+                    fontWeight: "600",
+                    letterSpacing: 1,
+                  }}
+                >
+                  {element.product_name}
+                </Text>
+                <View
+                  style={{
+                    marginTop: 4,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    opacity: 0.6,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      fontWeight: "400",
+                      maxWidth: "85%",
+                      marginRight: 4,
+                    }}
+                  >
+                    {element.price} dt
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    marginTop: 4,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    opacity: 0.6,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      fontWeight: "400",
+                      maxWidth: "85%",
+                      marginRight: 4,
+                    }}
+                  >
+                    {element.quantity} Units
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 10,
+                  }}
+                ></View>
+              </View>
+            </View>
+          </TouchableOpacity>
         ))}
       </View>
     </View>

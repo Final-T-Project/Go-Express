@@ -40,7 +40,10 @@ const MyCart = ({ navigation, route }) => {
   const [idCart, setIdCart] = useState("");
   useEffect(() => {
     axios
-      .get(`http://${IPADRESS}:5000/carts/getIdCart/${idUser.userId}`)
+      // .get(`http://${IPADRESS}:5000/carts/getIdCart/${idUser.userId}`)
+      .get(
+        `http://${IPADRESS}:5000/carts/getIdCart/UUDC5Db06IXg3eM6SRbyxHOdei53`
+      )
       .then((response) => {
         console.log("test", response.data);
         response.data.map((element) => {
@@ -53,11 +56,13 @@ const MyCart = ({ navigation, route }) => {
       });
   }, []);
 
-  //
+  console.log(idCart);
 
   useEffect(() => {
     axios
-      .get(`http://${IPADRESS}:5000/carts/getCartProduct/${idCart}`)
+      // .get(`http://${IPADRESS}:5000/carts/getCartProduct/${idCart}`)
+      .get(`http://${IPADRESS}:5000/carts/getCartProduct/3`)
+
       .then((response) => {
         console.log("tu", response.data);
         setCartProducts(response.data);
@@ -86,7 +91,10 @@ const MyCart = ({ navigation, route }) => {
   // function to get user information
   useEffect(() => {
     axios
-      .get(`http://${IPADRESS}:5000/users/getUserPorfile/${idUser.userId}`)
+      // .get(`http://${IPADRESS}:5000/users/getUserPorfile/${idUser.userId}`)
+      .get(
+        `http://${IPADRESS}:5000/users/getUserPorfile/UUDC5Db06IXg3eM6SRbyxHOdei53`
+      )
       .then((response) => {
         setUserDataProfile(response.data);
       })
@@ -118,6 +126,7 @@ const MyCart = ({ navigation, route }) => {
   };
 
   const renderProducts = (data, index) => {
+    console.log("e5or test", data.photo_product);
     return (
       <TouchableOpacity
         key={index}
@@ -148,10 +157,11 @@ const MyCart = ({ navigation, route }) => {
         >
           <StatusBar backgroundColor={"white"} barStyle="dark-content" />
           <Image
-            source={data.photo_product}
+            source={{ uri: data.photo_product }}
             style={{
-              width: "100%",
-              height: "100%",
+              width: "170%",
+              width: 150,
+              height: "130%",
               resizeMode: "contain",
             }}
           />
@@ -259,7 +269,7 @@ const MyCart = ({ navigation, route }) => {
             fontWeight: "500",
           }}
         >
-          {data.adress} Tunis
+          {data.adress}
         </Text>
         <Text
           style={{
@@ -270,7 +280,7 @@ const MyCart = ({ navigation, route }) => {
             opacity: 0.5,
           }}
         >
-          {data.ville} Ariana
+          {data.ville}
         </Text>
       </View>
     );

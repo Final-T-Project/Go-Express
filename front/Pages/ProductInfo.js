@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../UserContext";
+
 import {
   View,
   Text,
@@ -19,11 +21,17 @@ import SliderPhoto from "./ImageDetails";
 import IPADRESS from "../config/IPADRESS";
 
 const ProductInfo = ({ route, navigation }) => {
+  const { userId, setUserId } = useContext(UserContext);
+
+  console.log("messsage", userId);
+
   const width = Dimensions.get("window").width;
   const scrollX = new Animated.Value(0);
 
   // recived the props sended from products
   const item = route.params.element;
+
+  console.log("test id product", item.id_product);
 
   const [idUser, setIdUser] = useState("");
   const [idCart, setIdCart] = useState("");
