@@ -165,23 +165,18 @@ export default function SideBbar({ navigation, route }) {
               // Tab Bar Buttons....
             }
 
-              {/* {TabButton(currentTab, setCurrentTab, "Feedback", feedback)} */}
-              {TabButton(
-                currentTab,
-                setCurrentTab,
-                "Notification",
-                notifications
-              )}
-              {TabButton(currentTab, setCurrentTab, "MyCart", cart)}
-              {TabButton(currentTab, setCurrentTab, "Chat", chat)}
-            </View>
-            <View>
-              {TabButton(currentTab, setCurrentTab, "LogOut", logout)}
-            </View>
+            {/* {TabButton(currentTab, setCurrentTab, "Feedback", feedback)} */}
+            {TabButton(
+              currentTab,
+              setCurrentTab,
+              "Notification",
+              notifications
+            )}
+            {TabButton(currentTab, setCurrentTab, "MyCart", cart)}
+            {TabButton(currentTab, setCurrentTab, "Chat", chat)}
           </View>
-
-
-        
+          <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
+        </View>
       </ImageBackground>
       {
         // Over lay View...
@@ -253,7 +248,7 @@ export default function SideBbar({ navigation, route }) {
               }}
             ></Image>
           </TouchableOpacity>
-          {/* <Text
+          <Text
             style={{
               fontSize: 30,
               fontWeight: "bold",
@@ -261,8 +256,8 @@ export default function SideBbar({ navigation, route }) {
               paddingTop: 20,
             }}
           >
-            {currentTab}
-          </Text> */}
+            {/* {currentTab} */}
+          </Text>
         </Animated.View>
         <TabBar navigation={navigation} />
         {/* navigation={navigation} */}
@@ -287,6 +282,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           // navigation.navigate("Shop");
         } else if (title == "MyCart") {
           setCurrentTab("MyCart");
+          navigation.navigate("Cart");
         } else if (title == "Chat") {
           setCurrentTab("Chat");
         } else if (title == "Settings") {
@@ -350,4 +346,160 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 });
-//side bar
+
+
+// nex Drower
+// import React from 'react';
+
+// import {
+//   Image, StyleSheet, ScrollView, SafeAreaView, Platform,
+// } from 'react-native';
+// import {
+
+//   DrawerItems,
+// } from 'react-navigation';
+
+// import { createDrawerNavigator } from '@react-navigation/drawer';
+
+
+// // screens
+// import MyCart from "../test/MyCart";
+// import Shop from 'front/test/Shop.js';
+// import History from "../Pages/History";
+// import Profil from "../Pages/Profil"; //contain the feedback side
+// import TestLogin from "../Pages/TestLogin.js"
+// // import Presentation from './src/screens/Presentation';
+// // import Dashboard from './src/screens/Dashboard';
+// // import Register from './src/screens/Register';
+// // import Registerv2 from './src/screens/Registerv2';
+// // import Grid from './src/screens/Grid';
+
+//  import theme from '../components/theme';
+// import { Block, Icon, Text } from 'galio-framework';
+
+// const SideBar = props =>{
+// return (
+//   <SafeAreaView style={styles.drawer} forceInset={{ top: 'always', horizontal: 'never' }}>
+//     <Block space="between" row style={styles.header}>
+//       <Block flex={0.3}><Image source={{ uri: 'http://i.pravatar.cc/100' }} style={styles.avatar} /></Block>
+//       <Block flex style={styles.middle}>
+//         <Text size={theme.SIZES.FONT * 0.875}>Galio Framework</Text>
+//         <Text muted size={theme.SIZES.FONT * 0.875}>React Native</Text>
+//       </Block>
+//     </Block>
+//     <ScrollView>
+//       <DrawerItems {...props} />
+//     </ScrollView>
+//   </SafeAreaView>
+// )};
+
+// const styles = StyleSheet.create({
+//   drawer: {
+//     flex: 1,
+//   },
+//   header: {
+//     paddingHorizontal: theme.SIZES.BASE,
+//     paddingTop: theme.SIZES.BASE * 0.6875,
+//     paddingBottom: theme.SIZES.BASE * 1.6875,
+//     borderBottomColor: '#D8D8D8',
+//     borderBottomWidth: 0.5,
+//     marginTop: Platform.OS === 'android' ? theme.SIZES.BASE * 2 : null,
+//   },
+//   avatar: {
+//     width: theme.SIZES.BASE * 2.5,
+//     height: theme.SIZES.BASE * 2.5,
+//     borderRadius: theme.SIZES.BASE * 1.25,
+//   },
+//   middle: {
+//     justifyContent: 'center',
+//   },
+// });
+
+// const MenuIcon = ({ name, family, focused }) => (
+//   <Icon
+//     name={name}
+//     family={family}
+//     size={theme.SIZES.FONT}
+//     color={focused ? theme.COLORS.WHITE : '#5D5D5D'}
+//   />
+// );
+
+// MenuIcon.defaultProps = {
+//   name: null,
+//   family: null,
+//   focused: false,
+// };
+
+
+// const screens = {
+//   Home: {
+//     screen:  Profil,
+//     navigationOptions: {
+//       drawerLabel: ' Profil',
+//       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+//     },
+//   },
+//   History: {
+//     screen: History,
+//     navigationOptions: {
+//       drawerLabel: 'History',
+//       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+//     },
+//   },
+//   MyCart: {
+//     screen: MyCart,
+//     navigationOptions: {
+//       drawerLabel: 'MyCart Screen',
+//       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+//     },
+//   },
+//   Shop: {
+//     screen: Shop,
+//     navigationOptions: {
+//       drawerLabel: 'Article Cover',
+//       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+//     },
+//   },
+// //  SignIn: {
+// //     screen:SignIn,
+// //     navigationOptions: {
+// //       drawerLabel: 'News Screen',
+// //       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+// //     },
+// //   },
+//   TestLogin: {
+//     screen: TestLogin,
+//     navigationOptions: {
+//       drawerLabel: 'Order Confirmed',
+//       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+//     },
+//   },
+// };
+
+// const options = {
+//   contentComponent: props => <SideBar {...props} />,
+//   contentOptions: {
+//     labelStyle: {
+//       fontWeight: '500',
+//       color: theme.COLORS.GREY,
+//       fontSize: theme.SIZES.FONT * 0.875,
+//       marginLeft: theme.SIZES.BASE * 0.75,
+//     },
+//     activeLabelStyle: {
+//       color: theme.COLORS.WHITE,
+//     },
+//     activeBackgroundColor: theme.COLORS.THEME,
+//     itemsContainerStyle: {
+//       paddingVertical: 0,
+//     },
+//     iconContainerStyle: {
+//       marginHorizontal: 0,
+//       marginLeft: theme.SIZES.BASE * 1.65,
+//       // marginRight: theme.SIZES.BASE * 0.76,
+//     },
+//   },
+// };
+
+// const GalioApp = createDrawerNavigator(screens, options);
+
+// export default GalioApp;
