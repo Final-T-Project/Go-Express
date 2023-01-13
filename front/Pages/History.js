@@ -6,6 +6,7 @@ import {
   View,
   Dimensions,
   StyleSheet,
+  TouchableOpacity,
  
 } from 'react-native';
 import {
@@ -18,55 +19,56 @@ import TabBar from "../components/TabBar";
 const { width, height } = Dimensions.get('screen');
 
 const Data = [
-  {
+  {key:0,
     image:
       'https://res.cloudinary.com/dn9qfvg2p/image/upload/c_scale,w_1000/v1673554661/G_eluphz.png',
     date: '27/01/2020',
     price: '250',
   },
-  {
+  {key:0,
     image:
       'https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/O_qvopza.png',
     date: '02/04/2020',
     price: '100',
   },
-  {
+  {key:0,
     image:
       'https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/E_bjthps.png',
       date: '19/04/2021',
     price: '60',
   },
-  {
+  {key:0,
     image:
       'https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/X_msn0li.png',
     date: '06/06/2020',
     price: '1700',
   },
-  {
+  {key:0,
     image:
       'https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/P_oulzqy.png',
     date: '29/06/2022',
     price: '60',
   },
   {
+    key:0,
     image:
       'https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/R_xmhhpl.png',
       date: '01/07/2022',
       price: '150',
   },
-  {
+  {key:0,
     image:
       'https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/E_bjthps.png',
       date: '09/11/2022',
       price: '600',
   },
-  {
+  {key:0,
     image:
       'https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/S_xb7ndd.png',
       date: '10/12/2022',
       price: '750',
   },
-  {
+  {key:0,
     image:
       'https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/S_xb7ndd.png',
       date: '12/01/2023',
@@ -129,6 +131,7 @@ export default ({navigation}) => {
                 outputRange:[1, 1 , 1 , 0]
             })
           return (
+            <TouchableOpacity onPress={() => navigation.navigate("HistoryDetails")}>
             <Animated.View style={{flexDirection: "row" , padding: SPACING , marginBottom: SPACING , backgroundColor :'rgba(255,255,255,0.8)' , borderRadius: 12 , borderColor: "red"  
             ,borderWidth: 1.5,
             borderRadius: 25,
@@ -144,17 +147,19 @@ export default ({navigation}) => {
             transform: [{scale}]
             }} >
            <Image source={{uri: item.image}}
+           alt="Alternate Text"
         //    style={{ width:AVATAR_SIZE , height: AVATAR_SIZE  ,
         // marginRight: SPACING /2  }}
             size={50}
             />
            <View style={{justifyContent:'center'}}>
             <Text style={{fontSize: 18 , fontWeight: '500' , opacity: .7 , marginLeft: SPACING /2 ,color:"#1C2765"}}> {item.date}</Text>
-            <Text style={{fontSize: 18 , fontWeight: '600' , opacity: .7 , marginLeft: SPACING /2,color:"#444444" }}> {item.price} DT</Text>
+            <Text style={{fontSize: 18 , fontWeight: '400' , opacity: .7 , marginLeft: SPACING /2,color:"#444444" }}> {item.price} DT</Text>
             {/* <Text style={{fontSize: 18 , opacity: .7}}> {item.jobTitle}</Text> */}
             {/* <Text style={{ fontSize:14 , opacity: .8 , color: '#0099cc' }}> {item.email}</Text>  */}
            </View> 
             </Animated.View>
+            </TouchableOpacity>
           );
         }}
       />

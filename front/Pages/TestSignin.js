@@ -14,7 +14,7 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/core";
 
 import axios from "axios";
-import firebaseConfig from "../config/firebase"; //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
+import firebaseConfig from "../config/firebase";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -25,18 +25,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import IPADRESS from "../config/IPADRESS";
 
-
-
-
-
-
-
 function TestLogin() {
   const [value, setValue] = useState({
     nameUser: "",
     email: "", //         TO STORE THE EMAIL INPUT
     password: "", //   TO STORE THE PASSWORD INPUT
-    passwordConfirm:"",
+    passwordConfirm: "",
 
     error: "", // ST7A9ITHECH LHA9 AMAAA TAJEM TESTHA9HA
 
@@ -52,54 +46,69 @@ function TestLogin() {
   const app = initializeApp(firebaseConfig); //  ----------->  BECH NAAMLOU INITIALIZATION LEL CONFIG TA3 EL FIREBASE W NRODOUH EL app MTE3NA
   const auth = getAuth(app);
 
-  const [valueError,setValueError]=useState("")
+  const [valueError, setValueError] = useState("");
 
   const handleSignIn = () => {
+    createUserWithEmailAndPassword(auth, value.email, value.password) //  -----------> TA3MEL CREATION L USER JDID BEL EMAIL WEL PASSWORD ILI KTEBTHOM
+      .then((userCredential) => {
+        //  ----------->  BAAD EL CREATION TA3 EL USER FEL FIREBASE , EL FIREBASE YRAJA3 OBJET ESMOU (userCredential) FIH INFO AL USER
+        setUser(userCredential.user); //  ---------->  Setting the user object (containing the detail of the athentication information )
+        setUserId(user.uid); //  ----------->  Setting the user Id ( that takin from the User Objet )
 
-      createUserWithEmailAndPassword(auth, value.email, value.password) //  -----------> TA3MEL CREATION L USER JDID BEL EMAIL WEL PASSWORD ILI KTEBTHOM
-        .then((userCredential) => {
-          //  ----------->  BAAD EL CREATION TA3 EL USER FEL FIREBASE , EL FIREBASE YRAJA3 OBJET ESMOU (userCredential) FIH INFO AL USER
-          setUser(userCredential.user); //  ---------->  Setting the user object (containing the detail of the athentication information )
-          setUserId(user.uid); //  ----------->  Setting the user Id ( that takin from the User Objet )
-
-          axios
-            .post(`http://${IPADRESS}:5000/users/addUser`, {
+        axios
+          .post(`http://${IPADRESS}:5000/users/addUser`, {
+            id_user: userCredential.user.uid,
+            name: value.nameUser,
+            email: value.email,
+          })
+          .then(() => {
+            console.log("user added to dataBase");
+          })
+          .then(() => {
+            axios.post(`http://${IPADRESS}:5000/carts/addCart`, {
+              payment_type: "Cash",
+              date: "Null",
               id_user: userCredential.user.uid,
-              name: value.nameUser,
-              email: value.email,
-            })
-            .then(() => {
-              console.log("user added to dataBase");
-            })
-            .catch((err) => {
-              alert(err);
+              state: "not done",
             });
-
+          })
+          .then((result) => {
+            return result.data.insertId;
+          })
+          .then((cart_Id) => {
             AsyncStorage.setItem(
-              "userData",
+              "userCart",
               JSON.stringify({
-                userId: userCredential.user.uid,
+                Id_Cart: cart_Id,
               })
             );
-            return userCredential.user.uid;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
 
-        })
+        AsyncStorage.setItem(
+          "userData",
+          JSON.stringify({
+            userId: userCredential.user.uid,
+          })
+        );
+        return userCredential.user.uid;
+      })
 
+      .then((id) => {
+        console.log("------>" + userId);
+        Navigation.navigate("SideBar", { id });
 
-        .then((id) => {
-          console.log("------>" + userId);
-          Navigation.navigate("SideBar", { id });
-
-          //Navigation.navigate("PhoneNumber Verif",{name:value.nameUser,email:value.email})
-        })
-        .catch((err) => {
-          if (err.code === "auth/email-already-in-use") {
-            setValueError("This email is already used");
-          } else {
-            alert(err);
-          }
-        });
-    
+        //Navigation.navigate("PhoneNumber Verif",{name:value.nameUser,email:value.email})
+      })
+      .catch((err) => {
+        if (err.code === "auth/email-already-in-use") {
+          setValueError("This email is already used");
+        } else {
+          alert(err);
+        }
+      });
   };
 
   return (
@@ -186,43 +195,44 @@ function TestLogin() {
                 placeholder="  🙍   Your Name here..."
                 onChangeText={(text) => setValue({ ...value, nameUser: text })}
               />
-              
-              {valueError==="This email is already used" ?
-              <TextInput
-                keyboardType="email-address"
-                style={{
-                  backgroundColor: "white",
-                  height: 50,
-                  fontSize: 17,
-                  borderColor: "red",
-                  borderWidth: 2,
-                  padding: 10,
-                  width: 330,
-                  borderRadius: 50,
-                  alignItems: "center",
-                  marginTop: 20,
-                }}
-                placeholder="  ✉️   Your Email here..."
-                onChangeText={(text) => setValue({ ...value, email: text })}
-              />:<TextInput
-              keyboardType="email-address"
-              style={{
-                backgroundColor: "white",
-                height: 50,
-                fontSize: 17,
-                borderColor: "#9d9d9e",
-                borderWidth: 1,
-                padding: 10,
-                width: 330,
-                borderRadius: 50,
-                alignItems: "center",
-                marginTop: 20,
-              }}
-              placeholder="  ✉️   Your Email here..."
-              onChangeText={(text) => setValue({ ...value, email: text })}
-            />}
 
-
+              {valueError === "This email is already used" ? (
+                <TextInput
+                  keyboardType="email-address"
+                  style={{
+                    backgroundColor: "white",
+                    height: 50,
+                    fontSize: 17,
+                    borderColor: "red",
+                    borderWidth: 2,
+                    padding: 10,
+                    width: 330,
+                    borderRadius: 50,
+                    alignItems: "center",
+                    marginTop: 20,
+                  }}
+                  placeholder="  ✉️   Your Email here..."
+                  onChangeText={(text) => setValue({ ...value, email: text })}
+                />
+              ) : (
+                <TextInput
+                  keyboardType="email-address"
+                  style={{
+                    backgroundColor: "white",
+                    height: 50,
+                    fontSize: 17,
+                    borderColor: "#9d9d9e",
+                    borderWidth: 1,
+                    padding: 10,
+                    width: 330,
+                    borderRadius: 50,
+                    alignItems: "center",
+                    marginTop: 20,
+                  }}
+                  placeholder="  ✉️   Your Email here..."
+                  onChangeText={(text) => setValue({ ...value, email: text })}
+                />
+              )}
 
               <TextInput
                 secureTextEntry={true}
@@ -242,7 +252,7 @@ function TestLogin() {
                 onChangeText={(text) => setValue({ ...value, password: text })}
               />
 
-            <TextInput
+              <TextInput
                 secureTextEntry={true}
                 style={{
                   backgroundColor: "white",
@@ -257,57 +267,86 @@ function TestLogin() {
                   marginTop: 20,
                 }}
                 placeholder="  🔐   Confirm youor password..."
-                onChangeText={(text) => setValue({ ...value, passwordConfirm: text })}
+                onChangeText={(text) =>
+                  setValue({ ...value, passwordConfirm: text })
+                }
               />
             </View>
 
-            {valueError.length?<View style={{alignItems:'center',marginTop:30,borderRaduis:50}}>
-            <View style={{backgroundColor:"#fcad92",height:40,width:300,alignItems:"center",justifyContent: "center",borderRaduis:50}}>
-                  <Text style={{alignItems:"center",justifyContent: "center",fontWeight:'500'}}>{valueError}</Text>
-            </View>
-            </View>:null}
+            {valueError.length ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  marginTop: 30,
+                  borderRaduis: 50,
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "#fcad92",
+                    height: 40,
+                    width: 300,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRaduis: 50,
+                  }}
+                >
+                  <Text
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {valueError}
+                  </Text>
+                </View>
+              </View>
+            ) : null}
 
             {/** ------------------------------------ BUTTON CONFIRM ------------------------------------- */}
 
-            {value.nameUser.length && value.email.length && value.password.length && value.passwordConfirm.length ?<View style={{ alignItems: "center", marginTop: 10 }}>
-              <View style={css.buttonStyle}>
-                <Text
-                  style={{
-                    color: "white",
-                    alignItems: "center",
-                    fontWeight: "400",
-                    fontSize: 17,
-                  }}
-                  onPress={() => {
-                    if ( value.passwordConfirm === value.password ){
-                      handleSignIn()
-                    }else {
-                      setValueError("The password doesn't match")
-                    }
-                    
-                  }}
-                >
-                  create account{" "}
-                </Text>
+            {value.nameUser.length &&
+            value.email.length &&
+            value.password.length &&
+            value.passwordConfirm.length ? (
+              <View style={{ alignItems: "center", marginTop: 10 }}>
+                <View style={css.buttonStyle}>
+                  <Text
+                    style={{
+                      color: "white",
+                      alignItems: "center",
+                      fontWeight: "400",
+                      fontSize: 17,
+                    }}
+                    onPress={() => {
+                      if (value.passwordConfirm === value.password) {
+                        handleSignIn();
+                      } else {
+                        setValueError("The password doesn't match");
+                      }
+                    }}
+                  >
+                    create account{" "}
+                  </Text>
+                </View>
               </View>
-            </View>:<View style={{ alignItems: "center", marginTop: 60 }}>
-              <View style={css.buttonStyleNo}>
-                <Text
-                  style={{
-                    color: "white",
-                    alignItems: "center",
-                    fontWeight: "400",
-                    fontSize: 17,
-                  }}
-                  
-                >
-                  create account{" "}
-                </Text>
+            ) : (
+              <View style={{ alignItems: "center", marginTop: 60 }}>
+                <View style={css.buttonStyleNo}>
+                  <Text
+                    style={{
+                      color: "white",
+                      alignItems: "center",
+                      fontWeight: "400",
+                      fontSize: 17,
+                    }}
+                  >
+                    create account{" "}
+                  </Text>
+                </View>
               </View>
-            </View>}
-
-
-
+            )}
           </View>
         </ScrollView>
       </ImageBackground>
@@ -361,5 +400,5 @@ const css = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 500,
-  }
+  },
 });

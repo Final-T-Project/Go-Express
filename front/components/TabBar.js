@@ -30,7 +30,7 @@ const TabBar = ({ navigation }) => {
     <SafeAreaView
       style={{
         flex: 1,
-        top: height -80,
+        top: height - 80,
         flexDirection: "column",
         width: width,
         position: "absolute",
