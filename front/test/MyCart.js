@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ToastAndroid,
+  StatusBar
 } from "react-native";
 import { Box, Center, HStack, Checkbox } from "native-base";
 import EditeAdress from "front/Pages/EditeAdress.js";
