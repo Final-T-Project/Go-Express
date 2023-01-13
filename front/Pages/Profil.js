@@ -91,8 +91,8 @@ function Feedback(props) {
                 h={130}
                 size="xl"
                 placeholder="Feedback Placeholder"
-                w="800"
-                maxW="300"
+                w="1000"
+                maxW="380"
                 backgroundColor={"#fafafa"}
                 borderColor={"#ED5C00"}
                 onChangeText={(text) => setFeedBackText(text)}
@@ -162,9 +162,9 @@ function Info({ route, navigation, id }) {
       <Center>
         <Box
           marginLeft={0}
-          height={150}
+          height={80}
           top={1}
-          size={250}
+          size={200}
           width={350}
           borderColor={"#F14E24"}
           p="5"

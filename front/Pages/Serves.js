@@ -14,16 +14,19 @@ import {
   RefreshControl,
   TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 const { width, height } = Dimensions.get("screen");
+
+
 const images = {
   Moving:
-    "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673477074/t%C3%A9l%C3%A9chargement_uosdjf.jpg",
+  "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673477074/t%C3%A9l%C3%A9chargement_uosdjf.jpg",
   Cleaning:
-    "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673476864/home-cleaning-service-johor-bahru_nfgd9c.jpg",
+  "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673476864/home-cleaning-service-johor-bahru_nfgd9c.jpg",
   Plumbing:
-    "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673477170/How-To-Spot-On-The-Best-Plumbing-Service-To-Hire-2_kvrrif.jpg",
+  "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673477170/How-To-Spot-On-The-Best-Plumbing-Service-To-Hire-2_kvrrif.jpg",
   electricity:
-    "https://res.cloudinary.com/dn9qfvg2p/image/upload/c_scale,w_600/v1673477425/Ootravaux-trouver-meilleur-electricien_1000x667_bdmgi1.jpg",
+  "https://res.cloudinary.com/dn9qfvg2p/image/upload/c_scale,w_600/v1673477425/Ootravaux-trouver-meilleur-electricien_1000x667_bdmgi1.jpg",
 };
 const data = Object.keys(images).map((i) => ({
   key: i,
@@ -31,10 +34,11 @@ const data = Object.keys(images).map((i) => ({
   image: images[i],
   ref: React.createRef(),
 }));
-
 const Tab=React.forwardRef(({item,onItemPress},ref)=>{
-    return(
-        <TouchableOpacity onPress={onItemPress}>
+  
+  const Navigation=useNavigation()
+  return(
+    <TouchableOpacity  onPress={()=>Navigation.navigate("BookService")}>
         <View ref={ref}>
            <Text style={{color:'#373E5A',
            fontSize:70/data.length,

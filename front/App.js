@@ -24,6 +24,9 @@ import ProductInfo from "./Pages/ProductInfo.js";
 import ImageDetails from "./Pages/ImageDetails";
 import yahya from "./Pages/yahya.js";
 import Serves from "./Pages/Serves.js";
+import BookService from "./Pages/BookService.js";
+import BookingDetails from "./Pages/BookingDetails.js";
+
 import HistoryDetails from "./Pages/HistoryDetails.js";
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -96,6 +99,8 @@ export default function App() {
             <Stack.Screen name="ImageDetails" component={ImageDetails} />
             <Stack.Screen name="Home" component={yahya} />
             <Stack.Screen name="Serves" component={Serves} />
+            <Stack.Screen name="BookService" component={BookService} />
+            <Stack.Screen name="Booking Details" component={BookingDetails} />
             <Stack.Screen name="HistoryDetails" component={HistoryDetails} />
           </Stack.Navigator>
         </NavigationContainer>
