@@ -19,15 +19,16 @@ import { NativeBaseProvider } from "native-base";
 import { UserContext } from "./UserContext.js";
 import { useContext, useState } from "react";
 import Shopping from "./Pages/Shopping.js";
-import MyCart from "./test/MyCart.js";
+import Cart from "./Pages/Cart.js";
 import ProductInfo from "./Pages/ProductInfo.js";
 import ImageDetails from "./Pages/ImageDetails";
 import Home from "./Pages/Home.js";
 import Serves from "./Pages/Serves.js";
-import Cart from "./Pages/Cart.js";
+
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [showContent, setShowContent] = useState("");
+  // const [userId, setUserId] = useState(null);
   return (
     <UserContext.Provider
       value={{
@@ -39,7 +40,7 @@ export default function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="History"
+            initialRouteName="TestLogin"
             screenOptions={{
               headerTintColor: "white",
               headerStyle: {
@@ -88,12 +89,11 @@ export default function App() {
             <Stack.Screen name="EditeProfil" component={EditeProfil} />
             <Stack.Screen name="EditeAdress" component={EditeAdress} />
             <Stack.Screen name="Shopping" component={Shopping} />
-            <Stack.Screen name="MyCart" component={MyCart} />
+            <Stack.Screen name="Cart" component={Cart} />
             <Stack.Screen name="ProductInfo" component={ProductInfo} />
             <Stack.Screen name="ImageDetails" component={ImageDetails} />
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Serves" component={Serves} />
-            <Stack.Screen name="Cart" component={Cart} />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

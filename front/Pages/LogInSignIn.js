@@ -30,7 +30,7 @@ import { initializeApp } from "firebase/app";
 
 ///----------------------------------------------------------------------------------------------------------------------------------------------///
 import { useNavigation } from "@react-navigation/native";
-
+import UserContext from "../UserContext.js";
 export default function App() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
@@ -47,23 +47,19 @@ export default function App() {
   });
 
   const [user, setUser] = useState("");
-  const [userId, setUserId] = useState("");
 
   const app = initializeApp(firebaseConfig); //  ----------->  BECH NAAMLOU INITIALIZATION LEL CONFIG TA3 EL FIREBASE W NRODOUH EL app MTE3NA
   const auth = getAuth(app); //  ----------->  TA3TIIII AUTHORISATION LEL app MTE3EKKK BECH TNAJEM TESTAKHDEMHA KI T CREATE WALA SIGN IN LEL USER
-  ///----------------------------------------------------------------------------------------------------------------------------------------------///
-  // const provider = new GoogleAuthProvider();
 
-  ///----------------------------------------------------> USE NAVIGATE APPLICATION <----------------------------------------------------------------------------///
   const Navigation = useNavigation();
 
-  ///----------------------------------------------------------------------------------------------------------------------------------------------///
+  // const [userId, setUserId] = useState(null);
+  const { userId, setUserId } = useContext(UserContext);
 
-  ///----------------------------------------------------> function for handling the creating the account (FEL SignIn.tsx) <-----------------------------------------///
+  const userContext = useContext(UserContext);
+  userContext.userId = userId;
 
-  ///----------------------------------------------------------------------------------------------------------------------------------------------///
-
-  ///----------------------------------------------------> function for handling the Sign In to te account <-----------------------------------------///
+  // function for handling the Sign In to te account
   const handleLogIn = () => {
     if (!value.email.length || !value.password.length) {
       alert("Please fill all information");
@@ -78,6 +74,7 @@ export default function App() {
           setValue({ ...value, error: "" });
           setValue({ ...value, emailError: false });
 
+          setUserId(userCredential.user.uid);
           AsyncStorage.setItem(
             "userData",
             JSON.stringify({

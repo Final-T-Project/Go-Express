@@ -24,20 +24,15 @@ import {
 import axios from "axios";
 
 import IPADRESS from "../config/IPADRESS";
+import { useNavigation } from "@react-navigation/native";
 
-const pickImage = async () => {
-  let result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    allowsEditing: true,
-    quality: 1,
-  });
-  // console.log(result);
+export default function EditeProfil({ id }) {
+  // console.log("mel edit profile", id);
 
-  if (!result.canceled) {
-    setImage(result.uri);
-  }
-};
-let EditeProfil = ({ id }) => {
+  // const [saveId, setSaveId] = useState();
+
+  const navigation = useNavigation();
+
   const [placement, setPlacement] = useState(undefined);
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState(null);
@@ -52,25 +47,46 @@ let EditeProfil = ({ id }) => {
     setPlacement(placement);
   };
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    // console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.uri);
+    }
+  };
+
   const saveUpdate = () => {
     axios
       .put(`http://${IPADRESS}:5000/users/updateUser/${id}`, {
-        photo:
-          "https://assets.materialup.com/uploads/b78ca002-cd6c-4f84-befb-c09dd9261025/preview.png",
+        photo: image,
         name: name,
         ville: ville,
         adress: adress,
         phoneNumber: phoneNumber,
       })
-      .then(() => {
+
+      .then((result) => {
+        console.log("testttto", result.config.data.name);
+        return result.config.data.name;
+      })
+
+      .then((name) => {
         alert("profile updated");
         setOpen(false);
+        navigation.navigate("Profil", { name });
       })
       .catch((error) => {
-        alert(name);
+        alert(error);
       });
   };
 
+  // console.log("images ", image);
   return (
     <>
       <Stack
@@ -184,7 +200,7 @@ let EditeProfil = ({ id }) => {
       </Modal>
     </>
   );
-};
+}
 
 const styles = {
   top: {
@@ -202,5 +218,3 @@ const styles = {
   right: {},
   center: {},
 };
-
-export default EditeProfil;

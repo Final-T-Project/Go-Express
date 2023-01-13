@@ -163,23 +163,18 @@ export default function SideBbar({ navigation, route }) {
               // Tab Bar Buttons....
             }
 
-              {/* {TabButton(currentTab, setCurrentTab, "Feedback", feedback)} */}
-              {TabButton(
-                currentTab,
-                setCurrentTab,
-                "Notification",
-                notifications
-              )}
-              {TabButton(currentTab, setCurrentTab, "MyCart", cart)}
-              {TabButton(currentTab, setCurrentTab, "Chat", chat)}
-            </View>
-            <View>
-              {TabButton(currentTab, setCurrentTab, "LogOut", logout)}
-            </View>
+            {/* {TabButton(currentTab, setCurrentTab, "Feedback", feedback)} */}
+            {TabButton(
+              currentTab,
+              setCurrentTab,
+              "Notification",
+              notifications
+            )}
+            {TabButton(currentTab, setCurrentTab, "MyCart", cart)}
+            {TabButton(currentTab, setCurrentTab, "Chat", chat)}
           </View>
-
-
-        
+          <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
+        </View>
       </ImageBackground>
       {
         // Over lay View...
@@ -284,6 +279,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           // navigation.navigate("Shop");
         } else if (title == "MyCart") {
           setCurrentTab("MyCart");
+          navigation.navigate("Cart");
         } else if (title == "Chat") {
           setCurrentTab("Chat");
         } else if (title == "Settings") {
