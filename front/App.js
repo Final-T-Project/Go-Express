@@ -28,12 +28,14 @@ import Serves from "./Pages/Serves.js";
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [showContent, setShowContent] = useState("");
-  // const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState("l id 2 fois mel app");
   return (
     <UserContext.Provider
       value={{
         showContent,
         setShowContent,
+        userId,
+        setUserId,
       }}
     >
       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
