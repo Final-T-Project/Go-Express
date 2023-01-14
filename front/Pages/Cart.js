@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -8,78 +8,61 @@ import {
   ToastAndroid,
   StatusBar,
 } from "react-native";
-import { Box, Center, HStack, Checkbox } from "native-base";
+import { Box, Center, HStack, Checkbox, Button } from "native-base";
 import EditeAdress from "front/Pages/EditeAdress.js";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { COLOURS, Items } from "../database/Database";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
+import { UserContext } from "../UserContext";
 import IPADRESS from "../config/IPADRESS";
+import { async } from "@firebase/util";
 
-const MyCart = ({ navigation, route }) => {
-  const [product, setProduct] = useState();
+const MyCart = ({ navigation }) => {
   const [total, setTotal] = useState(0);
 
-  const [idUser, setIdUser] = useState("");
-
-  //function to get the id_user
-  useEffect(() => {
-    AsyncStorage.getItem("userData").then((res) => {
-      setIdUser(JSON.parse(res));
-    });
-  }, []);
+  const { userId } = useContext(UserContext);
+  const { userCartId } = useContext(UserContext);
 
   // state to save products in the cart
   const [cartProducts, setCartProducts] = useState([]);
-  const [productPrice, setProductPrice] = useState([]);
-  //id card recived from product info
-  // const id_card = route.params.idCart;
-
-  // function to get product in the cart with specifique Id
-  const [idCart, setIdCart] = useState("");
-  useEffect(() => {
-    axios
-      // .get(`http://${IPADRESS}:5000/carts/getIdCart/${idUser.userId}`)
-      .get(
-        `http://${IPADRESS}:5000/carts/getIdCart/UUDC5Db06IXg3eM6SRbyxHOdei53`
-      )
-      .then((response) => {
-        console.log("test", response.data);
-        response.data.map((element) => {
-          setIdCart(element.id_cart);
-          console.log("testoo", element.id_cart);
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  console.log(idCart);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [shippingPrice, setShippingPrice] = useState(10);
 
   useEffect(() => {
-    axios
-      // .get(`http://${IPADRESS}:5000/carts/getCartProduct/${idCart}`)
-      .get(`http://${IPADRESS}:5000/carts/getCartProduct/3`)
+    const fetchData = () => {
+      getAllProducts();
+    };
 
-      .then((response) => {
-        console.log("tu", response.data);
-        setCartProducts(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    fetchData();
   }, []);
 
-  console.log("testt price", productPrice);
+  // get all product in the cart
+  const getAllProducts = async () => {
+    const { data } = await axios.get(
+      `http://${IPADRESS}:5000/carts/getCartProduct/${userCartId}`
+    );
+    setCartProducts(data);
+    getTotalePrice(data);
+  };
+
+  // function to calculate the sum
+  const getTotalePrice = (data) => {
+    let sum = 0;
+    data?.map((element) => {
+      sum = sum + element.price;
+    });
+    setTotalPrice(sum);
+  };
 
   //delete data from database
-  let DeleteProductFromCart = (idproduct) => {
+  const DeleteProductFromCart = (idproduct) => {
     axios
-      .delete(`http://${IPADRESS}/carts/deleteProduct/${idproduct}`)
-      .then(() => {
+      .delete(`http://${IPADRESS}:5000/carts/deleteProduct/${idproduct}`)
+      .then(async () => {
         console.log("deleted");
+        await getAllProducts();
       })
       .catch((error) => {
         console.log(error);
@@ -91,10 +74,7 @@ const MyCart = ({ navigation, route }) => {
   // function to get user information
   useEffect(() => {
     axios
-      // .get(`http://${IPADRESS}:5000/users/getUserPorfile/${idUser.userId}`)
-      .get(
-        `http://${IPADRESS}:5000/users/getUserPorfile/UUDC5Db06IXg3eM6SRbyxHOdei53`
-      )
+      .get(`http://${IPADRESS}:5000/users/getUserPorfile/${userId}`)
       .then((response) => {
         setUserDataProfile(response.data);
       })
@@ -103,36 +83,10 @@ const MyCart = ({ navigation, route }) => {
       });
   }, []);
 
-  //get total price of all items in the cart
-  const getTotal = (productData) => {
-    let total = 0;
-    for (let index = 0; index < productData.length; index++) {
-      let productPrice = productData[index].productPrice;
-      total = total + productPrice;
-    }
-    setTotal(total);
-  };
-
-  const checkOut = async () => {
-    try {
-      await AsyncStorage.removeItem("cartItems");
-    } catch (error) {
-      return error;
-    }
-
-    ToastAndroid.show("Items will be Deliverd SOON!", ToastAndroid.SHORT);
-
-    navigation.navigate("Shop");
-  };
-
   const renderProducts = (data, index) => {
-    console.log("e5or test", data.photo_product);
     return (
       <TouchableOpacity
         key={index}
-        // onPress={() =>
-        //   navigation.navigate("ProductInfo", { productID: data.id })
-        // }
         style={{
           width: "100%",
           height: 100,
@@ -239,10 +193,9 @@ const MyCart = ({ navigation, route }) => {
               }}
             ></View>
 
-            <TouchableOpacity
-              onPress={() => DeleteProductFromCart(data.id_product)}
-            >
+            <TouchableOpacity>
               <MaterialCommunityIcons
+                onPress={() => DeleteProductFromCart(data.id_product)}
                 name="delete-outline"
                 style={{
                   fontSize: 20,
@@ -307,18 +260,6 @@ const MyCart = ({ navigation, route }) => {
             alignItems: "center",
           }}
         >
-          {/* <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialCommunityIcons
-              name="chevron-left"
-              style={{
-                fontSize: 18,
-                color: COLOURS.backgroundDark,
-                padding: 12,
-                backgroundColor: COLOURS.backgroundLight,
-                borderRadius: 12,
-              }}
-            />
-          </TouchableOpacity> */}
           <Text
             style={{
               fontSize: 24,
@@ -592,7 +533,7 @@ const MyCart = ({ navigation, route }) => {
             >
               Order Info
             </Text>
-            <View
+            {/* <View
               style={{
                 flexDirection: "row",
                 alignItems: "center",
@@ -621,7 +562,7 @@ const MyCart = ({ navigation, route }) => {
               >
                 {total}.00dt
               </Text>
-            </View>
+            </View> */}
             <View
               style={{
                 flexDirection: "row",
@@ -649,8 +590,7 @@ const MyCart = ({ navigation, route }) => {
                   opacity: 0.8,
                 }}
               >
-                {total / 20}
-                dt
+                {shippingPrice} dt
               </Text>
             </View>
             <View
@@ -678,8 +618,7 @@ const MyCart = ({ navigation, route }) => {
                   color: COLOURS.black,
                 }}
               >
-                {total + total / 20}
-                dt
+                {totalPrice + shippingPrice}dt
               </Text>
             </View>
           </View>
@@ -697,7 +636,7 @@ const MyCart = ({ navigation, route }) => {
         }}
       >
         <TouchableOpacity
-          onPress={() => (total != 0 ? checkOut() : null)}
+          // onPress={() => (total != 0 ? checkOut() : null)}
           style={{
             width: "86%",
             height: "90%",
@@ -716,7 +655,8 @@ const MyCart = ({ navigation, route }) => {
               textTransform: "uppercase",
             }}
           >
-            CHECKOUT ({total + total / 20} )
+            {/* CHECKOUT ({total + total / 20} ) */}
+            CHECKOUT ({totalPrice} )
           </Text>
         </TouchableOpacity>
       </View>

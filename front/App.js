@@ -8,7 +8,6 @@ import Products from "./Pages/Products.js";
 import History from "./Pages/History";
 import Profil from "./Pages/Profil";
 import LogInSignIn from "./Pages/LogInSignIn";
-import SignIn from "./Pages/SignIn";
 import AddProduct from "./Pages/AddProduct";
 import TestSignin from "./Pages/TestSignin.js";
 import TestLogin from "./Pages/TestLogin.js";
@@ -22,13 +21,18 @@ import Shopping from "./Pages/Shopping.js";
 import Cart from "./Pages/Cart.js";
 import ProductInfo from "./Pages/ProductInfo.js";
 import ImageDetails from "./Pages/ImageDetails";
-import Home from "./Pages/Home.js";
+import yahya from "./Pages/yahya.js";
 import Serves from "./Pages/Serves.js";
+import BookService from "./Pages/BookService.js";
+import BookingDetails from "./Pages/BookingDetails.js";
+import { LogBox } from "react-native";
 import HistoryDetails from "./Pages/HistoryDetails.js";
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [showContent, setShowContent] = useState("");
-  const [userId, setUserId] = useState("l id 2 fois mel app");
+  const [userId, setUserId] = useState("");
+  const [userCartId, setUserCartId] = useState("");
+  LogBox.ignoreAllLogs();
   return (
     <UserContext.Provider
       value={{
@@ -36,6 +40,8 @@ export default function App() {
         setShowContent,
         userId,
         setUserId,
+        userCartId,
+        setUserCartId,
       }}
     >
       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
@@ -55,9 +61,8 @@ export default function App() {
               options={{ headerShown: false }}
               component={LogInSignIn}
             />
-            {/* <Stack.Screen name="Home" component={Home} /> */}
+            <Stack.Screen name="home" component={yahya} />
             <Stack.Screen name="History" component={History} />
-            <Stack.Screen name="Create an account" component={SignIn} />
             <Stack.Screen name="PhoneNumber Verif" component={PhoneNumber} />
             <Stack.Screen
               name="TestSignin"
@@ -71,7 +76,7 @@ export default function App() {
             />
             <Stack.Screen
               name="Profil"
-              options={{ headerShown: false }}
+              // options={{ headerShown: false }}
               component={Profil}
             />
             {/* <Stack.Screen name="TabBar" component={TabBar} /> */}
@@ -94,8 +99,10 @@ export default function App() {
             <Stack.Screen name="Cart" component={Cart} />
             <Stack.Screen name="ProductInfo" component={ProductInfo} />
             <Stack.Screen name="ImageDetails" component={ImageDetails} />
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Home" component={yahya} />
             <Stack.Screen name="Serves" component={Serves} />
+            <Stack.Screen name="BookService" component={BookService} />
+            <Stack.Screen name="Booking Details" component={BookingDetails} />
             <Stack.Screen name="HistoryDetails" component={HistoryDetails} />
           </Stack.Navigator>
         </NavigationContainer>

@@ -13,8 +13,7 @@ import {
 } from "react-native";
 import profile from "../assets/profile.png";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// Tab ICons...
-
+import Home from "../Pages/yahya";
 import cart from "front/assets/shopping-cart-empty-side-view.png";
 import notifications from "front/assets/notification.png";
 import chat from "../assets/chat.png";
@@ -23,15 +22,16 @@ import menu from "../assets/menu.png";
 import close from "../assets/close.png";
 import { useNavigation } from "@react-navigation/native";
 import TabBar from "../components/TabBar";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { UserContext } from "../UserContext";
 import axios from "axios";
-
 import IPADRESS from "../config/IPADRESS";
 
 export default function SideBbar({ navigation, route }) {
   const [Page, SetPage] = useState("Home");
   const [currentTab, setCurrentTab] = useState("Home");
   // To get the curretn Status of menu ...
+
   const [showMenu, setShowMenu] = useState(false);
   // Animated Properties...
 
@@ -42,24 +42,20 @@ export default function SideBbar({ navigation, route }) {
 
   // state to save user data
   const [userDataProfile, setUserDataProfile] = useState([]);
-  // state to ssave id to send it to profile componnent
-  const [idToSend, setIdToSend] = useState("");
+
+  const { userId } = useContext(UserContext);
 
   useEffect(() => {
-    console.log("the id: ", route.params.id); // from login
-    setIdToSend(route.params.id);
     axios
-      .get(`http://${IPADRESS}:5000/users/getUserPorfile/${route.params.id}`)
+      .get(`http://${IPADRESS}:5000/users/getUserPorfile/${userId}`)
       .then((response) => {
         setUserDataProfile(response.data);
-        console.log("user_data", response.data);
+        // console.log("user_data", response.data);
       })
       .catch((error) => {
         alert(error);
       });
   }, []);
-
-  // console.log("huhuh", ahmed);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -71,13 +67,13 @@ export default function SideBbar({ navigation, route }) {
         resizeMode="cover"
         style={styles.image}
       >
-        <View style={{ justifyContent: "flex-start", padding: 20 }}>
+        <View style={{ justifyContent: "flex-start" }}>
           {userDataProfile.map((element) => {
             if (element.photo) {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate("Profil", { idToSend });
+                    navigation.navigate("Profil");
                   }}
                 >
                   <Image
@@ -100,7 +96,7 @@ export default function SideBbar({ navigation, route }) {
                       marginTop: 10,
                     }}
                   >
-                    Hello {element.name}{" "}
+                    {element.name}{" "}
                   </Text>
                   <Text
                     style={{
@@ -118,7 +114,7 @@ export default function SideBbar({ navigation, route }) {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate("Profil", { idToSend });
+                    navigation.navigate("Profil");
                   }}
                 >
                   <Image
@@ -176,9 +172,6 @@ export default function SideBbar({ navigation, route }) {
           <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
         </View>
       </ImageBackground>
-      {
-        // Over lay View...
-      }
 
       <Animated.View
         style={{
@@ -189,7 +182,7 @@ export default function SideBbar({ navigation, route }) {
           bottom: 0,
           left: 0,
           right: 0,
-          paddingHorizontal: 15,
+          paddingHorizontal: 1,
           paddingVertical: 0,
           borderRadius: showMenu ? 15 : 0,
           // Transforming View...
@@ -244,19 +237,13 @@ export default function SideBbar({ navigation, route }) {
                 tintColor: "#ea580c",
                 marginTop: 40,
               }}
-            ></Image>
+            />
           </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 30,
-              fontWeight: "bold",
-              color: "red",
-              paddingTop: 20,
-            }}
-          >
-            {/* {currentTab} */}
-          </Text>
+
+          {/* {currentTab} */}
         </Animated.View>
+        <Home />
+        {/* <Home  /> */}
         <TabBar navigation={navigation} />
         {/* navigation={navigation} */}
       </Animated.View>
@@ -330,9 +317,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFAD62",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
+    backgroundColor: "white",
   },
   image: {
     flex: 1,
@@ -341,7 +326,6 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 });
-
 
 // nex Drower
 // import React from 'react';
@@ -355,7 +339,6 @@ const styles = StyleSheet.create({
 // } from 'react-navigation';
 
 // import { createDrawerNavigator } from '@react-navigation/drawer';
-
 
 // // screens
 // import MyCart from "../test/MyCart";
@@ -424,7 +407,6 @@ const styles = StyleSheet.create({
 //   family: null,
 //   focused: false,
 // };
-
 
 // const screens = {
 //   Home: {
