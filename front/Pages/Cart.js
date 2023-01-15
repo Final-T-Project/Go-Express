@@ -8,10 +8,9 @@ import {
   ToastAndroid,
   StatusBar,
 } from "react-native";
-import { Box, Center, HStack, Checkbox, Button } from "native-base";
-import EditeAdress from "front/Pages/EditeAdress.js";
+import { Box, Center, HStack, Checkbox, Button, useToast } from "native-base";
+import EditeAdress from "./EditeAdress.js";
 import { FontAwesome5 } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { COLOURS, Items } from "../database/Database";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
@@ -20,21 +19,48 @@ import IPADRESS from "../config/IPADRESS";
 import { async } from "@firebase/util";
 
 const MyCart = ({ navigation }) => {
-  const [total, setTotal] = useState(0);
-
   const { userId } = useContext(UserContext);
   const { userCartId } = useContext(UserContext);
+  const toast = useToast();
+
+  // to get the instant time
+  const month = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  let date = month[new Date().getMonth()];
+  let checkout_at =
+    date +
+    " " +
+    new Date().getDate() +
+    " " +
+    "2022" +
+    " " +
+    new Date().getHours() +
+    ":" +
+    new Date().getMinutes();
 
   // state to save products in the cart
   const [cartProducts, setCartProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [shippingPrice, setShippingPrice] = useState(10);
 
+  // i invoked inside  useeffect to automaticaly change
   useEffect(() => {
     const fetchData = () => {
       getAllProducts();
     };
-
+    // alert(userCartId);
     fetchData();
   }, []);
 
@@ -50,7 +76,7 @@ const MyCart = ({ navigation }) => {
   // function to calculate the sum
   const getTotalePrice = (data) => {
     let sum = 0;
-    data?.map((element) => {
+    data.map((element) => {
       sum = sum + element.price;
     });
     setTotalPrice(sum);
@@ -81,8 +107,57 @@ const MyCart = ({ navigation }) => {
       .catch((error) => {
         alert(error);
       });
-  }, []);
+  }, [userDataProfile]);
 
+  //change the status of cart to note done to done  (payment)
+  let ChangeCartStatus = () => {
+    if (cartProducts.length === 0) {
+      return toast.show({
+        render: () => {
+          return (
+            <Box bg="gray.500" px="5" py="1" rounded="sm" mb={7}>
+              You don't have Product anything in your cart.
+            </Box>
+          );
+        },
+      });
+    } else {
+      axios
+        .put(`http://${IPADRESS}:5000/carts/updateStateToDone/${userCartId}`, {
+          date: checkout_at,
+        })
+        .then(() => {
+          // axios.delete(`http://${IPADRESS}:5000/carts/deleteALL/${userCartId}`);
+          axios.post(`http://${IPADRESS}:5000/carts/addCart`, {
+            payment_type: "Cash",
+            date: "Null",
+            id_user: userId,
+            state: "not done",
+          });
+          navigation.navigate("Home");
+        })
+        .then(() => {
+          setCartProducts(null);
+          setTotalPrice(0);
+        })
+        .then(() => {
+          toast.show({
+            render: () => {
+              return (
+                <Box bg="green.500" px="5" py="1" rounded="sm" mb={7}>
+                  Congratulations you will receive this as soon as possible, we
+                  will get in touch with you.
+                </Box>
+              );
+            },
+          });
+        })
+
+        .catch((error) => {
+          alert(error);
+        });
+    }
+  };
   const renderProducts = (data, index) => {
     return (
       <TouchableOpacity
@@ -222,7 +297,7 @@ const MyCart = ({ navigation }) => {
             fontWeight: "500",
           }}
         >
-          {data.adress}
+          {data.ville}
         </Text>
         <Text
           style={{
@@ -233,7 +308,7 @@ const MyCart = ({ navigation }) => {
             opacity: 0.5,
           }}
         >
-          {data.ville}
+          {data.adress}
         </Text>
       </View>
     );
@@ -427,16 +502,6 @@ const MyCart = ({ navigation }) => {
                   >
                     Visa Classic
                   </Text>
-                  {/* <Text
-                  style={{
-                    fontSize: 12,
-                    color: COLOURS.black,
-                    fontWeight: '400',
-                    lineHeight: 20,
-                    opacity: 0.5,
-                  }}>
-                  ****-9092
-                </Text> */}
                 </View>
               </View>
               <HStack space={6}>
@@ -493,16 +558,6 @@ const MyCart = ({ navigation }) => {
                   >
                     Pay Cash
                   </Text>
-                  {/* <Text
-                  style={{
-                    fontSize: 12,
-                    color: COLOURS.black,
-                    fontWeight: '400',
-                    lineHeight: 20,
-                    opacity: 0.5,
-                  }}>
-                  ****-9092
-                </Text> */}
                 </View>
               </View>
               <HStack space={6}>
@@ -533,36 +588,6 @@ const MyCart = ({ navigation }) => {
             >
               Order Info
             </Text>
-            {/* <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: 8,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "400",
-                  maxWidth: "80%",
-                  color: COLOURS.black,
-                  opacity: 0.5,
-                }}
-              >
-                Subtotal
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "400",
-                  color: COLOURS.black,
-                  opacity: 0.8,
-                }}
-              >
-                {total}.00dt
-              </Text>
-            </View> */}
             <View
               style={{
                 flexDirection: "row",
@@ -636,7 +661,9 @@ const MyCart = ({ navigation }) => {
         }}
       >
         <TouchableOpacity
-          // onPress={() => (total != 0 ? checkOut() : null)}
+          onPress={() => {
+            ChangeCartStatus();
+          }}
           style={{
             width: "86%",
             height: "90%",
@@ -655,8 +682,7 @@ const MyCart = ({ navigation }) => {
               textTransform: "uppercase",
             }}
           >
-            {/* CHECKOUT ({total + total / 20} ) */}
-            CHECKOUT ({totalPrice} )
+            CHECKOUT ({totalPrice + 10} )
           </Text>
         </TouchableOpacity>
       </View>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 
 import MainHeader from "../components/MainHeader";
@@ -7,7 +7,6 @@ import TopPlacesCarousel from "../components/TopPlacesCarousel";
 import { PLACES, TOP_PLACES } from "../data";
 import SectionHeader from "../components/SectionHeader";
 import TripsList from "../components/TripsList";
-import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../UserContext";
 import axios from "axios";
 import IPADRESS from "../config/IPADRESS";
@@ -15,9 +14,7 @@ const Home = () => {
   const { userId } = useContext(UserContext);
   const { userCartId, setUserCartId } = useContext(UserContext);
 
-  console.log("hetah IDCard", userCartId);
-  console.log("hetah ID", userId);
-
+  // to set id_cart for each user and set a new id-cart after each chek-out
   useEffect(() => {
     axios
       .get(`http://${IPADRESS}:5000/carts/getIdCart/${userId}`)
@@ -31,6 +28,7 @@ const Home = () => {
       });
   }, []);
 
+  
   return (
     <View style={styles.container}>
       <MainHeader title="Go-Express" style={styles.title} />

@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import {
   Animated,
   Image,
@@ -22,7 +22,6 @@ import menu from "../assets/menu.png";
 import close from "../assets/close.png";
 import { useNavigation } from "@react-navigation/native";
 import TabBar from "../components/TabBar";
-import { useEffect, useContext } from "react";
 import { UserContext } from "../UserContext";
 import axios from "axios";
 import IPADRESS from "../config/IPADRESS";
@@ -45,6 +44,10 @@ export default function SideBbar({ navigation, route }) {
 
   const { userId } = useContext(UserContext);
 
+  // console.log("hetah IDCard", userCartId);
+  // console.log("hetah ID", userId);
+
+  // to get profile information
   useEffect(() => {
     axios
       .get(`http://${IPADRESS}:5000/users/getUserPorfile/${userId}`)

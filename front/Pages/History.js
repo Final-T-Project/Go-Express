@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   StatusBar,
   Animated,
@@ -10,74 +10,11 @@ import {
 } from "react-native";
 import { Image, Box } from "native-base";
 import TabBar from "../components/TabBar";
+import { UserContext } from "../UserContext";
+import axios from "axios";
+import IPADRESS from "../config/IPADRESS";
 
 const { width, height } = Dimensions.get("screen");
-
-const Data = [
-  {
-    key: 0,
-    image:
-      "https://res.cloudinary.com/dn9qfvg2p/image/upload/c_scale,w_1000/v1673554661/G_eluphz.png",
-    date: "27/01/2020",
-    price: "250",
-  },
-  {
-    key: 0,
-    image:
-      "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/O_qvopza.png",
-    date: "02/04/2020",
-    price: "100",
-  },
-  {
-    key: 0,
-    image:
-      "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/E_bjthps.png",
-    date: "19/04/2021",
-    price: "60",
-  },
-  {
-    key: 0,
-    image:
-      "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/X_msn0li.png",
-    date: "06/06/2020",
-    price: "1700",
-  },
-  {
-    key: 0,
-    image:
-      "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/P_oulzqy.png",
-    date: "29/06/2022",
-    price: "60",
-  },
-  {
-    key: 0,
-    image:
-      "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/R_xmhhpl.png",
-    date: "01/07/2022",
-    price: "150",
-  },
-  {
-    key: 0,
-    image:
-      "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/E_bjthps.png",
-    date: "09/11/2022",
-    price: "600",
-  },
-  {
-    key: 0,
-    image:
-      "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/S_xb7ndd.png",
-    date: "10/12/2022",
-    price: "750",
-  },
-  {
-    key: 0,
-    image:
-      "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673554661/S_xb7ndd.png",
-    date: "12/01/2023",
-    price: "1550",
-  },
-];
 
 const BG_IMG =
   "https://images.pexels.com/photos/1231265/pexels-photo-1231265.jpeg?aut1265.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
@@ -90,6 +27,24 @@ const ITEM_SIZE = AVATAR_SIZE + SPACING * 3;
 export default ({ navigation }) => {
   const scrollY = React.useRef(new Animated.Value(0)).current;
 
+  const { userId } = useContext(UserContext);
+  const { userCartId } = useContext(UserContext);
+
+  let [historyData, setHistoryData] = useState([]);
+
+  console.log("off", historyData);
+  useEffect(() => {
+    // alert(userCartId);
+    axios
+      .get(`http://${IPADRESS}:5000/carts/getCartHistorique/${userId}`)
+      .then((response) => {
+        setHistoryData(response.data);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
+
   return (
     <View style={StyleSheet.absoluteFillObject}>
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -99,7 +54,7 @@ export default ({ navigation }) => {
           blurRadius={80}
         />
         <Animated.FlatList
-          data={Data}
+          data={historyData}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: scrollY } } }],
             { useNativeDriver: true }
@@ -132,7 +87,7 @@ export default ({ navigation }) => {
             });
             return (
               <TouchableOpacity
-                onPress={() => navigation.navigate("HistoryDetails")}
+                onPress={() => navigation.navigate("HistoryDetails", { item })}
               >
                 <Animated.View
                   style={{
@@ -157,10 +112,16 @@ export default ({ navigation }) => {
                   }}
                 >
                   <Image
-                    source={{ uri: item.image }}
+                    source={{
+                      uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/c_scale,w_1000/v1673554661/G_eluphz.png",
+                    }}
                     alt="Alternate Text"
-                    //    style={{ width:AVATAR_SIZE , height: AVATAR_SIZE  ,
-                    // marginRight: SPACING /2  }}
+                    style={{
+                      top: 10,
+                      width: AVATAR_SIZE,
+                      height: AVATAR_SIZE,
+                      marginRight: SPACING / 2,
+                    }}
                     size={50}
                   />
                   <View style={{ justifyContent: "center" }}>
@@ -174,7 +135,7 @@ export default ({ navigation }) => {
                       }}
                     >
                       {" "}
-                      {item.date}
+                      {item.product_name}
                     </Text>
                     <Text
                       style={{
@@ -188,8 +149,16 @@ export default ({ navigation }) => {
                       {" "}
                       {item.price} DT
                     </Text>
-                    {/* <Text style={{fontSize: 18 , opacity: .7}}> {item.jobTitle}</Text> */}
-                    {/* <Text style={{ fontSize:14 , opacity: .8 , color: '#0099cc' }}> {item.email}</Text>  */}
+                    <Text style={{ fontSize: 18, opacity: 0.7 }}>
+                      {" "}
+                      {item.quantity} unit
+                    </Text>
+                    {/* <Text
+                      style={{ fontSize: 14, opacity: 0.8, color: "#0099cc" }}
+                    >
+                      {" "}
+                      {item.payment_type}
+                    </Text> */}
                   </View>
                 </Animated.View>
               </TouchableOpacity>

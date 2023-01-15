@@ -337,9 +337,6 @@ function Product() {
         {userDataProduct.map((element, index) => (
           <TouchableOpacity
             key={index}
-            // onPress={() =>
-            //   navigation.navigate("ProductInfo", { productID: data.id })
-            // }
             style={{
               width: "100%",
               height: 100,
@@ -459,7 +456,6 @@ export default function Profil({ navigation, route }) {
 
   // state to save user information
   const [userDataProfile, setUserDataProfile] = useState([]);
-
 
   const { userId } = useContext(UserContext);
 
