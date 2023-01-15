@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -8,78 +8,87 @@ import {
   ToastAndroid,
   StatusBar,
 } from "react-native";
-import { Box, Center, HStack, Checkbox } from "native-base";
-import EditeAdress from "front/Pages/EditeAdress.js";
+import { Box, Center, HStack, Checkbox, Button, useToast } from "native-base";
+import EditeAdress from "./EditeAdress.js";
 import { FontAwesome5 } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { COLOURS, Items } from "../database/Database";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
+import { UserContext } from "../UserContext";
 import IPADRESS from "../config/IPADRESS";
+import { async } from "@firebase/util";
 
-const MyCart = ({ navigation, route }) => {
-  const [product, setProduct] = useState();
-  const [total, setTotal] = useState(0);
+const MyCart = ({ navigation }) => {
+  const { userId } = useContext(UserContext);
+  const { userCartId } = useContext(UserContext);
+  const toast = useToast();
 
-  const [idUser, setIdUser] = useState("");
-
-  //function to get the id_user
-  useEffect(() => {
-    AsyncStorage.getItem("userData").then((res) => {
-      setIdUser(JSON.parse(res));
-    });
-  }, []);
+  // to get the instant time
+  const month = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  let date = month[new Date().getMonth()];
+  let checkout_at =
+    date +
+    " " +
+    new Date().getDate() +
+    " " +
+    "2022" +
+    " " +
+    new Date().getHours() +
+    ":" +
+    new Date().getMinutes();
 
   // state to save products in the cart
   const [cartProducts, setCartProducts] = useState([]);
-  const [productPrice, setProductPrice] = useState([]);
-  //id card recived from product info
-  // const id_card = route.params.idCart;
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [shippingPrice, setShippingPrice] = useState(10);
 
-  // function to get product in the cart with specifique Id
-  const [idCart, setIdCart] = useState("");
+  // i invoked inside  useeffect to automaticaly change
   useEffect(() => {
-    axios
-      // .get(`http://${IPADRESS}:5000/carts/getIdCart/${idUser.userId}`)
-      .get(
-        `http://${IPADRESS}:5000/carts/getIdCart/UUDC5Db06IXg3eM6SRbyxHOdei53`
-      )
-      .then((response) => {
-        console.log("test", response.data);
-        response.data.map((element) => {
-          setIdCart(element.id_cart);
-          console.log("testoo", element.id_cart);
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const fetchData = () => {
+      getAllProducts();
+    };
+    // alert(userCartId);
+    fetchData();
   }, []);
 
-  console.log(idCart);
+  // get all product in the cart
+  const getAllProducts = async () => {
+    const { data } = await axios.get(
+      `http://${IPADRESS}:5000/carts/getCartProduct/${userCartId}`
+    );
+    setCartProducts(data);
+    getTotalePrice(data);
+  };
 
-  useEffect(() => {
-    axios
-      // .get(`http://${IPADRESS}:5000/carts/getCartProduct/${idCart}`)
-      .get(`http://${IPADRESS}:5000/carts/getCartProduct/3`)
-
-      .then((response) => {
-        console.log("tu", response.data);
-        setCartProducts(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  console.log("testt price", productPrice);
+  // function to calculate the sum
+  const getTotalePrice = (data) => {
+    let sum = 0;
+    data.map((element) => {
+      sum = sum + element.price;
+    });
+    setTotalPrice(sum);
+  };
 
   //delete data from database
-  let DeleteProductFromCart = (idproduct) => {
+  const DeleteProductFromCart = (idproduct) => {
     axios
-      .delete(`http://${IPADRESS}/carts/deleteProduct/${idproduct}`)
-      .then(() => {
+      .delete(`http://${IPADRESS}:5000/carts/deleteProduct/${idproduct}`)
+      .then(async () => {
         console.log("deleted");
+        await getAllProducts();
       })
       .catch((error) => {
         console.log(error);
@@ -91,48 +100,68 @@ const MyCart = ({ navigation, route }) => {
   // function to get user information
   useEffect(() => {
     axios
-      // .get(`http://${IPADRESS}:5000/users/getUserPorfile/${idUser.userId}`)
-      .get(
-        `http://${IPADRESS}:5000/users/getUserPorfile/UUDC5Db06IXg3eM6SRbyxHOdei53`
-      )
+      .get(`http://${IPADRESS}:5000/users/getUserPorfile/${userId}`)
       .then((response) => {
         setUserDataProfile(response.data);
       })
       .catch((error) => {
         alert(error);
       });
-  }, []);
+  }, [userDataProfile]);
 
-  //get total price of all items in the cart
-  const getTotal = (productData) => {
-    let total = 0;
-    for (let index = 0; index < productData.length; index++) {
-      let productPrice = productData[index].productPrice;
-      total = total + productPrice;
+  //change the status of cart to note done to done  (payment)
+  let ChangeCartStatus = () => {
+    if (cartProducts.length === 0) {
+      return toast.show({
+        render: () => {
+          return (
+            <Box bg="gray.500" px="5" py="1" rounded="sm" mb={7}>
+              You don't have Product anything in your cart.
+            </Box>
+          );
+        },
+      });
+    } else {
+      axios
+        .put(`http://${IPADRESS}:5000/carts/updateStateToDone/${userCartId}`, {
+          date: checkout_at,
+        })
+        .then(() => {
+          // axios.delete(`http://${IPADRESS}:5000/carts/deleteALL/${userCartId}`);
+          axios.post(`http://${IPADRESS}:5000/carts/addCart`, {
+            payment_type: "Cash",
+            date: "Null",
+            id_user: userId,
+            state: "not done",
+          });
+          navigation.navigate("Home");
+        })
+        .then(() => {
+          setCartProducts(null);
+          setTotalPrice(0);
+        })
+        .then(() => {
+          toast.show({
+            render: () => {
+              return (
+                <Box bg="green.500" px="5" py="1" rounded="sm" mb={7}>
+                  Congratulations you will receive this as soon as possible, we
+                  will get in touch with you.
+                </Box>
+              );
+            },
+          });
+        })
+
+        .catch((error) => {
+          alert(error);
+        });
     }
-    setTotal(total);
   };
-
-  const checkOut = async () => {
-    try {
-      await AsyncStorage.removeItem("cartItems");
-    } catch (error) {
-      return error;
-    }
-
-    ToastAndroid.show("Items will be Deliverd SOON!", ToastAndroid.SHORT);
-
-    navigation.navigate("Shop");
-  };
-
   const renderProducts = (data, index) => {
-    console.log("e5or test", data.photo_product);
     return (
       <TouchableOpacity
         key={index}
-        // onPress={() =>
-        //   navigation.navigate("ProductInfo", { productID: data.id })
-        // }
         style={{
           width: "100%",
           height: 100,
@@ -239,10 +268,9 @@ const MyCart = ({ navigation, route }) => {
               }}
             ></View>
 
-            <TouchableOpacity
-              onPress={() => DeleteProductFromCart(data.id_product)}
-            >
+            <TouchableOpacity>
               <MaterialCommunityIcons
+                onPress={() => DeleteProductFromCart(data.id_product)}
                 name="delete-outline"
                 style={{
                   fontSize: 20,
@@ -269,7 +297,7 @@ const MyCart = ({ navigation, route }) => {
             fontWeight: "500",
           }}
         >
-          {data.adress}
+          {data.ville}
         </Text>
         <Text
           style={{
@@ -280,7 +308,7 @@ const MyCart = ({ navigation, route }) => {
             opacity: 0.5,
           }}
         >
-          {data.ville}
+          {data.adress}
         </Text>
       </View>
     );
@@ -307,18 +335,6 @@ const MyCart = ({ navigation, route }) => {
             alignItems: "center",
           }}
         >
-          {/* <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialCommunityIcons
-              name="chevron-left"
-              style={{
-                fontSize: 18,
-                color: COLOURS.backgroundDark,
-                padding: 12,
-                backgroundColor: COLOURS.backgroundLight,
-                borderRadius: 12,
-              }}
-            />
-          </TouchableOpacity> */}
           <Text
             style={{
               fontSize: 24,
@@ -486,16 +502,6 @@ const MyCart = ({ navigation, route }) => {
                   >
                     Visa Classic
                   </Text>
-                  {/* <Text
-                  style={{
-                    fontSize: 12,
-                    color: COLOURS.black,
-                    fontWeight: '400',
-                    lineHeight: 20,
-                    opacity: 0.5,
-                  }}>
-                  ****-9092
-                </Text> */}
                 </View>
               </View>
               <HStack space={6}>
@@ -552,16 +558,6 @@ const MyCart = ({ navigation, route }) => {
                   >
                     Pay Cash
                   </Text>
-                  {/* <Text
-                  style={{
-                    fontSize: 12,
-                    color: COLOURS.black,
-                    fontWeight: '400',
-                    lineHeight: 20,
-                    opacity: 0.5,
-                  }}>
-                  ****-9092
-                </Text> */}
                 </View>
               </View>
               <HStack space={6}>
@@ -597,36 +593,6 @@ const MyCart = ({ navigation, route }) => {
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "space-between",
-                marginBottom: 8,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "400",
-                  maxWidth: "80%",
-                  color: COLOURS.black,
-                  opacity: 0.5,
-                }}
-              >
-                Subtotal
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "400",
-                  color: COLOURS.black,
-                  opacity: 0.8,
-                }}
-              >
-                {total}.00dt
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
                 marginBottom: 22,
               }}
             >
@@ -649,8 +615,7 @@ const MyCart = ({ navigation, route }) => {
                   opacity: 0.8,
                 }}
               >
-                {total / 20}
-                dt
+                {shippingPrice} dt
               </Text>
             </View>
             <View
@@ -678,8 +643,7 @@ const MyCart = ({ navigation, route }) => {
                   color: COLOURS.black,
                 }}
               >
-                {total + total / 20}
-                dt
+                {totalPrice + shippingPrice}dt
               </Text>
             </View>
           </View>
@@ -697,7 +661,9 @@ const MyCart = ({ navigation, route }) => {
         }}
       >
         <TouchableOpacity
-          onPress={() => (total != 0 ? checkOut() : null)}
+          onPress={() => {
+            ChangeCartStatus();
+          }}
           style={{
             width: "86%",
             height: "90%",
@@ -716,7 +682,7 @@ const MyCart = ({ navigation, route }) => {
               textTransform: "uppercase",
             }}
           >
-            CHECKOUT ({total + total / 20} )
+            CHECKOUT ({totalPrice + 10} )
           </Text>
         </TouchableOpacity>
       </View>

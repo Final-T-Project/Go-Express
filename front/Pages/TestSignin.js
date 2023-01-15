@@ -10,7 +10,7 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
 } from "react-native";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/core";
 
 import axios from "axios";
@@ -19,41 +19,39 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-} from "firebase/auth"; // importing the auth of Firebase
+} from "firebase/auth";
+import { UserContext } from "../UserContext";
 import { initializeApp } from "firebase/app";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import IPADRESS from "../config/IPADRESS";
 
 function TestLogin() {
+  const { userId, setUserId } = useContext(UserContext);
+  const { userCartId, setUserCartId } = useContext(UserContext);
+
   const [value, setValue] = useState({
     nameUser: "",
-    email: "", //         TO STORE THE EMAIL INPUT
-    password: "", //   TO STORE THE PASSWORD INPUT
+    email: "",
+    password: "",
     passwordConfirm: "",
-
-    error: "", // ST7A9ITHECH LHA9 AMAAA TAJEM TESTHA9HA
-
+    error: "",
     emailConfirmation: false,
     emailInput: "",
   });
 
   const Navigation = useNavigation();
-
-  const [user, setUser] = useState("");
-  const [userId, setUserId] = useState("");
-
-  const app = initializeApp(firebaseConfig); //  ----------->  BECH NAAMLOU INITIALIZATION LEL CONFIG TA3 EL FIREBASE W NRODOUH EL app MTE3NA
+  const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
+  const [user, setUser] = useState("");
   const [valueError, setValueError] = useState("");
 
   const handleSignIn = () => {
-    createUserWithEmailAndPassword(auth, value.email, value.password) //  -----------> TA3MEL CREATION L USER JDID BEL EMAIL WEL PASSWORD ILI KTEBTHOM
+    createUserWithEmailAndPassword(auth, value.email, value.password)
       .then((userCredential) => {
-        //  ----------->  BAAD EL CREATION TA3 EL USER FEL FIREBASE , EL FIREBASE YRAJA3 OBJET ESMOU (userCredential) FIH INFO AL USER
-        setUser(userCredential.user); //  ---------->  Setting the user object (containing the detail of the athentication information )
-        setUserId(user.uid); //  ----------->  Setting the user Id ( that takin from the User Objet )
+        setUser(userCredential.user);
+        // save the user Id in the state "userID"
+        setUserId(userCredential.user.uid);
 
         axios
           .post(`http://${IPADRESS}:5000/users/addUser`, {
@@ -73,34 +71,15 @@ function TestLogin() {
             });
           })
           .then((result) => {
-            return result.data.insertId;
+            setUserCartId(result.data.insertId);
           })
-          .then((cart_Id) => {
-            AsyncStorage.setItem(
-              "userCart",
-              JSON.stringify({
-                Id_Cart: cart_Id,
-              })
-            );
-          })
+
           .catch((error) => {
             console.log(error);
           });
-
-        AsyncStorage.setItem(
-          "userData",
-          JSON.stringify({
-            userId: userCredential.user.uid,
-          })
-        );
-        return userCredential.user.uid;
       })
-
-      .then((id) => {
-        console.log("------>" + userId);
-        Navigation.navigate("SideBar", { id });
-
-        //Navigation.navigate("PhoneNumber Verif",{name:value.nameUser,email:value.email})
+      .then(() => {
+        Navigation.navigate("SideBar");
       })
       .catch((err) => {
         if (err.code === "auth/email-already-in-use") {

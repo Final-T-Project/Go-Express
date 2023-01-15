@@ -11,7 +11,7 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
 } from "react-native";
-import firebaseConfig from "../config/firebase"; //  ----------->  T IMPORTIIII EL CONFIG TA3 EL FIREBASE
+import firebaseConfig from "../config/firebase";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -21,87 +21,81 @@ import {
   // signInWithPopup,
 } from "firebase/auth"; // importing the auth of Firebase
 import { initializeApp } from "firebase/app";
-import { useState, useRef } from "react";
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useState, useRef, useContext, useEffect } from "react";
+import IPADRESS from "../config/IPADRESS";
+import axios from "axios";
 import { useNavigation } from "@react-navigation/core";
+import { UserContext } from "../UserContext";
 
 export default function TestLogin() {
   const [value, setValue] = useState({
-    email: "", //         TO STORE THE EMAIL INPUT
-    password: "", //   TO STORE THE PASSWORD INPUT
+    email: "",
+    password: "",
     passwordHide: true,
     emailError: false,
   });
 
-  const [valueError,setError]=useState("")
-  const [ passwordError,setPasswordError]=useState(false)
+  // import userId from useContext object
+  const { userId, setUserId } = useContext(UserContext);
 
+  // console.log("message mel login ", userId);
 
-  const app = initializeApp(firebaseConfig); //  ----------->  BECH NAAMLOU INITIALIZATION LEL CONFIG TA3 EL FIREBASE W NRODOUH EL app MTE3NA
-  const auth = getAuth(app); //  ----------->  TA3TIIII AUTHORISATION LEL app MTE3EKKK BECH TNAJEM TESTAKHDEMHA KI T CREATE WALA SIGN IN LEL USER
+  // State to handle the error of login
+  const [valueError, setError] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+
+  // initialization of firebase config
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
   const Navigation = useNavigation();
 
-  //------------------------------------------| Handle Login Function |---------------------------------------->
-
+  // Handle Login Function
   const handleLogIn = () => {
-      console.log(valueError)
-      //console.log("---->",passwordError)
-
-      signInWithEmailAndPassword(auth, value.email, value.password) //  -----------> METHOD FEL FIREBASE TA3MEL BIHA EL SIGN IN (TET2AKED MEL EMAIL WEL PASSWORD)
-        .then((userCredential) => {
-          //  ----------->  KIMA FEL CREATION , EL FIREBASE YRAJA3LEK OBJECT BAAD MA TEM 3AMALEYET EL SIGN IN CORRECTLY
-          console.log("------------> YYEYYYY CREDENTIAL ARE CORRECT");
-          console.log("********** user Id current ***********" + userCredential.user.uid);
-          setError("")
+    console.log(valueError);
+    signInWithEmailAndPassword(auth, value.email, value.password)
+      .then((userCredential) => {
+        // console.log("user Id current:", userCredential.user.uid);
+        setError("");
+        setValue({ ...value, emailError: false });
+        setPasswordError(false);
+        // save the user Id in the state "userID"
+        setUserId(userCredential.user.uid);
+        return userCredential.user.uid;
+      })
+      .then(() => {
+        Navigation.navigate("SideBar");
+      })
+      .catch((error) => {
+        setValue({ ...value, error: error.code });
+        if (
+          error.code === "auth/invalid-email" ||
+          error.code === "auth/user-not-found"
+        ) {
+          setValue({ ...value, emailError: true });
+          setError(" Your Email is incorrect ");
+          console.log(valueError);
+          return;
+        }
+        if (error.code === "auth/wrong-password") {
           setValue({ ...value, emailError: false });
-          setPasswordError(false)
-
-          AsyncStorage.setItem(
-            "userData",
-            JSON.stringify({
-              userId: userCredential.user.uid,
-            })
-          );
-          return userCredential.user.uid;
-        })
-
-        .then((id) => {
-          Navigation.navigate("SideBar", { id });
-        })
-
-        .catch((error) => {
-          setValue({ ...value, error: error.code });
-          if (
-            error.code === "auth/invalid-email" ||
-            error.code === "auth/user-not-found"
-          ) {
-            //alert("Ekteb EMAIL shihhh ya hajjj")
-            setValue({ ...value,emailError: true });
-            setError(" Your Email is incorrect ")
-            console.log(valueError)
-            return;
-          }
-          if (error.code === "auth/wrong-password") {
-            setValue({ ...value,emailError: false });
-            setError(" Your password is incorrect ")
-            setPasswordError(true)
-            setValue({ ...value, emailError: false });
+          setError(" Your password is incorrect ");
+          setPasswordError(true);
+          setValue({ ...value, emailError: false });
+        } else {
+          if (error.code === "auth/too-many-requests") {
+            setError(
+              "Your account has been frozed for a moment, you should click on 'Forget my password'"
+            );
+            alert(
+              "Your account has been frozed for a moment, you should click on 'Forget my password'"
+            );
           } else {
-            if (error.code === "auth/too-many-requests") {
-              setError("Your account has been frozed for a moment, you should click on 'Forget my password'")
-              alert(
-                "Your account has been frozed for a moment, you should click on 'Forget my password'"
-              );
-            } else {
-              console.log(error.message);
-            }
+            console.log(error.message);
           }
-        });
-    
+        }
+      });
   };
-
   const forgetPassword = () => {
     if (value.email.length < 5) {
       alert("Write your Email");
@@ -267,88 +261,116 @@ export default function TestLogin() {
               )}
             </View>
             {!value.password.length ? null : value.passwordHide === true ? (
-                  <Text
-                    style={{ textAlign: "center" }}
-                    onPress={() =>
-                      setValue({ ...value, passwordHide: !value.passwordHide })
-                    }
-                  >
-                    Show password
-                  </Text>
-                ) : (
-                  <Text
-                    style={{ textAlign: "center" }}
-                    onPress={() =>
-                      setValue({ ...value, passwordHide: !value.passwordHide })
-                    }
-                  >
-                    hide password
-                  </Text>
-                )}
-            
-
-
-            {valueError.length?<View style={{alignItems:'center',marginTop:30,borderRaduis:50}}>
-            <View style={{backgroundColor:"#fcad92",height:40,width:300,alignItems:"center",justifyContent: "center",borderRaduis:50}}>
-                  <Text style={{alignItems:"center",justifyContent: "center",fontWeight:'500'}}>{valueError}</Text>
-            </View>
-            </View>:null}
-            {passwordError?<Text
-              style={{
-                fontSize: 15,
-                marginTop: 15,
-                fontWeight: "600",
-                textAlign: "center",
-              }}
-            >
-              Forget your password ?
               <Text
-                style={{ color: "#F96332" }}
-                onPress={() => forgetPassword()}
+                style={{ textAlign: "center" }}
+                onPress={() =>
+                  setValue({ ...value, passwordHide: !value.passwordHide })
+                }
               >
-                {" "}
-                tap here
+                Show password
               </Text>
-            </Text>:null}
-{/** ------------------------------------ BUTTON CONFIRM ------------------------------------- */}
+            ) : (
+              <Text
+                style={{ textAlign: "center" }}
+                onPress={() =>
+                  setValue({ ...value, passwordHide: !value.passwordHide })
+                }
+              >
+                hide password
+              </Text>
+            )}
 
-            {value.email.length && value.password.length ?<View
-              style={{ alignItems: "center", marginTop: 30 }}
-              onPress={() => handleLogIn()}
-            >
-              <View style={css.buttonStyle} onPress={() => handleLogIn()}>
-                <Text
+            {valueError.length ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  marginTop: 30,
+                  borderRaduis: 50,
+                }}
+              >
+                <View
                   style={{
-                    color: "white",
+                    backgroundColor: "#fcad92",
+                    height: 40,
+                    width: 300,
                     alignItems: "center",
-                    fontWeight: "400",
-                    fontSize: 17,
-                  }}
-                  onPress={() => handleLogIn()}
-                >
-                  Confirm
-                </Text>
-              </View>
-            </View>:
-            <View
-              style={{ alignItems: "center", marginTop: 30 }}
-              onPress={() => handleLogIn()}
-            >
-              <View style={css.buttonStyleNo} onPress={() => handleLogIn()}>
-                <Text
-                  style={{
-                    color: "white",
-                    alignItems: "center",
-                    fontWeight: "400",
-                    fontSize: 17,
+                    justifyContent: "center",
+                    borderRaduis: 50,
                   }}
                 >
-                  Confirm
-                </Text>
+                  <Text
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {valueError}
+                  </Text>
+                </View>
               </View>
-            </View>}
+            ) : null}
+            {passwordError ? (
+              <Text
+                style={{
+                  fontSize: 15,
+                  marginTop: 15,
+                  fontWeight: "600",
+                  textAlign: "center",
+                }}
+              >
+                Forget your password ?
+                <Text
+                  style={{ color: "#F96332" }}
+                  onPress={() => forgetPassword()}
+                >
+                  {" "}
+                  tap here
+                </Text>
+              </Text>
+            ) : null}
+            {/** ------------------------------------ BUTTON CONFIRM ------------------------------------- */}
 
-{/** ----------------------------------------------------------------------------------------- */}
+            {value.email.length && value.password.length ? (
+              <View
+                style={{ alignItems: "center", marginTop: 30 }}
+                onPress={() => handleLogIn()}
+              >
+                <View style={css.buttonStyle} onPress={() => handleLogIn()}>
+                  <Text
+                    style={{
+                      color: "white",
+                      alignItems: "center",
+                      fontWeight: "400",
+                      fontSize: 17,
+                    }}
+                    onPress={() => handleLogIn()}
+                  >
+                    Confirm
+                  </Text>
+                </View>
+              </View>
+            ) : (
+              <View
+                style={{ alignItems: "center", marginTop: 30 }}
+                onPress={() => handleLogIn()}
+              >
+                <View style={css.buttonStyleNo} onPress={() => handleLogIn()}>
+                  <Text
+                    style={{
+                      color: "white",
+                      alignItems: "center",
+                      fontWeight: "400",
+                      fontSize: 17,
+                    }}
+                  >
+                    Confirm
+                  </Text>
+                </View>
+              </View>
+            )}
+
+            {/** ----------------------------------------------------------------------------------------- */}
 
             <Text
               style={{
@@ -367,11 +389,6 @@ export default function TestLogin() {
                 tap here
               </Text>
             </Text>
-
-            
-
-
-
           </View>
         </ImageBackground>
       </View>
@@ -418,5 +435,5 @@ const css = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 500,
-  }
+  },
 });

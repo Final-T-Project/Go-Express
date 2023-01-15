@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   MaterialCommunityIcons,
   Entypo,
@@ -25,12 +25,9 @@ import axios from "axios";
 
 import IPADRESS from "../config/IPADRESS";
 import { useNavigation } from "@react-navigation/native";
+import { UserContext } from "../UserContext";
 
-export default function EditeProfil({ id }) {
-  // console.log("mel edit profile", id);
-
-  // const [saveId, setSaveId] = useState();
-
+export default function EditeProfil() {
   const navigation = useNavigation();
 
   const [placement, setPlacement] = useState(undefined);
@@ -41,6 +38,8 @@ export default function EditeProfil({ id }) {
   const [ville, setVille] = useState("");
   const [adress, setAdress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+
+  const { userId } = useContext(UserContext);
 
   const openModal = (placement) => {
     setOpen(true);
@@ -54,7 +53,6 @@ export default function EditeProfil({ id }) {
       aspect: [4, 3],
       quality: 1,
     });
-    // console.log(result);
 
     if (!result.canceled) {
       setImage(result.uri);
@@ -63,30 +61,22 @@ export default function EditeProfil({ id }) {
 
   const saveUpdate = () => {
     axios
-      .put(`http://${IPADRESS}:5000/users/updateUser/${id}`, {
+      .put(`http://${IPADRESS}:5000/users/updateUser/${userId}`, {
         photo: image,
         name: name,
         ville: ville,
         adress: adress,
         phoneNumber: phoneNumber,
       })
-
-      .then((result) => {
-        console.log("testttto", result.config.data.name);
-        return result.config.data.name;
-      })
-
-      .then((name) => {
-        alert("profile updated");
+      .then(() => {
         setOpen(false);
-        navigation.navigate("Profil", { name });
+        navigation.navigate("Profil");
       })
       .catch((error) => {
         alert(error);
       });
   };
 
-  // console.log("images ", image);
   return (
     <>
       <Stack

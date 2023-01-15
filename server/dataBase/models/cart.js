@@ -17,14 +17,16 @@ module.exports = {
   },
 
   getIdCart: function (callback, id_user) {
-    const sql = ` SELECT * FROM cart WHERE user_id_user = "${id_user}"`;
+    const sql = ` SELECT * FROM cart WHERE user_id_user = "${id_user}" AND state="not done" ORDER BY id_cart DESC LIMIT 1 `;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
   },
 
+  //  const sql = `SELECT * FROM products_cart INNER JOIN product ON products_cart.product_id_product=product.id_product WHERE products_cart.cart_id_cart = "${id_cart}"`;
+
   getCartProduct: function (callback, id_cart) {
-    const sql = `SELECT * FROM products_cart INNER JOIN product ON products_cart.product_id_product=product.id_product WHERE products_cart.cart_id_cart = "${id_cart}"`;
+    const sql = `SELECT * FROM products_cart Inner JOIN product ON products_cart.product_id_product = product.id_product Inner JOIN cart ON products_cart.cart_id_cart = cart.id_cart WHERE products_cart.cart_id_cart ="${id_cart}"AND cart.state="not done"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
@@ -32,6 +34,28 @@ module.exports = {
 
   deleteProductFromCart: function (callback, id_product) {
     const sql = `DELETE FROM products_cart WHERE product_id_product= "${id_product}"`;
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  },
+
+  changeCartStatusToDone: function (callback, date, id_cart) {
+    const sql = `UPDATE cart SET state="done" , date = "${date}" WHERE id_cart="${id_cart}"`;
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  },
+
+  deleteAll: function (callback, idcart) {
+    const sql = `DELETE FROM products_cart WHERE cart_id_cart="${idcart}"`;
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  },
+
+  getCartHistoryByUserId: function (callback, id_user) {
+    // const sql = `select * from cart WHERE state="done" AND user_id_user="${id_user}"`;
+    const sql = `SELECT * FROM products_cart Inner JOIN product ON products_cart.product_id_product = product.id_product Inner JOIN cart ON products_cart.cart_id_cart = cart.id_cart WHERE cart.user_id_user="${id_user}" AND cart.state="done"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });

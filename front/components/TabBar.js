@@ -11,7 +11,7 @@ import {
   Dimensions,
   SafeAreaView,
   Pressable,
-  DevSetting
+  DevSetting,
 } from "react-native";
 import { UserContext } from "../UserContext";
 import React from "react";
@@ -30,7 +30,8 @@ const TabBar = ({ navigation }) => {
     <SafeAreaView
       style={{
         flex: 1,
-        top: height - 80,
+        // top: height - 100,
+        bottom: 0,
         flexDirection: "column",
         width: width,
         position: "absolute",
@@ -40,8 +41,8 @@ const TabBar = ({ navigation }) => {
         style={{
           alignSelf: "center",
 
-          width: 70,
-          height: 0,
+          width: 60,
+          height: 46,
           borderRadius: 35,
           bottom: 35,
           zIndex: 10,
@@ -49,10 +50,10 @@ const TabBar = ({ navigation }) => {
         }}
       >
         <TouchableOpacity
-         onPress={() => {
-          navigation.navigate("Serves");
-        return setShowContent("SideBar");
-        }}
+          onPress={() => {
+            navigation.navigate("Serves");
+            return setShowContent("SideBar");
+          }}
         >
           <View
             style={{
@@ -60,10 +61,10 @@ const TabBar = ({ navigation }) => {
               alignItems: "center",
               justifyContent: "center",
               marginStart: -5,
-              top: 64,
+              top: 20,
               backgroundColor: "#373E5A",
               width: 60,
-              marginTop: -79,
+              marginTop: 8,
               height: 50,
             }}
           >
@@ -119,10 +120,10 @@ const TabBar = ({ navigation }) => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            marginStart:5,
+            marginStart: 5,
           }}
         >
-           <TouchableOpacity
+          <TouchableOpacity
             onPress={() => {
               navigation.navigate("Shop");
               return setShowContent("shop");
@@ -155,7 +156,6 @@ const TabBar = ({ navigation }) => {
               color={showContent === "AddProduct" ? "#ED5C00" : "#b0aeae"}
             />
           </TouchableOpacity>
-         
         </View>
         <View
           style={{
@@ -167,9 +167,8 @@ const TabBar = ({ navigation }) => {
         >
           <TouchableOpacity
             onPress={() => {
-             
-              navigation.navigate("History")
-              return(setShowContent('history'))
+              navigation.navigate("History");
+              return setShowContent("history");
             }}
           >
             <FontAwesome
@@ -178,7 +177,6 @@ const TabBar = ({ navigation }) => {
               color={showContent === "history" ? "#ED5C00" : "#b0aeae"}
             />
           </TouchableOpacity>
-          
         </View>
       </View>
     </SafeAreaView>
