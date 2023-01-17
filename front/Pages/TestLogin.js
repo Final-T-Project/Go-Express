@@ -26,6 +26,7 @@ import { useState, useRef } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/core";
 
+
 export default function TestLogin() {
   const [value, setValue] = useState({
     email: "", //         TO STORE THE EMAIL INPUT
@@ -347,6 +348,8 @@ export default function TestLogin() {
                 </Text>
               </View>
             </View>}
+
+          
 
 {/** ----------------------------------------------------------------------------------------- */}
 
