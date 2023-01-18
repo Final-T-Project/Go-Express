@@ -52,6 +52,7 @@ const Shop = ({ navigation }) => {
   // function to change the category state and send it as props to products components
   let SendCategory = (category) => {
     setCategory(category);
+    
     navigation.navigate("Products", { category });
   };
 

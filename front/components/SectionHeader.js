@@ -1,12 +1,15 @@
 import React from 'react';
 import {Button, Text, View, StyleSheet} from 'react-native';
-
-
+import { useNavigation } from '@react-navigation/core';
 const SectionHeader = ({title, onPress, buttonTitle = 'Button'}) => {
+  const navigation=useNavigation()
+  function naaa(){
+    navigation.navigate('Shop')
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
-      <Button title={buttonTitle} />
+      <Button title={buttonTitle} onPress={naaa} />
     </View>
   );
 };

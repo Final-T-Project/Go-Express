@@ -274,11 +274,12 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           //  navigation.navigate("Home");
         } else if (title == "Notification") {
           setCurrentTab("Notification");
-          // navigation.navigate("Shop");
+          navigation.navigate("Notification");
         } else if (title == "MyCart") {
           setCurrentTab("MyCart");
           navigation.navigate("Cart");
         } else if (title == "Chat") {
+          navigation.navigate("Chat");
           setCurrentTab("Chat");
         } else if (title == "Settings") {
           setCurrentTab("Settings");

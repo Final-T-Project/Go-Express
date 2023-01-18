@@ -26,8 +26,11 @@ import yahya from "./Pages/yahya.js";
 import Serves from "./Pages/Serves.js";
 import BookService from "./Pages/BookService.js";
 import BookingDetails from "./Pages/BookingDetails.js";
+import Notification from "./Pages/Notifcation"
+import Awelscreen from "./Pages/Awelscreen.js";
 
 import HistoryDetails from "./Pages/HistoryDetails.js";
+import ChatScreen from "./Pages/ChatScreen.js";
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [showContent, setShowContent] = useState("");
@@ -45,12 +48,10 @@ export default function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="TestLogin"
+            initialRouteName="WELCOME HOME"
             screenOptions={{
-              headerTintColor: "white",
-              headerStyle: {
-                backgroundColor: "#ED5C00",
-              },
+              headerTintColor: "#ED5C00",
+              
             }}
           >
             <Stack.Screen
@@ -58,6 +59,7 @@ export default function App() {
               options={{ headerShown: false }}
               component={LogInSignIn}
             />
+            <Stack.Screen name="WELCOME HOME" component={Awelscreen} />
             <Stack.Screen name="home" component={yahya} />
             <Stack.Screen name="History" component={History} />
             <Stack.Screen name="Create an account" component={SignIn} />
@@ -102,6 +104,9 @@ export default function App() {
             <Stack.Screen name="BookService" component={BookService} />
             <Stack.Screen name="Booking Details" component={BookingDetails} />
             <Stack.Screen name="HistoryDetails" component={HistoryDetails} />
+            <Stack.Screen name="Notification" component={Notification} />
+            <Stack.Screen name="Chat" component={ChatScreen} />
+
           </Stack.Navigator>
         </NavigationContainer>
     </NativeBaseProvider>

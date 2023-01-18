@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-
+import { useNavigation } from '@react-navigation/core';
 import {Dimensions} from 'react-native';
 const {width, height} = Dimensions.get('window')
 export const sizes = {
@@ -24,6 +24,7 @@ const CARD_HEIGHT = 200;
 const CARD_WIDTH_SPACING = CARD_WIDTH + 24;
 
 const TopPlacesCarousel = ({list}) => {
+  const navigation =useNavigation()
   return (
     <FlatList
       data={list}
@@ -41,7 +42,9 @@ const TopPlacesCarousel = ({list}) => {
             }}>
             <View style={[styles.card, styles.dark]}>
               <View style={styles.imageBox}>
-                <Image source={item.image} style={styles.image} />
+                <Image source={item.image} style={styles.image} onPress={()=>{
+                  nav
+                }}/>
               </View>
               <View style={styles.titleBox}>
                 <Text style={styles.title}>{item.title}</Text>
