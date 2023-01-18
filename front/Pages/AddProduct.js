@@ -9,8 +9,8 @@ import {
   ScrollView,
   Permissions,
   LogBox,
+  Dimensions,
 } from "react-native";
-
 import {
   Button,
   IconButton,
@@ -43,7 +43,7 @@ const AddProduct = ({ navigation }) => {
   // state for selected name , description , price , quantity , category , image
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(1);
+  const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [category, setCategory] = useState("");
 
@@ -178,12 +178,12 @@ const AddProduct = ({ navigation }) => {
   };
 
   const toast = useToast();
-
+const {height,width}=Dimensions.get("screen")
   return (
-    <>
-      <View>
+    <>  
+    
         <ScrollView>
-          <View style={styles.container}>
+        <View style={{height: height}}>
             <Formik
               initialValues={{
                 name: "",
@@ -209,9 +209,11 @@ const AddProduct = ({ navigation }) => {
                       Product Name
                     </FormControl.Label>
                     <Input
+                    _focus={{ borderColor: '#ED5C00' }}
+                    placeholder="Product Name"
                       backgroundColor={"muted.100"}
                       borderColor={"muted.200"}
-                      fontSize={"20"}
+                      fontSize={"15"}
                       onChangeText={(text) => setName(text)}
                     />
                   </FormControl>
@@ -224,9 +226,11 @@ const AddProduct = ({ navigation }) => {
                       Product Description
                     </FormControl.Label>
                     <Input
+                    _focus={{ borderColor: '#ED5C00' }}
+                    placeholder="Product Description"
                       backgroundColor={"muted.100"}
                       borderColor={"muted.200"}
-                      fontSize={"20"}
+                      fontSize={"15"}
                       onChangeText={(text) => setDescription(text)}
                     />
                   </FormControl>
@@ -238,9 +242,11 @@ const AddProduct = ({ navigation }) => {
                       Unit Price
                     </FormControl.Label>
                     <Input
+                    _focus={{ borderColor: '#ED5C00' }}
+                    placeholder="Product Price"
                       backgroundColor={"muted.100"}
                       borderColor={"muted.200"}
-                      fontSize={"20"}
+                      fontSize={"15"}
                       onChangeText={(number) => setPrice(number)}
                     />
                   </FormControl>
@@ -276,7 +282,7 @@ const AddProduct = ({ navigation }) => {
 
                     <Text>{quantity}</Text>
 
-                    <Pressable onPress={onPlus} style={styles.quantityButton}>
+                    <Pressable onPress={onPlus} style={styles.quantityButton} >
                       <Text style={styles.quantityInput}>+</Text>
                     </Pressable>
                   </View>
@@ -348,10 +354,12 @@ const AddProduct = ({ navigation }) => {
                 </View>
               )}
             </Formik>
-          </View>
-        </ScrollView>
-      </View>
-
+        </View>
+        </ScrollView> 
+        {/* <TabBar navigation={navigation} /> */}
+         
+    {/* save bottun 2 */}
+{/* 
       <Button
         backgroundColor={"#F14E24"}
         onPress={() => {
@@ -359,9 +367,9 @@ const AddProduct = ({ navigation }) => {
         }}
       >
         Save
-      </Button>
+      </Button> */}
 
-      {/* <TabBar navigation={navigation} /> */}
+      
     </>
   );
 };
@@ -370,12 +378,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    height: "100%",
+    // height: "100%",
     justifyContent: "center",
   },
   form: {
     flex: 1,
-    width: "80%",
+    // width: "100%",
     backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
@@ -387,7 +395,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    marginTop: 70,
+    // marginTop: 10,
   },
 
   form_image: {
@@ -459,7 +467,7 @@ const styles = StyleSheet.create({
     height: 35,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#d1d1d1",
+    backgroundColor: "#F14E24",
   },
   quantityInput: {
     fontSize: 18,
