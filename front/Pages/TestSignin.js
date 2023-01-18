@@ -77,9 +77,10 @@ function TestLogin() {
           .catch((error) => {
             console.log(error);
           });
+          return userCredential.user.uid
       })
-      .then(() => {
-        Navigation.navigate("SideBar");
+      .then((id) => {
+        Navigation.navigate("SideBar",{id});
       })
       .catch((err) => {
         if (err.code === "auth/email-already-in-use") {

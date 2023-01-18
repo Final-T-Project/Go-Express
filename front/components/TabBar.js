@@ -149,7 +149,7 @@ const TabBar = ({ navigation }) => {
         >
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("AddProduct");
+              navigation.navigate("AddProduct");     // WHERE TO ADD THE ID OF THE USER 
               return setShowContent("AddProduct");
             }}
           >

@@ -38,10 +38,16 @@ export default function SideBbar({ navigation, route }) {
   // state to save user data
   const [userDataProfile, setUserDataProfile] = useState([]);
   const { userId } = useContext(UserContext);
+
+  // console.log("hetah IDCard", userCartId);
+  // console.log("hetah ID", userId);
+  const [idToSend, setIdToSend] = useState("");
   // to get profile information
   useEffect(() => {
+    console.log("the id: ", route.params.id); // from login
+    setIdToSend(route.params.id);
     axios
-      .get(`http://${IPADRESS}:5000/users/getUserPorfile/${userId}`)
+      .get(`http://${IPADRESS}:5000/users/getUserPorfile/${route.params.id}`)
       .then((response) => {
         setUserDataProfile(response.data);
         // console.log("user_data", response.data);
