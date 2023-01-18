@@ -1,3 +1,4 @@
+
 import React, { useRef, useState, useContext, useEffect } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 
@@ -29,6 +30,7 @@ const Home = () => {
   }, []);
 
   
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -43,7 +45,7 @@ const Home = () => {
         <SectionHeader
           title="Product"
           buttonTitle="See All"
-          onPress={() => {}}
+          onPress={() => {navig}}
         />
         <TripsList list={PLACES} />
       </ScrollView>
