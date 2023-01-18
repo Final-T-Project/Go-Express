@@ -15,8 +15,10 @@ import { useState , useEffect} from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from 'axios'
 
 import { useNavigation } from "@react-navigation/native";
+import IPADRESS from "../config/IPADRESS";
 
 // primary color : #F14E24
 // Secondary color : #373E5A
@@ -24,13 +26,22 @@ import { useNavigation } from "@react-navigation/native";
 export default function BookService() {
   
   const [id,setId]=useState("")
+  const [idCart,setIdCart]=useState("")
 
   useEffect(()=>{
     AsyncStorage.getItem("id").then((id)=>{
       setId(id)
     })
   },[id])
+  
+  useEffect(()=>{
+    axios.get(`http://${IPADRESS}:5000/cart/getIdCart/${id}`).then((res)=>{
+        console.log(res.data)
+      })
+  },[id])
 
+
+  
   console.log(id)
   const Navigation = useNavigation();
   const [date, setDate] = useState(new Date());
