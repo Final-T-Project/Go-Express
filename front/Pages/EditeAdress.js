@@ -66,7 +66,7 @@ let EditeAdress = () => {
           base: "column",
           md: "row",
         }}
-        marginLeft={160}
+        marginLeft={8}
       >
         <IconButton
           icon={
@@ -152,7 +152,7 @@ const styles = {
     marginLeft: 0,
     marginRight: "auto",
   },
-  right: {},
+  right: 10,
   center: {},
 };
 

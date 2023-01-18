@@ -23,6 +23,9 @@ import {
   useToast,
   Box,
   Select,
+  CheckIcon,
+  WarningOutlineIcon,
+  Radio,
 } from "native-base";
 import * as ImagePicker from "expo-image-picker";
 import { Picker } from "@react-native-picker/picker";
@@ -35,18 +38,20 @@ import TabBar from "../components/TabBar";
 import axios from "axios";
 import IPADRESS from "../config/IPADRESS";
 import { UserContext } from "../UserContext";
-
-const AddProduct = ({ navigation }) => {
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
+const Join_Us = ({ navigation }) => {
   // state for selected name , description , price , quantity , category , image
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [category, setCategory] = useState("");
-
+  const [service, setService] = useState("");
+  
   const { userId } = useContext(UserContext);
   const { userCartId } = useContext(UserContext);
-
+  const [value, setValue] = React.useState('Male');
   // function to incriment product quantity
   const onMinus = () => {
     setQuantity(Math.max(0, quantity - 1));
@@ -98,7 +103,18 @@ const AddProduct = ({ navigation }) => {
       };
     }
   };
+  const [fileResponse, setFileResponse] = useState([]);
 
+  // const handleDocumentSelection = useCallback(async () => {
+  //   try {
+  //     const response = await DocumentPicker.pick({
+  //       presentationStyle: 'fullScreen',
+  //     });
+  //     setFileResponse(response);
+  //   } catch (err) {
+  //     console.warn(err);
+  //   }
+  // }, []);
   const pickImageTow = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Image,
@@ -199,125 +215,150 @@ const {height,width}=Dimensions.get("screen")
               {/* {formik} */}
               {({ errors, touched, handleBlur }) => (
                 <View style={styles.form}>
-                  {/*Name  Start */}
-
+                  {/*First Name */}
                   <FormControl>
                     <FormControl.Label fontStyle={{ color: "#373E5A" }}>
-                      Product Name
+                      First Name
                     </FormControl.Label>
                     <Input
                     _focus={{ borderColor: '#ED5C00' }}
-                    placeholder="Product Name"
+                    placeholder="First Name"
                       backgroundColor={"muted.100"}
                       borderColor={"muted.200"}
                       fontSize={"15"}
                       onChangeText={(text) => setName(text)}
                     />
                   </FormControl>
-
-                  {/*Name  End */}
-
-                  {/*Description  Start */}
+                  {/*Last Name*/}
                   <FormControl>
                     <FormControl.Label fontStyle={{ color: "#373E5A" }}>
-                      Product Description
+                      Last Name
                     </FormControl.Label>
                     <Input
                     _focus={{ borderColor: '#ED5C00' }}
-                    placeholder="Product Description"
+                    placeholder="Last Name"
+                      backgroundColor={"muted.100"}
+                      borderColor={"muted.200"}
+                      fontSize={"15"}
+                      onChangeText={(text) => setName(text)}
+                    />
+                  </FormControl>
+                  {/*Phone Number */}
+                  <FormControl>
+                    <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                      Phone Number
+                    </FormControl.Label>
+                    <Input
+                    _focus={{ borderColor: '#ED5C00' }}
+                    placeholder="Phone Number"
                       backgroundColor={"muted.100"}
                       borderColor={"muted.200"}
                       fontSize={"15"}
                       onChangeText={(text) => setDescription(text)}
                     />
                   </FormControl>
-                  {/*Description  End */}
-
-                  {/*Price  Start */}
+                  {/*Adress */}
                   <FormControl>
                     <FormControl.Label fontStyle={{ color: "#373E5A" }}>
-                      Unit Price
+                      Adress
                     </FormControl.Label>
                     <Input
                     _focus={{ borderColor: '#ED5C00' }}
-                    placeholder="Product Price"
+                    placeholder="Adress"
                       backgroundColor={"muted.100"}
                       borderColor={"muted.200"}
                       fontSize={"15"}
-                      onChangeText={(number) => setPrice(number)}
+                      onChangeText={(text) => setDescription(text)}
                     />
                   </FormControl>
-
+               
                   {/*Price  End */}
 
                   {/*Category  Start */}
-                  <Text style={styles.label}>Category:</Text>
-                  <View style={styles.input}>
-                    <Picker
-                      selectedValue={category}
-                      onValueChange={(value) => setCategory(value)}
-                      // mode="dropdown"
-                      mode="dialog"
-                      style={styles.picker}
-                      onBlur={handleBlur("category")}
-                    >
-                      <Picker.Item label="Please Select Category" />
-                      <Picker.Item label="Kitchen" value="Kitchen" />
-                      <Picker.Item label="Furniture" value="Furniture" />
-                      <Picker.Item label="Garden" value="Garden" />
-                      <Picker.Item label="Accessories" value="Accessories" />
-                    </Picker>
-                  </View>
+                  {/* <FormControl w="3/4" maxW="300" isRequired isInvalid>
+        <FormControl.Label>Choose work position</FormControl.Label>
+        <Select minWidth="200" accessibilityLabel="Choose Service" placeholder="Choose Service" _selectedItem={{
+        bg: "teal.600",
+        endIcon: <CheckIcon size={5} />
+      }} mt="1">
+          <Select.Item label="Householder" value="householder" />
+          <Select.Item label="Electrician" value="electrician" />
+          <Select.Item label="Plumber" value="plumber" />
+          <Select.Item label="Truck Driver" value="truck driver" />
+          <Select.Item label="Delivery Agents" value="delivery agents" />
+        </Select>
+        {/* <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
+          Please make a selection!
+        </FormControl.ErrorMessage> */}
+      {/* </FormControl> */}
+
                   {/*Category  End */}
+          <FormControl>
+                    <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    Choose work position
+                    </FormControl.Label>         
+      <Box maxW="300">
+        <Select selectedValue={service} minWidth="200" accessibilityLabel="work position" placeholder="work position" _selectedItem={{
+        bg: "teal.600",
+        endIcon: <CheckIcon size="5" />
+      }} mt={1} onValueChange={itemValue => setService(itemValue)}>
+          <Select.Item label="Householder" value="householder" />
+          <Select.Item label="Electrician" value="electrician" />
+          <Select.Item label="Plumber" value="plumber" />
+          <Select.Item label="Truck Driver" value="truck driver" />
+          <Select.Item label="Delivery Agents" value="delivery agents" />
+        </Select>
+      </Box>
+      </FormControl>
+                
 
-                  {/*Quantity  Start */}
-                  <Text style={styles.label}>Quantity:</Text>
-                  <View style={styles.quantityContainer}>
-                    <Pressable onPress={onMinus} style={styles.quantityButton}>
-                      <Text style={styles.quantityInput}>-</Text>
-                    </Pressable>
-
-                    <Text>{quantity}</Text>
-
-                    <Pressable onPress={onPlus} style={styles.quantityButton} >
-                      <Text style={styles.quantityInput}>+</Text>
-                    </Pressable>
-                  </View>
-
-                  {/* Quantity  End */}
-                  <View style={styles.container}>
-                    <Text style={styles.Price_label}>
-                      Total Price : {price * quantity} dt{" "}
-                    </Text>
-                  </View>
-
-                  {/*Image  start */}
+              {/* Gender */}
+              <FormControl>
+                    <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    Choose your Gender
+                    </FormControl.Label>  
+              <Radio.Group
+      name="myRadioGroup"
+      value={value}
+      
+      onChange={(nextValue) => {
+        setValue(nextValue);
+      }}
+    >
+      <Radio color="#ED5C00"  selectedColor="red" value="Male" my="1">
+        Male
+      </Radio>
+      <Radio value="Female" my="1">
+        Female
+      </Radio>
+    </Radio.Group>
+    </FormControl>
+                  {/* Image */}
 
                   <FormControl>
-                    <FormControl.Label>Image One</FormControl.Label>
+                    <FormControl.Label>Your Image</FormControl.Label>
                     <Button backgroundColor={"#373E5A"} onPress={pickImageOne}>
-                      Pick image1
+                      Pick your image
                     </Button>
                   </FormControl>
 
-                  <FormControl>
-                    <FormControl.Label>Image Tow </FormControl.Label>
-                    <Button backgroundColor={"#373E5A"} onPress={pickImageTow}>
-                      Pick image2
-                    </Button>
-                  </FormControl>
-
-                  <FormControl>
-                    <FormControl.Label>Image Three</FormControl.Label>
-                    <Button
-                      backgroundColor={"#373E5A"}
-                      onPress={pickImageThree}
-                    >
-                      Pick image3
-                    </Button>
-                  </FormControl>
+                 
                   {/*Image  End */}
-
+                  <SafeAreaView style={styles.container} >
+      <StatusBar barStyle={'dark-content'} />
+      {fileResponse.map((file, index) => (
+        <Text
+          key={index.toString()}
+          style={styles.uri}
+          numberOfLines={1}
+          ellipsizeMode={'middle'}>
+          {file?.uri}
+        </Text>
+      ))}
+      <Button title="Select 📑" 
+      // onPress={handleDocumentSelection} 
+      />
+    </SafeAreaView>
                   {/*Button Add  Start */}
                   <TouchableOpacity>
                     <View>
@@ -487,4 +528,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddProduct;
+export default Join_Us;

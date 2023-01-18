@@ -15,6 +15,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import TabBar from "../components/TabBar";
 const { width, height } = Dimensions.get("screen");
 
 const images = {
@@ -125,7 +126,7 @@ const Tabs = ({ data, scrollX, onItemPress }) => {
   );
 };
 
-const Serves = () => {
+const Serves = ({navigation}) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const ref = React.useRef();
   const onItemPress = React.useCallback((itemIndex) => {
@@ -157,12 +158,15 @@ const Serves = () => {
                   { backgroundColor: "rgba(0,0,0,0,3" },
                 ]}
               ></View>
+               <TabBar/>
             </View>
           );
         }}
       />
       <Tabs scrollX={scrollX} data={data} onItemPress={onItemPress} />
+      <TabBar navigation={navigation}/>
     </View>
+    
   );
 };
 
