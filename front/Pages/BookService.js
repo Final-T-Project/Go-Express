@@ -11,12 +11,12 @@ import {
 import { DatePickerAndroid } from "react-native";
 import React from "react";
 import { Picker } from "@react-native-picker/picker";
-import { useState , useEffect} from "react";
+import { useState , useEffect , useContext} from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from 'axios'
-
+import { UserContext } from "../UserContext";
 import { useNavigation } from "@react-navigation/native";
 import IPADRESS from "../config/IPADRESS";
 
@@ -28,21 +28,21 @@ export default function BookService() {
   const [id,setId]=useState("")
   const [idCart,setIdCart]=useState("")
 
-  useEffect(()=>{
-    AsyncStorage.getItem("id").then((id)=>{
-      setId(id)
-    })
-  },[id])
+  const { userId } = useContext(UserContext);
   
   useEffect(()=>{
-    axios.get(`http://${IPADRESS}:5000/cart/getIdCart/${id}`).then((res)=>{
-        console.log(res.data)
+    axios.get(`http://${IPADRESS}:5000/carts/getIdCart/${userId}`).then((res)=>{
+        console.log(res.data[0].id_cart)
+        setIdCart(res.data[0].id_cart)
       })
-  },[id])
+      .catch((err)=>{
+        console.log("Error ----------->"+err)
+      })
+  },[userId])
 
 
   
-  console.log(id)
+  console.log(userId)
   const Navigation = useNavigation();
   const [date, setDate] = useState(new Date());
 

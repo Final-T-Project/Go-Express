@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useRef, useState, useContext, useEffect } from "react";
 import {
   Animated,
@@ -30,18 +29,14 @@ export default function SideBbar({ navigation, route }) {
   const [Page, SetPage] = useState("Home");
   const [currentTab, setCurrentTab] = useState("Home");
   // To get the curretn Status of menu ...
-
   const [showMenu, setShowMenu] = useState(false);
   // Animated Properties...
-
   const offsetValue = useRef(new Animated.Value(0)).current;
   // Scale Intially must be One...
   const scaleValue = useRef(new Animated.Value(1)).current;
   const closeButtonOffset = useRef(new Animated.Value(0)).current;
-
   // state to save user data
   const [userDataProfile, setUserDataProfile] = useState([]);
-
   const { userId } = useContext(UserContext);
 
   // console.log("hetah IDCard", userCartId);
@@ -69,7 +64,7 @@ export default function SideBbar({ navigation, route }) {
         source={{
           uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673040221/ekher_wba4yg.png",
         }}
-        resizeMode="cover"
+        // resizeMode="cover"
         style={styles.image}
       >
         <View style={{ justifyContent: "flex-start" }}>
@@ -99,6 +94,7 @@ export default function SideBbar({ navigation, route }) {
                       fontWeight: "bold",
                       color: "white",
                       marginTop: 10,
+                      left:10
                     }}
                   >
                     {element.name}{" "}
@@ -109,6 +105,7 @@ export default function SideBbar({ navigation, route }) {
                       // fontWeight: "bold",
                       color: "white",
                       marginTop: 10,
+                      left:10
                     }}
                   >
                     View Profil
@@ -117,11 +114,13 @@ export default function SideBbar({ navigation, route }) {
               );
             } else {
               return (
+                // hello user and view profil 
                 <TouchableOpacity
                   onPress={() => {
                     navigation.navigate("Profil");
                   }}
                 >
+                  {/* user image */}
                   <Image
                     source={{
                       uri: `https://invisiblechildren.com/wp-content/uploads/2012/07/facebook-profile-picture-no-pic-avatar.jpg`,
@@ -130,8 +129,10 @@ export default function SideBbar({ navigation, route }) {
                       width: 90,
                       height: 90,
                       borderRadius: 7,
-                      marginTop: 10,
+                      marginTop: -30,
                       marginLeft: 23,
+                      left:30,
+                      
                     }}
                   ></Image>
                   <Text
@@ -140,6 +141,7 @@ export default function SideBbar({ navigation, route }) {
                       fontWeight: "bold",
                       color: "white",
                       marginTop: 10,
+                      left:30
                     }}
                   >
                     Hello {element.name}{" "}
@@ -149,7 +151,8 @@ export default function SideBbar({ navigation, route }) {
                       fontSize: 15,
                       // fontWeight: "bold",
                       color: "white",
-                      marginTop: 10,
+                      marginTop:10,
+                      left:30
                     }}
                   >
                     View Profil
@@ -160,11 +163,6 @@ export default function SideBbar({ navigation, route }) {
           })}
 
           <View style={{ flexGrow: 1, marginTop: 60 }}>
-            {
-              // Tab Bar Buttons....
-            }
-
-            {/* {TabButton(currentTab, setCurrentTab, "Feedback", feedback)} */}
             {TabButton(
               currentTab,
               setCurrentTab,
@@ -177,7 +175,6 @@ export default function SideBbar({ navigation, route }) {
           <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
         </View>
       </ImageBackground>
-
       <Animated.View
         style={{
           flexGrow: 1,
@@ -190,13 +187,11 @@ export default function SideBbar({ navigation, route }) {
           paddingHorizontal: 1,
           paddingVertical: 0,
           borderRadius: showMenu ? 15 : 0,
+          
           // Transforming View...
           transform: [{ scale: scaleValue }, { translateX: offsetValue }],
         }}
       >
-        {
-          // Menu Button...
-        }
         <Animated.View
           style={{
             transform: [
@@ -208,9 +203,6 @@ export default function SideBbar({ navigation, route }) {
         >
           <TouchableOpacity
             onPress={() => {
-              // Do Actions Here....
-              // Scaling the view...
-
               Animated.timing(scaleValue, {
                 toValue: showMenu ? 1 : 0.88,
                 duration: 300,
@@ -234,29 +226,25 @@ export default function SideBbar({ navigation, route }) {
               setShowMenu(!showMenu);
             }}
           >
+            {/* x & 3bar of the side bar */}
             <Image
               source={showMenu ? close : menu}
               style={{
                 width: 30,
                 height: 30,
-                tintColor: "#ea580c",
+                tintColor: "#171717",
                 marginTop: 40,
               }}
             />
           </TouchableOpacity>
-
-          {/* {currentTab} */}
         </Animated.View>
         <Home />
         {/* <Home  /> */}
         <TabBar navigation={navigation} />
-        {/* navigation={navigation} */}
       </Animated.View>
     </SafeAreaView>
   );
 }
-
-// For multiple Buttons...
 const TabButton = (currentTab, setCurrentTab, title, image) => {
   const navigation = useNavigation();
   return (
@@ -268,11 +256,12 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           //  navigation.navigate("Home");
         } else if (title == "Notification") {
           setCurrentTab("Notification");
-          // navigation.navigate("Shop");
+          navigation.navigate("Notification");
         } else if (title == "MyCart") {
           setCurrentTab("MyCart");
           navigation.navigate("Cart");
         } else if (title == "Chat") {
+          navigation.navigate("Chat");
           setCurrentTab("Chat");
         } else if (title == "Settings") {
           setCurrentTab("Settings");
@@ -283,6 +272,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
       LogOut
       //onPress={() => navigation.navigate("Profil")}
     >
+      {/* button side */}
       <View
         style={{
           flexDirection: "row",
@@ -293,6 +283,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           paddingRight: 35,
           borderRadius: 10,
           marginTop: 20,
+          left:10
         }}
       >
         <Image
@@ -300,6 +291,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           style={{
             width: 27,
             height: 25,
+            left:10,
             tintColor: currentTab == title ? "#ea580c" : "white",
           }}
         ></Image>
@@ -309,6 +301,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
             fontSize: 15,
             fontWeight: "bold",
             paddingLeft: 15,
+            left:10,
             color: currentTab == title ? "white" : "white",
           }}
         >
@@ -323,15 +316,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+    
   },
   image: {
     flex: 1,
     justifyContent: "center",
     width: "100%",
     height: "100%",
+    
   },
 });
-
 // nex Drower
 // import React from 'react';
 
