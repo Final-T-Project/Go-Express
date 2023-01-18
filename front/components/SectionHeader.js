@@ -9,7 +9,7 @@ const SectionHeader = ({title, onPress, buttonTitle = 'Button'}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
-      <Button title={buttonTitle}color="#ED5C00" onPress={naaa}/>
+      <Button title={buttonTitle}color="#ED5C00" onPress={rederection}/>
 
     </View>
   );
