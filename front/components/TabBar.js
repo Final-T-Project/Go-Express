@@ -52,7 +52,7 @@ const TabBar = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Serves");
-            return setShowContent("SideBar");
+            return setShowContent("truck-fast");
           }}
         >
           <View
@@ -68,7 +68,10 @@ const TabBar = ({ navigation }) => {
               height: 50,
             }}
           >
-            <MaterialCommunityIcons name="truck-fast" size={24} color="white" />
+            <MaterialCommunityIcons name="truck-fast" 
+            size={24} 
+            color={showContent === "truck-fast" ? "#ED5C00" : "#b0aeae"}
+            />
           </View>
         </TouchableOpacity>
       </View>
@@ -104,8 +107,8 @@ const TabBar = ({ navigation }) => {
         >
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("home");
-              return setShowContent("yahya");
+              navigation.navigate("SideBar");
+              return setShowContent("Home");
             }}
           >
             <FontAwesome
@@ -199,7 +202,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowOffset: { x: 2, y: 0 },
     shadowRadius: 2,
-    borderRadius: 30,
+    // borderRadius: 30,
     position: "absolute",
     bottom: 20,
     right: 0,

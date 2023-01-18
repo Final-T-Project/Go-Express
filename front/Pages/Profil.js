@@ -482,7 +482,7 @@ export default function Profil({ navigation, route }) {
                 height: height - 500,
               }}
               source={{
-                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673038894/background_profil_wxppqf.png",
+                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1674060984/font_oq0zp9.png",
               }}
             ></Image>
           </View>

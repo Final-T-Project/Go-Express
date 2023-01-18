@@ -1,181 +1,10 @@
+import { View, Text,TouchableOpacity,Image,StyleSheet,Pressable,
+  ScrollView, } from 'react-native'
 import React, { useState, useEffect, useContext } from "react";
-import {
-  View,
-  Pressable,
-  StyleSheet,
-  ScrollView,
-  Permissions,
-  LogBox,
-  Dimensions,
-} from "react-native";
-import {
-  Button,
-  IconButton,
-  Icon,
-  Modal,
-  Stack,
-  FormControl,
-  Input,
-  Center,
-  NativeBaseProvider,
-  Text,
-  Image,
-  useToast,
-  Box,
-  Select,
-} from "native-base";
-import * as ImagePicker from "expo-image-picker";
-import { Picker } from "@react-native-picker/picker";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { MaterialIcons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import TabBar from "../components/TabBar";
-import axios from "axios";
-import IPADRESS from "../config/IPADRESS";
-import { UserContext } from "../UserContext";
-
-const AddProduct = ({ navigation }) => {
-  // state for selected name , description , price , quantity , category , image
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
-  const [quantity, setQuantity] = useState(1);
-  const [category, setCategory] = useState("");
-
-  const { userId } = useContext(UserContext);
-  const { userCartId } = useContext(UserContext);
-
-  // function to incriment product quantity
-  const onMinus = () => {
-    setQuantity(Math.max(0, quantity - 1));
-  };
-  // function to dicriment product quantity
-  const onPlus = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const month = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  let date = month[new Date().getMonth()];
-  let posted_at =
-    date +
-    " " +
-    new Date().getDate() +
-    " " +
-    "2022" +
-    " " +
-    new Date().getHours() +
-    ":" +
-    new Date().getMinutes();
-
-  // function to pick image from device and store it in image variable
-  const pickImageOne = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Image,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    setImageOne(result.uri);
-    console.log("image1:", result.uri);
-    if (!result.cancelled) {
-      let newfile1 = {
-        uri: result.uri,
-      };
-    }
-  };
-
-  const pickImageTow = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Image,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    setImageTow(result.uri);
-    console.log("image2:", result.uri);
-    if (!result.cancelled) {
-      let newfile2 = {
-        uri: result.uri,
-      };
-    }
-  };
-  const pickImageThree = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Image,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    setImageThree(result.uri);
-    console.log("image3:", result.uri);
-    if (!result.cancelled) {
-      let newfile3 = {
-        uri: result.uri,
-      };
-    }
-  };
-
-  const [imageOne, setImageOne] = useState(null);
-  const [imageTow, setImageTow] = useState(null);
-  const [imageThree, setImageThree] = useState(null);
-
-  let addProductDetails = () => {
-    if (!name.length || !description.length || !price.length) {
-      alert("Please fill all information");
-    } else {
-      axios
-        .post(`http://${IPADRESS}:5000/products/addProduct`, {
-          sellIerd: userId,
-          buyerId: "Null",
-          name: name,
-          category: category,
-          price: price,
-          description: description,
-          photo: imageOne,
-          quantity: quantity,
-          id_user: userId,
-          id_cart: userCartId,
-          productStatus: "NotAccepted",
-          Published_at: posted_at,
-        })
-        .then((result) => {
-          console.log(result.data.insertId);
-          return result.data.insertId;
-        })
-        .then((id_post) => {
-          axios.post(`http://${IPADRESS}:5000/products/addProduct/photo`, {
-            photo1: imageOne,
-            photo2: imageTow,
-            photo3: imageThree,
-            idproduct: id_post,
-          });
-        })
-        .then(() => {
-          navigation.navigate("Home");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
-
-  const toast = useToast();
+import {Box,Button,Input,Stack} from "native-base"
+const toast = useToast();
 const {height,width}=Dimensions.get("screen")
+export default function Join_Us() {
   return (
     <>  
     
@@ -370,7 +199,6 @@ const {height,width}=Dimensions.get("screen")
     </>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -486,5 +314,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-export default AddProduct;
