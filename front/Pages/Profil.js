@@ -143,7 +143,7 @@ function Info({ route, navigation, id }) {
       .catch((error) => {
         alert(error);
       });
-  }, []);
+  }, [userDataProfile]);
 
   return (
     <View
