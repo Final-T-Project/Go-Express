@@ -25,6 +25,13 @@ module.exports = {
     });
   },
 
+  updateAdress: function (callback, ville, adress, id_user) {
+    const sql = `UPDATE user SET adress="${adress}", ville="${ville}" WHERE id_user="${id_user}"`;
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  },
+
   getUserProfile: function (callback, id_user) {
     const sql = `SELECT * FROM user WHERE id_user="${id_user}"`;
     connection.query(sql, function (error, results) {

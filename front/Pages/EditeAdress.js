@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../UserContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import {
@@ -14,11 +15,44 @@ import {
   useToast,
   Box,
 } from "native-base";
+import axios from "axios";
+import IPADRESS from "../config/IPADRESS";
+
 let EditeAdress = () => {
   const [placement, setPlacement] = useState(undefined);
   const [open, setOpen] = useState(false);
-  const [image, setImage] = useState(null);
+  let [ville, setVille] = useState("");
+  let [adress, setAdress] = useState("");
+
   const toast = useToast();
+
+  const { userId } = useContext(UserContext);
+
+  // to update adress and ville before chekout
+  let UpdateAdress = () => {
+    axios
+      .put(`http://${IPADRESS}:5000/users/updateUserAdress/${userId}`, {
+        ville: ville,
+        adress: adress,
+      })
+      .then(() => {
+        toast.show({
+          render: () => {
+            return (
+              <Box bg="green.500" px="2" py="1" rounded="sm" mb={6}>
+                Your Adress Is Modified Successfully
+              </Box>
+            );
+          },
+        });
+      })
+      .then(() => {
+        setOpen(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const openModal = (placement) => {
     setOpen(true);
@@ -63,11 +97,19 @@ let EditeAdress = () => {
               <FormControl.Label fontStyle={{ color: "#373E5A" }}>
                 Ville
               </FormControl.Label>
-              <Input backgroundColor={"muted.100"} borderColor={"muted.200"} />
+              <Input
+                onChangeText={(text) => setVille(text)}
+                backgroundColor={"muted.100"}
+                borderColor={"muted.200"}
+              />
             </FormControl>
             <FormControl>
               <FormControl.Label>Adress</FormControl.Label>
-              <Input backgroundColor={"muted.100"} borderColor={"muted.200"} />
+              <Input
+                onChangeText={(text) => setAdress(text)}
+                backgroundColor={"muted.100"}
+                borderColor={"muted.200"}
+              />
             </FormControl>
           </Modal.Body>
           <Modal.Footer>
@@ -82,19 +124,10 @@ let EditeAdress = () => {
                 Cancel
               </Button>
               <Button
-                backgroundColor={"#F14E24"}
                 onPress={() => {
-                  toast.show({
-                    render: () => {
-                      return (
-                        <Box bg="green.500" px="2" py="1" rounded="sm" mb={2}>
-                          Your Adress Is Modified Successfully
-                        </Box>
-                      );
-                    },
-                  });
-                  setOpen(false);
+                  UpdateAdress();
                 }}
+                backgroundColor={"#F14E24"}
               >
                 Save
               </Button>

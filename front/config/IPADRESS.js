@@ -1,4 +1,4 @@
-// ------------------> Just Updtate the Ip adress mena kol mara and that's it (9oulou fedi khayeb :)
+// ------------------> Just Updtate the Ip adress mena kol mara and that's it
 
 const IPADRESS = `180.180.180.51`
 

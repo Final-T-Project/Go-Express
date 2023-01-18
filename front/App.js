@@ -8,7 +8,6 @@ import Products from "./Pages/Products.js";
 import History from "./Pages/History";
 import Profil from "./Pages/Profil";
 import LogInSignIn from "./Pages/LogInSignIn";
-import SignIn from "./Pages/SignIn";
 import AddProduct from "./Pages/AddProduct";
 import TestSignin from "./Pages/TestSignin.js";
 import TestLogin from "./Pages/TestLogin.js";
@@ -26,12 +25,14 @@ import yahya from "./Pages/yahya.js";
 import Serves from "./Pages/Serves.js";
 import BookService from "./Pages/BookService.js";
 import BookingDetails from "./Pages/BookingDetails.js";
-
+import { LogBox } from "react-native";
 import HistoryDetails from "./Pages/HistoryDetails.js";
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [showContent, setShowContent] = useState("");
-  const [userId, setUserId] = useState("l id 2 fois mel app");
+  const [userId, setUserId] = useState("");
+  const [userCartId, setUserCartId] = useState("");
+  LogBox.ignoreAllLogs();
   return (
     <UserContext.Provider
       value={{
@@ -39,6 +40,8 @@ export default function App() {
         setShowContent,
         userId,
         setUserId,
+        userCartId,
+        setUserCartId,
       }}
     >
       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
@@ -60,7 +63,6 @@ export default function App() {
             />
             <Stack.Screen name="home" component={yahya} />
             <Stack.Screen name="History" component={History} />
-            <Stack.Screen name="Create an account" component={SignIn} />
             <Stack.Screen name="PhoneNumber Verif" component={PhoneNumber} />
             <Stack.Screen
               name="TestSignin"
@@ -74,7 +76,7 @@ export default function App() {
             />
             <Stack.Screen
               name="Profil"
-              options={{ headerShown: false }}
+              // options={{ headerShown: false }}
               component={Profil}
             />
             {/* <Stack.Screen name="TabBar" component={TabBar} /> */}
@@ -104,19 +106,15 @@ export default function App() {
             <Stack.Screen name="HistoryDetails" component={HistoryDetails} />
           </Stack.Navigator>
         </NavigationContainer>
-    </NativeBaseProvider>
+      </NativeBaseProvider>
     </UserContext.Provider>
-  //   <NativeBaseProvider>
-  //   <View style={{ flex: 1 }}>
-  //   <StatusBar hidden={false} />
-  //   <SideBar />
-  // </View>  
-  
+    //   <NativeBaseProvider>
+    //   <View style={{ flex: 1 }}>
+    //   <StatusBar hidden={false} />
+    //   <SideBar />
+    // </View>
   );
 }
-
-
-
 
 // import React from 'react';
 
@@ -130,8 +128,7 @@ export default function App() {
 
 // import { createDrawerNavigator } from '@react-navigation/drawer';
 
-
-// // screens
+// screens
 // import MyCart from "./test/MyCart.js";;
 // import Shop from 'front/test/Shop.js';
 // import History from "./Pages/History";
@@ -197,7 +194,6 @@ export default function App() {
 //   family: null,
 //   focused: false,
 // };
-
 
 // const screens = {
 //   Home: {
