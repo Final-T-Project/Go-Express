@@ -1,5 +1,4 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import {
   Animated,
   Image,
@@ -22,9 +21,8 @@ import menu from "../assets/menu.png";
 import close from "../assets/close.png";
 import { useNavigation } from "@react-navigation/native";
 import TabBar from "../components/TabBar";
-import { useEffect } from "react";
+import { UserContext } from "../UserContext";
 import axios from "axios";
-
 import IPADRESS from "../config/IPADRESS";
 
 export default function SideBbar({ navigation, route }) {
@@ -33,52 +31,43 @@ export default function SideBbar({ navigation, route }) {
   // To get the curretn Status of menu ...
   const [showMenu, setShowMenu] = useState(false);
   // Animated Properties...
-
   const offsetValue = useRef(new Animated.Value(0)).current;
   // Scale Intially must be One...
   const scaleValue = useRef(new Animated.Value(1)).current;
   const closeButtonOffset = useRef(new Animated.Value(0)).current;
-
   // state to save user data
   const [userDataProfile, setUserDataProfile] = useState([]);
-  // state to ssave id to send it to profile componnent
-  const [idToSend, setIdToSend] = useState("");
-
+  const { userId } = useContext(UserContext);
+  // to get profile information
   useEffect(() => {
-    console.log("the id: ", route.params.id); // from login
-    setIdToSend(route.params.id);
     axios
-      .get(`http://${IPADRESS}:5000/users/getUserPorfile/${route.params.id}`)
+      .get(`http://${IPADRESS}:5000/users/getUserPorfile/${userId}`)
       .then((response) => {
         setUserDataProfile(response.data);
-        console.log("user_data", response.data);
+        // console.log("user_data", response.data);
       })
       .catch((error) => {
         alert(error);
       });
   }, []);
 
-  // console.log("huhuh", ahmed);
-
   return (
-   
     <SafeAreaView style={styles.container}>
-       
       {/* blaset el contenue mta el side bar */}
       <ImageBackground
         source={{
           uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673040221/ekher_wba4yg.png",
         }}
-        resizeMode="cover"
+        // resizeMode="cover"
         style={styles.image}
       >
-        <View style={{ justifyContent: "flex-start"}}>
+        <View style={{ justifyContent: "flex-start" }}>
           {userDataProfile.map((element) => {
             if (element.photo) {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate("Profil", { idToSend });
+                    navigation.navigate("Profil");
                   }}
                 >
                   <Image
@@ -99,9 +88,10 @@ export default function SideBbar({ navigation, route }) {
                       fontWeight: "bold",
                       color: "white",
                       marginTop: 10,
+                      left:10
                     }}
                   >
-                     {element.name}{" "}
+                    {element.name}{" "}
                   </Text>
                   <Text
                     style={{
@@ -109,6 +99,7 @@ export default function SideBbar({ navigation, route }) {
                       // fontWeight: "bold",
                       color: "white",
                       marginTop: 10,
+                      left:10
                     }}
                   >
                     View Profil
@@ -117,11 +108,13 @@ export default function SideBbar({ navigation, route }) {
               );
             } else {
               return (
+                // hello user and view profil 
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate("Profil", { idToSend });
+                    navigation.navigate("Profil");
                   }}
                 >
+                  {/* user image */}
                   <Image
                     source={{
                       uri: `https://invisiblechildren.com/wp-content/uploads/2012/07/facebook-profile-picture-no-pic-avatar.jpg`,
@@ -130,8 +123,10 @@ export default function SideBbar({ navigation, route }) {
                       width: 90,
                       height: 90,
                       borderRadius: 7,
-                      marginTop: 10,
+                      marginTop: -30,
                       marginLeft: 23,
+                      left:30,
+                      
                     }}
                   ></Image>
                   <Text
@@ -140,6 +135,7 @@ export default function SideBbar({ navigation, route }) {
                       fontWeight: "bold",
                       color: "white",
                       marginTop: 10,
+                      left:30
                     }}
                   >
                     Hello {element.name}{" "}
@@ -149,7 +145,8 @@ export default function SideBbar({ navigation, route }) {
                       fontSize: 15,
                       // fontWeight: "bold",
                       color: "white",
-                      marginTop: 10,
+                      marginTop:10,
+                      left:30
                     }}
                   >
                     View Profil
@@ -160,11 +157,6 @@ export default function SideBbar({ navigation, route }) {
           })}
 
           <View style={{ flexGrow: 1, marginTop: 60 }}>
-            {
-              // Tab Bar Buttons....
-            }
-
-            {/* {TabButton(currentTab, setCurrentTab, "Feedback", feedback)} */}
             {TabButton(
               currentTab,
               setCurrentTab,
@@ -177,9 +169,6 @@ export default function SideBbar({ navigation, route }) {
           <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
         </View>
       </ImageBackground>
-      
-
-      
       <Animated.View
         style={{
           flexGrow: 1,
@@ -192,13 +181,11 @@ export default function SideBbar({ navigation, route }) {
           paddingHorizontal: 1,
           paddingVertical: 0,
           borderRadius: showMenu ? 15 : 0,
+          
           // Transforming View...
           transform: [{ scale: scaleValue }, { translateX: offsetValue }],
         }}
       >
-        {
-          // Menu Button...
-        }
         <Animated.View
           style={{
             transform: [
@@ -210,9 +197,6 @@ export default function SideBbar({ navigation, route }) {
         >
           <TouchableOpacity
             onPress={() => {
-              // Do Actions Here....
-              // Scaling the view...
-
               Animated.timing(scaleValue, {
                 toValue: showMenu ? 1 : 0.88,
                 duration: 300,
@@ -236,33 +220,25 @@ export default function SideBbar({ navigation, route }) {
               setShowMenu(!showMenu);
             }}
           >
-            
+            {/* x & 3bar of the side bar */}
             <Image
               source={showMenu ? close : menu}
               style={{
                 width: 30,
                 height: 30,
-                tintColor: "#ea580c",
+                tintColor: "#171717",
                 marginTop: 40,
               }}
             />
           </TouchableOpacity>
-         
-           
-            {/* {currentTab} */}
-          
         </Animated.View>
-            <Home />
+        <Home />
         {/* <Home  /> */}
         <TabBar navigation={navigation} />
-        {/* navigation={navigation} */}
       </Animated.View>
-      
     </SafeAreaView>
   );
 }
-
-// For multiple Buttons...
 const TabButton = (currentTab, setCurrentTab, title, image) => {
   const navigation = useNavigation();
   return (
@@ -290,6 +266,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
       LogOut
       //onPress={() => navigation.navigate("Profil")}
     >
+      {/* button side */}
       <View
         style={{
           flexDirection: "row",
@@ -300,6 +277,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           paddingRight: 35,
           borderRadius: 10,
           marginTop: 20,
+          left:10
         }}
       >
         <Image
@@ -307,6 +285,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           style={{
             width: 27,
             height: 25,
+            left:10,
             tintColor: currentTab == title ? "#ea580c" : "white",
           }}
         ></Image>
@@ -316,35 +295,31 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
             fontSize: 15,
             fontWeight: "bold",
             paddingLeft: 15,
+            left:10,
             color: currentTab == title ? "white" : "white",
           }}
         >
           {title}
         </Text>
       </View>
-      
     </TouchableOpacity>
-    
   );
 };
 
 const styles = StyleSheet.create({
-  
   container: {
-    flex:1,
+    flex: 1,
     backgroundColor: "white",
-   
-   
+    
   },
   image: {
     flex: 1,
     justifyContent: "center",
     width: "100%",
     height: "100%",
+    
   },
 });
-
-
 // nex Drower
 // import React from 'react';
 
@@ -357,7 +332,6 @@ const styles = StyleSheet.create({
 // } from 'react-navigation';
 
 // import { createDrawerNavigator } from '@react-navigation/drawer';
-
 
 // // screens
 // import MyCart from "../test/MyCart";
@@ -426,7 +400,6 @@ const styles = StyleSheet.create({
 //   family: null,
 //   focused: false,
 // };
-
 
 // const screens = {
 //   Home: {

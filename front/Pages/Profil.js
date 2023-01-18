@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import TabBar from "../components/TabBar";
 import {
   TouchableHighlight,
@@ -19,6 +19,7 @@ import {
   StatusBar,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { UserContext } from "../UserContext";
 import axios from "axios";
 
 import {
@@ -33,22 +34,24 @@ import {
 } from "native-base";
 import EditeProfil from "./EditeProfil";
 import { EmailAuthCredential } from "@firebase/auth";
-const width = Dimensions.get("window").width;
-const height = Dimensions.get("window").height;
 
 import IPADRESS from "../config/IPADRESS";
+
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
 const adressIp = IPADRESS;
 
 // feedback side
-function Feedback(props) {
+function Feedback() {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
+  const { userId } = useContext(UserContext);
   // state to save feedback text
   const [FeedBackText, setFeedBackText] = useState("");
   let AddFeedback = () => {
     axios
       .post(`http://${adressIp}:5000/feedback/addFeedback`, {
         details: FeedBackText,
-        id_user: props.idUser,
+        id_user: userId,
       })
       .catch((err) => {
         console.log(err);
@@ -90,9 +93,10 @@ function Feedback(props) {
               <TextArea
                 h={130}
                 size="xl"
+                _focus={{ borderColor: '#ED5C00' }}
                 placeholder="Feedback Placeholder"
-                w="1000"
-                maxW="380"
+                w="500"
+                maxW="350"
                 backgroundColor={"#fafafa"}
                 borderColor={"#ED5C00"}
                 onChangeText={(text) => setFeedBackText(text)}
@@ -125,28 +129,23 @@ function Feedback(props) {
 }
 
 function Info({ route, navigation, id }) {
+  const imgWidth = Dimensions.get("screen").width * 0.33333;
+
+  const { userId } = useContext(UserContext);
   const [userDataProfile, setUserDataProfile] = useState([]);
-
-  // console.log("newData mel profile", route.params.new_data);
-
-  // const [idUser, setIdUser] = useState({});
-
-  console.log("from Info", id);
-  // console.log(route.params.name);
 
   useEffect(() => {
     axios
-      .get(`http://${adressIp}:5000/users/getUserPorfile/${id}`)
+      .get(`http://${adressIp}:5000/users/getUserPorfile/${userId}`)
       .then((response) => {
         setUserDataProfile(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         alert(error);
       });
   }, []);
 
-  const imgWidth = Dimensions.get("screen").width * 0.33333;
   return (
     <View
       style={{
@@ -157,7 +156,7 @@ function Info({ route, navigation, id }) {
       }}
     >
       <HStack>
-        <EditeProfil id={id} />
+        <EditeProfil />
       </HStack>
       <Center>
         <Box
@@ -298,7 +297,7 @@ function Info({ route, navigation, id }) {
   );
 }
 // product side
-function Product(props) {
+function Product() {
   const COLOURS = {
     white: "#ffffff",
     black: "#000000",
@@ -310,13 +309,14 @@ function Product(props) {
     backgroundDark: "#777777",
   };
   const imgWidth = Dimensions.get("screen").width * 0.33333;
+
   // state to save user information
   const [userDataProduct, setUserDataProduct] = useState([]);
 
+  const { userId } = useContext(UserContext);
   useEffect(() => {
-    // console.log("the id from prduct : ", props.idUser);
     axios
-      .get(`http://${IPADRESS}:5000/users/getUserProduct/${props.idUser}`)
+      .get(`http://${IPADRESS}:5000/users/getUserProduct/${userId}`)
       .then((response) => {
         setUserDataProduct(response.data);
       })
@@ -325,9 +325,8 @@ function Product(props) {
       });
   }, []);
 
-  // console.log("data", userData);
   return (
-    <View>
+    <ScrollView >
       <View
         style={{
           flexDirection: "row",
@@ -339,9 +338,6 @@ function Product(props) {
         {userDataProduct.map((element, index) => (
           <TouchableOpacity
             key={index}
-            // onPress={() =>
-            //   navigation.navigate("ProductInfo", { productID: data.id })
-            // }
             style={{
               width: "100%",
               height: 100,
@@ -452,7 +448,7 @@ function Product(props) {
           </TouchableOpacity>
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -461,22 +457,16 @@ export default function Profil({ navigation, route }) {
 
   // state to save user information
   const [userDataProfile, setUserDataProfile] = useState([]);
-  // state to save id connected user
-  const [idUser, setIdUser] = useState("");
+
+  const { userId } = useContext(UserContext);
 
   useEffect(() => {
-    setIdUser(route.params.idToSend);
-    console.log("test", route.params.idToSend);
     axios
-
-      .get(
-        `http://${adressIp}:5000/users/getUserPorfile/${route.params.idToSend}`
-      )
+      .get(`http://${adressIp}:5000/users/getUserPorfile/${userId}`)
       .then((response) => {
         setUserDataProfile(response.data);
         // console.log(response.data);
       })
-
       .catch((error) => {
         alert(error);
       });
@@ -618,11 +608,11 @@ export default function Profil({ navigation, route }) {
               </TouchableOpacity>
             </View>
             {showContent === "Product" ? (
-              <Product idUser={idUser} />
+              <Product />
             ) : showContent === "Info" ? (
-              <Info id={idUser} />
+              <Info />
             ) : (
-              <Feedback idUser={idUser} />
+              <Feedback />
             )}
           </View>
         </ScrollView>

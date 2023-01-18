@@ -40,7 +40,8 @@ module.exports = {
   },
 
   getLastProductId: function (callback) {
-    const sql = "SELECT id_product FROM product ORDER BY id_product DESC LIMIT 1";
+    const sql =
+      "SELECT id_product FROM product ORDER BY id_product DESC LIMIT 1";
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
@@ -54,9 +55,3 @@ module.exports = {
     });
   },
 };
-
-
-
-
-
-     

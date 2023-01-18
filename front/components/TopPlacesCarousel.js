@@ -99,11 +99,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color:  '#fff',
+    color:  'black',
   },
   location: {
     fontSize: 18,
-    color:  '#fff',
+    color:  '#ED5C00',
   },
 });
 
