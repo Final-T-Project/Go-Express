@@ -29,6 +29,18 @@ module.exports = {
     );
   },
 
+  UpdateUserAdress: function (req, res) {
+    users.updateAdress(
+      function (err, results) {
+        if (err) res.status(500).send(err);
+        else res.json(results);
+      },
+      req.body.ville,
+      req.body.adress,
+      req.params.id_user
+    );
+  },
+
   GetUserProfile: function (req, res) {
     users.getUserProfile(function (err, result) {
       if (err) res.status(500).send(err);

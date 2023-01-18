@@ -43,4 +43,28 @@ module.exports = {
       else res.json(results);
     }, req.params.id_product);
   },
+  ChangeCartStatusToDone: function (req, res) {
+    cart.changeCartStatusToDone(
+      function (err, result) {
+        if (err) result.send(err);
+        else res.json(result);
+      },
+      req.body.date,
+      req.params.id_cart
+    );
+  },
+
+  DeleteAll: function (req, res) {
+    cart.deleteAll(function (err, result) {
+      if (err) result.send(err);
+      else res.json(result);
+    }, req.params.id_cart);
+  },
+
+  GetCartHistorique: function (req, res) {
+    cart.getCartHistoryByUserId(function (err, result) {
+      if (err) result.send(err);
+      else res.json(result);
+    }, req.params.id_user);
+  },
 };

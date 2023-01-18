@@ -22,54 +22,28 @@ import IPADRESS from "../config/IPADRESS";
 
 const ProductInfo = ({ route, navigation }) => {
   const { userId, setUserId } = useContext(UserContext);
-
-  console.log("messsage", userId);
+  const { userCartId } = useContext(UserContext);
 
   const width = Dimensions.get("window").width;
   const scrollX = new Animated.Value(0);
-
-  // recived the props sended from products
+  // selected element sended from products
   const item = route.params.element;
 
-  console.log("test id product", item.id_product);
-
-  const [idUser, setIdUser] = useState("");
-  const [idCart, setIdCart] = useState("");
-  //function to get the id_user
-  useEffect(() => {
-    AsyncStorage.getItem("userData").then((res) => {
-      setIdUser(JSON.parse(res));
-    });
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get(`http://${IPADRESS}:5000/carts/getIdCart/${idUser.userId}`)
-      .then((response) => {
-        console.log("test", response.data);
-        response.data.map((element) => {
-          setIdCart(element.id_cart);
-          console.log("testoo", element.id_cart);
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  // console.log("test id cart ", idCart);
+  // console.log("iduser", userId);
+  // console.log("id cart", userCartId);
+  // console.log("id product", item.id_product);
 
   const AddProductToCart = (idProduct) => {
     axios
       .post(`http://${IPADRESS}:5000/carts/addProductTocart`, {
         id_product: idProduct,
-        id_cart: idCart,
+        id_cart: userCartId,
       })
       .catch((err) => {
-        alert(err);
+        alert("This Product alerdy in the cart ");
       })
       .then(() => {
-        navigation.navigate("Cart", { idCart });
+        navigation.navigate("Cart");
       });
   };
 

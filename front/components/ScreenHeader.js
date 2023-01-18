@@ -9,21 +9,21 @@ const ScreenHeader = ({mainTitle, secondTitle}) => {
     <View style={styles.container}>
           
 
-      <Text style={styles.mainTitle}>{mainTitle}</Text>
-      {/* <Image style={styles.cart} source={cart} />
-      <Image style={styles.notifications} source={notifications} /> */}
-      <Text style={styles.secondTitle}>{secondTitle} </Text>
+      {/* <Text style={styles.mainTitle}>{mainTitle}</Text> */}
+      <Image style={styles.cart} source={cart} />
+      <Image style={styles.notifications} source={notifications} />
+      {/* <Text style={styles.secondTitle}>{secondTitle} </Text> */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 24,
-    paddingVertical: 24,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
   },
   mainTitle: {
-    fontSize: 32,
+    fontSize: 20,
     fontWeight: 'bold',
     color:" #1C2765"
   },
@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
   notifications:{
     width:30,
     height:30,
-    padding: -70,
-    paddingBottom:3,
+    // padding: -70,
+    // paddingBottom:3,
     marginLeft: 350,
   },
 });

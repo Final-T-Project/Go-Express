@@ -8,7 +8,6 @@ import Products from "./Pages/Products.js";
 import History from "./Pages/History";
 import Profil from "./Pages/Profil";
 import LogInSignIn from "./Pages/LogInSignIn";
-import SignIn from "./Pages/SignIn";
 import AddProduct from "./Pages/AddProduct";
 import TestSignin from "./Pages/TestSignin.js";
 import TestLogin from "./Pages/TestLogin.js";
@@ -28,13 +27,15 @@ import BookService from "./Pages/BookService.js";
 import BookingDetails from "./Pages/BookingDetails.js";
 import Notification from "./Pages/Notifcation"
 import Awelscreen from "./Pages/Awelscreen.js";
-
+import { LogBox } from "react-native";
 import HistoryDetails from "./Pages/HistoryDetails.js";
 import ChatScreen from "./Pages/ChatScreen.js";
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [showContent, setShowContent] = useState("");
-  const [userId, setUserId] = useState("l id 2 fois mel app");
+  const [userId, setUserId] = useState("");
+  const [userCartId, setUserCartId] = useState("");
+  LogBox.ignoreAllLogs();
   return (
     <UserContext.Provider
       value={{
@@ -42,6 +43,8 @@ export default function App() {
         setShowContent,
         userId,
         setUserId,
+        userCartId,
+        setUserCartId,
       }}
     >
       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
@@ -60,9 +63,8 @@ export default function App() {
               component={LogInSignIn}
             />
             <Stack.Screen name="WELCOME HOME" component={Awelscreen} />
-            <Stack.Screen name="home" component={yahya} />
-            <Stack.Screen name="History" component={History} />
-            <Stack.Screen name="Create an account" component={SignIn} />
+            <Stack.Screen name="home" component={yahya} options={{ headerShown: false }}/>
+            <Stack.Screen name="History" component={History}  options={{ headerShown: false }}/>
             <Stack.Screen name="PhoneNumber Verif" component={PhoneNumber} />
             <Stack.Screen
               name="TestSignin"
@@ -76,7 +78,7 @@ export default function App() {
             />
             <Stack.Screen
               name="Profil"
-              options={{ headerShown: false }}
+              // options={{ headerShown: false }}
               component={Profil}
             />
             {/* <Stack.Screen name="TabBar" component={TabBar} /> */}
@@ -85,22 +87,24 @@ export default function App() {
               options={{ headerShown: false }}
               component={SideBar}
             />
-            <Stack.Screen name="Shop" component={Shop} />
-            <Stack.Screen name="Products" component={Products} />
+            <Stack.Screen name="Shop" component={Shop}  options={{ headerShown: false }}/>
+            <Stack.Screen name="Products" component={Products} options={{ headerShown: false }} />
             {/* <Stack.Screen name="Email Confiramtion" component={EmailConfirmation} /> */}
             <Stack.Screen
               name="AddProduct"
-              // options={{ headerShown: false }}
+              //  options={{ headerShown: false }}
               component={AddProduct}
             />
             <Stack.Screen name="EditeProfil" component={EditeProfil} />
             <Stack.Screen name="EditeAdress" component={EditeAdress} />
             <Stack.Screen name="Shopping" component={Shopping} />
             <Stack.Screen name="Cart" component={Cart} />
-            <Stack.Screen name="ProductInfo" component={ProductInfo} />
-            <Stack.Screen name="ImageDetails" component={ImageDetails} />
-            <Stack.Screen name="Home" component={yahya} />
-            <Stack.Screen name="Serves" component={Serves} />
+            <Stack.Screen name="ProductInfo" component={ProductInfo}  />
+            <Stack.Screen name="ImageDetails" component={ImageDetails}  />
+            <Stack.Screen name="Home" component={yahya}  options={{ headerShown: false }} />
+            <Stack.Screen name="Serves" component={Serves} 
+            // options={{ headerShown: false }}
+            />
             <Stack.Screen name="BookService" component={BookService} />
             <Stack.Screen name="Booking Details" component={BookingDetails} />
             <Stack.Screen name="HistoryDetails" component={HistoryDetails} />
@@ -109,19 +113,15 @@ export default function App() {
 
           </Stack.Navigator>
         </NavigationContainer>
-    </NativeBaseProvider>
+      </NativeBaseProvider>
     </UserContext.Provider>
-  //   <NativeBaseProvider>
-  //   <View style={{ flex: 1 }}>
-  //   <StatusBar hidden={false} />
-  //   <SideBar />
-  // </View>  
-  
+    //   <NativeBaseProvider>
+    //   <View style={{ flex: 1 }}>
+    //   <StatusBar hidden={false} />
+    //   <SideBar />
+    // </View>
   );
 }
-
-
-
 
 // import React from 'react';
 
@@ -135,8 +135,7 @@ export default function App() {
 
 // import { createDrawerNavigator } from '@react-navigation/drawer';
 
-
-// // screens
+// screens
 // import MyCart from "./test/MyCart.js";;
 // import Shop from 'front/test/Shop.js';
 // import History from "./Pages/History";
@@ -202,7 +201,6 @@ export default function App() {
 //   family: null,
 //   focused: false,
 // };
-
 
 // const screens = {
 //   Home: {

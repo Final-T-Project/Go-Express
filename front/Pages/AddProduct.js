@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   TextInput,
@@ -8,12 +8,13 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
   Permissions,
+  LogBox,
+  Dimensions,
 } from "react-native";
-
 import {
+  Button,
   IconButton,
   Icon,
-  Button,
   Modal,
   Stack,
   FormControl,
@@ -36,14 +37,18 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import TabBar from "../components/TabBar";
 import axios from "axios";
 import IPADRESS from "../config/IPADRESS";
+import { UserContext } from "../UserContext";
 
-const AddProduct = ({ navigation, route }) => {
+const AddProduct = ({ navigation }) => {
   // state for selected name , description , price , quantity , category , image
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(1);
+  const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [category, setCategory] = useState("");
+
+  const { userId } = useContext(UserContext);
+  const { userCartId } = useContext(UserContext);
 
   // function to incriment product quantity
   const onMinus = () => {
@@ -69,7 +74,6 @@ const AddProduct = ({ navigation, route }) => {
     "December",
   ];
   let date = month[new Date().getMonth()];
-
   let posted_at =
     date +
     " " +
@@ -80,14 +84,6 @@ const AddProduct = ({ navigation, route }) => {
     new Date().getHours() +
     ":" +
     new Date().getMinutes();
-
-  // state to save id connected user
-  const [idUser, setIdUser] = useState("");
-  //function to get the id_user
-  AsyncStorage.getItem("userData").then((res) => {
-    setIdUser(JSON.parse(res));
-    // console.log(res);
-  });
 
   // function to pick image from device and store it in image variable
   const pickImageOne = async () => {
@@ -147,7 +143,7 @@ const AddProduct = ({ navigation, route }) => {
     } else {
       axios
         .post(`http://${IPADRESS}:5000/products/addProduct`, {
-          sellIerd: idUser.userId,
+          sellIerd: userId,
           buyerId: "Null",
           name: name,
           category: category,
@@ -155,8 +151,8 @@ const AddProduct = ({ navigation, route }) => {
           description: description,
           photo: imageOne,
           quantity: quantity,
-          id_user: idUser.userId,
-          id_cart: 2,
+          id_user: userId,
+          id_cart: userCartId,
           productStatus: "NotAccepted",
           Published_at: posted_at,
         })
@@ -173,9 +169,8 @@ const AddProduct = ({ navigation, route }) => {
           });
         })
         .then(() => {
-          navigation.navigate();
+          navigation.navigate("Home");
         })
-
         .catch((error) => {
           console.log(error);
         });
@@ -183,221 +178,198 @@ const AddProduct = ({ navigation, route }) => {
   };
 
   const toast = useToast();
-
+const {height,width}=Dimensions.get("screen")
   return (
-    <>
-      <ScrollView>
-        <View style={styles.container}>
-          <Formik
-            initialValues={{
-              name: "",
-              description: "",
-              price: "",
-              image: "",
-              quantity: 1,
-              category: "",
-            }}
-            validationSchema={Yup.object().shape({
-              name: Yup.string().required(""),
-              description: Yup.string().required(""),
-              price: Yup.number().required("Price is required"),
-            })}
-          >
-            {/* {formik} */}
-            {({ errors, touched, handleBlur }) => (
-              <View style={styles.form}>
-                {/*Name  Start */}
-                {/* <Text style={styles.label}>Product Name :</Text>
-                <TextInput
-                  mode="outlined"
-                  style={styles.input}
-                  onChangeText={(text) => setName(text)}
-                />
-                {name.length === 0 ? (
-                  <Text style={styles.error}>Name is required</Text>
-                ) : null} */}
-                <FormControl>
-                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
-                    Product Name
-                  </FormControl.Label>
-                  <Input
-                    backgroundColor={"muted.100"}
-                    borderColor={"muted.200"}
-                    fontSize={"20"}
-                    onChangeText={(text) => setName(text)}
-                  />
-                </FormControl>
+    <>  
+    
+        <ScrollView>
+        <View style={{height: height}}>
+            <Formik
+              initialValues={{
+                name: "",
+                description: "",
+                price: "",
+                image: "",
+                quantity: 1,
+                category: "",
+              }}
+              validationSchema={Yup.object().shape({
+                name: Yup.string().required(""),
+                description: Yup.string().required(""),
+                price: Yup.number().required("Price is required"),
+              })}
+            >
+              {/* {formik} */}
+              {({ errors, touched, handleBlur }) => (
+                <View style={styles.form}>
+                  {/*Name  Start */}
 
-                {/*Name  End */}
+                  <FormControl>
+                    <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                      Product Name
+                    </FormControl.Label>
+                    <Input
+                    _focus={{ borderColor: '#ED5C00' }}
+                    placeholder="Product Name"
+                      backgroundColor={"muted.100"}
+                      borderColor={"muted.200"}
+                      fontSize={"15"}
+                      onChangeText={(text) => setName(text)}
+                    />
+                  </FormControl>
 
-                {/*Description  start */}
-                {/* <Text style={styles.label}>Description :</Text>
-                <TextInput
-                  style={styles.inputDescription}
-                  onChangeText={(text) => setDescription(text)}
-                />
-                {description.length === 0 ? (
-                  <Text style={styles.error}>Description is required</Text>
-                ) : null} */}
+                  {/*Name  End */}
 
-                <FormControl>
-                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
-                    Product Description
-                  </FormControl.Label>
-                  <Input
-                    backgroundColor={"muted.100"}
-                    borderColor={"muted.200"}
-                    fontSize={"20"}
-                    onChangeText={(text) => setDescription(text)}
-                  />
-                </FormControl>
+                  {/*Description  Start */}
+                  <FormControl>
+                    <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                      Product Description
+                    </FormControl.Label>
+                    <Input
+                    _focus={{ borderColor: '#ED5C00' }}
+                    placeholder="Product Description"
+                      backgroundColor={"muted.100"}
+                      borderColor={"muted.200"}
+                      fontSize={"15"}
+                      onChangeText={(text) => setDescription(text)}
+                    />
+                  </FormControl>
+                  {/*Description  End */}
 
-                {/*Description  End */}
+                  {/*Price  Start */}
+                  <FormControl>
+                    <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                      Unit Price
+                    </FormControl.Label>
+                    <Input
+                    _focus={{ borderColor: '#ED5C00' }}
+                    placeholder="Product Price"
+                      backgroundColor={"muted.100"}
+                      borderColor={"muted.200"}
+                      fontSize={"15"}
+                      onChangeText={(number) => setPrice(number)}
+                    />
+                  </FormControl>
 
-                {/*Price  Start */}
-                {/* <Text style={styles.label}>Unit Price:</Text>
-                <TextInput
-                  style={styles.input}
-                  onBlur={handleBlur("price")}
-                  onChangeText={(number) => setPrice(number)}
-                />
-                {price.length === 0 ? (
-                  <Text style={styles.error}>Price is required</Text>
-                ) : null} */}
-                {/* {typeof price !== Number ? (
-                  <Text style={styles.error}>Price must be a number </Text>
-                ) : null} */}
+                  {/*Price  End */}
 
-                <FormControl>
-                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
-                    Unit Price
-                  </FormControl.Label>
-                  <Input
-                    backgroundColor={"muted.100"}
-                    borderColor={"muted.200"}
-                    fontSize={"20"}
-                    onChangeText={(number) => setPrice(number)}
-                  />
-                </FormControl>
-
-                {/*Price  End */}
-
-                {/*Category  Start */}
-                <Text style={styles.label}>Category:</Text>
-                <View style={styles.input}>
-                  <Picker
-                    selectedValue={category}
-                    onValueChange={(value) => setCategory(value)}
-                    // mode="dropdown"
-                    mode="dialog"
-                    style={styles.picker}
-                    onBlur={handleBlur("category")}
-                  >
-                    <Picker.Item label="Please Select Category" />
-                    <Picker.Item label="Kitchen" value="Kitchen" />
-                    <Picker.Item label="Furniture" value="Furniture" />
-                    <Picker.Item label="Garden" value="Garden" />
-                    <Picker.Item label="Accessories" value="Accessories" />
-                  </Picker>
-                  {category === "Please Select Category" ? (
-                    <Text style={styles.error}> Category is required </Text>
-                  ) : null}
-                </View>
-                {/*Category  End */}
-
-                {/*Quantity  Start */}
-                <Text style={styles.label}>Quantity:</Text>
-                <View style={styles.quantityContainer}>
-                  <Pressable onPress={onMinus} style={styles.quantityButton}>
-                    <Text style={styles.quantityInput}>-</Text>
-                  </Pressable>
-
-                  <Text>{quantity}</Text>
-
-                  <Pressable onPress={onPlus} style={styles.quantityButton}>
-                    <Text style={styles.quantityInput}>+</Text>
-                  </Pressable>
-                </View>
-
-                {/* Quantity  End */}
-                <View style={styles.container}>
-                  <Text style={styles.Price_label}>
-                    Total Price : {price * quantity} dt{" "}
-                  </Text>
-                </View>
-
-                {/*Image  start */}
-
-                {/* <View>
-                  <Button title="Pick a image1 " onPress={pickImageOne} /> */}
-                {/* {image && <Image source={{ uri: image }} />} */}
-                {/* </View> */}
-
-                {/* <View>
-                  <Button title="Pick a image2 " onPress={pickImageTow} />
-                </View> */}
-
-                {/* <View>
-                  <Button title="Pick a image3 " onPress={pickImageThree} />
-                </View> */}
-
-                <FormControl>
-                  <FormControl.Label>Image One</FormControl.Label>
-                  <Button backgroundColor={"#373E5A"} onPress={pickImageOne}>
-                    Pick image1
-                  </Button>
-                </FormControl>
-
-                <FormControl>
-                  <FormControl.Label>Image Tow </FormControl.Label>
-                  <Button backgroundColor={"#373E5A"} onPress={pickImageTow}>
-                    Pick image2
-                  </Button>
-                </FormControl>
-
-                <FormControl>
-                  <FormControl.Label>Image Three</FormControl.Label>
-                  <Button backgroundColor={"#373E5A"} onPress={pickImageThree}>
-                    Pick image3
-                  </Button>
-                </FormControl>
-                {/*Image  End */}
-
-                {/*Button Add  Start */}
-                <TouchableOpacity>
-                  <View style={styles.button}>
-                    <MaterialIcons name="add" size={24} color="white" />
-                    <Text
-                      onPress={() => {
-                        toast.show({
-                          render: () => {
-                            return (
-                              <Box
-                                bg="green.500"
-                                px="2"
-                                py="1"
-                                rounded="sm"
-                                mb={2}
-                              >
-                                Your product Sended to admin For confirmation.
-                              </Box>
-                            );
-                          },
-                        });
-                        addProductDetails();
-                      }}
+                  {/*Category  Start */}
+                  <Text style={styles.label}>Category:</Text>
+                  <View style={styles.input}>
+                    <Picker
+                      selectedValue={category}
+                      onValueChange={(value) => setCategory(value)}
+                      // mode="dropdown"
+                      mode="dialog"
+                      style={styles.picker}
+                      onBlur={handleBlur("category")}
                     >
-                      Add Product
+                      <Picker.Item label="Please Select Category" />
+                      <Picker.Item label="Kitchen" value="Kitchen" />
+                      <Picker.Item label="Furniture" value="Furniture" />
+                      <Picker.Item label="Garden" value="Garden" />
+                      <Picker.Item label="Accessories" value="Accessories" />
+                    </Picker>
+                  </View>
+                  {/*Category  End */}
+
+                  {/*Quantity  Start */}
+                  <Text style={styles.label}>Quantity:</Text>
+                  <View style={styles.quantityContainer}>
+                    <Pressable onPress={onMinus} style={styles.quantityButton}>
+                      <Text style={styles.quantityInput}>-</Text>
+                    </Pressable>
+
+                    <Text>{quantity}</Text>
+
+                    <Pressable onPress={onPlus} style={styles.quantityButton} >
+                      <Text style={styles.quantityInput}>+</Text>
+                    </Pressable>
+                  </View>
+
+                  {/* Quantity  End */}
+                  <View style={styles.container}>
+                    <Text style={styles.Price_label}>
+                      Total Price : {price * quantity} dt{" "}
                     </Text>
                   </View>
-                </TouchableOpacity>
-                {/*Button Add  End */}
-              </View>
-            )}
-          </Formik>
+
+                  {/*Image  start */}
+
+                  <FormControl>
+                    <FormControl.Label>Image One</FormControl.Label>
+                    <Button backgroundColor={"#373E5A"} onPress={pickImageOne}>
+                      Pick image1
+                    </Button>
+                  </FormControl>
+
+                  <FormControl>
+                    <FormControl.Label>Image Tow </FormControl.Label>
+                    <Button backgroundColor={"#373E5A"} onPress={pickImageTow}>
+                      Pick image2
+                    </Button>
+                  </FormControl>
+
+                  <FormControl>
+                    <FormControl.Label>Image Three</FormControl.Label>
+                    <Button
+                      backgroundColor={"#373E5A"}
+                      onPress={pickImageThree}
+                    >
+                      Pick image3
+                    </Button>
+                  </FormControl>
+                  {/*Image  End */}
+
+                  {/*Button Add  Start */}
+                  <TouchableOpacity>
+                    <View>
+                      <Button
+                        style={styles.button}
+                        backgroundColor={"#F14E24"}
+                        onPress={() => {
+                          toast.show({
+                            render: () => {
+                              return (
+                                <Box
+                                  bg="green.500"
+                                  px="2"
+                                  py="1"
+                                  rounded="sm"
+                                  mb={2}
+                                >
+                                  Your product Sended to admin For confirmation.
+                                </Box>
+                              );
+                            },
+                          });
+                          addProductDetails();
+                        }}
+                      >
+                        Save
+                      </Button>
+                    </View>
+                  </TouchableOpacity>
+                  {/*Button Add  End */}
+                </View>
+              )}
+            </Formik>
         </View>
-      </ScrollView>
-      <TabBar navigation={navigation} />
+        </ScrollView> 
+        {/* <TabBar navigation={navigation} /> */}
+         
+    {/* save bottun 2 */}
+{/* 
+      <Button
+        backgroundColor={"#F14E24"}
+        onPress={() => {
+          saveUpdate();
+        }}
+      >
+        Save
+      </Button> */}
+
+      
     </>
   );
 };
@@ -406,12 +378,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    height: "100%",
+    // height: "100%",
     justifyContent: "center",
   },
   form: {
     flex: 1,
-    width: "80%",
+    // width: "100%",
     backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
@@ -423,7 +395,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    marginTop: 70,
+    // marginTop: 10,
   },
 
   form_image: {
@@ -495,18 +467,15 @@ const styles = StyleSheet.create({
     height: 35,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#d1d1d1",
+    backgroundColor: "#F14E24",
   },
   quantityInput: {
     fontSize: 18,
   },
   button: {
-    flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#ED5C00",
-    padding: 6,
-    borderRadius: 5,
     marginTop: 30,
+    Color: "#ED5C00",
   },
   buttonText: {
     color: "white",
