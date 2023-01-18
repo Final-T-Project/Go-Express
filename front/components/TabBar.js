@@ -63,8 +63,8 @@ const TabBar = ({ navigation }) => {
               marginStart: -5,
               top: 20,
               backgroundColor: "#373E5A",
-              width: 60,
-              marginTop: 8,
+              width: 70,
+              marginTop: 11,
               height: 50,
             }}
           >

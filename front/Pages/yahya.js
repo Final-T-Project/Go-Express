@@ -31,19 +31,22 @@ const Home = () => {
   
   return (
     <View style={styles.container}>
-      <MainHeader title="Go-Express" style={styles.title} />
-      <ScreenHeader
-        mainTitle="where are here "
-        secondTitle="to facilitate your life"
+      <ScrollView>
+        <ScreenHeader
+        // mainTitle="where are here "
+        // secondTitle="to facilitate your life"
       />
+      <MainHeader title="Go-Express To facilitate your life" style={styles.title} />
+      
       <ScrollView showsVerticalScrollIndicator={false}>
         <TopPlacesCarousel list={TOP_PLACES} />
         <SectionHeader
           title="Product"
-          buttonTitle="Seedd All"
+          buttonTitle="See All"
           onPress={() => {}}
         />
         <TripsList list={PLACES} />
+      </ScrollView>
       </ScrollView>
     </View>
   );
@@ -54,6 +57,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fbfbfb",
   },
+  
 });
 
 export default Home;

@@ -85,6 +85,7 @@ const Shop = ({ navigation }) => {
                   alignItems: "center",
                 }}
               >
+                <TouchableOpacity>
                 <Text
                   style={{
                     fontSize: 18,
@@ -92,9 +93,13 @@ const Shop = ({ navigation }) => {
                     fontWeight: "500",
                     letterSpacing: 1,
                   }}
+                  onPress={() => {
+                    SendCategory("Kitchen");
+                  }}
                 >
                   kitchen
                 </Text>
+                </TouchableOpacity>
                 <Text
                   style={{
                     fontSize: 14,
@@ -111,14 +116,14 @@ const Shop = ({ navigation }) => {
                 <Text
                   style={{
                     fontSize: 14,
-                    color: COLOURS.blue,
+                    color: "#F14E24",
                     fontWeight: "400",
                   }}
                   onPress={() => {
                     SendCategory("Kitchen");
                   }}
                 >
-                  SeeAll
+                  See All
                 </Text>
               </TouchableOpacity>
             </View>
@@ -184,6 +189,7 @@ const Shop = ({ navigation }) => {
                   alignItems: "center",
                 }}
               >
+                <TouchableOpacity>
                 <Text
                   style={{
                     fontSize: 20,
@@ -191,9 +197,13 @@ const Shop = ({ navigation }) => {
                     fontWeight: "500",
                     letterSpacing: 1,
                   }}
+                  onPress={() => {
+                    SendCategory("Furniture");
+                  }}
                 >
                   Furniture
                 </Text>
+                </TouchableOpacity>
                 <Text
                   style={{
                     fontSize: 14,
@@ -210,14 +220,14 @@ const Shop = ({ navigation }) => {
                 <Text
                   style={{
                     fontSize: 14,
-                    color: COLOURS.blue,
+                    color: "#F14E24",
                     fontWeight: "400",
                   }}
                   onPress={() => {
                     SendCategory("Furniture");
                   }}
                 >
-                  SeeAll
+                  See All
                 </Text>
               </TouchableOpacity>
             </View>
@@ -284,6 +294,7 @@ const Shop = ({ navigation }) => {
                   alignItems: "center",
                 }}
               >
+                <TouchableOpacity>
                 <Text
                   style={{
                     fontSize: 20,
@@ -291,9 +302,14 @@ const Shop = ({ navigation }) => {
                     fontWeight: "500",
                     letterSpacing: 1,
                   }}
+                  onPress={() => {
+                    SendCategory("Accessories");
+                  }}
                 >
                   Accessories
                 </Text>
+                </TouchableOpacity>
+               
                 <Text
                   style={{
                     fontSize: 14,
@@ -310,14 +326,14 @@ const Shop = ({ navigation }) => {
                 <Text
                   style={{
                     fontSize: 14,
-                    color: COLOURS.blue,
+                    color: "#F14E24",
                     fontWeight: "400",
                   }}
                   onPress={() => {
                     SendCategory("Accessories");
                   }}
                 >
-                  SeeAll
+                  See All
                 </Text>
               </TouchableOpacity>
             </View>
@@ -384,6 +400,7 @@ const Shop = ({ navigation }) => {
                   alignItems: "center",
                 }}
               >
+                <TouchableOpacity>
                 <Text
                   style={{
                     fontSize: 20,
@@ -391,9 +408,13 @@ const Shop = ({ navigation }) => {
                     fontWeight: "500",
                     letterSpacing: 1,
                   }}
+                  onPress={() => {
+                    SendCategory("Garden");
+                  }}
                 >
                   Garden
                 </Text>
+                </TouchableOpacity>
                 <Text
                   style={{
                     fontSize: 14,
@@ -410,14 +431,14 @@ const Shop = ({ navigation }) => {
                 <Text
                   style={{
                     fontSize: 14,
-                    color: COLOURS.blue,
+                    color:" COLOURS.blue",
                     fontWeight: "400",
                   }}
                   onPress={() => {
                     SendCategory("Garden");
                   }}
                 >
-                  SeeAll
+                  See All
                 </Text>
               </TouchableOpacity>
             </View>
