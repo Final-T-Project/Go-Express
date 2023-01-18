@@ -1,4 +1,3 @@
-
 import React, { useRef, useState, useContext, useEffect } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 
@@ -30,7 +29,6 @@ const Home = () => {
   }, []);
 
   
-
   return (
     <View style={styles.container}>
       <ScrollView>

@@ -9,12 +9,10 @@ const ScreenHeader = ({mainTitle, secondTitle}) => {
     <View style={styles.container}>
           
 
-
       {/* <Text style={styles.mainTitle}>{mainTitle}</Text> */}
       <Image style={styles.cart} source={cart} />
       <Image style={styles.notifications} source={notifications} />
       {/* <Text style={styles.secondTitle}>{secondTitle} </Text> */}
-
     </View>
   );
 };

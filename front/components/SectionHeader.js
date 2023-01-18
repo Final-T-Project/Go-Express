@@ -3,7 +3,7 @@ import {Button, Text, View, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 const SectionHeader = ({title, onPress, buttonTitle = 'Button'}) => {
   const navigation=useNavigation()
-  function naaa(){
+  function rederection(){
     navigation.navigate('Shop')
   }
   return (

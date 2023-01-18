@@ -28,7 +28,6 @@ import BookingDetails from "./Pages/BookingDetails.js";
 import Notification from "./Pages/Notifcation"
 import Awelscreen from "./Pages/Awelscreen.js";
 import { LogBox } from "react-native";
-
 import HistoryDetails from "./Pages/HistoryDetails.js";
 import ChatScreen from "./Pages/ChatScreen.js";
 const Stack = createNativeStackNavigator();
