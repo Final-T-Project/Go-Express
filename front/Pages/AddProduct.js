@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
   View,
-  TextInput,
   Pressable,
   StyleSheet,
-  Keyboard,
-  TouchableWithoutFeedback,
   ScrollView,
   Permissions,
   LogBox,
@@ -157,7 +154,7 @@ const AddProduct = ({ navigation }) => {
           Published_at: posted_at,
         })
         .then((result) => {
-          console.log(result.data.insertId);
+          // console.log(result.data.insertId);
           return result.data.insertId;
         })
         .then((id_post) => {

@@ -11,16 +11,37 @@ import {
 import { DatePickerAndroid } from "react-native";
 import React from "react";
 import { Picker } from "@react-native-picker/picker";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { UserContext } from "../UserContext";
 import { useNavigation } from "@react-navigation/native";
+import IPADRESS from "../config/IPADRESS";
 
 // primary color : #F14E24
 // Secondary color : #373E5A
 
 export default function BookService() {
+  const [id, setId] = useState("");
+  const [idCart, setIdCart] = useState("");
+
+  const { userId } = useContext(UserContext);
+
+  useEffect(() => {
+    axios
+      .get(`http://${IPADRESS}:5000/carts/getIdCart/${userId}`)
+      .then((res) => {
+        console.log(res.data[0].id_cart);
+        setIdCart(res.data[0].id_cart);
+      })
+      .catch((err) => {
+        console.log("Error ----------->" + err);
+      });
+  }, [userId]);
+
+  // console.log(userId)
   const Navigation = useNavigation();
   const [date, setDate] = useState(new Date());
 

@@ -29,7 +29,7 @@ import Notification from "./Pages/Notifcation";
 import Awelscreen from "./Pages/Awelscreen.js";
 import { LogBox } from "react-native";
 import HistoryDetails from "./Pages/HistoryDetails.js";
-import ChatScreen from "./Pages/ChatScreen.js";
+import Join_Us from "./components/Join_Us.js";
 import IntoductionPages from "./Pages/IntoductionPages.js";
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -53,17 +53,18 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator
             initialRouteName="IntoductionPages"
-
-            // screenOptions={{
-            //   headerTintColor: "#ED5C00",
-            // }}
+            screenOptions={{
+              headerTintColor: "white",
+              headerStyle: {
+                backgroundColor: "#ED5C00",
+              },
+            }}
           >
             <Stack.Screen
               name="LogInSignIn"
               options={{ headerShown: false }}
               component={LogInSignIn}
             />
-            <Stack.Screen name="WELCOME HOME" component={Awelscreen} />
             <Stack.Screen
               name="IntoductionPages"
               component={IntoductionPages}
@@ -135,8 +136,7 @@ export default function App() {
             <Stack.Screen name="BookService" component={BookService} />
             <Stack.Screen name="Booking Details" component={BookingDetails} />
             <Stack.Screen name="HistoryDetails" component={HistoryDetails} />
-            <Stack.Screen name="Notification" component={Notification} />
-            <Stack.Screen name="Chat" component={ChatScreen} />
+            <Stack.Screen name="Join_Us" component={Join_Us} />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

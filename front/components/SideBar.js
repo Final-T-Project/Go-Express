@@ -38,6 +38,10 @@ export default function SideBbar({ navigation, route }) {
   // state to save user data
   const [userDataProfile, setUserDataProfile] = useState([]);
   const { userId } = useContext(UserContext);
+
+  // console.log("hetah IDCard", userCartId);
+  // console.log("hetah ID", userId);
+
   // to get profile information
   useEffect(() => {
     axios
@@ -49,14 +53,14 @@ export default function SideBbar({ navigation, route }) {
       .catch((error) => {
         alert(error);
       });
-  }, [userDataProfile]);
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       {/* blaset el contenue mta el side bar */}
       <ImageBackground
         source={{
-          uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673040221/ekher_wba4yg.png",
+          uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1674060984/font_oq0zp9.png",
         }}
         // resizeMode="cover"
         style={styles.image}
