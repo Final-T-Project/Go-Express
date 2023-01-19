@@ -54,7 +54,7 @@ function Feedback() {
         id_user: userId,
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
       });
   };
 
@@ -93,9 +93,10 @@ function Feedback() {
               <TextArea
                 h={130}
                 size="xl"
+                _focus={{ borderColor: "#ED5C00" }}
                 placeholder="Feedback Placeholder"
-                w="1000"
-                maxW="380"
+                w="500"
+                maxW="350"
                 backgroundColor={"#fafafa"}
                 borderColor={"#ED5C00"}
                 onChangeText={(text) => setFeedBackText(text)}
@@ -320,12 +321,12 @@ function Product() {
         setUserDataProduct(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        alert(error);
       });
-  }, []);
+  }, [userDataProduct]);
 
   return (
-    <View>
+    <ScrollView>
       <View
         style={{
           flexDirection: "row",
@@ -447,7 +448,7 @@ function Product() {
           </TouchableOpacity>
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -469,7 +470,7 @@ export default function Profil({ navigation, route }) {
       .catch((error) => {
         alert(error);
       });
-  }, []);
+  }, [userDataProfile]);
 
   return (
     <>

@@ -28,22 +28,29 @@ const Home = () => {
       });
   }, []);
 
-  
   return (
     <View style={styles.container}>
-      <MainHeader title="Go-Express" style={styles.title} />
-      <ScreenHeader
-        mainTitle="where are here "
-        secondTitle="to facilitate your life"
-      />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <TopPlacesCarousel list={TOP_PLACES} />
-        <SectionHeader
-          title="Product"
-          buttonTitle="Seedd All"
-          onPress={() => {}}
+      <ScrollView>
+        <ScreenHeader
+        // mainTitle="where are here "
+        // secondTitle="to facilitate your life"
         />
-        <TripsList list={PLACES} />
+        <MainHeader
+          title="Go-Express To facilitate your life"
+          style={styles.title}
+        />
+
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <TopPlacesCarousel list={TOP_PLACES} />
+          <SectionHeader
+            title="Product"
+            buttonTitle="See All"
+            onPress={() => {
+              navig;
+            }}
+          />
+          <TripsList list={PLACES} />
+        </ScrollView>
       </ScrollView>
     </View>
   );

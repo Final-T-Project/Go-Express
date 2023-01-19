@@ -42,7 +42,7 @@ export const CustomerListResults = (props) => {
                         display: "flex",
                       }}
                     >
-                      <Avatar src={element.photo} sx={{ mr: 2 }}></Avatar>
+                      <Avatar src={{ uri: element.photo }} sx={{ mr: 2 }}></Avatar>
 
                       <Link href={"/id"} as={`/${element.id_user}`}>
                         <Typography color="textPrimary" variant="body1">
@@ -53,9 +53,9 @@ export const CustomerListResults = (props) => {
                   </TableCell>
                   <TableCell>{element.email}</TableCell>
                   <TableCell>{element.phone_number}</TableCell>
-                  <TableCell>element.gender</TableCell>
-                  <TableCell>elemnt.ville</TableCell>
-                  <TableCell>element.adress</TableCell>
+                  <TableCell>{element.gender}</TableCell>
+                  <TableCell>{element.ville}</TableCell>
+                  <TableCell>{element.adress}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

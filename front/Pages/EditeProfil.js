@@ -125,7 +125,9 @@ export default function EditeProfil() {
               <Input
                 backgroundColor={"muted.100"}
                 borderColor={"muted.200"}
-                fontSize={"20"}
+                _focus={{ borderColor: "#ED5C00" }}
+                placeholder="Your name here"
+                fontSize={"15"}
                 onChangeText={(changed) => {
                   setName(changed);
                 }}
@@ -137,7 +139,9 @@ export default function EditeProfil() {
                 <Input
                   backgroundColor={"muted.100"}
                   borderColor={"muted.200"}
-                  fontSize={"20"}
+                  _focus={{ borderColor: "#ED5C00" }}
+                  placeholder="Your state here"
+                  fontSize={"15"}
                   onChangeText={(changed) => {
                     setVille(changed);
                   }}
@@ -147,7 +151,9 @@ export default function EditeProfil() {
               <Input
                 backgroundColor={"muted.100"}
                 borderColor={"muted.200"}
-                fontSize={"20"}
+                _focus={{ borderColor: "#ED5C00" }}
+                placeholder="Your adress here"
+                fontSize={"15"}
                 onChangeText={(changed) => {
                   setAdress(changed);
                 }}
@@ -158,7 +164,9 @@ export default function EditeProfil() {
               <Input
                 backgroundColor={"muted.100"}
                 borderColor={"muted.200"}
-                fontSize={"20"}
+                _focus={{ borderColor: "#ED5C00" }}
+                placeholder="Your phonr number here"
+                fontSize={"15"}
                 onChangeText={(changed) => {
                   setPhoneNumber(changed);
                 }}
