@@ -17,4 +17,13 @@ module.exports = {
 
     );
   },
+  getPrice: function (req, res) {
+    service.getPrice(
+      function (results, err) {
+        if (err) res.status(500).send(err);
+        else res.json(results);
+      },
+      req.params.idService,
+    );
+  },
 };

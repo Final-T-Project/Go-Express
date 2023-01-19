@@ -10,6 +10,8 @@ import {
 import React, { useState, useEffect, useContext } from "react";;
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../UserContext";
+import axios from "axios"
+import IPADRESS from "../config/IPADRESS";
 
 export default function BookingDetails({route}) {
   const Navigation = useNavigation();
@@ -20,10 +22,18 @@ export default function BookingDetails({route}) {
 
   const [serviceChoosen,setServiceChoosen]=useState("")
 
+  const [price,setPrice] = useState(0)
+
   useEffect(()=>{
     listService==="1"?setServiceChoosen("Moving"):listService==="2"?setServiceChoosen("Cleaning"):listService==="3"?setServiceChoosen("Plumbing"):setServiceChoosen("electricity")
   },[listService])
   
+  useEffect(()=>{
+    axios.get(`http://${IPADRESS}:5000/service/getPrice/${listService}`)
+    .then((res)=>{
+      setPrice(res.data[0].price)
+    })
+  },[listService])
 
 
   console.log("hethi mel details" , time);
@@ -84,7 +94,7 @@ export default function BookingDetails({route}) {
                 opacity: 0.2,
               }}
             />
-            {toList.length?<Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 10 }}>
+            {serviceChoosen === "Moving" ?<Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 10 }}>
               Destination :{"   "+toList}
             </Text>:<Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 10 }}>
               Destination :{"   "+"The service you choose doesn't have destination field"}
@@ -100,7 +110,7 @@ export default function BookingDetails({route}) {
               }}
             />
             <Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 10 }}>
-              Price :{" "}
+              Price :{"    "+price+"  Dt"}
             </Text>
 
             <View style={{ alignItems: "center" }}>

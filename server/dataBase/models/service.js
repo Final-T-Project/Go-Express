@@ -6,5 +6,11 @@ module.exports = {
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
+  },
+  getPrice: function (callback,idService){
+    const sql = `SELECT * FROM serves WHERE id_serves=${idService}`
+    connection.query(sql,function(err,res){
+        callback(res,err)
+    })
   }
 }
