@@ -276,7 +276,7 @@ export default function BookService() {
 
             {/** --------------------------------DROP DOWN LIST FOR PLACES  --------------------------------------------- */}
 
-            <View
+            {listService==="1"?<View
               style={{
                 display: "flex",
                 flexDirection: "row",
@@ -355,7 +355,7 @@ export default function BookService() {
                         })}
                       </Picker>
                     </View>
-            </View>
+            </View>:null}
 
 
 {/*------------------------------------------------------------ BUTTON ---------------------------------------------------------- */}
