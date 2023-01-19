@@ -11,7 +11,7 @@ const adminRoute = require("./routes/admin.js");
 const productRoute = require("./routes/product.js");
 const cartRoute = require("./routes/cart.js");
 const feedBackRoute = require("./routes/feedback.js");
-
+const employersRoute = require("./routes/Employer.js");
 //
 
 app.use("/users", usersRoute);
@@ -19,5 +19,6 @@ app.use("/admin", adminRoute);
 app.use("/products", productRoute);
 app.use("/carts", cartRoute);
 app.use("/feedback", feedBackRoute);
+app.use("/Employers", employersRoute);
 module.exports = app;
 
