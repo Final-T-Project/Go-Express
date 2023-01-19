@@ -27,10 +27,13 @@ import BookService from "./Pages/BookService.js";
 import BookingDetails from "./Pages/BookingDetails.js";
 import Notification from "./Pages/Notifcation";
 import Awelscreen from "./Pages/Awelscreen.js";
+
 import { LogBox } from "react-native";
 import HistoryDetails from "./Pages/HistoryDetails.js";
 import Join_Us from "./components/Join_Us.js";
 import IntoductionPages from "./Pages/IntoductionPages.js";
+import ChatScreen from "./Pages/ChatScreen.js";
+
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [showContent, setShowContent] = useState("");
@@ -61,6 +64,18 @@ export default function App() {
             }}
           >
             <Stack.Screen
+              name="Notification"
+              options={{ headerShown: false }}
+              component={Notification}
+            />
+
+            <Stack.Screen
+              name="ChatScreen"
+              options={{ headerShown: false }}
+              component={ChatScreen}
+            />
+
+            <Stack.Screen
               name="LogInSignIn"
               options={{ headerShown: false }}
               component={LogInSignIn}
@@ -69,11 +84,7 @@ export default function App() {
               name="IntoductionPages"
               component={IntoductionPages}
             />
-            <Stack.Screen
-              name="home"
-              component={yahya}
-              options={{ headerShown: false }}
-            />
+
             <Stack.Screen
               name="History"
               component={History}
