@@ -12,7 +12,9 @@ import { DatePickerAndroid } from "react-native";
 import React from "react";
 import { Picker } from "@react-native-picker/picker";
 import { useState , useEffect , useContext} from "react";
-import DateTimePicker from "@react-native-community/datetimepicker";
+//import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePicker from "react-native-modal-datetime-picker";
+
 import moment from "moment";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from 'axios'
@@ -29,10 +31,11 @@ export default function BookService() {
   const [idCart,setIdCart]=useState("")
 
   const { userId } = useContext(UserContext);
-  
+
   useEffect(()=>{
+    setId(userId)
     axios.get(`http://${IPADRESS}:5000/carts/getIdCart/${userId}`).then((res)=>{
-        console.log(res.data[0].id_cart)
+        //console.log(res.data[0].id_cart)
         setIdCart(res.data[0].id_cart)
       })
       .catch((err)=>{
@@ -42,7 +45,10 @@ export default function BookService() {
 
 
   
-  console.log(userId)
+  console.log(id)
+  console.log(idCart)
+
+
   const Navigation = useNavigation();
   const [date, setDate] = useState(new Date());
 
@@ -80,7 +86,9 @@ export default function BookService() {
   };
 
   const handleBookPress = () => {
-    Navigation.navigate("Booking Details");
+    console.log(listService+" "+date+" "+time+" "+fromList+" "+toList)
+    console.log(listService+" "+date+" "+time+" "+fromList+" "+toList)
+    //Navigation.navigate("Booking Details");
   };
 
   // ------------------------------- ALL STATE IN TUNISIA ( I WILL MAP OVER IT SO I DON'T WRITE IT MANUALLY :))
@@ -110,6 +118,20 @@ export default function BookService() {
     "Touzeur",
     "Zaghouan",
   ];
+
+  const handleDay =(date)=>{
+    let formattedDate = date.toLocaleDateString("en-US", {day: 'numeric', month: 'none', year: 'none'});
+    console.log(formattedDate.substring(3,5))
+    setDate(formattedDate.substring(3,5))
+    setDShow(false)
+  }
+
+  const handleTime=(time)=>{
+    let formattedTime = time.toLocaleTimeString();
+    console.log(formattedTime)
+    setTime(formattedTime)
+    setTimeShow(false)
+  }
 
   return (
     <View style={css.container}>
@@ -143,15 +165,15 @@ export default function BookService() {
               style={css.picker}
             >
               <Picker.Item
-                label="Please Select Counter"
+                label="Please Select Service"
                 enabled={false}
                 opacity={0.5}
                 color="gray"
               />
-              <Picker.Item label="Moving + tidying up things" value="Moving" />
-              <Picker.Item label="Cleanig" value="Cleanig" />
-              <Picker.Item label="Plumbing" value="Plumbing" />
-              <Picker.Item label="Electricity" value="Electricity" />
+              <Picker.Item label="Moving + tidying up things" value="1" />
+              <Picker.Item label="Cleanig" value="2" />
+              <Picker.Item label="Plumbing" value="3" />
+              <Picker.Item label="Electricity" value="4" />
             </Picker>
 
             {/** --------------------------------LIGNE  --------------------------------------------- */}
@@ -190,13 +212,10 @@ export default function BookService() {
             </TouchableOpacity>
 
             {DShow ? (
-              <DateTimePicker
-                isVisible={DShow}
-                onConfirm={() => setDShow(false)}
-                onCancel={() => setDShow(false)}
-                mode="date"
-                value={date}
-                onChange={(time) => setDateChoosen(time)}
+                <DateTimePicker
+                  isVisible={DShow}
+                  onConfirm={handleDay}
+                  onCancel={()=>setDShow(false)}
               />
             ) : null}
 
@@ -237,14 +256,11 @@ export default function BookService() {
 
             {timeShow ? (
               <DateTimePicker
-                isVisible={timeShow}
-                onConfirm={() => setTimeShow(false)}
-                onCancel={() => setTimeShow(false)}
-                mode="time"
-                value={date}
-                is24Hour={true}
-                onChange={(time) => handleTimeChange(time)}
-              />
+              mode="time"
+              isVisible={timeShow}
+              onConfirm={handleTime}
+              onCancel={()=>setTimeShow(false)}
+          />
             ) : null}
 
             <View
@@ -269,82 +285,85 @@ export default function BookService() {
                 justifyContent: "center",
               }}
             >
-              <View>
-                <Text
-                  style={{
-                    marginTop: 0,
-                    fontWeight: "600",
-                    fontSize: 20,
-                    marginLeft: 30,
-                  }}
-                >
-                  {" "}
-                  From :
-                </Text>
-                <Picker
-                  selectedValue={fromList}
-                  onValueChange={(value) => setFromList(value)}
-                  // mode="dropdown"
-                  mode="dialog"
-                  style={css.pickerFromTo}
-                >
-                  <Picker.Item
-                    label="Please Select City"
-                    enabled={false}
-                    opacity={0.5}
-                    color="gray"
-                  />
-                  {ville.map((element, key) => {
-                    return <Picker.Item label={element} value={element} />;
-                  })}
-                </Picker>
-                <Image
-                  source={require("../assets/MovingTruck.gif")}
-                  style={{
-                    width: 80,
-                    height: 80,
-                    marginLeft: 50,
-                    marginTop: -20,
-                  }}
-                />
-              </View>
+                    <View>
+                      <Text
+                        style={{
+                          marginTop: 0,
+                          fontWeight: "600",
+                          fontSize: 20,
+                          marginLeft: 30,
+                        }}
+                      >
+                        {" "}
+                        From :
+                      </Text>
+                      <Picker
+                        selectedValue={fromList}
+                        onValueChange={(value) => setFromList(value)}
+                        // mode="dropdown"
+                        mode="dialog"
+                        style={css.pickerFromTo}
+                      >
+                        <Picker.Item
+                          label="Please Select City"
+                          enabled={false}
+                          opacity={0.5}
+                          color="gray"
+                        />
+                        {ville.map((element, key) => {
+                          return <Picker.Item label={element} value={element} />;
+                        })}
+                      </Picker>
+                      <Image
+                        source={require("../assets/MovingTruck.gif")}
+                        style={{
+                          width: 80,
+                          height: 80,
+                          marginLeft: 50,
+                          marginTop: -20,
+                        }}
+                      />
+                    </View>
 
-              <View>
-                <Text
-                  style={{
-                    marginTop: 20,
-                    fontWeight: "600",
-                    fontSize: 20,
-                    marginLeft: 30,
-                  }}
-                >
-                  {" "}
-                  To :
-                </Text>
-                <Picker
-                  selectedValue={toList}
-                  onValueChange={(value) => setToList(value)}
-                  // mode="dropdown"
-                  mode="dialog"
-                  style={css.pickerFromTo}
-                >
-                  <Picker.Item
-                    label="Please Select City"
-                    enabled={false}
-                    opacity={0.5}
-                    color="gray"
-                  />
-                  {ville.map((element, key) => {
-                    return <Picker.Item label={element} value={element} />;
-                  })}
-                </Picker>
-              </View>
+                    <View>
+                      <Text
+                        style={{
+                          marginTop: 20,
+                          fontWeight: "600",
+                          fontSize: 20,
+                          marginLeft: 30,
+                        }}
+                      >
+                        {" "}
+                        To :
+                      </Text>
+                      <Picker
+                        selectedValue={toList}
+                        onValueChange={(value) => setToList(value)}
+                        // mode="dropdown"
+                        mode="dialog"
+                        style={css.pickerFromTo}
+                      >
+                        <Picker.Item
+                          label="Please Select City"
+                          enabled={false}
+                          opacity={0.5}
+                          color="gray"
+                        />
+                        {ville.map((element, key) => {
+                          return <Picker.Item label={element} value={element} />;
+                        })}
+                      </Picker>
+                    </View>
             </View>
 
+
+{/*------------------------------------------------------------ BUTTON ---------------------------------------------------------- */}
+            {!listService.length || !date.length || !time.length || !fromList.length || !toList.length ?
             <View style={{ alignItems: "center" }}>
               <TouchableOpacity
                 style={{
-                  backgroundColor: "#F14E24",
+                  backgroundColor: "#fcad92",
                   width: 200,
                   height: 50,
                   color: "white",
@@ -366,7 +385,36 @@ export default function BookService() {
                   Book
                 </Text>
               </TouchableOpacity>
-            </View>
+            </View>:
+            <View style={{ alignItems: "center" }}>
+                      <TouchableOpacity
+                      style={{
+                        backgroundColor: "#F14E24",
+                        width: 200,
+                        height: 50,
+                        color: "white",
+                        borderRadius: 100,
+                        justifyContent: "center",
+                        marginTop: 20,
+                        alignItems: "center",
+                      }}
+                      onPress={() => handleBookPress()}
+                    >
+                      <Text
+                        style={{
+                          color: "white",
+                          textAlign: "center",
+                          fontSize: 17,
+                          fontWeight: "500",
+                        }}
+                      >
+                        Book
+                      </Text>
+                    </TouchableOpacity>
+                    </View>
+            }
+
+
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>
