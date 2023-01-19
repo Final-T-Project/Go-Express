@@ -25,8 +25,13 @@ import IPADRESS from "../config/IPADRESS";
 // primary color : #F14E24
 // Secondary color : #373E5A
 
-export default function BookService() {
+export default function BookService({route}) {
   
+  const serviceChoosen = route.params.service;
+  console.log(serviceChoosen)
+
+  
+
   const [id,setId]=useState("")
   const [idCart,setIdCart]=useState("")
 
@@ -37,6 +42,7 @@ export default function BookService() {
     axios.get(`http://${IPADRESS}:5000/carts/getIdCart/${userId}`).then((res)=>{
         //console.log(res.data[0].id_cart)
         setIdCart(res.data[0].id_cart)
+        serviceChoosen==="Moving"?setListService("1"):serviceChoosen==="Cleaning"?setListService("2"):serviceChoosen==="Plumbing"?setListService("3"):setListService("4")
       })
       .catch((err)=>{
         console.log("Error ----------->"+err)
@@ -72,6 +78,9 @@ export default function BookService() {
   const [toList, setToList] = useState("");
 
   // ---------------------------------- Functions -------------------------------------------------//
+
+ 
+
   const handleTimeChange = (time) => {
     setTime(time);
     console.log(time);
