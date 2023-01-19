@@ -28,7 +28,9 @@ import IPADRESS from "../config/IPADRESS";
 export default function BookService({route}) {
   
   const serviceChoosen = route.params.service;
+  
   console.log(serviceChoosen)
+
 
   
 
@@ -56,17 +58,21 @@ export default function BookService({route}) {
 
 
   const Navigation = useNavigation();
-  const [date, setDate] = useState(new Date());
 
+  const {date, setDate } = useContext(UserContext);
+  const {time, setTime } = useContext(UserContext);
+  const {toList,setToList} = useContext(UserContext)
   // ---------------------------------- Drop list state -------------------------------------------------//
-  const [listService, setListService] = useState("");
+ 
+
+  const {listService, setListService } = useContext(UserContext);
+
 
   // ---------------------------------- Date state -------------------------------------------------//
   const [dateChoosen, setDateChoosen] = useState("");
   const [DShow, setDShow] = useState(false);
 
   // ---------------------------------- Time  state -------------------------------------------------//
-  const [time, setTime] = useState("");
   const [timeShow, setTimeShow] = useState(false); // show and hide the time window
 
   // --------------------------------- distination from Drop List ---------------------------------- //
@@ -75,7 +81,7 @@ export default function BookService({route}) {
 
   // --------------------------------- distination to Drop List ---------------------------------- //
 
-  const [toList, setToList] = useState("");
+ 
 
   // ---------------------------------- Functions -------------------------------------------------//
 
@@ -98,7 +104,16 @@ export default function BookService({route}) {
     console.log(listService+" "+date+" "+time+" "+fromList+" "+toList)
     console.log(listService+" "+date+" "+time+" "+fromList+" "+toList)
     //Navigation.navigate("Booking Details");
-    Navigation.navigate("Booking Details",{listService,date,time})
+    axios.post(`http://${IPADRESS}:5000/service/addBookedService`,{"date":date,"idUser":id,"idService":listService,"idCart":idCart,"time":time,"fromPlace":fromList,"toPlace":toList})
+    .then(()=>{
+      Navigation.navigate("Booking Details")
+      //,{params:{listService,date,time}}
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+
+    
   };
 
   // ------------------------------- ALL STATE IN TUNISIA ( I WILL MAP OVER IT SO I DON'T WRITE IT MANUALLY :))

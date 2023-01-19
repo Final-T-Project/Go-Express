@@ -7,14 +7,26 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";;
 import { useNavigation } from "@react-navigation/native";
+import { UserContext } from "../UserContext";
 
 export default function BookingDetails({route}) {
   const Navigation = useNavigation();
 
-  const {listService,date,time} = route.Params;
+  // const {listService,date,time} = route.Params;
 
+  const { listService,date,time,toList } = useContext(UserContext);
+
+  const [serviceChoosen,setServiceChoosen]=useState("")
+
+  useEffect(()=>{
+    listService==="1"?setServiceChoosen("Moving"):listService==="2"?setServiceChoosen("Cleaning"):listService==="3"?setServiceChoosen("Plumbing"):setServiceChoosen("electricity")
+  },[listService])
+  
+
+
+  console.log("hethi mel details" , time);
 
   return (
     <View style={css.container}>
@@ -34,7 +46,7 @@ export default function BookingDetails({route}) {
             </Text>
 
             <Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 40 }}>
-              services :{" "}
+              services :{"   "+serviceChoosen}
             </Text>
             <View
               style={{
@@ -47,7 +59,7 @@ export default function BookingDetails({route}) {
               }}
             />
             <Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 10 }}>
-              Date :{" "}
+              Date :{"     "+date}
             </Text>
             <View
               style={{
@@ -60,7 +72,7 @@ export default function BookingDetails({route}) {
               }}
             />
             <Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 10 }}>
-              Time :{" "}
+              Time :{"   "+time}
             </Text>
             <View
               style={{
@@ -72,9 +84,11 @@ export default function BookingDetails({route}) {
                 opacity: 0.2,
               }}
             />
-            <Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 10 }}>
-              Destination :{" "}
-            </Text>
+            {toList.length?<Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 10 }}>
+              Destination :{"   "+toList}
+            </Text>:<Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 10 }}>
+              Destination :{"   "+"The service you choose doesn't have destination field"}
+            </Text>}
             <View
               style={{
                 marginTop: 5,
