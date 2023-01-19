@@ -10,21 +10,13 @@ import {
 } from "react-native";
 import {
   Button,
-  IconButton,
-  Icon,
-  Modal,
-  Stack,
   FormControl,
   Input,
-  Center,
-  NativeBaseProvider,
   Text,
-  Image,
   useToast,
   Box,
   Select,
   CheckIcon,
-  WarningOutlineIcon,
   Radio,
 } from "native-base";
 import * as ImagePicker from "expo-image-picker";
@@ -32,61 +24,20 @@ import { Picker } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import TabBar from "../components/TabBar";
 import axios from "axios";
 import IPADRESS from "../config/IPADRESS";
 import { UserContext } from "../UserContext";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 const Join_Us = ({ navigation }) => {
-  // state for selected name , description , price , quantity , category , image
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
-  const [quantity, setQuantity] = useState(1);
-  const [category, setCategory] = useState("");
-  const [service, setService] = useState("");
-  
-  const { userId } = useContext(UserContext);
-  const { userCartId } = useContext(UserContext);
-  const [value, setValue] = React.useState('Male');
-  // function to incriment product quantity
-  const onMinus = () => {
-    setQuantity(Math.max(0, quantity - 1));
-  };
-  // function to dicriment product quantity
-  const onPlus = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const month = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  let date = month[new Date().getMonth()];
-  let posted_at =
-    date +
-    " " +
-    new Date().getDate() +
-    " " +
-    "2022" +
-    " " +
-    new Date().getHours() +
-    ":" +
-    new Date().getMinutes();
-
+  // state for  firt name , last name , phone number , adress , work position , gender , photo
+  const [first_name, setFirst_name] = useState("");
+  const [last_name, setLast_name] = useState("");
+  const [phone_number, setPhone_number] = useState("");
+  const [adress, setAdress] = useState("");
+  const [work_position, setWork_position] = useState("");
+  const [gender, setGender] = React.useState("Male");
   // function to pick image from device and store it in image variable
   const pickImageOne = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -103,301 +54,217 @@ const Join_Us = ({ navigation }) => {
       };
     }
   };
-  const [fileResponse, setFileResponse] = useState([]);
-
-  // const handleDocumentSelection = useCallback(async () => {
-  //   try {
-  //     const response = await DocumentPicker.pick({
-  //       presentationStyle: 'fullScreen',
-  //     });
-  //     setFileResponse(response);
-  //   } catch (err) {
-  //     console.warn(err);
-  //   }
-  // }, []);
-  const pickImageTow = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Image,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    setImageTow(result.uri);
-    console.log("image2:", result.uri);
-    if (!result.cancelled) {
-      let newfile2 = {
-        uri: result.uri,
-      };
-    }
-  };
-  const pickImageThree = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Image,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    setImageThree(result.uri);
-    console.log("image3:", result.uri);
-    if (!result.cancelled) {
-      let newfile3 = {
-        uri: result.uri,
-      };
-    }
-  };
-
   const [imageOne, setImageOne] = useState(null);
-  const [imageTow, setImageTow] = useState(null);
-  const [imageThree, setImageThree] = useState(null);
-
-  let addProductDetails = () => {
-    if (!name.length || !description.length || !price.length) {
+  const toast = useToast();
+  const { height, width } = Dimensions.get("screen");
+  let addEmployer = () => {
+    if (!first_name.length || !last_name.length || !adress.length) {
       alert("Please fill all information");
-    } else {
+    } 
+    else if(phone_number.length<8 ||phone_number.length>8){
+      alert("Your phone number must containe 8 numbers");
+    }
+    // else if(phone_number.length>8){
+    //   alert("Your phone number must containe 8 numbers");
+    // }
+    else {
       axios
-        .post(`http://${IPADRESS}:5000/products/addProduct`, {
-          sellIerd: userId,
-          buyerId: "Null",
-          name: name,
-          category: category,
-          price: price,
-          description: description,
-          photo: imageOne,
-          quantity: quantity,
-          id_user: userId,
-          id_cart: userCartId,
-          productStatus: "NotAccepted",
-          Published_at: posted_at,
+        .post(`http://${IPADRESS}:5000/Employers/addEmployer`, {
+          first_name:first_name,
+          last_name:last_name,
+          phone_number:phone_number,
+          adress:adress,
+          work_position:work_position,
+          gender:gender,
+          photo:imageOne
         })
-        .then((result) => {
-          console.log(result.data.insertId);
-          return result.data.insertId;
-        })
-        .then((id_post) => {
-          axios.post(`http://${IPADRESS}:5000/products/addProduct/photo`, {
-            photo1: imageOne,
-            photo2: imageTow,
-            photo3: imageThree,
-            idproduct: id_post,
-          });
-        })
-        .then(() => {
-          navigation.navigate("Home");
-        })
+        // .then(() => {
+        //   navigation.navigate("Home");
+        // })
         .catch((error) => {
           console.log(error);
         });
     }
   };
-
-  const toast = useToast();
-const {height,width}=Dimensions.get("screen")
+  console.log(imageOne);
   return (
-    <>  
-    
-        <ScrollView>
-        <View style={{height: height}}>
-            <Formik
-              initialValues={{
-                name: "",
-                description: "",
-                price: "",
-                image: "",
-                quantity: 1,
-                category: "",
-              }}
-              validationSchema={Yup.object().shape({
-                name: Yup.string().required(""),
-                description: Yup.string().required(""),
-                price: Yup.number().required("Price is required"),
-              })}
-            >
-              {/* {formik} */}
-              {({ errors, touched, handleBlur }) => (
-                <View style={styles.form}>
-                  {/*First Name */}
-                  <FormControl>
-                    <FormControl.Label fontStyle={{ color: "#373E5A" }}>
-                      First Name
-                    </FormControl.Label>
-                    <Input
-                    _focus={{ borderColor: '#ED5C00' }}
+    <>
+      <ScrollView>
+        <View style={{ height: height }}>
+          <Formik
+            initialValues={{
+              firstname: "",
+              lasttname: "",
+              phoneNumber: "",
+              adress: "",
+              image: "",
+              workPosition: "",
+              gender: "",
+            }}
+            validationSchema={Yup.object().shape({
+              firstname: Yup.string().required("Required Field"),
+              lasttname: Yup.string().required("Required Field"),
+              phoneNumber: Yup.string().required("Required Field"),
+              adress: Yup.string().required("Required Field"),
+              image: Yup.string().required("Required Field"),
+              workPosition: Yup.string().required("Required Field"),
+              gender: Yup.string().required("Required Field"),
+            })}
+          >
+            {({ errors, touched, handleBlur }) => (
+              <View style={styles.form}>
+                {/*First Name */}
+                <FormControl>
+                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    First Name
+                  </FormControl.Label>
+                  <Input
+                    _focus={{ borderColor: "#ED5C00" }}
                     placeholder="First Name"
-                      backgroundColor={"muted.100"}
-                      borderColor={"muted.200"}
-                      fontSize={"15"}
-                      onChangeText={(text) => setName(text)}
-                    />
-                  </FormControl>
-                  {/*Last Name*/}
-                  <FormControl>
-                    <FormControl.Label fontStyle={{ color: "#373E5A" }}>
-                      Last Name
-                    </FormControl.Label>
-                    <Input
-                    _focus={{ borderColor: '#ED5C00' }}
+                    backgroundColor={"muted.100"}
+                    borderColor={"muted.200"}
+                    fontSize={"15"}
+                    onChangeText={(text) => setFirst_name(text)}
+                  />
+                </FormControl>
+                {/*Last Name*/}
+                <FormControl>
+                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    Last Name
+                  </FormControl.Label>
+                  <Input
+                    _focus={{ borderColor: "#ED5C00" }}
                     placeholder="Last Name"
-                      backgroundColor={"muted.100"}
-                      borderColor={"muted.200"}
-                      fontSize={"15"}
-                      onChangeText={(text) => setName(text)}
-                    />
-                  </FormControl>
-                  {/*Phone Number */}
-                  <FormControl>
-                    <FormControl.Label fontStyle={{ color: "#373E5A" }}>
-                      Phone Number
-                    </FormControl.Label>
-                    <Input
-                    _focus={{ borderColor: '#ED5C00' }}
+                    backgroundColor={"muted.100"}
+                    borderColor={"muted.200"}
+                    fontSize={"15"}
+                    onChangeText={(text) => setLast_name(text)}
+                  />
+                </FormControl>
+                {/*Phone Number */}
+                <FormControl>
+                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    Phone Number
+                  </FormControl.Label>
+                  <Input
+                    _focus={{ borderColor: "#ED5C00" }}
                     placeholder="Phone Number"
-                      backgroundColor={"muted.100"}
-                      borderColor={"muted.200"}
-                      fontSize={"15"}
-                      onChangeText={(text) => setDescription(text)}
-                    />
-                  </FormControl>
-                  {/*Adress */}
-                  <FormControl>
-                    <FormControl.Label fontStyle={{ color: "#373E5A" }}>
-                      Adress
-                    </FormControl.Label>
-                    <Input
-                    _focus={{ borderColor: '#ED5C00' }}
+                    backgroundColor={"muted.100"}
+                    borderColor={"muted.200"}
+                    fontSize={"15"}
+                    maxlength={"8"}
+                    onChangeText={(text) => setPhone_number(text)}
+                  />
+                </FormControl>
+                {/*Adress */}
+                <FormControl>
+                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    Adress
+                  </FormControl.Label>
+                  <Input
+                    _focus={{ borderColor: "#ED5C00" }}
                     placeholder="Adress"
-                      backgroundColor={"muted.100"}
-                      borderColor={"muted.200"}
-                      fontSize={"15"}
-                      onChangeText={(text) => setDescription(text)}
-                    />
-                  </FormControl>
-               
-                  {/*Price  End */}
-
-                  {/*Category  Start */}
-                  {/* <FormControl w="3/4" maxW="300" isRequired isInvalid>
-        <FormControl.Label>Choose work position</FormControl.Label>
-        <Select minWidth="200" accessibilityLabel="Choose Service" placeholder="Choose Service" _selectedItem={{
-        bg: "teal.600",
-        endIcon: <CheckIcon size={5} />
-      }} mt="1">
-          <Select.Item label="Householder" value="householder" />
-          <Select.Item label="Electrician" value="electrician" />
-          <Select.Item label="Plumber" value="plumber" />
-          <Select.Item label="Truck Driver" value="truck driver" />
-          <Select.Item label="Delivery Agents" value="delivery agents" />
-        </Select>
-        {/* <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-          Please make a selection!
-        </FormControl.ErrorMessage> */}
-      {/* </FormControl> */}
-
-                  {/*Category  End */}
-          <FormControl>
-                    <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    backgroundColor={"muted.100"}
+                    borderColor={"muted.200"}
+                    fontSize={"15"}
+                    onChangeText={(text) => setAdress(text)}
+                  />
+                </FormControl>
+                {/*work position */}
+                <FormControl>
+                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
                     Choose work position
-                    </FormControl.Label>         
-      <Box maxW="300">
-        <Select selectedValue={service} minWidth="200" accessibilityLabel="work position" placeholder="work position" _selectedItem={{
-        bg: "teal.600",
-        endIcon: <CheckIcon size="5" />
-      }} mt={1} onValueChange={itemValue => setService(itemValue)}>
-          <Select.Item label="Householder" value="householder" />
-          <Select.Item label="Electrician" value="electrician" />
-          <Select.Item label="Plumber" value="plumber" />
-          <Select.Item label="Truck Driver" value="truck driver" />
-          <Select.Item label="Delivery Agents" value="delivery agents" />
-        </Select>
-      </Box>
-      </FormControl>
-                
-
-              {/* Gender */}
-              <FormControl>
-                    <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                  </FormControl.Label>
+                  <Box maxW="300">
+                    <Select
+                      selectedValue={work_position}
+                      minWidth="200"
+                      accessibilityLabel="work position"
+                      placeholder="work position"
+                      _selectedItem={{
+                        bg: "teal.600",
+                        endIcon: <CheckIcon size="5" />,
+                      }}
+                      mt={1}
+                      onValueChange={(itemValue) => setWork_position(itemValue)}
+                    >
+                      <Select.Item label="Householder" value="householder" />
+                      <Select.Item label="Electrician" value="electrician" />
+                      <Select.Item label="Plumber" value="plumber" />
+                      <Select.Item label="Truck Driver" value="truck driver" />
+                      <Select.Item
+                        label="Delivery Agents"
+                        value="delivery agents"
+                      />
+                    </Select>
+                  </Box>
+                </FormControl>
+                {/* Gender */}
+                <FormControl>
+                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
                     Choose your Gender
-                    </FormControl.Label>  
-              <Radio.Group
-      name="myRadioGroup"
-      value={value}
-      
-      onChange={(nextValue) => {
-        setValue(nextValue);
-      }}
-    >
-      <Radio color="#ED5C00"  selectedColor="red" value="Male" my="1">
-        Male
-      </Radio>
-      <Radio value="Female" my="1">
-        Female
-      </Radio>
-    </Radio.Group>
-    </FormControl>
-                  {/* Image */}
-
-                  <FormControl>
-                    <FormControl.Label>Your Image</FormControl.Label>
-                    <Button backgroundColor={"#373E5A"} onPress={pickImageOne}>
-                      Pick your image
+                  </FormControl.Label>
+                  <Radio.Group
+                    name="myRadioGroup"
+                    value={gender}
+                    onChange={(nextValue) => {
+                      setGender(nextValue);
+                    }}
+                  >
+                    <Radio value="Male" my="1">
+                      Male
+                    </Radio>
+                    <Radio value="Female" my="1">
+                      Female
+                    </Radio>
+                  </Radio.Group>
+                </FormControl>
+                {/* Image */}
+                <FormControl>
+                  <FormControl.Label>Your Image</FormControl.Label>
+                  <Button backgroundColor={"#373E5A"} onPress={pickImageOne}>
+                    Pick your image
+                  </Button>
+                </FormControl>
+                {/*Button Add  Start */}
+                <TouchableOpacity>
+                  <View>
+                    <Button
+                      style={styles.button}
+                      backgroundColor={"#F14E24"}
+                      onPress={() => {
+                        toast.show({
+                          render: () => {
+                            return (
+                              <Box
+                                bg="green.500"
+                                px="2"
+                                py="1"
+                                rounded="sm"
+                                mb={2}
+                              >
+                                Your request has been successfully submitted and will be processed shortly and you will be contacted by one of our officials.
+                              </Box>
+                            );
+                          },
+                        });
+                       addEmployer();
+                      }}
+                    >
+                      Save
                     </Button>
-                  </FormControl>
-
-                 
-                  {/*Image  End */}
-                  <SafeAreaView style={styles.container} >
-      <StatusBar barStyle={'dark-content'} />
-      {fileResponse.map((file, index) => (
-        <Text
-          key={index.toString()}
-          style={styles.uri}
-          numberOfLines={1}
-          ellipsizeMode={'middle'}>
-          {file?.uri}
-        </Text>
-      ))}
-      <Button title="Select 📑" 
-      // onPress={handleDocumentSelection} 
-      />
-    </SafeAreaView>
-                  {/*Button Add  Start */}
-                  <TouchableOpacity>
-                    <View>
-                      <Button
-                        style={styles.button}
-                        backgroundColor={"#F14E24"}
-                        onPress={() => {
-                          toast.show({
-                            render: () => {
-                              return (
-                                <Box
-                                  bg="green.500"
-                                  px="2"
-                                  py="1"
-                                  rounded="sm"
-                                  mb={2}
-                                >
-                                  Your product Sended to admin For confirmation.
-                                </Box>
-                              );
-                            },
-                          });
-                          addProductDetails();
-                        }}
-                      >
-                        Save
-                      </Button>
-                    </View>
-                  </TouchableOpacity>
-                  {/*Button Add  End */}
-                </View>
-              )}
-            </Formik>
+                  </View>
+                </TouchableOpacity>
+                {/*Button Add  End */}
+              </View>
+            )}
+          </Formik>
         </View>
-        </ScrollView> 
-        {/* <TabBar navigation={navigation} /> */}
-         
-    {/* save bottun 2 */}
-{/* 
+      </ScrollView>
+      {/* <TabBar navigation={navigation} /> */}
+
+      {/* save bottun 2 */}
+      {/* 
       <Button
         backgroundColor={"#F14E24"}
         onPress={() => {
@@ -406,8 +273,6 @@ const {height,width}=Dimensions.get("screen")
       >
         Save
       </Button> */}
-
-      
     </>
   );
 };
