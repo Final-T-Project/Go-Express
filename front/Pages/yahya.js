@@ -28,25 +28,29 @@ const Home = () => {
       });
   }, []);
 
-  
   return (
     <View style={styles.container}>
       <ScrollView>
         <ScreenHeader
         // mainTitle="where are here "
         // secondTitle="to facilitate your life"
-      />
-      <MainHeader title="Go-Express To facilitate your life" style={styles.title} />
-      
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <TopPlacesCarousel list={TOP_PLACES} />
-        <SectionHeader
-          title="Product"
-          buttonTitle="See All"
-          onPress={() => {navig}}
         />
-        <TripsList list={PLACES} />
-      </ScrollView>
+        <MainHeader
+          title="Go-Express To facilitate your life"
+          style={styles.title}
+        />
+
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <TopPlacesCarousel list={TOP_PLACES} />
+          <SectionHeader
+            title="Product"
+            buttonTitle="See All"
+            onPress={() => {
+              navig;
+            }}
+          />
+          <TripsList list={PLACES} />
+        </ScrollView>
       </ScrollView>
     </View>
   );
@@ -57,7 +61,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fbfbfb",
   },
-  
 });
 
 export default Home;

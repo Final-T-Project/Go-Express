@@ -154,7 +154,7 @@ const AddProduct = ({ navigation }) => {
           Published_at: posted_at,
         })
         .then((result) => {
-          console.log(result.data.insertId);
+          // console.log(result.data.insertId);
           return result.data.insertId;
         })
         .then((id_post) => {
@@ -175,198 +175,180 @@ const AddProduct = ({ navigation }) => {
   };
 
   const toast = useToast();
-const {height,width}=Dimensions.get("screen")
+  const { height, width } = Dimensions.get("screen");
   return (
-    <>  
-    
-        <ScrollView>
-        <View style={{height: height}}>
-            <Formik
-              initialValues={{
-                name: "",
-                description: "",
-                price: "",
-                image: "",
-                quantity: 1,
-                category: "",
-              }}
-              validationSchema={Yup.object().shape({
-                name: Yup.string().required(""),
-                description: Yup.string().required(""),
-                price: Yup.number().required("Price is required"),
-              })}
-            >
-              {/* {formik} */}
-              {({ errors, touched, handleBlur }) => (
-                <View style={styles.form}>
-                  {/*Name  Start */}
+    <>
+      <ScrollView>
+        <View style={{ height: height }}>
+          <Formik
+            initialValues={{
+              name: "",
+              description: "",
+              price: "",
+              image: "",
+              quantity: 1,
+              category: "",
+            }}
+            validationSchema={Yup.object().shape({
+              name: Yup.string().required(""),
+              description: Yup.string().required(""),
+              price: Yup.number().required("Price is required"),
+            })}
+          >
+            {/* {formik} */}
+            {({ errors, touched, handleBlur }) => (
+              <View style={styles.form}>
+                {/*Name  Start */}
 
-                  <FormControl>
-                    <FormControl.Label fontStyle={{ color: "#373E5A" }}>
-                      Product Name
-                    </FormControl.Label>
-                    <Input
-                    _focus={{ borderColor: '#ED5C00' }}
+                <FormControl>
+                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    Product Name
+                  </FormControl.Label>
+                  <Input
+                    _focus={{ borderColor: "#ED5C00" }}
                     placeholder="Product Name"
-                      backgroundColor={"muted.100"}
-                      borderColor={"muted.200"}
-                      fontSize={"15"}
-                      onChangeText={(text) => setName(text)}
-                    />
-                  </FormControl>
+                    backgroundColor={"muted.100"}
+                    borderColor={"muted.200"}
+                    fontSize={"15"}
+                    onChangeText={(text) => setName(text)}
+                  />
+                </FormControl>
 
-                  {/*Name  End */}
+                {/*Name  End */}
 
-                  {/*Description  Start */}
-                  <FormControl>
-                    <FormControl.Label fontStyle={{ color: "#373E5A" }}>
-                      Product Description
-                    </FormControl.Label>
-                    <Input
-                    _focus={{ borderColor: '#ED5C00' }}
+                {/*Description  Start */}
+                <FormControl>
+                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    Product Description
+                  </FormControl.Label>
+                  <Input
+                    _focus={{ borderColor: "#ED5C00" }}
                     placeholder="Product Description"
-                      backgroundColor={"muted.100"}
-                      borderColor={"muted.200"}
-                      fontSize={"15"}
-                      onChangeText={(text) => setDescription(text)}
-                    />
-                  </FormControl>
-                  {/*Description  End */}
+                    backgroundColor={"muted.100"}
+                    borderColor={"muted.200"}
+                    fontSize={"15"}
+                    onChangeText={(text) => setDescription(text)}
+                  />
+                </FormControl>
+                {/*Description  End */}
 
-                  {/*Price  Start */}
-                  <FormControl>
-                    <FormControl.Label fontStyle={{ color: "#373E5A" }}>
-                      Unit Price
-                    </FormControl.Label>
-                    <Input
-                    _focus={{ borderColor: '#ED5C00' }}
+                {/*Price  Start */}
+                <FormControl>
+                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    Unit Price
+                  </FormControl.Label>
+                  <Input
+                    _focus={{ borderColor: "#ED5C00" }}
                     placeholder="Product Price"
-                      backgroundColor={"muted.100"}
-                      borderColor={"muted.200"}
-                      fontSize={"15"}
-                      onChangeText={(number) => setPrice(number)}
-                    />
-                  </FormControl>
+                    backgroundColor={"muted.100"}
+                    borderColor={"muted.200"}
+                    fontSize={"15"}
+                    onChangeText={(number) => setPrice(number)}
+                  />
+                </FormControl>
 
-                  {/*Price  End */}
+                {/*Price  End */}
 
-                  {/*Category  Start */}
-                  <Text style={styles.label}>Category:</Text>
-                  <View style={styles.input}>
-                    <Picker
-                      selectedValue={category}
-                      onValueChange={(value) => setCategory(value)}
-                      // mode="dropdown"
-                      mode="dialog"
-                      style={styles.picker}
-                      onBlur={handleBlur("category")}
-                    >
-                      <Picker.Item label="Please Select Category" />
-                      <Picker.Item label="Kitchen" value="Kitchen" />
-                      <Picker.Item label="Furniture" value="Furniture" />
-                      <Picker.Item label="Garden" value="Garden" />
-                      <Picker.Item label="Accessories" value="Accessories" />
-                    </Picker>
-                  </View>
-                  {/*Category  End */}
-
-                  {/*Quantity  Start */}
-                  <Text style={styles.label}>Quantity:</Text>
-                  <View style={styles.quantityContainer}>
-                    <Pressable onPress={onMinus} style={styles.quantityButton}>
-                      <Text style={styles.quantityInput}>-</Text>
-                    </Pressable>
-
-                    <Text>{quantity}</Text>
-
-                    <Pressable onPress={onPlus} style={styles.quantityButton} >
-                      <Text style={styles.quantityInput}>+</Text>
-                    </Pressable>
-                  </View>
-
-                  {/* Quantity  End */}
-                  <View style={styles.container}>
-                    <Text style={styles.Price_label}>
-                      Total Price : {price * quantity} dt{" "}
-                    </Text>
-                  </View>
-
-                  {/*Image  start */}
-
-                  <FormControl>
-                    <FormControl.Label>Image One</FormControl.Label>
-                    <Button backgroundColor={"#373E5A"} onPress={pickImageOne}>
-                      Pick image1
-                    </Button>
-                  </FormControl>
-
-                  <FormControl>
-                    <FormControl.Label>Image Tow </FormControl.Label>
-                    <Button backgroundColor={"#373E5A"} onPress={pickImageTow}>
-                      Pick image2
-                    </Button>
-                  </FormControl>
-
-                  <FormControl>
-                    <FormControl.Label>Image Three</FormControl.Label>
-                    <Button
-                      backgroundColor={"#373E5A"}
-                      onPress={pickImageThree}
-                    >
-                      Pick image3
-                    </Button>
-                  </FormControl>
-                  {/*Image  End */}
-
-                  {/*Button Add  Start */}
-                  <TouchableOpacity>
-                    <View>
-                      <Button
-                        style={styles.button}
-                        backgroundColor={"#F14E24"}
-                        onPress={() => {
-                          toast.show({
-                            render: () => {
-                              return (
-                                <Box
-                                  bg="green.500"
-                                  px="2"
-                                  py="1"
-                                  rounded="sm"
-                                  mb={2}
-                                >
-                                  Your product Sended to admin For confirmation.
-                                </Box>
-                              );
-                            },
-                          });
-                          addProductDetails();
-                        }}
-                      >
-                        Save
-                      </Button>
-                    </View>
-                  </TouchableOpacity>
-                  {/*Button Add  End */}
+                {/*Category  Start */}
+                <Text style={styles.label}>Category:</Text>
+                <View style={styles.input}>
+                  <Picker
+                    selectedValue={category}
+                    onValueChange={(value) => setCategory(value)}
+                    // mode="dropdown"
+                    mode="dialog"
+                    style={styles.picker}
+                    onBlur={handleBlur("category")}
+                  >
+                    <Picker.Item label="Please Select Category" />
+                    <Picker.Item label="Kitchen" value="Kitchen" />
+                    <Picker.Item label="Furniture" value="Furniture" />
+                    <Picker.Item label="Garden" value="Garden" />
+                    <Picker.Item label="Accessories" value="Accessories" />
+                  </Picker>
                 </View>
-              )}
-            </Formik>
-        </View>
-        </ScrollView> 
-        {/* <TabBar navigation={navigation} /> */}
-         
-    {/* save bottun 2 */}
-{/* 
-      <Button
-        backgroundColor={"#F14E24"}
-        onPress={() => {
-          saveUpdate();
-        }}
-      >
-        Save
-      </Button> */}
+                {/*Category  End */}
 
-      
+                {/*Quantity  Start */}
+                <Text style={styles.label}>Quantity:</Text>
+                <View style={styles.quantityContainer}>
+                  <Pressable onPress={onMinus} style={styles.quantityButton}>
+                    <Text style={styles.quantityInput}>-</Text>
+                  </Pressable>
+
+                  <Text>{quantity}</Text>
+
+                  <Pressable onPress={onPlus} style={styles.quantityButton}>
+                    <Text style={styles.quantityInput}>+</Text>
+                  </Pressable>
+                </View>
+
+                {/* Quantity  End */}
+                <View style={styles.container}>
+                  <Text style={styles.Price_label}>
+                    Total Price : {price * quantity} dt{" "}
+                  </Text>
+                </View>
+
+                {/*Image  start */}
+
+                <FormControl>
+                  <FormControl.Label>Image One</FormControl.Label>
+                  <Button backgroundColor={"#373E5A"} onPress={pickImageOne}>
+                    Pick image1
+                  </Button>
+                </FormControl>
+
+                <FormControl>
+                  <FormControl.Label>Image Tow </FormControl.Label>
+                  <Button backgroundColor={"#373E5A"} onPress={pickImageTow}>
+                    Pick image2
+                  </Button>
+                </FormControl>
+
+                <FormControl>
+                  <FormControl.Label>Image Three</FormControl.Label>
+                  <Button backgroundColor={"#373E5A"} onPress={pickImageThree}>
+                    Pick image3
+                  </Button>
+                </FormControl>
+                {/*Image  End */}
+
+                {/*Button Add  Start */}
+                <TouchableOpacity>
+                  <View>
+                    <Button
+                      style={styles.button}
+                      backgroundColor={"#F14E24"}
+                      onPress={() => {
+                        toast.show({
+                          render: () => {
+                            return (
+                              <Box
+                                bg="green.500"
+                                px="2"
+                                py="1"
+                                rounded="sm"
+                                mb={2}
+                              >
+                                Your product Sended to admin For confirmation.
+                              </Box>
+                            );
+                          },
+                        });
+                        addProductDetails();
+                      }}
+                    >
+                      Save
+                    </Button>
+                  </View>
+                </TouchableOpacity>
+                {/*Button Add  End */}
+              </View>
+            )}
+          </Formik>
+        </View>
+      </ScrollView>
     </>
   );
 };
