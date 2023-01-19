@@ -25,9 +25,15 @@ import yahya from "./Pages/yahya.js";
 import Serves from "./Pages/Serves.js";
 import BookService from "./Pages/BookService.js";
 import BookingDetails from "./Pages/BookingDetails.js";
+import Notification from "./Pages/Notifcation";
+import Awelscreen from "./Pages/Awelscreen.js";
+
 import { LogBox } from "react-native";
 import HistoryDetails from "./Pages/HistoryDetails.js";
 import Join_Us from "./components/Join_Us.js";
+import IntoductionPages from "./Pages/IntoductionPages.js";
+import ChatScreen from "./Pages/ChatScreen.js";
+
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [showContent, setShowContent] = useState("");
@@ -49,7 +55,7 @@ export default function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Join_Us"
+            initialRouteName="IntoductionPages"
             screenOptions={{
               headerTintColor: "white",
               headerStyle: {
@@ -58,12 +64,32 @@ export default function App() {
             }}
           >
             <Stack.Screen
+              name="Notification"
+              options={{ headerShown: false }}
+              component={Notification}
+            />
+
+            <Stack.Screen
+              name="ChatScreen"
+              options={{ headerShown: false }}
+              component={ChatScreen}
+            />
+
+            <Stack.Screen
               name="LogInSignIn"
               options={{ headerShown: false }}
               component={LogInSignIn}
             />
-            <Stack.Screen name="home" component={yahya} options={{ headerShown: false }}/>
-            <Stack.Screen name="History" component={History}  options={{ headerShown: false }}/>
+            <Stack.Screen
+              name="IntoductionPages"
+              component={IntoductionPages}
+            />
+
+            <Stack.Screen
+              name="History"
+              component={History}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen name="PhoneNumber Verif" component={PhoneNumber} />
             <Stack.Screen
               name="TestSignin"
@@ -86,8 +112,16 @@ export default function App() {
               options={{ headerShown: false }}
               component={SideBar}
             />
-            <Stack.Screen name="Shop" component={Shop}  options={{ headerShown: false }}/>
-            <Stack.Screen name="Products" component={Products} options={{ headerShown: false }} />
+            <Stack.Screen
+              name="Shop"
+              component={Shop}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Products"
+              component={Products}
+              options={{ headerShown: false }}
+            />
             {/* <Stack.Screen name="Email Confiramtion" component={EmailConfirmation} /> */}
             <Stack.Screen
               name="AddProduct"
@@ -98,11 +132,17 @@ export default function App() {
             <Stack.Screen name="EditeAdress" component={EditeAdress} />
             <Stack.Screen name="Shopping" component={Shopping} />
             <Stack.Screen name="Cart" component={Cart} />
-            <Stack.Screen name="ProductInfo" component={ProductInfo}  />
-            <Stack.Screen name="ImageDetails" component={ImageDetails}  />
-            <Stack.Screen name="Home" component={yahya}  options={{ headerShown: false }} />
-            <Stack.Screen name="Serves" component={Serves} 
-            // options={{ headerShown: false }}
+            <Stack.Screen name="ProductInfo" component={ProductInfo} />
+            <Stack.Screen name="ImageDetails" component={ImageDetails} />
+            <Stack.Screen
+              name="Home"
+              component={yahya}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Serves"
+              component={Serves}
+              // options={{ headerShown: false }}
             />
             <Stack.Screen name="BookService" component={BookService} />
             <Stack.Screen name="Booking Details" component={BookingDetails} />

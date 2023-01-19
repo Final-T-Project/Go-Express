@@ -54,7 +54,7 @@ function Feedback() {
         id_user: userId,
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
       });
   };
 
@@ -93,7 +93,7 @@ function Feedback() {
               <TextArea
                 h={130}
                 size="xl"
-                _focus={{ borderColor: '#ED5C00' }}
+                _focus={{ borderColor: "#ED5C00" }}
                 placeholder="Feedback Placeholder"
                 w="500"
                 maxW="350"
@@ -144,7 +144,7 @@ function Info({ route, navigation, id }) {
       .catch((error) => {
         alert(error);
       });
-  }, []);
+  }, [userDataProfile]);
 
   return (
     <View
@@ -321,12 +321,12 @@ function Product() {
         setUserDataProduct(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        alert(error);
       });
-  }, []);
+  }, [userDataProduct]);
 
   return (
-    <ScrollView >
+    <ScrollView>
       <View
         style={{
           flexDirection: "row",
@@ -470,7 +470,7 @@ export default function Profil({ navigation, route }) {
       .catch((error) => {
         alert(error);
       });
-  }, []);
+  }, [userDataProfile]);
 
   return (
     <>
