@@ -10,8 +10,12 @@ import {
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
-export default function BookingDetails() {
+export default function BookingDetails({route}) {
   const Navigation = useNavigation();
+
+  const {listService,date,time} = route.Params;
+
+
   return (
     <View style={css.container}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

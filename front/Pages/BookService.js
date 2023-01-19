@@ -98,6 +98,7 @@ export default function BookService({route}) {
     console.log(listService+" "+date+" "+time+" "+fromList+" "+toList)
     console.log(listService+" "+date+" "+time+" "+fromList+" "+toList)
     //Navigation.navigate("Booking Details");
+    Navigation.navigate("Booking Details",{listService,date,time})
   };
 
   // ------------------------------- ALL STATE IN TUNISIA ( I WILL MAP OVER IT SO I DON'T WRITE IT MANUALLY :))
@@ -368,9 +369,10 @@ export default function BookService({route}) {
 
 
 {/*------------------------------------------------------------ BUTTON ---------------------------------------------------------- */}
-            {!listService.length || !date.length || !time.length || !fromList.length || !toList.length ?
+            {!listService.length || !date.length || !time.length ?
             <View style={{ alignItems: "center" }}>
               <TouchableOpacity
+              disabled={true}
                 style={{
                   backgroundColor: "#fcad92",
                   width: 200,
@@ -381,7 +383,6 @@ export default function BookService({route}) {
                   marginTop: 20,
                   alignItems: "center",
                 }}
-                onPress={() => handleBookPress()}
               >
                 <Text
                   style={{
