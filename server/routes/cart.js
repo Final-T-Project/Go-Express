@@ -10,7 +10,6 @@ const {
   DeleteProductFromCart,
   ChangeCartStatusToDone,
   DeleteAll,
-  ChangeCartStatusToNotDone,
   GetCartHistorique,
 } = require("../contollers/cart.js");
 
@@ -25,6 +24,5 @@ router.delete("/deleteProduct/:id_product", DeleteProductFromCart);
 router.delete("/deleteALL/:id_cart", DeleteAll);
 
 router.put("/updateStateToDone/:id_cart", ChangeCartStatusToDone);
-
 
 module.exports = router;

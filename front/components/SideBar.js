@@ -16,12 +16,14 @@ import Home from "../Pages/yahya";
 import cart from "front/assets/shopping-cart-empty-side-view.png";
 import notifications from "front/assets/notification.png";
 import chat from "../assets/chat.png";
+import join from "front/assets/join.png"
 import logout from "../assets/logout.png";
 import menu from "../assets/menu.png";
 import close from "../assets/close.png";
 import { useNavigation } from "@react-navigation/native";
 import TabBar from "../components/TabBar";
 import { UserContext } from "../UserContext";
+import Join_Us from "./Join_Us";
 import axios from "axios";
 import IPADRESS from "../config/IPADRESS";
 
@@ -38,6 +40,10 @@ export default function SideBbar({ navigation, route }) {
   // state to save user data
   const [userDataProfile, setUserDataProfile] = useState([]);
   const { userId } = useContext(UserContext);
+
+  // console.log("hetah IDCard", userCartId);
+  // console.log("hetah ID", userId);
+
   // to get profile information
   useEffect(() => {
     axios
@@ -56,7 +62,7 @@ export default function SideBbar({ navigation, route }) {
       {/* blaset el contenue mta el side bar */}
       <ImageBackground
         source={{
-          uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673040221/ekher_wba4yg.png",
+          uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1674060984/font_oq0zp9.png",
         }}
         // resizeMode="cover"
         style={styles.image}
@@ -88,7 +94,7 @@ export default function SideBbar({ navigation, route }) {
                       fontWeight: "bold",
                       color: "white",
                       marginTop: 10,
-                      left:10
+                      left: 10,
                     }}
                   >
                     {element.name}{" "}
@@ -99,7 +105,7 @@ export default function SideBbar({ navigation, route }) {
                       // fontWeight: "bold",
                       color: "white",
                       marginTop: 10,
-                      left:10
+                      left: 10,
                     }}
                   >
                     View Profil
@@ -108,7 +114,7 @@ export default function SideBbar({ navigation, route }) {
               );
             } else {
               return (
-                // hello user and view profil 
+                // hello user and view profil
                 <TouchableOpacity
                   onPress={() => {
                     navigation.navigate("Profil");
@@ -125,8 +131,7 @@ export default function SideBbar({ navigation, route }) {
                       borderRadius: 7,
                       marginTop: -30,
                       marginLeft: 23,
-                      left:30,
-                      
+                      left: 30,
                     }}
                   ></Image>
                   <Text
@@ -135,7 +140,7 @@ export default function SideBbar({ navigation, route }) {
                       fontWeight: "bold",
                       color: "white",
                       marginTop: 10,
-                      left:30
+                      left: 30,
                     }}
                   >
                     Hello {element.name}{" "}
@@ -145,8 +150,8 @@ export default function SideBbar({ navigation, route }) {
                       fontSize: 15,
                       // fontWeight: "bold",
                       color: "white",
-                      marginTop:10,
-                      left:30
+                      marginTop: 10,
+                      left: 30,
                     }}
                   >
                     View Profil
@@ -165,8 +170,9 @@ export default function SideBbar({ navigation, route }) {
             )}
             {TabButton(currentTab, setCurrentTab, "MyCart", cart)}
             {TabButton(currentTab, setCurrentTab, "Chat", chat)}
+            {TabButton(currentTab, setCurrentTab, "Join_Us", join)}
           </View>
-          <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
+          <View  style={{top:130}}>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
         </View>
       </ImageBackground>
       <Animated.View
@@ -181,7 +187,7 @@ export default function SideBbar({ navigation, route }) {
           paddingHorizontal: 1,
           paddingVertical: 0,
           borderRadius: showMenu ? 15 : 0,
-          
+
           // Transforming View...
           transform: [{ scale: scaleValue }, { translateX: offsetValue }],
         }}
@@ -244,8 +250,9 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        if (title == "Feedback") {
-          setCurrentTab("Feedback");
+        if (title == "Join_Us") {
+          setCurrentTab("Join_Us");
+          navigation.navigate("Join_Us");
 
           //  navigation.navigate("Home");
         } else if (title == "Notification") {
@@ -255,7 +262,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           setCurrentTab("MyCart");
           navigation.navigate("Cart");
         } else if (title == "Chat") {
-          navigation.navigate("Chat");
+          navigation.navigate("ChatScreen");
           setCurrentTab("Chat");
         } else if (title == "Settings") {
           setCurrentTab("Settings");
@@ -277,7 +284,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           paddingRight: 35,
           borderRadius: 10,
           marginTop: 20,
-          left:10
+          left: 10,
         }}
       >
         <Image
@@ -285,7 +292,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           style={{
             width: 27,
             height: 25,
-            left:10,
+            left: 10,
             tintColor: currentTab == title ? "#ea580c" : "white",
           }}
         ></Image>
@@ -295,7 +302,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
             fontSize: 15,
             fontWeight: "bold",
             paddingLeft: 15,
-            left:10,
+            left: 10,
             color: currentTab == title ? "white" : "white",
           }}
         >
@@ -310,14 +317,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    
   },
   image: {
     flex: 1,
     justifyContent: "center",
     width: "100%",
     height: "100%",
-    
   },
 });
 // nex Drower
