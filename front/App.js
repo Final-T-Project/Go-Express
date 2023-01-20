@@ -55,7 +55,7 @@ export default function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="IntoductionPages"
+            initialRouteName="SideBar"
             screenOptions={{
               headerTintColor: "white",
               headerStyle: {

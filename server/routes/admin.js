@@ -11,6 +11,7 @@ const {
   DeleteProduct,
   UpdateProductPrice,
   GetAllFeedBack,
+  GetEmployers
 } = require("../contollers/admin.js");
 
 // user route
@@ -27,4 +28,6 @@ router.delete("/deleteproduct/:id_product", DeleteProduct);
 // feedback route
 router.get("/getallfeedback", GetAllFeedBack);
 
+// employer  route
+router.get ("/getEmployers",GetEmployers)
 module.exports = router;

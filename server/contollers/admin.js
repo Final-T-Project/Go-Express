@@ -69,4 +69,12 @@ module.exports = {
       else res.json(results);
     });
   },
+
+GetEmployers:function(req,res){
+  admin.GetEmployers(function (err,results){
+    if(err) res.status(500).send(err);
+    else res.json(results)
+  })
+}
+
 };

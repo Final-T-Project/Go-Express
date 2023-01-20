@@ -57,4 +57,11 @@ module.exports = {
       callback(error, results);
     });
   },
+
+  GetEmployers:function(callback){
+    const sql =`SELECT * FROM employer `;
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+  })
+},
 };
