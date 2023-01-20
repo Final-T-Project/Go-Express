@@ -32,11 +32,12 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <ScrollView>
+        <MainHeader title="Go-Express " style={styles.title} />
+       
         <ScreenHeader
-        // mainTitle="where are here "
-        // secondTitle="to facilitate your life"
+        mainTitle="where are here "
+        secondTitle="to facilitate your life"
       />
-      <MainHeader title="Go-Express To facilitate your life" style={styles.title} />
       
       <ScrollView showsVerticalScrollIndicator={false}>
         <TopPlacesCarousel list={TOP_PLACES} />
