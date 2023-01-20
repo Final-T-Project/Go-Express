@@ -11,11 +11,13 @@ const {
   DeleteProduct,
   UpdateProductPrice,
   GetAllFeedBack,
+  DeleteProductPhoto,
 } = require("../contollers/admin.js");
 
 // user route
 router.get("/getalluser", GetAllUsers);
 router.get("/getoneuser/:id_user", GetOneUser);
+
 
 // product route
 router.get("/getallproductnotaccepted", GetAllProductsNotAccepted);
@@ -23,7 +25,7 @@ router.get("/getoneproduct/:id_product", GetOneProduct);
 router.put("/updateproductstate/:id_product", UpdateProductState);
 router.put("/updateproductprice/:id_product", UpdateProductPrice);
 router.delete("/deleteproduct/:id_product", DeleteProduct);
-
+router.delete("/deleteproduct/photo/:product_id_product", DeleteProductPhoto);
 // feedback route
 router.get("/getallfeedback", GetAllFeedBack);
 

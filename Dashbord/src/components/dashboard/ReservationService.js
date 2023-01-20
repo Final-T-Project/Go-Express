@@ -17,7 +17,11 @@ export const ReservationService = () => {
   }, []);
 
   return (
-    <Card sx={{ height: "100%" }}>
+    <Card
+      sx={{
+        height: 175,
+      }}
+    >
       <CardContent>
         <Grid container spacing={3} sx={{ justifyContent: "space-between" }}>
           <Grid item>
@@ -34,15 +38,17 @@ export const ReservationService = () => {
                 backgroundColor: "warning.main",
                 height: 56,
                 width: 56,
+                marginBottom: -6,
+                marginLeft: -5,
               }}
             >
               <InsertChartIcon />
             </Avatar>
           </Grid>
         </Grid>
-        <Box sx={{ pt: 3 }}>
+        {/* <Box sx={{ pt: 3 }}>
           <LinearProgress value={5.5} variant="determinate" />
-        </Box>
+        </Box> */}
       </CardContent>
     </Card>
   );

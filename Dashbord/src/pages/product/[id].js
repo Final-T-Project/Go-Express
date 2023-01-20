@@ -106,10 +106,14 @@ function Page() {
       .catch((err) => console.log(err));
   };
 
+  //
   // function to delete product (not_accepted)
   let DeleteProduct = () => {
     axios
-      .delete(`http://localhost:5000/admin/deleteproduct/${router.query.id}`)
+      .delete(`http://localhost:5000/admin/deleteproduct/photo/${router.query.id}`)
+      .then(() => {
+        axios.delete(`http://localhost:5000/admin/deleteproduct/${router.query.id}`);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -238,7 +242,7 @@ function Page() {
 
                   <Grid item md={6} xs={12}>
                     <Typography variant="h6" gutterBottom>
-                      Seller : {element.sellIerd}
+                      Seller : {element.name}
                     </Typography>
                   </Grid>
                   <Grid item md={6} xs={12}>

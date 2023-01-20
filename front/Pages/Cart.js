@@ -8,7 +8,7 @@ import {
   ToastAndroid,
   StatusBar,
 } from "react-native";
-import { Box, HStack, Checkbox,useToast } from "native-base";
+import { Box, HStack, Checkbox, useToast } from "native-base";
 import EditeAdress from "./EditeAdress.js";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { COLOURS, Items } from "../database/Database";
@@ -432,8 +432,7 @@ const MyCart = ({ navigation }) => {
                       <Text> </Text>
                     )}
                   </View>
-                 
-                </View> 
+                </View>
                 <EditeAdress />
               </View>
             </View>
@@ -684,7 +683,7 @@ const MyCart = ({ navigation }) => {
               textTransform: "uppercase",
             }}
           >
-            CHECKOUT ({totalPrice+6} dt)
+            CHECKOUT ({totalPrice + 6} dt)
           </Text>
         </TouchableOpacity>
       </View>

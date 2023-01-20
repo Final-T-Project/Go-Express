@@ -58,6 +58,7 @@ export default function App() {
             initialRouteName="IntoductionPages"
             screenOptions={{
               headerTintColor: "white",
+              headerShown: false,
               headerStyle: {
                 backgroundColor: "#ED5C00",
               },

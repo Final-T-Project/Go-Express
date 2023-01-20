@@ -142,7 +142,6 @@ const slides = [
     image: {
       uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1674149411/e_dk0ttn.webp",
     },
-
     backgroundColor: "#ff9482",
   },
   {
@@ -151,9 +150,8 @@ const slides = [
     text: " Best Deals on all our services",
     // image: require("../assets/Intro/plomber h.gif"),
     image: {
-      uri: "https://res.cloudinary.com/ddvyi3jpk/image/upload/v1674149300/plomber_h_dnijqk.gif",
+      uri: "https://res.cloudinary.com/ddvyi3jpk/image/upload/v1674206359/test_rzfkmn.png",
     },
-
-    backgroundColor: "#3395ff",
+    backgroundColor: "#257dbd",
   },
 ];

@@ -10,12 +10,12 @@ export const TotalEmployer = () => {
   let [employer, setEmployer] = useState([]);
 
   // function to get all employer
-  useEffect(() => {
-    axios.get(`http://localhost:5000/employer/getallemployer`).then((result) => {
-      setEmployer(result.data);
-      console.log(result.data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get(`http://localhost:5000/employer/getallemployer`).then((result) => {
+  //     setEmployer(result.data);
+  //     console.log(result.data);
+  //   });
+  // }, []);
 
   return (
     <>

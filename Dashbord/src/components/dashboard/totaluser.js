@@ -1,5 +1,5 @@
 import { Avatar, Box, Card, CardContent, Grid, Typography } from "@mui/material";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import MoneyIcon from "@mui/icons-material/Money";
 
 import axios from "axios";
@@ -19,8 +19,7 @@ export const TotalUser = () => {
 
   return (
     <>
-      {" "}
-      <Card sx={{ height: "100%" }}>
+      <Card>
         <CardContent>
           <Grid container spacing={3} sx={{ justifyContent: "space-between" }}>
             <Grid item>
@@ -45,18 +44,18 @@ export const TotalUser = () => {
           </Grid>
           <Box
             sx={{
-              pt: 2,
               display: "flex",
               alignItems: "center",
+              pt: 2,
             }}
           >
-            <ArrowDownwardIcon color="error" />
+            <ArrowUpwardIcon color="success" />
             <Typography
-              color="error"
+              // color="error"
+              variant="body2"
               sx={{
                 mr: 1,
               }}
-              variant="body2"
             >
               {user.length} Users
             </Typography>

@@ -2,7 +2,11 @@ import { Avatar, Card, CardContent, Grid, Typography } from "@mui/material";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 export const TotalProfit = () => (
-  <Card>
+  <Card
+    sx={{
+      height: 175,
+    }}
+  >
     <CardContent>
       <Grid container spacing={3} sx={{ justifyContent: "space-between" }}>
         <Grid item>

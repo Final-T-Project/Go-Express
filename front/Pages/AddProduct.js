@@ -90,8 +90,8 @@ const AddProduct = ({ navigation }) => {
       aspect: [4, 3],
       quality: 1,
     });
-    setImageOne(result.uri);
-    console.log("image1:", result.uri);
+    setImageOne(result.assets[0].uri);
+    console.log("image1:", result.assets[0].uri);
     if (!result.cancelled) {
       let newfile1 = {
         uri: result.uri,
@@ -166,7 +166,7 @@ const AddProduct = ({ navigation }) => {
           });
         })
         .then(() => {
-          navigation.navigate("Home");
+          navigation.navigate("SideBar");
         })
         .catch((error) => {
           console.log(error);
@@ -175,7 +175,7 @@ const AddProduct = ({ navigation }) => {
   };
 
   const toast = useToast();
-  const { height, width } = Dimensions.get("screen");
+  const { height } = Dimensions.get("screen");
   return (
     <>
       <ScrollView>
