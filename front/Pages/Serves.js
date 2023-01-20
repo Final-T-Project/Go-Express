@@ -37,7 +37,7 @@ const data = Object.keys(images).map((i) => ({
 const Tab = React.forwardRef(({ item, onItemPress }, ref) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("BookService")}>
+    <TouchableOpacity onPress={() => navigation.navigate("BookService",{service:item.title})}>
       <View ref={ref}>
         <Text
           style={{

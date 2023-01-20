@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`serves` (
   `description` TEXT NOT NULL,
   PRIMARY KEY (`id_serves`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -77,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cart` (
     FOREIGN KEY (`user_id_user`)
     REFERENCES `mydb`.`user` (`id_user`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -128,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`feedback` (
   `etoile` ENUM('1', '2', '3', '4', '5') NOT NULL,
   `details` VARCHAR(400) NULL DEFAULT '0',
   `user_id_user` VARCHAR(50) NOT NULL,
-  `serves_id_serves` INT NULL DEFAULT NULL,
+  `serves_id_serves` INT NOT NULL,
   PRIMARY KEY (`id_feedback`),
   INDEX `fk_feedBack_user1_idx` (`user_id_user` ASC) VISIBLE,
   INDEX `fk_feedBack_serves1_idx` (`serves_id_serves` ASC) VISIBLE,
@@ -139,7 +140,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`feedback` (
     FOREIGN KEY (`user_id_user`)
     REFERENCES `mydb`.`user` (`id_user`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
   `id_product` INT NOT NULL AUTO_INCREMENT,
   `sellIerd` VARCHAR(60) CHARACTER SET 'utf8mb3' NULL DEFAULT 'Null',
   `buyerId` VARCHAR(60) NULL DEFAULT 'Null',
-  `product_name` VARCHAR(45) NULL DEFAULT NULL,
+  `name` VARCHAR(45) NOT NULL,
   `category` ENUM('Kitchen', 'Garden', 'Furniture', 'Accessories') NOT NULL,
   `price` INT NOT NULL,
   `description` VARCHAR(600) NOT NULL,
@@ -222,6 +222,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`reservation` (
   `user_id_user` VARCHAR(50) NOT NULL,
   `serves_id_serves` INT NOT NULL,
   `cart_id_cart` INT NOT NULL,
+  `time` VARCHAR(30) NULL DEFAULT NULL,
+  `fromPlace` VARCHAR(30) NULL DEFAULT NULL,
+  `toPlace` VARCHAR(30) NULL DEFAULT NULL,
   PRIMARY KEY (`id_reservation`),
   INDEX `fk_reservation_user1_idx` (`user_id_user` ASC) VISIBLE,
   INDEX `fk_reservation_serves1_idx` (`serves_id_serves` ASC) VISIBLE,
@@ -235,6 +238,30 @@ CREATE TABLE IF NOT EXISTS `mydb`.`reservation` (
   CONSTRAINT `fk_reservation_user1`
     FOREIGN KEY (`user_id_user`)
     REFERENCES `mydb`.`user` (`id_user`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 27
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`serves_has_cart`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`serves_has_cart` (
+  `serves_id_serves` INT NOT NULL,
+  `cart_id_cart` INT NOT NULL,
+  PRIMARY KEY (`serves_id_serves`, `cart_id_cart`),
+  INDEX `fk_serves_has_cart_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
+  INDEX `fk_serves_has_cart_serves1_idx` (`serves_id_serves` ASC) VISIBLE,
+  CONSTRAINT `fk_serves_has_cart_serves1`
+    FOREIGN KEY (`serves_id_serves`)
+    REFERENCES `mydb`.`serves` (`id_serves`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_serves_has_cart_cart1`
+    FOREIGN KEY (`cart_id_cart`)
+    REFERENCES `mydb`.`cart` (`id_cart`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
