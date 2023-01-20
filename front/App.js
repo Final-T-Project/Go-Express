@@ -39,6 +39,11 @@ export default function App() {
   const [showContent, setShowContent] = useState("");
   const [userId, setUserId] = useState("");
   const [userCartId, setUserCartId] = useState("");
+  const [listService, setListService] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [time,setTime]=useState("")
+  const [toList, setToList] = useState("");
+
   LogBox.ignoreAllLogs();
   return (
     <UserContext.Provider
@@ -49,6 +54,14 @@ export default function App() {
         setUserId,
         userCartId,
         setUserCartId,
+        setListService,
+        listService,
+        date,
+        setDate,
+        time,
+        setTime,
+        toList,
+        setToList
       }}
     >
       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
