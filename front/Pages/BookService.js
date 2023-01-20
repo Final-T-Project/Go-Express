@@ -219,6 +219,7 @@ export default function BookService({route}) {
               Day :
             </Text>
 
+            <View style={{alignItems:'center', justifyContent: "center",}}>
             <TouchableOpacity
               style={{
                 backgroundColor: "#373E5A",
@@ -235,6 +236,7 @@ export default function BookService({route}) {
                 Pick Day
               </Text>
             </TouchableOpacity>
+            </View>
 
             {DShow ? (
                 <DateTimePicker
@@ -262,6 +264,7 @@ export default function BookService({route}) {
               Time :
             </Text>
 
+              <View style={{alignItems:'center', justifyContent: "center",}}>
             <TouchableOpacity
               style={{
                 backgroundColor: "#373E5A",
@@ -278,6 +281,7 @@ export default function BookService({route}) {
                 Pick Time
               </Text>
             </TouchableOpacity>
+            </View>
 
             {timeShow ? (
               <DateTimePicker
