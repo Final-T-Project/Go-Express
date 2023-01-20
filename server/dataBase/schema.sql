@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cart` (
     FOREIGN KEY (`user_id_user`)
     REFERENCES `mydb`.`user` (`id_user`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -239,25 +239,24 @@ CREATE TABLE IF NOT EXISTS `mydb`.`reservation` (
     FOREIGN KEY (`user_id_user`)
     REFERENCES `mydb`.`user` (`id_user`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 27
 DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`serves_has_cart`
+-- Table `mydb`.`products_cart`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`serves_has_cart` (
-  `serves_id_serves` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `mydb`.`products_cart` (
+  `product_id_product` INT NOT NULL,
   `cart_id_cart` INT NOT NULL,
-  PRIMARY KEY (`serves_id_serves`, `cart_id_cart`),
-  INDEX `fk_serves_has_cart_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
-  INDEX `fk_serves_has_cart_serves1_idx` (`serves_id_serves` ASC) VISIBLE,
-  CONSTRAINT `fk_serves_has_cart_serves1`
-    FOREIGN KEY (`serves_id_serves`)
-    REFERENCES `mydb`.`serves` (`id_serves`)
+  PRIMARY KEY (`product_id_product`, `cart_id_cart`),
+  INDEX `fk_product_has_cart_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
+  INDEX `fk_product_has_cart_product1_idx` (`product_id_product` ASC) VISIBLE,
+  CONSTRAINT `fk_product_has_cart_product1`
+    FOREIGN KEY (`product_id_product`)
+    REFERENCES `mydb`.`product` (`id_product`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_serves_has_cart_cart1`
+  CONSTRAINT `fk_product_has_cart_cart1`
     FOREIGN KEY (`cart_id_cart`)
     REFERENCES `mydb`.`cart` (`id_cart`)
     ON DELETE NO ACTION
