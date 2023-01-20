@@ -6,13 +6,12 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  DevSettings
+  DevSettings,
 } from "react-native";
 import TabBar from "../components/TabBar";
 import { COLOURS, Items } from "../database/Database";
 import axios from "axios";
 import IPADRESS from "../config/IPADRESS";
-
 
 const Shop = ({ navigation }) => {
   // function to get Kitchen data length
@@ -52,7 +51,7 @@ const Shop = ({ navigation }) => {
   // function to change the category state and send it as props to products components
   let SendCategory = (category) => {
     setCategory(category);
-    
+
     navigation.navigate("Products", { category });
   };
 
@@ -87,19 +86,19 @@ const Shop = ({ navigation }) => {
                 }}
               >
                 <TouchableOpacity>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: COLOURS.black,
-                    fontWeight: "500",
-                    letterSpacing: 1,
-                  }}
-                  onPress={() => {
-                    SendCategory("Kitchen");
-                  }}
-                >
-                  kitchen
-                </Text>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: COLOURS.black,
+                      fontWeight: "500",
+                      letterSpacing: 1,
+                    }}
+                    onPress={() => {
+                      SendCategory("Kitchen");
+                    }}
+                  >
+                    kitchen
+                  </Text>
                 </TouchableOpacity>
                 <Text
                   style={{
@@ -191,19 +190,19 @@ const Shop = ({ navigation }) => {
                 }}
               >
                 <TouchableOpacity>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: COLOURS.black,
-                    fontWeight: "500",
-                    letterSpacing: 1,
-                  }}
-                  onPress={() => {
-                    SendCategory("Furniture");
-                  }}
-                >
-                  Furniture
-                </Text>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      color: COLOURS.black,
+                      fontWeight: "500",
+                      letterSpacing: 1,
+                    }}
+                    onPress={() => {
+                      SendCategory("Furniture");
+                    }}
+                  >
+                    Furniture
+                  </Text>
                 </TouchableOpacity>
                 <Text
                   style={{
@@ -296,21 +295,21 @@ const Shop = ({ navigation }) => {
                 }}
               >
                 <TouchableOpacity>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: COLOURS.black,
-                    fontWeight: "500",
-                    letterSpacing: 1,
-                  }}
-                  onPress={() => {
-                    SendCategory("Accessories");
-                  }}
-                >
-                  Accessories
-                </Text>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      color: COLOURS.black,
+                      fontWeight: "500",
+                      letterSpacing: 1,
+                    }}
+                    onPress={() => {
+                      SendCategory("Accessories");
+                    }}
+                  >
+                    Accessories
+                  </Text>
                 </TouchableOpacity>
-               
+
                 <Text
                   style={{
                     fontSize: 14,
@@ -402,19 +401,19 @@ const Shop = ({ navigation }) => {
                 }}
               >
                 <TouchableOpacity>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: COLOURS.black,
-                    fontWeight: "500",
-                    letterSpacing: 1,
-                  }}
-                  onPress={() => {
-                    SendCategory("Garden");
-                  }}
-                >
-                  Garden
-                </Text>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      color: COLOURS.black,
+                      fontWeight: "500",
+                      letterSpacing: 1,
+                    }}
+                    onPress={() => {
+                      SendCategory("Garden");
+                    }}
+                  >
+                    Garden
+                  </Text>
                 </TouchableOpacity>
                 <Text
                   style={{
@@ -432,7 +431,7 @@ const Shop = ({ navigation }) => {
                 <Text
                   style={{
                     fontSize: 14,
-                    color:" COLOURS.blue",
+                    color: " COLOURS.blue",
                     fontWeight: "400",
                   }}
                   onPress={() => {

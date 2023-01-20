@@ -8,7 +8,7 @@ import {
   ToastAndroid,
   StatusBar,
 } from "react-native";
-import { Box, Center, HStack, Checkbox, Button, useToast } from "native-base";
+import { Box, HStack, Checkbox,useToast } from "native-base";
 import EditeAdress from "./EditeAdress.js";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { COLOURS, Items } from "../database/Database";
@@ -53,7 +53,7 @@ const MyCart = ({ navigation }) => {
   // state to save products in the cart
   const [cartProducts, setCartProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [shippingPrice, setShippingPrice] = useState(10);
+  const [shippingPrice, setShippingPrice] = useState(6);
 
   // i invoked inside  useeffect to automaticaly change
   useEffect(() => {
@@ -134,6 +134,7 @@ const MyCart = ({ navigation }) => {
             id_user: userId,
             state: "not done",
           });
+          alert(userCartId);
           navigation.navigate("Home");
         })
         .then(() => {
@@ -431,8 +432,9 @@ const MyCart = ({ navigation }) => {
                       <Text> </Text>
                     )}
                   </View>
-                  <EditeAdress />
-                </View>
+                 
+                </View> 
+                <EditeAdress />
               </View>
             </View>
           </HStack>
@@ -682,7 +684,7 @@ const MyCart = ({ navigation }) => {
               textTransform: "uppercase",
             }}
           >
-            CHECKOUT ({totalPrice + 10} )
+            CHECKOUT ({totalPrice+6} dt)
           </Text>
         </TouchableOpacity>
       </View>

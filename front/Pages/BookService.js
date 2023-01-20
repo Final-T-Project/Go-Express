@@ -12,12 +12,12 @@ import { DatePickerAndroid } from "react-native";
 import React from "react";
 import { Picker } from "@react-native-picker/picker";
 import { useState , useEffect , useContext} from "react";
-//import DateTimePicker from "@react-native-community/datetimepicker";
+
 import DateTimePicker from "react-native-modal-datetime-picker";
 
 import moment from "moment";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from 'axios'
+import axios from "axios";
 import { UserContext } from "../UserContext";
 import { useNavigation } from "@react-navigation/native";
 import IPADRESS from "../config/IPADRESS";
@@ -51,6 +51,17 @@ export default function BookService({route}) {
       })
   },[userId])
 
+  useEffect(() => {
+    axios
+      .get(`http://${IPADRESS}:5000/carts/getIdCart/${userId}`)
+      .then((res) => {
+        console.log(res.data[0].id_cart);
+        setIdCart(res.data[0].id_cart);
+      })
+      .catch((err) => {
+        console.log("Error ----------->" + err);
+      });
+  }, [userId]);
 
   
   console.log(id)

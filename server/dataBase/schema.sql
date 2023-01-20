@@ -107,20 +107,16 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- Table `mydb`.`employer`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`employer` (
-  `id_employer` VARCHAR(45) NOT NULL,
-  `name` VARCHAR(20) NOT NULL,
-  `cv` VARCHAR(700) NOT NULL,
-  `gender` ENUM('Male', 'female') NOT NULL,
+  `id_employer` INT NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(20) NOT NULL,
+  `gender` ENUM('Male', 'Female') NOT NULL,
   `adress` VARCHAR(45) NOT NULL,
   `photo` VARCHAR(300) NOT NULL,
   `phone_number` VARCHAR(8) NOT NULL,
+  `work_position` ENUM('householder','electrician','plumber','truck driver','delivery agents') NOT NULL,
   `state` ENUM('Accepted', 'Not Accepted') NOT NULL DEFAULT 'Not Accepted',
-  `serves_id_serves` INT NOT NULL,
-  PRIMARY KEY (`id_employer`),
-  INDEX `fk_employer_serves1_idx` (`serves_id_serves` ASC) VISIBLE,
-  CONSTRAINT `fk_employer_serves1`
-    FOREIGN KEY (`serves_id_serves`)
-    REFERENCES `mydb`.`serves` (`id_serves`))
+  `last_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_employer`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -158,10 +154,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
   `category` ENUM('Kitchen', 'Garden', 'Furniture', 'Accessories') NOT NULL,
   `price` INT NOT NULL,
   `description` VARCHAR(600) NOT NULL,
-  `photo` VARCHAR(300) NOT NULL,
+  `photo_product` VARCHAR(300) NOT NULL,
   `quantity` INT NOT NULL DEFAULT '1',
   `user_id_user` VARCHAR(50) NOT NULL,
   `cart_id_cart` INT NOT NULL,
+  `productStatus` ENUM('Accepted', 'NotAccepted') NULL DEFAULT 'NotAccepted',
+  `Published_at` VARCHAR(500) NULL DEFAULT NULL,
   PRIMARY KEY (`id_product`),
   INDEX `fk_product_user_idx` (`user_id_user` ASC) VISIBLE,
   INDEX `fk_product_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
@@ -172,6 +170,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
     FOREIGN KEY (`user_id_user`)
     REFERENCES `mydb`.`user` (`id_user`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 46
 DEFAULT CHARACTER SET = utf8mb3;
 
 
