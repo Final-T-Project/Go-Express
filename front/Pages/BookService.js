@@ -155,6 +155,11 @@ export default function BookService({route}) {
     "Zaghouan",
   ];
 
+  const customStyles = {
+    headerText: { color: "red" },
+    header: { backgroundColor: "red" },
+  };
+
   const handleDay =(date)=>{
     let formattedDate = date.toLocaleDateString("en-US", {day: 'numeric', month: 'none', year: 'none'});
     console.log(formattedDate.substring(3,5))
@@ -255,6 +260,7 @@ export default function BookService({route}) {
                   onConfirm={handleDay}
                   onCancel={()=>setDShow(false)}
                   minimumDate={minDate}
+                  customStyles={customStyles}
               />
             ) : null}
 
@@ -298,6 +304,7 @@ export default function BookService({route}) {
             {timeShow ? (
               <DateTimePicker
               mode="time"
+              is24Hour={true}
               isVisible={timeShow}
               onConfirm={handleTime}
               onCancel={()=>setTimeShow(false)}
@@ -501,4 +508,8 @@ const css = StyleSheet.create({
     fontWeight: "bold",
     margin: 30,
   },
+  datePicker: {
+    backgroundColor: 'red',
+    color: 'white'
+}
 });
