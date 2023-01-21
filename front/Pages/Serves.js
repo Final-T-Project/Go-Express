@@ -34,10 +34,15 @@ const data = Object.keys(images).map((i) => ({
   image: images[i],
   ref: React.createRef(),
 }));
-const Tab = React.forwardRef(({ item, onItemPress }, ref) => {
-  const navigation = useNavigation();
+
+const Tab = React.forwardRef(({ navigation, item, onItemPress }, ref) => {
+  // const navigation = useNavigation();
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("BookService")}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("BookService", { service: item.title })
+      }
+    >
       <View ref={ref}>
         <Text
           style={{
@@ -112,9 +117,9 @@ const Tabs = ({ data, scrollX, onItemPress }) => {
               key={item.key}
               item={item}
               ref={item.ref}
-              onItemPress={() => {
-                onItemPress(index);
-              }}
+              // onItemPress={() => {
+              //   onItemPress(index);
+              // }}
             />
           );
         })}
@@ -126,7 +131,7 @@ const Tabs = ({ data, scrollX, onItemPress }) => {
   );
 };
 
-const Serves = ({navigation}) => {
+const Serves = ({ navigation }) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const ref = React.useRef();
   const onItemPress = React.useCallback((itemIndex) => {
@@ -158,15 +163,14 @@ const Serves = ({navigation}) => {
                   { backgroundColor: "rgba(0,0,0,0,3" },
                 ]}
               ></View>
-               <TabBar/>
+              <TabBar />
             </View>
           );
         }}
       />
       <Tabs scrollX={scrollX} data={data} onItemPress={onItemPress} />
-      <TabBar navigation={navigation}/>
+      <TabBar navigation={navigation} />
     </View>
-    
   );
 };
 

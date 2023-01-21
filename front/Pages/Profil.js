@@ -146,6 +146,8 @@ function Info({ route, navigation, id }) {
       });
   }, [userDataProfile]);
 
+ 
+
   return (
     <View
       style={{
@@ -324,7 +326,7 @@ function Product() {
         alert(error);
       });
   }, [userDataProduct]);
-
+ 
   return (
     <ScrollView>
       <View

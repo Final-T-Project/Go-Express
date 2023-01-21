@@ -16,12 +16,14 @@ import Home from "../Pages/yahya";
 import cart from "front/assets/shopping-cart-empty-side-view.png";
 import notifications from "front/assets/notification.png";
 import chat from "../assets/chat.png";
+import join from "front/assets/join.png";
 import logout from "../assets/logout.png";
 import menu from "../assets/menu.png";
 import close from "../assets/close.png";
 import { useNavigation } from "@react-navigation/native";
 import TabBar from "../components/TabBar";
 import { UserContext } from "../UserContext";
+import Join_Us from "./Join_Us";
 import axios from "axios";
 import IPADRESS from "../config/IPADRESS";
 
@@ -168,8 +170,11 @@ export default function SideBbar({ navigation, route }) {
             )}
             {TabButton(currentTab, setCurrentTab, "MyCart", cart)}
             {TabButton(currentTab, setCurrentTab, "Chat", chat)}
+            {TabButton(currentTab, setCurrentTab, "Join_Us", join)}
           </View>
-          <View>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
+          <View style={{ top: 130 }}>
+            {TabButton(currentTab, setCurrentTab, "LogOut", logout)}
+          </View>
         </View>
       </ImageBackground>
       <Animated.View
@@ -247,8 +252,9 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        if (title == "Feedback") {
-          setCurrentTab("Feedback");
+        if (title == "Join_Us") {
+          setCurrentTab("Join_Us");
+          navigation.navigate("Join_Us");
 
           //  navigation.navigate("Home");
         } else if (title == "Notification") {

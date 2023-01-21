@@ -10,6 +10,7 @@ import TripsList from "../components/TripsList";
 import { UserContext } from "../UserContext";
 import axios from "axios";
 import IPADRESS from "../config/IPADRESS";
+
 const Home = () => {
   const { userId } = useContext(UserContext);
   const { userCartId, setUserCartId } = useContext(UserContext);
@@ -31,25 +32,40 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <ScreenHeader
-        // mainTitle="where are here "
-        // secondTitle="to facilitate your life"
-        />
-        <MainHeader
-          title="Go-Express To facilitate your life"
-          style={styles.title}
-        />
+        {/* <MainHeader title="Go-Express " style={styles.title} /> */}
+
+        {/* <ScreenHeader
+          mainTitle="where are here "
+          secondTitle="to facilitate your life"
+        /> */}
 
         <ScrollView showsVerticalScrollIndicator={false}>
-          <TopPlacesCarousel list={TOP_PLACES} />
-          <SectionHeader
+          {/* <TopPlacesCarousel list={TOP_PLACES} /> */}
+          {/* <SectionHeader
             title="Product"
             buttonTitle="See All"
             onPress={() => {
               navig;
-            }}
+            }} */}
+            {/* // mainTitle="where are here "
+            // secondTitle="to facilitate your life"
+          // /> */}
+          <MainHeader
+            title="Go-Express To facilitate your life"
+            style={styles.title}
           />
-          <TripsList list={PLACES} />
+
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <TopPlacesCarousel list={TOP_PLACES} />
+            <SectionHeader
+              title="Product"
+              buttonTitle="See All"
+              onPress={() => {
+                navig;
+              }}
+            />
+            <TripsList list={PLACES} />
+          </ScrollView>
         </ScrollView>
       </ScrollView>
     </View>

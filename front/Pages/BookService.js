@@ -12,7 +12,9 @@ import { DatePickerAndroid } from "react-native";
 import React from "react";
 import { Picker } from "@react-native-picker/picker";
 import { useState, useEffect, useContext } from "react";
-import DateTimePicker from "@react-native-community/datetimepicker";
+
+import DateTimePicker from "react-native-modal-datetime-picker";
+
 import moment from "moment";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -23,11 +25,35 @@ import IPADRESS from "../config/IPADRESS";
 // primary color : #F14E24
 // Secondary color : #373E5A
 
-export default function BookService() {
+export default function BookService({ route }) {
+  const serviceChoosen = route.params.service;
+
+  console.log(serviceChoosen);
+
   const [id, setId] = useState("");
   const [idCart, setIdCart] = useState("");
 
   const { userId } = useContext(UserContext);
+
+  useEffect(() => {
+    setId(userId);
+    axios
+      .get(`http://${IPADRESS}:5000/carts/getIdCart/${userId}`)
+      .then((res) => {
+        //console.log(res.data[0].id_cart)
+        setIdCart(res.data[0].id_cart);
+        serviceChoosen === "Moving"
+          ? setListService("1")
+          : serviceChoosen === "Cleaning"
+          ? setListService("2")
+          : serviceChoosen === "Plumbing"
+          ? setListService("3")
+          : setListService("4");
+      })
+      .catch((err) => {
+        console.log("Error ----------->" + err);
+      });
+  }, [userId]);
 
   useEffect(() => {
     axios
@@ -41,19 +67,23 @@ export default function BookService() {
       });
   }, [userId]);
 
-  // console.log(userId)
-  const Navigation = useNavigation();
-  const [date, setDate] = useState(new Date());
+  console.log(id);
+  console.log(idCart);
 
+  const Navigation = useNavigation();
+
+  const { date, setDate } = useContext(UserContext);
+  const { time, setTime } = useContext(UserContext);
+  const { toList, setToList } = useContext(UserContext);
   // ---------------------------------- Drop list state -------------------------------------------------//
-  const [listService, setListService] = useState("");
+
+  const { listService, setListService } = useContext(UserContext);
 
   // ---------------------------------- Date state -------------------------------------------------//
   const [dateChoosen, setDateChoosen] = useState("");
   const [DShow, setDShow] = useState(false);
 
   // ---------------------------------- Time  state -------------------------------------------------//
-  const [time, setTime] = useState("");
   const [timeShow, setTimeShow] = useState(false); // show and hide the time window
 
   // --------------------------------- distination from Drop List ---------------------------------- //
@@ -62,9 +92,8 @@ export default function BookService() {
 
   // --------------------------------- distination to Drop List ---------------------------------- //
 
-  const [toList, setToList] = useState("");
-
   // ---------------------------------- Functions -------------------------------------------------//
+
   const handleTimeChange = (time) => {
     setTime(time);
     console.log(time);
@@ -79,7 +108,30 @@ export default function BookService() {
   };
 
   const handleBookPress = () => {
-    Navigation.navigate("Booking Details");
+    console.log(
+      listService + " " + date + " " + time + " " + fromList + " " + toList
+    );
+    console.log(
+      listService + " " + date + " " + time + " " + fromList + " " + toList
+    );
+    //Navigation.navigate("Booking Details");
+    axios
+      .post(`http://${IPADRESS}:5000/service/addBookedService`, {
+        date: date,
+        idUser: id,
+        idService: listService,
+        idCart: idCart,
+        time: time,
+        fromPlace: fromList,
+        toPlace: toList,
+      })
+      .then(() => {
+        Navigation.navigate("Booking Details");
+        //,{params:{listService,date,time}}
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // ------------------------------- ALL STATE IN TUNISIA ( I WILL MAP OVER IT SO I DON'T WRITE IT MANUALLY :))
@@ -109,6 +161,24 @@ export default function BookService() {
     "Touzeur",
     "Zaghouan",
   ];
+
+  const handleDay = (date) => {
+    let formattedDate = date.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "none",
+      year: "none",
+    });
+    console.log(formattedDate.substring(3, 5));
+    setDate(formattedDate.substring(3, 5));
+    setDShow(false);
+  };
+
+  const handleTime = (time) => {
+    let formattedTime = time.toLocaleTimeString();
+    console.log(formattedTime);
+    setTime(formattedTime);
+    setTimeShow(false);
+  };
 
   return (
     <View style={css.container}>
@@ -142,15 +212,15 @@ export default function BookService() {
               style={css.picker}
             >
               <Picker.Item
-                label="Please Select Counter"
+                label="Please Select Service"
                 enabled={false}
                 opacity={0.5}
                 color="gray"
               />
-              <Picker.Item label="Moving + tidying up things" value="Moving" />
-              <Picker.Item label="Cleanig" value="Cleanig" />
-              <Picker.Item label="Plumbing" value="Plumbing" />
-              <Picker.Item label="Electricity" value="Electricity" />
+              <Picker.Item label="Moving + tidying up things" value="1" />
+              <Picker.Item label="Cleanig" value="2" />
+              <Picker.Item label="Plumbing" value="3" />
+              <Picker.Item label="Electricity" value="4" />
             </Picker>
 
             {/** --------------------------------LIGNE  --------------------------------------------- */}
@@ -171,31 +241,30 @@ export default function BookService() {
               Day :
             </Text>
 
-            <TouchableOpacity
-              style={{
-                backgroundColor: "#373E5A",
-                width: 200,
-                height: 30,
-                color: "white",
-                borderRadius: 20,
-                justifyContent: "center",
-                marginTop: 20,
-              }}
-              onPress={() => setDShow(true)}
-            >
-              <Text style={{ color: "white", textAlign: "center" }}>
-                Pick Day
-              </Text>
-            </TouchableOpacity>
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#373E5A",
+                  width: 200,
+                  height: 30,
+                  color: "white",
+                  borderRadius: 20,
+                  justifyContent: "center",
+                  marginTop: 20,
+                }}
+                onPress={() => setDShow(true)}
+              >
+                <Text style={{ color: "white", textAlign: "center" }}>
+                  Pick Day
+                </Text>
+              </TouchableOpacity>
+            </View>
 
             {DShow ? (
               <DateTimePicker
                 isVisible={DShow}
-                onConfirm={() => setDShow(false)}
+                onConfirm={handleDay}
                 onCancel={() => setDShow(false)}
-                mode="date"
-                value={date}
-                onChange={(time) => setDateChoosen(time)}
               />
             ) : null}
 
@@ -217,32 +286,31 @@ export default function BookService() {
               Time :
             </Text>
 
-            <TouchableOpacity
-              style={{
-                backgroundColor: "#373E5A",
-                width: 200,
-                height: 30,
-                color: "white",
-                borderRadius: 20,
-                justifyContent: "center",
-                marginTop: 20,
-              }}
-              onPress={() => setTimeShow(true)}
-            >
-              <Text style={{ color: "white", textAlign: "center" }}>
-                Pick Time
-              </Text>
-            </TouchableOpacity>
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#373E5A",
+                  width: 200,
+                  height: 30,
+                  color: "white",
+                  borderRadius: 20,
+                  justifyContent: "center",
+                  marginTop: 20,
+                }}
+                onPress={() => setTimeShow(true)}
+              >
+                <Text style={{ color: "white", textAlign: "center" }}>
+                  Pick Time
+                </Text>
+              </TouchableOpacity>
+            </View>
 
             {timeShow ? (
               <DateTimePicker
-                isVisible={timeShow}
-                onConfirm={() => setTimeShow(false)}
-                onCancel={() => setTimeShow(false)}
                 mode="time"
-                value={date}
-                is24Hour={true}
-                onChange={(time) => handleTimeChange(time)}
+                isVisible={timeShow}
+                onConfirm={handleTime}
+                onCancel={() => setTimeShow(false)}
               />
             ) : null}
 
@@ -259,113 +327,145 @@ export default function BookService() {
 
             {/** --------------------------------DROP DOWN LIST FOR PLACES  --------------------------------------------- */}
 
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                marginTop: 20,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <View>
-                <Text
-                  style={{
-                    marginTop: 0,
-                    fontWeight: "600",
-                    fontSize: 20,
-                    marginLeft: 30,
-                  }}
-                >
-                  {" "}
-                  From :
-                </Text>
-                <Picker
-                  selectedValue={fromList}
-                  onValueChange={(value) => setFromList(value)}
-                  // mode="dropdown"
-                  mode="dialog"
-                  style={css.pickerFromTo}
-                >
-                  <Picker.Item
-                    label="Please Select City"
-                    enabled={false}
-                    opacity={0.5}
-                    color="gray"
-                  />
-                  {ville.map((element, key) => {
-                    return <Picker.Item label={element} value={element} />;
-                  })}
-                </Picker>
-                <Image
-                  source={require("../assets/MovingTruck.gif")}
-                  style={{
-                    width: 80,
-                    height: 80,
-                    marginLeft: 50,
-                    marginTop: -20,
-                  }}
-                />
-              </View>
-
-              <View>
-                <Text
-                  style={{
-                    marginTop: 20,
-                    fontWeight: "600",
-                    fontSize: 20,
-                    marginLeft: 30,
-                  }}
-                >
-                  {" "}
-                  To :
-                </Text>
-                <Picker
-                  selectedValue={toList}
-                  onValueChange={(value) => setToList(value)}
-                  // mode="dropdown"
-                  mode="dialog"
-                  style={css.pickerFromTo}
-                >
-                  <Picker.Item
-                    label="Please Select City"
-                    enabled={false}
-                    opacity={0.5}
-                    color="gray"
-                  />
-                  {ville.map((element, key) => {
-                    return <Picker.Item label={element} value={element} />;
-                  })}
-                </Picker>
-              </View>
-            </View>
-
-            <View style={{ alignItems: "center" }}>
-              <TouchableOpacity
+            {listService === "1" ? (
+              <View
                 style={{
-                  backgroundColor: "#F14E24",
-                  width: 200,
-                  height: 50,
-                  color: "white",
-                  borderRadius: 100,
-                  justifyContent: "center",
+                  display: "flex",
+                  flexDirection: "row",
                   marginTop: 20,
                   alignItems: "center",
+                  justifyContent: "center",
                 }}
-                onPress={() => handleBookPress()}
               >
-                <Text
+                <View>
+                  <Text
+                    style={{
+                      marginTop: 0,
+                      fontWeight: "600",
+                      fontSize: 20,
+                      marginLeft: 30,
+                    }}
+                  >
+                    {" "}
+                    From :
+                  </Text>
+                  <Picker
+                    selectedValue={fromList}
+                    onValueChange={(value) => setFromList(value)}
+                    // mode="dropdown"
+                    mode="dialog"
+                    style={css.pickerFromTo}
+                  >
+                    <Picker.Item
+                      label="Please Select City"
+                      enabled={false}
+                      opacity={0.5}
+                      color="gray"
+                    />
+                    {ville.map((element, key) => {
+                      return <Picker.Item label={element} value={element} />;
+                    })}
+                  </Picker>
+                  <Image
+                    source={require("../assets/MovingTruck.gif")}
+                    style={{
+                      width: 80,
+                      height: 80,
+                      marginLeft: 50,
+                      marginTop: -20,
+                    }}
+                  />
+                </View>
+
+                <View>
+                  <Text
+                    style={{
+                      marginTop: 20,
+                      fontWeight: "600",
+                      fontSize: 20,
+                      marginLeft: 30,
+                    }}
+                  >
+                    {" "}
+                    To :
+                  </Text>
+                  <Picker
+                    selectedValue={toList}
+                    onValueChange={(value) => setToList(value)}
+                    // mode="dropdown"
+                    mode="dialog"
+                    style={css.pickerFromTo}
+                  >
+                    <Picker.Item
+                      label="Please Select City"
+                      enabled={false}
+                      opacity={0.5}
+                      color="gray"
+                    />
+                    {ville.map((element, key) => {
+                      return <Picker.Item label={element} value={element} />;
+                    })}
+                  </Picker>
+                </View>
+              </View>
+            ) : null}
+
+            {/*------------------------------------------------------------ BUTTON ---------------------------------------------------------- */}
+            {!listService.length || !date.length || !time.length ? (
+              <View style={{ alignItems: "center" }}>
+                <TouchableOpacity
+                  disabled={true}
                   style={{
+                    backgroundColor: "#fcad92",
+                    width: 200,
+                    height: 50,
                     color: "white",
-                    textAlign: "center",
-                    fontSize: 17,
-                    fontWeight: "500",
+                    borderRadius: 100,
+                    justifyContent: "center",
+                    marginTop: 20,
+                    alignItems: "center",
                   }}
                 >
-                  Book
-                </Text>
-              </TouchableOpacity>
-            </View>
+                  <Text
+                    style={{
+                      color: "white",
+                      textAlign: "center",
+                      fontSize: 17,
+                      fontWeight: "500",
+                    }}
+                  >
+                    Book
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View style={{ alignItems: "center" }}>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#F14E24",
+                    width: 200,
+                    height: 50,
+                    color: "white",
+                    borderRadius: 100,
+                    justifyContent: "center",
+                    marginTop: 20,
+                    alignItems: "center",
+                  }}
+                  onPress={() => handleBookPress()}
+                >
+                  <Text
+                    style={{
+                      color: "white",
+                      textAlign: "center",
+                      fontSize: 17,
+                      fontWeight: "500",
+                    }}
+                  >
+                    Book
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>

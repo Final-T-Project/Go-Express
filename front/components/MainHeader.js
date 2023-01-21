@@ -16,9 +16,8 @@ const MainHeader = ({title}) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 24,
+    paddingHorizontal: 21,
   },
   title: {
     fontSize: 25,

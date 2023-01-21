@@ -35,6 +35,10 @@ import TabBar from "../components/TabBar";
 import axios from "axios";
 import IPADRESS from "../config/IPADRESS";
 import { UserContext } from "../UserContext";
+import firebase from "firebase/compat/app";
+import "firebase/compat/storage";
+import { initializeApp } from "firebase/app";
+import firebaseConfig from "../config/firebase";
 
 const AddProduct = ({ navigation }) => {
   // state for selected name , description , price , quantity , category , image
@@ -97,6 +101,46 @@ const AddProduct = ({ navigation }) => {
         uri: result.uri,
       };
     }
+  };
+
+  const [image, setImage] = useState(
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+  );
+  const uploadImage = async () => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function () {
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", imageOne, true);
+      xhr.send(null);
+    });
+    const ref = firebase.storage().ref().child(`Pictures/image`);
+    const snapshot = ref.put(blob);
+    snapshot.on(
+      firebase.storage.TaskEvent.STATE_CHANGED,
+      () => {
+        setUploading(true);
+      },
+      (error) => {
+        console.log(error);
+        alert(error);
+        blob.close();
+        return;
+      },
+      () => {
+        snapshot.snapshot.ref.getDownloadURL().then((url) => {
+          console.log("Download URL: ", url);
+          setImage(url);
+          blob.close();
+          return url;
+        });
+      }
+    );
   };
 
   const pickImageTow = async () => {
@@ -250,23 +294,28 @@ const AddProduct = ({ navigation }) => {
                 {/*Price  End */}
 
                 {/*Category  Start */}
-                <Text style={styles.label}>Category:</Text>
-                <View style={styles.input}>
-                  <Picker
-                    selectedValue={category}
-                    onValueChange={(value) => setCategory(value)}
-                    // mode="dropdown"
-                    mode="dialog"
-                    style={styles.picker}
-                    onBlur={handleBlur("category")}
-                  >
-                    <Picker.Item label="Please Select Category" />
-                    <Picker.Item label="Kitchen" value="Kitchen" />
-                    <Picker.Item label="Furniture" value="Furniture" />
-                    <Picker.Item label="Garden" value="Garden" />
-                    <Picker.Item label="Accessories" value="Accessories" />
-                  </Picker>
-                </View>
+                <FormControl>
+                  <FormControl.Label
+                    fontStyle={{ color: "#373E5A" }}
+                  ></FormControl.Label>
+                  <Text style={styles.label}>Category:</Text>
+                  <View style={styles.input}>
+                    <Picker
+                      selectedValue={category}
+                      onValueChange={(value) => setCategory(value)}
+                      // mode="dropdown"
+                      mode="dialog"
+                      style={styles.picker}
+                      onBlur={handleBlur("category")}
+                    >
+                      <Picker.Item label="Please Select Category" />
+                      <Picker.Item label="Kitchen" value="Kitchen" />
+                      <Picker.Item label="Furniture" value="Furniture" />
+                      <Picker.Item label="Garden" value="Garden" />
+                      <Picker.Item label="Accessories" value="Accessories" />
+                    </Picker>
+                  </View>
+                </FormControl>
                 {/*Category  End */}
 
                 {/*Quantity  Start */}
@@ -284,7 +333,7 @@ const AddProduct = ({ navigation }) => {
                 </View>
 
                 {/* Quantity  End */}
-                <View style={styles.container}>
+                <View>
                   <Text style={styles.Price_label}>
                     Total Price : {price * quantity} dt{" "}
                   </Text>
@@ -321,22 +370,22 @@ const AddProduct = ({ navigation }) => {
                       style={styles.button}
                       backgroundColor={"#F14E24"}
                       onPress={() => {
-                        toast.show({
-                          render: () => {
-                            return (
-                              <Box
-                                bg="green.500"
-                                px="2"
-                                py="1"
-                                rounded="sm"
-                                mb={2}
-                              >
-                                Your product Sended to admin For confirmation.
-                              </Box>
-                            );
-                          },
-                        });
-                        addProductDetails();
+                        // toast.show({
+                        //   render: () => {
+                        //     return (
+                        //       <Box
+                        //         bg="green.500"
+                        //         px="2"
+                        //         py="1"
+                        //         rounded="sm"
+                        //         mb={2}
+                        //       >
+                        //         Your product Sended to admin For confirmation.
+                        //       </Box>
+                        //     );
+                        //   },
+                        // });
+                        uploadImage();
                       }}
                     >
                       Save

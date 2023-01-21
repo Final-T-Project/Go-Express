@@ -134,7 +134,7 @@ const MyCart = ({ navigation }) => {
             id_user: userId,
             state: "not done",
           });
-          alert(userCartId);
+          // alert(userCartId);
           navigation.navigate("Home");
         })
         .then(() => {

@@ -242,7 +242,7 @@ function Page() {
 
                   <Grid item md={6} xs={12}>
                     <Typography variant="h6" gutterBottom>
-                      Seller : {element.name}
+                      Seller : {element.sellIerd}
                     </Typography>
                   </Grid>
                   <Grid item md={6} xs={12}>
