@@ -97,6 +97,7 @@ export default function BookService({route}) {
   // ---------------------------------- Functions -------------------------------------------------//
 
  
+  
 
   const handleTimeChange = (time) => {
     setTime(time);
@@ -174,11 +175,25 @@ export default function BookService({route}) {
     setTimeShow(false)
   }
 
+  const boxH = () => {
+    if (serviceChoosen === "Moving") {
+      return 700;
+    } else {
+      return 500;
+    }
+  };
+
   return (
     <View style={css.container}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <ScrollView>
-          <View style={css.box}>
+          <View style={{backgroundColor: "white",
+              width: 370,
+              height:boxH(),
+              borderRadius: 4,
+              marginTop: 50,
+              paddingLeft: 20,
+              marginBottom: 50,}}>
             {/** --------------------------------TEXT ( TITLE ) --------------------------------------------- */}
             <Text
               style={{
@@ -470,6 +485,7 @@ export default function BookService({route}) {
   );
 }
 
+
 const css = StyleSheet.create({
   container: {
     backgroundColor: "#373E5A",
@@ -480,7 +496,7 @@ const css = StyleSheet.create({
   box: {
     backgroundColor: "white",
     width: 370,
-    height: 700,
+    height:700,
     borderRadius: 4,
     marginTop: 50,
     paddingLeft: 20,
