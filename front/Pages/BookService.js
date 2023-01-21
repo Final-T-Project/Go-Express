@@ -32,7 +32,7 @@ export default function BookService({route}) {
   console.log(serviceChoosen)
 
 
-  
+  const minDate = new Date();
 
   const [id,setId]=useState("")
   const [idCart,setIdCart]=useState("")
@@ -207,7 +207,7 @@ export default function BookService({route}) {
                 color="gray"
               />
               <Picker.Item label="Moving + tidying up things" value="1" />
-              <Picker.Item label="Cleanig" value="2" />
+              <Picker.Item label="Cleaning" value="2" />
               <Picker.Item label="Plumbing" value="3" />
               <Picker.Item label="Electricity" value="4" />
             </Picker>
@@ -254,6 +254,7 @@ export default function BookService({route}) {
                   isVisible={DShow}
                   onConfirm={handleDay}
                   onCancel={()=>setDShow(false)}
+                  minimumDate={minDate}
               />
             ) : null}
 
