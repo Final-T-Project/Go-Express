@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { SafeAreaView, StyleSheet, View, Text, Image } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
-import Icon from "react-native-ionicons";
+// import Icon from "react-native-ionicons";
 import TestLogin from "./TestLogin";
 
 const IntoductionPages = () => {
@@ -15,14 +15,14 @@ const IntoductionPages = () => {
   const RenderNextButton = () => {
     return (
       <View style={styles.buttonCircle}>
-        <Icon
+        {/* <Icon
           //name="arrow-forward-outline"
           name="information-circle-outline"
           // name="ion:arrow-forward-circle"
           color="rgba(255, 255, 255, .9)"
           size={24}
           style={{ backgroundColor: "transparent" }}
-        />
+        /> */}
       </View>
     );
   };
@@ -30,14 +30,14 @@ const IntoductionPages = () => {
   const RenderDoneButton = () => {
     return (
       <View style={styles.buttonCircle}>
-        <Icon
+        {/* <Icon
           name="information-circle-outline"
           // name="ion-arrow-right-c"
           // name="ion:arrow-forward-circle"
           color="rgba(255, 255, 255, .9)"
           size={24}
           style={{ backgroundColor: "transparent" }}
-        />
+        /> */}
       </View>
     );
   };

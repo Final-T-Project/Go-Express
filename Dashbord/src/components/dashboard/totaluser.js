@@ -33,7 +33,7 @@ export const TotalUser = () => {
             <Grid item>
               <Avatar
                 sx={{
-                  backgroundColor: "error.main",
+                  backgroundColor: "#ED5C00",
                   height: 56,
                   width: 56,
                 }}
@@ -49,7 +49,7 @@ export const TotalUser = () => {
               pt: 2,
             }}
           >
-            <ArrowUpwardIcon color="success" />
+            <ArrowUpwardIcon style={{ color: "#ED5C00" }} />
             <Typography
               // color="error"
               variant="body2"

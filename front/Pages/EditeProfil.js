@@ -18,22 +18,15 @@ import {
   Spinner,
   Text,
   Image,
+  HStack,
+  Heading,
 } from "native-base";
 import axios from "axios";
 
 import IPADRESS from "../config/IPADRESS";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../UserContext";
-// import { firebaseConfigforPhoto } from "../config/firebase";
-
-const firebaseConfigforPhoto = {
-  apiKey: "AIzaSyC4bljvI7GZ0WLPxLHWrqMyg9yHjlr2xWA",
-  authDomain: "fir-expo-8f806.firebaseapp.com",
-  projectId: "fir-expo-8f806",
-  storageBucket: "fir-expo-8f806.appspot.com",
-  messagingSenderId: "299764130922",
-  appId: "1:299764130922:web:79652108cbbe383b04d613",
-};
+import firebaseConfig from "../config/firebase";
 
 export default function EditeProfil() {
   const navigation = useNavigation();
@@ -55,25 +48,9 @@ export default function EditeProfil() {
     setPlacement(placement);
   };
 
-  // const pickImage = async () => {
-  //   let result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
-  //     allowsEditing: true,
-  //     aspect: [4, 3],
-  //     quality: 1,
-  //   });
-
-  //   if (!result.canceled) {
-  //     setImage(result.uri);
-  //   }
-  // };
-
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfigforPhoto, "fir-expo-8f806");
+  if (firebase.apps.length === 0) {
+    firebase.initializeApp(firebaseConfig);
   }
-
-  // firebase.initializeApp(firebaseConfigforPhoto, "fir-expo-8f806");
-  // const app = initializeApp(firebaseConfigforPhoto, "fir-expo-8f806");
 
   const PickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -85,9 +62,6 @@ export default function EditeProfil() {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
-  };
-
-  const Upload = async () => {
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {
@@ -97,7 +71,7 @@ export default function EditeProfil() {
         reject(new TypeError("Network request failed"));
       };
       xhr.responseType = "blob";
-      xhr.open("GET", image, true);
+      xhr.open("GET", result.assets[0].uri, true);
       xhr.send(null);
     });
     const ref = firebase.storage().ref().child(new Date().toISOString());
@@ -132,7 +106,7 @@ export default function EditeProfil() {
   const saveUpdate = () => {
     axios
       .put(`http://${IPADRESS}:5000/users/updateUser/${userId}`, {
-        photo: image,
+        photo: urlImage,
         name: name,
         ville: ville,
         adress: adress,
@@ -189,10 +163,13 @@ export default function EditeProfil() {
                   Pick image
                 </Button>
               ) : (
-                <Spinner accessibilityLabel="Loading posts" />
+                <HStack space={2} justifyContent="center">
+                  <Spinner accessibilityLabel="Loading posts" color="#ED5C00" />
+                  <Heading color="#ED5C00" fontSize="md">
+                    Loading
+                  </Heading>
+                </HStack>
               )}
-
-              <Button onPress={Upload}>upload</Button>
 
               {image && <Image source={{ uri: image }} />}
             </FormControl>

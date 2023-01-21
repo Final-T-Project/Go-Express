@@ -63,11 +63,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "#544ce4",
+    backgroundColor: "#ED5C00",
     borderRadius: 25,
     marginLeft: "35%",
     marginTop: "2%",
-    width: "30%",
+    width: "24%",
+    color: "white",
   },
 }));
 
@@ -205,6 +206,7 @@ function Page() {
                       <FontAwesomeIcon
                         onClick={() => setSubmitUpdate(!submitUpdate)}
                         icon={faPenToSquare}
+                        color="#ED5C00"
                       />
                     </Typography>
                     {/* update Price  Start */}
@@ -220,6 +222,7 @@ function Page() {
                             name="Price"
                             required
                             variant="outlined"
+                            color="warning"
                             // ✅
                             InputProps={{
                               endAdornment: (
@@ -273,6 +276,7 @@ function Page() {
                   }}
                   variant="contained"
                   color="primary"
+                  style={{ color: "white", backgroundColor: "#ED5C00" }}
                 >
                   Accept Product
                 </Button>
@@ -284,6 +288,7 @@ function Page() {
                   }}
                   variant="outlined"
                   color="primary"
+                  style={{ color: "#ED5C00", backgroundColor: "white", borderColor: "#ED5C00" }}
                 >
                   Reject Product
                 </Button>

@@ -18,6 +18,9 @@ import {
   Select,
   CheckIcon,
   Radio,
+  Spinner,
+  HStack,
+  Heading,
 } from "native-base";
 import * as ImagePicker from "expo-image-picker";
 import { Picker } from "@react-native-picker/picker";
@@ -30,7 +33,18 @@ import IPADRESS from "../config/IPADRESS";
 import { UserContext } from "../UserContext";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import firebase from "firebase/compat/app";
+import "firebase/compat/storage";
+import { initializeApp } from "firebase/app";
+
 const Join_Us = ({ navigation }) => {
+  const toast = useToast();
+  const { height, width } = Dimensions.get("screen");
+
+  if (firebase.apps.length === 0) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
   // state for  firt name , last name , phone number , adress , work position , gender , photo
   const [first_name, setFirst_name] = useState("");
   const [last_name, setLast_name] = useState("");
@@ -38,55 +52,97 @@ const Join_Us = ({ navigation }) => {
   const [adress, setAdress] = useState("");
   const [work_position, setWork_position] = useState("");
   const [gender, setGender] = React.useState("Male");
+  const [image, setImage] = useState(null);
+  // state for uploading
+  const [uploading, setUploading] = useState(false);
+
   // function to pick image from device and store it in image variable
-  const pickImageOne = async () => {
+  const PickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Image,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-    setImageOne(result.uri);
-    console.log("image1:", result.uri);
-    if (!result.cancelled) {
-      let newfile1 = {
-        uri: result.uri,
-      };
+    if (!result.canceled) {
+      // setImage(result.assets[0].uri);
     }
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function () {
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", result.assets[0].uri, true);
+      xhr.send(null);
+    });
+    const ref = firebase.storage().ref().child(new Date().toISOString());
+    const snapshot = ref.put(blob);
+    snapshot.on(
+      firebase.storage.TaskEvent.STATE_CHANGED,
+      () => {
+        setUploading(true);
+      },
+      (error) => {
+        setUploading(false);
+        console.log(error);
+        alert(error);
+        blob.close();
+        return;
+      },
+      () => {
+        snapshot.snapshot.ref.getDownloadURL().then((url) => {
+          setUploading(false);
+          console.log("Download URL: ", url);
+          setImage(url);
+          blob.close();
+          return url;
+        });
+      }
+    );
   };
-  const [imageOne, setImageOne] = useState(null);
-  const toast = useToast();
-  const { height, width } = Dimensions.get("screen");
+
   let addEmployer = () => {
     if (!first_name.length || !last_name.length || !adress.length) {
       alert("Please fill all information");
-    } 
-    else if(phone_number.length<8 ||phone_number.length>8){
+    } else if (phone_number.length < 8 || phone_number.length > 8) {
       alert("Your phone number must containe 8 numbers");
-    }
-    // else if(phone_number.length>8){
-    //   alert("Your phone number must containe 8 numbers");
-    // }
-    else {
+    } else {
       axios
         .post(`http://${IPADRESS}:5000/Employers/addEmployer`, {
-          first_name:first_name,
-          last_name:last_name,
-          phone_number:phone_number,
-          adress:adress,
-          work_position:work_position,
-          gender:gender,
-          photo:imageOne
+          first_name: first_name,
+          gender: gender,
+          adress: adress,
+          photo: image,
+          phone_number: phone_number,
+          work_position: work_position,
+          last_name: last_name,
+          serves_id_serves: 1,
         })
-        // .then(() => {
-        //   navigation.navigate("Home");
-        // })
+        .then(() => {
+          toast.show({
+            render: () => {
+              return (
+                <Box bg="green.500" px="2" py="1" rounded="sm" mb={2}>
+                  Your request has been successfully submitted and will be
+                  processed shortly and you will be contacted by one of our
+                  officials.
+                </Box>
+              );
+            },
+          });
+        })
+        .then(() => {
+          navigation.navigate("SideBar");
+        })
         .catch((error) => {
           console.log(error);
         });
     }
   };
-  console.log(imageOne);
   return (
     <>
       <ScrollView>
@@ -175,7 +231,7 @@ const Join_Us = ({ navigation }) => {
                   <FormControl.Label fontStyle={{ color: "#373E5A" }}>
                     Choose work position
                   </FormControl.Label>
-                  <Box maxW="300">
+                  <Box maxW="600">
                     <Select
                       selectedValue={work_position}
                       minWidth="200"
@@ -222,9 +278,22 @@ const Join_Us = ({ navigation }) => {
                 {/* Image */}
                 <FormControl>
                   <FormControl.Label>Your Image</FormControl.Label>
-                  <Button backgroundColor={"#373E5A"} onPress={pickImageOne}>
-                    Pick your image
-                  </Button>
+
+                  {!uploading ? (
+                    <Button backgroundColor={"#373E5A"} onPress={PickImage}>
+                      Pick your image
+                    </Button>
+                  ) : (
+                    <HStack space={2} justifyContent="center">
+                      <Spinner
+                        accessibilityLabel="Loading posts"
+                        color="#ED5C00"
+                      />
+                      <Heading color="#ED5C00" fontSize="md">
+                        Loading
+                      </Heading>
+                    </HStack>
+                  )}
                 </FormControl>
                 {/*Button Add  Start */}
                 <TouchableOpacity>
@@ -233,22 +302,7 @@ const Join_Us = ({ navigation }) => {
                       style={styles.button}
                       backgroundColor={"#F14E24"}
                       onPress={() => {
-                        toast.show({
-                          render: () => {
-                            return (
-                              <Box
-                                bg="green.500"
-                                px="2"
-                                py="1"
-                                rounded="sm"
-                                mb={2}
-                              >
-                                Your request has been successfully submitted and will be processed shortly and you will be contacted by one of our officials.
-                              </Box>
-                            );
-                          },
-                        });
-                       addEmployer();
+                        addEmployer();
                       }}
                     >
                       Save

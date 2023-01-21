@@ -78,13 +78,14 @@ export const ProductCard = () => {
                   >
                     <Link href={"/product/id"} as={`/product/${element.id_product}`}>
                       <Typography
-                        color="textSecondary"
-                        display="inline"
+                        // color="textSecondary"
+
                         sx={{
                           alignItems: "center",
                           display: "flex",
                           marginRight: 15,
                           marginTop: -7,
+                          color: "#ED5C00",
                         }}
                         variant="body2"
                       >

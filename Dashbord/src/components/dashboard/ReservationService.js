@@ -9,12 +9,12 @@ export const ReservationService = () => {
   let [reservation, setReservation] = useState([]);
 
   // function to get all reservation
-  useEffect(() => {
-    axios.get(`http://localhost:5000/reservation/getallreservation`).then((result) => {
-      setReservation(result.data);
-      console.log(result.data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get(`http://localhost:5000/reservation/getallreservation`).then((result) => {
+  //     setReservation(result.data);
+  //     console.log(result.data);
+  //   });
+  // }, []);
 
   return (
     <Card
@@ -35,7 +35,7 @@ export const ReservationService = () => {
           <Grid item>
             <Avatar
               sx={{
-                backgroundColor: "warning.main",
+                backgroundColor: "#ED5C00",
                 height: 56,
                 width: 56,
                 marginBottom: -6,

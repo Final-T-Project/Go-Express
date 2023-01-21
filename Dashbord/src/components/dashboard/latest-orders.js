@@ -11,7 +11,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  TableSortLabel,
   Tooltip,
 } from "@mui/material";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";

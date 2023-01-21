@@ -20,7 +20,7 @@ export const TotalProfit = () => (
         <Grid item>
           <Avatar
             sx={{
-              backgroundColor: "primary.main",
+              backgroundColor: "#1C2765",
               height: 56,
               width: 56,
             }}

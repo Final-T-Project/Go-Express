@@ -23,15 +23,15 @@ import {
   useToast,
   Box,
   Select,
+  CheckIcon,
+  Spinner,
+  HStack,
+  Heading,
 } from "native-base";
 import * as ImagePicker from "expo-image-picker";
-import { Picker } from "@react-native-picker/picker";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import TabBar from "../components/TabBar";
 import axios from "axios";
 import IPADRESS from "../config/IPADRESS";
 import { UserContext } from "../UserContext";
@@ -41,6 +41,11 @@ import { initializeApp } from "firebase/app";
 import firebaseConfig from "../config/firebase";
 
 const AddProduct = ({ navigation }) => {
+  // initializeApp firebase
+  if (firebase.apps.length === 0) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
   // state for selected name , description , price , quantity , category , image
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -89,24 +94,14 @@ const AddProduct = ({ navigation }) => {
   // function to pick image from device and store it in image variable
   const pickImageOne = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Image,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-    setImageOne(result.assets[0].uri);
-    console.log("image1:", result.assets[0].uri);
-    if (!result.cancelled) {
-      let newfile1 = {
-        uri: result.uri,
-      };
+    if (!result.canceled) {
+      // setImageOne(result.assets[0].uri);
     }
-  };
-
-  const [image, setImage] = useState(
-    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-  );
-  const uploadImage = async () => {
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {
@@ -116,17 +111,18 @@ const AddProduct = ({ navigation }) => {
         reject(new TypeError("Network request failed"));
       };
       xhr.responseType = "blob";
-      xhr.open("GET", imageOne, true);
+      xhr.open("GET", result.assets[0].uri, true);
       xhr.send(null);
     });
-    const ref = firebase.storage().ref().child(`Pictures/image`);
+    const ref = firebase.storage().ref().child(new Date().toISOString());
     const snapshot = ref.put(blob);
     snapshot.on(
       firebase.storage.TaskEvent.STATE_CHANGED,
       () => {
-        setUploading(true);
+        setUploadingOne(true);
       },
       (error) => {
+        setUploadingOne(false);
         console.log(error);
         alert(error);
         blob.close();
@@ -134,8 +130,9 @@ const AddProduct = ({ navigation }) => {
       },
       () => {
         snapshot.snapshot.ref.getDownloadURL().then((url) => {
+          setUploadingOne(false);
           console.log("Download URL: ", url);
-          setImage(url);
+          setImageOne(url);
           blob.close();
           return url;
         });
@@ -145,38 +142,106 @@ const AddProduct = ({ navigation }) => {
 
   const pickImageTow = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Image,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-    setImageTow(result.uri);
-    console.log("image2:", result.uri);
-    if (!result.cancelled) {
-      let newfile2 = {
-        uri: result.uri,
-      };
+    if (!result.canceled) {
+      // setImageTow(result.assets[0].uri);
     }
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function () {
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", result.assets[0].uri, true);
+      xhr.send(null);
+    });
+    const ref = firebase.storage().ref().child(new Date().toISOString());
+    const snapshot = ref.put(blob);
+    snapshot.on(
+      firebase.storage.TaskEvent.STATE_CHANGED,
+      () => {
+        setUploadingTow(true);
+      },
+      (error) => {
+        setUploadingTow(false);
+        console.log(error);
+        alert(error);
+        blob.close();
+        return;
+      },
+      () => {
+        snapshot.snapshot.ref.getDownloadURL().then((url) => {
+          setUploadingTow(false);
+          console.log("Download URL: ", url);
+          setImageTow(url);
+          blob.close();
+          return url;
+        });
+      }
+    );
   };
   const pickImageThree = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Image,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-    setImageThree(result.uri);
-    console.log("image3:", result.uri);
-    if (!result.cancelled) {
-      let newfile3 = {
-        uri: result.uri,
-      };
+    if (!result.canceled) {
+      // setImageThree(result.assets[0].uri);
     }
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function () {
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", result.assets[0].uri, true);
+      xhr.send(null);
+    });
+    const ref = firebase.storage().ref().child(new Date().toISOString());
+    const snapshot = ref.put(blob);
+    snapshot.on(
+      firebase.storage.TaskEvent.STATE_CHANGED,
+      () => {
+        setUploadingThree(true);
+      },
+      (error) => {
+        setUploadingThree(false);
+        console.log(error);
+        alert(error);
+        blob.close();
+        return;
+      },
+      () => {
+        snapshot.snapshot.ref.getDownloadURL().then((url) => {
+          setUploadingThree(false);
+          console.log("Download URL: ", url);
+          setImageThree(url);
+          blob.close();
+          return url;
+        });
+      }
+    );
   };
 
   const [imageOne, setImageOne] = useState(null);
   const [imageTow, setImageTow] = useState(null);
   const [imageThree, setImageThree] = useState(null);
+
+  const [uploadingOne, setUploadingOne] = useState(false);
+  const [uploadingTow, setUploadingTow] = useState(false);
+  const [uploadingThree, setUploadingThree] = useState(false);
 
   let addProductDetails = () => {
     if (!name.length || !description.length || !price.length) {
@@ -207,6 +272,17 @@ const AddProduct = ({ navigation }) => {
             photo2: imageTow,
             photo3: imageThree,
             idproduct: id_post,
+          });
+        })
+        .then(() => {
+          toast.show({
+            render: () => {
+              return (
+                <Box bg="green.500" px="2" py="1" rounded="sm" mb={2}>
+                  Your product Sended to admin For confirmation.
+                </Box>
+              );
+            },
           });
         })
         .then(() => {
@@ -243,7 +319,6 @@ const AddProduct = ({ navigation }) => {
             {({ errors, touched, handleBlur }) => (
               <View style={styles.form}>
                 {/*Name  Start */}
-
                 <FormControl>
                   <FormControl.Label fontStyle={{ color: "#373E5A" }}>
                     Product Name
@@ -257,9 +332,7 @@ const AddProduct = ({ navigation }) => {
                     onChangeText={(text) => setName(text)}
                   />
                 </FormControl>
-
                 {/*Name  End */}
-
                 {/*Description  Start */}
                 <FormControl>
                   <FormControl.Label fontStyle={{ color: "#373E5A" }}>
@@ -275,7 +348,6 @@ const AddProduct = ({ navigation }) => {
                   />
                 </FormControl>
                 {/*Description  End */}
-
                 {/*Price  Start */}
                 <FormControl>
                   <FormControl.Label fontStyle={{ color: "#373E5A" }}>
@@ -290,79 +362,112 @@ const AddProduct = ({ navigation }) => {
                     onChangeText={(number) => setPrice(number)}
                   />
                 </FormControl>
-
                 {/*Price  End */}
-
                 {/*Category  Start */}
                 <FormControl>
-                  <FormControl.Label
-                    fontStyle={{ color: "#373E5A" }}
-                  ></FormControl.Label>
-                  <Text style={styles.label}>Category:</Text>
-                  <View style={styles.input}>
-                    <Picker
+                  <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    Choose Category
+                  </FormControl.Label>
+                  <Box maxW="600">
+                    <Select
                       selectedValue={category}
+                      minWidth="200"
+                      accessibilityLabel=""
+                      placeholder="Category"
+                      _selectedItem={{
+                        bg: "teal.600",
+                        endIcon: <CheckIcon size="5" />,
+                      }}
+                      mt={1}
                       onValueChange={(value) => setCategory(value)}
-                      // mode="dropdown"
-                      mode="dialog"
-                      style={styles.picker}
-                      onBlur={handleBlur("category")}
                     >
-                      <Picker.Item label="Please Select Category" />
-                      <Picker.Item label="Kitchen" value="Kitchen" />
-                      <Picker.Item label="Furniture" value="Furniture" />
-                      <Picker.Item label="Garden" value="Garden" />
-                      <Picker.Item label="Accessories" value="Accessories" />
-                    </Picker>
-                  </View>
+                      <Select.Item label="Kitchen" value="Kitchen" />
+                      <Select.Item label="Furniture" value="Furniture" />
+                      <Select.Item label="Garden" value="Garden" />
+                      <Select.Item label="Accessories" value="Accessories" />
+                    </Select>
+                  </Box>
                 </FormControl>
                 {/*Category  End */}
-
                 {/*Quantity  Start */}
                 <Text style={styles.label}>Quantity:</Text>
                 <View style={styles.quantityContainer}>
                   <Pressable onPress={onMinus} style={styles.quantityButton}>
                     <Text style={styles.quantityInput}>-</Text>
                   </Pressable>
-
                   <Text>{quantity}</Text>
 
                   <Pressable onPress={onPlus} style={styles.quantityButton}>
                     <Text style={styles.quantityInput}>+</Text>
                   </Pressable>
                 </View>
-
                 {/* Quantity  End */}
                 <View>
                   <Text style={styles.Price_label}>
                     Total Price : {price * quantity} dt{" "}
                   </Text>
                 </View>
-
                 {/*Image  start */}
-
                 <FormControl>
                   <FormControl.Label>Image One</FormControl.Label>
-                  <Button backgroundColor={"#373E5A"} onPress={pickImageOne}>
-                    Pick image1
-                  </Button>
-                </FormControl>
 
+                  {!uploadingOne ? (
+                    <Button backgroundColor={"#373E5A"} onPress={pickImageOne}>
+                      Pick Image 1
+                    </Button>
+                  ) : (
+                    <HStack space={2} justifyContent="center">
+                      <Spinner
+                        accessibilityLabel="Loading posts"
+                        color="#ED5C00"
+                      />
+                      <Heading color="#ED5C00" fontSize="md">
+                        Loading
+                      </Heading>
+                    </HStack>
+                  )}
+                </FormControl>
                 <FormControl>
                   <FormControl.Label>Image Tow </FormControl.Label>
-                  <Button backgroundColor={"#373E5A"} onPress={pickImageTow}>
-                    Pick image2
-                  </Button>
+                  {!uploadingTow ? (
+                    <Button backgroundColor={"#373E5A"} onPress={pickImageTow}>
+                      Pick Image 2
+                    </Button>
+                  ) : (
+                    <HStack space={2} justifyContent="center">
+                      <Spinner
+                        accessibilityLabel="Loading posts"
+                        color="#ED5C00"
+                      />
+                      <Heading color="#ED5C00" fontSize="md">
+                        Loading
+                      </Heading>
+                    </HStack>
+                  )}
                 </FormControl>
 
                 <FormControl>
                   <FormControl.Label>Image Three</FormControl.Label>
-                  <Button backgroundColor={"#373E5A"} onPress={pickImageThree}>
-                    Pick image3
-                  </Button>
+                  {!uploadingThree ? (
+                    <Button
+                      backgroundColor={"#373E5A"}
+                      onPress={pickImageThree}
+                    >
+                      Pick Image 3
+                    </Button>
+                  ) : (
+                    <HStack space={2} justifyContent="center">
+                      <Spinner
+                        accessibilityLabel="Loading posts"
+                        color="#ED5C00"
+                      />
+                      <Heading color="#ED5C00" fontSize="md">
+                        Loading
+                      </Heading>
+                    </HStack>
+                  )}
                 </FormControl>
                 {/*Image  End */}
-
                 {/*Button Add  Start */}
                 <TouchableOpacity>
                   <View>
@@ -370,22 +475,7 @@ const AddProduct = ({ navigation }) => {
                       style={styles.button}
                       backgroundColor={"#F14E24"}
                       onPress={() => {
-                        // toast.show({
-                        //   render: () => {
-                        //     return (
-                        //       <Box
-                        //         bg="green.500"
-                        //         px="2"
-                        //         py="1"
-                        //         rounded="sm"
-                        //         mb={2}
-                        //       >
-                        //         Your product Sended to admin For confirmation.
-                        //       </Box>
-                        //     );
-                        //   },
-                        // });
-                        uploadImage();
+                        addProductDetails();
                       }}
                     >
                       Save

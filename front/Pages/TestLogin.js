@@ -26,7 +26,6 @@ import IPADRESS from "../config/IPADRESS";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/core";
 import { UserContext } from "../UserContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function TestLogin() {
   const [value, setValue] = useState({
@@ -61,9 +60,6 @@ export default function TestLogin() {
         setPasswordError(false);
         // save the user Id in the state "userID"
         setUserId(userCredential.user.uid);
-
-        const idStr = JSON.stringify(userCredential.user.uid);
-        AsyncStorage.setItem("id", idStr);
 
         return userCredential.user.uid;
       })

@@ -56,7 +56,7 @@ export default function SideBbar({ navigation, route }) {
         alert(error);
       });
   }, []);
-
+  //userDataProfile
   return (
     <SafeAreaView style={styles.container}>
       {/* blaset el contenue mta el side bar */}

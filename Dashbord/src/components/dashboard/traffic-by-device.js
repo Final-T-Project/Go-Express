@@ -11,7 +11,7 @@ export const TrafficByDevice = (props) => {
     datasets: [
       {
         data: [63, 15, 22],
-        backgroundColor: ["#3F51B5", "#e53935", "#FB8C00"],
+        backgroundColor: ["#1C2765", "#ada8a8", "#ED5C00"],
         borderWidth: 8,
         borderColor: "#FFFFFF",
         hoverBorderColor: "#FFFFFF",
@@ -47,19 +47,19 @@ export const TrafficByDevice = (props) => {
       title: "Kitchen",
       value: 63,
       icon: CountertopsIcon,
-      color: "#3F51B5",
+      color: "#1C2765",
     },
     {
       title: "Furniture",
       value: 15,
       icon: BedroomChildIcon,
-      color: "#E53935",
+      color: "#ada8a8",
     },
     {
       title: "Garden",
       value: 23,
       icon: DeckIcon,
-      color: "#FB8C00",
+      color: "#ED5C00",
     },
   ];
 

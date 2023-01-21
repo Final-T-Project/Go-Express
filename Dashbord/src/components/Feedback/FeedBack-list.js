@@ -1,35 +1,28 @@
 import { Avatar, Box, Card, CardContent, Typography, Rating, Item, Grid } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import StarIcon from "@material-ui/icons/Star";
 import { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  star: {
+    color: "#ED5C00",
+  },
+}));
+
 export const FeedBack = (props) => {
   let [value, setValue] = useState(0);
-
-  // adress: null;
-  // details: "hi test the service";
-  // email: "ahmed@gmail.com";
-  // etoile: "1";
-  // gender: null;
-  // id_feedback: 9;
-  // id_user: "A";
-  // name: "ahmed";
-  // phone_number: null;
-  // photo: null;
-  // serves_id_serves: null;
-  // user_id_user: "A";
-  // ville: "Tunis";
-
+  const classes = useStyles();
   return (
     <>
-      <Box sx={{ height: 130, width: 900 }}>
+      <Box sx={{ height: 130, width: 1900 }}>
         <Grid container spacing={1}>
           <Grid container item spacing={2}>
             {props.feedback.map((element) => (
-              <Card container spacing={37}>
+              <Card container spacing={3}>
                 <Box>
-                  <Box
-                    
-                  >
+                  <Box>
                     <Avatar
                       sx={{
                         justifyContent: "center",
@@ -50,11 +43,12 @@ export const FeedBack = (props) => {
                     {element.name}
                   </Typography>
 
-                  {/* <Typography align="center" color="textPrimary" gutterBottom variant="h6">
-                    Service name
-                  </Typography> */}
-
-                  <Rating name="read-only" value={3} readOnly />
+                  <Rating
+                    name="read-only"
+                    value={element.etoile}
+                    readOnly
+                    icon={<StarIcon className={classes.star} />}
+                  />
                   <Typography align="center" color="textPrimary">
                     Detail: {element.details}
                   </Typography>
