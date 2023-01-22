@@ -8,7 +8,8 @@ module.exports = {
         else res.json(results);
       },
       req.body.details,
-      req.body.id_user
+      req.body.id_user,
+      req.body.etoile
     );
   },
 };

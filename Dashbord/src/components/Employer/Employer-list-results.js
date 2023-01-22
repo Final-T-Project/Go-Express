@@ -20,13 +20,13 @@ export const EmployerListResults = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell padding="checkbox  "></TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Location</TableCell>
-                <TableCell>Phone</TableCell>
 
-                <TableCell>gender</TableCell>
-                <TableCell>Curriculum Vitae </TableCell>
+                <TableCell style={{ color: "#ED5C00" }}>First Name</TableCell>
+                <TableCell style={{ color: "#ED5C00" }}>Last Name</TableCell>
+                <TableCell style={{ color: "#ED5C00" }}>Adress</TableCell>
+                <TableCell style={{ color: "#ED5C00" }}>Phone</TableCell>
+                <TableCell style={{ color: "#ED5C00" }}>gender</TableCell>
+                <TableCell style={{ color: "#ED5C00" }}>Work Position </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -42,15 +42,15 @@ export const EmployerListResults = (props) => {
                     >
                       <Avatar src={element.photo} sx={{ mr: 2 }}></Avatar>
                       <Typography color="textPrimary" variant="body1">
-                        element.name
+                        {element.first_name}
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell>element.email</TableCell>
-                  <TableCell>element.adress</TableCell>
-                  <TableCell>element.phone_number</TableCell>
-                  <TableCell>element.gender</TableCell>
-                  <TableCell>element.Registration</TableCell>
+                  <TableCell>{element.last_name}</TableCell>
+                  <TableCell>{element.adress}</TableCell>
+                  <TableCell>{element.phone_number}</TableCell>
+                  <TableCell>{element.gender}</TableCell>
+                  <TableCell>{element.work_position}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

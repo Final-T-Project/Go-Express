@@ -8,17 +8,22 @@ import { Bell as BellIcon } from "../icons/bell";
 import { UserCircle as UserCircleIcon } from "../icons/user-circle";
 import { Users as UsersIcon } from "../icons/users";
 import { AccountPopover } from "./account-popover";
-
+import { makeStyles } from "@material-ui/core/styles";
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.shadows[3],
 }));
-
+const useStyles = makeStyles({
+  badgeContent: {
+    color: "white",
+    backgroundColor: "#ED5C00",
+  },
+});
 export const DashboardNavbar = (props) => {
   const { onSidebarOpen, ...other } = props;
   const settingsRef = useRef(null);
   const [openAccountPopover, setOpenAccountPopover] = useState(false);
-
+  const classes = useStyles();
   return (
     <>
       <DashboardNavbarRoot
@@ -64,7 +69,7 @@ export const DashboardNavbar = (props) => {
           </Tooltip>
           <Tooltip title="Notifications">
             <IconButton sx={{ ml: 1 }}>
-              <Badge badgeContent={4} color="primary" variant="dot">
+              <Badge badgeContent={2} classes={{ badge: classes.badgeContent }}>
                 <BellIcon fontSize="small" />
               </Badge>
             </IconButton>
@@ -78,7 +83,7 @@ export const DashboardNavbar = (props) => {
               width: 40,
               ml: 1,
             }}
-            src="/static/images/avatars/avatar_1.png"
+            src="https://scontent.ftun14-1.fna.fbcdn.net/v/t1.6435-9/64864152_2419139844983382_7976696786360205312_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=ZeA5A3HiQL8AX9VF9dS&_nc_ht=scontent.ftun14-1.fna&oh=00_AfCRP-qsoW7UAYLOJsbeeDFofI-ZhykF6ZYNPQsCDbnIyw&oe=63F38E71"
           >
             <UserCircleIcon fontSize="small" />
           </Avatar>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { SafeAreaView, StyleSheet, View, Text, Image } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
-import Icon from "react-native-ionicons";
+// import Icon from "react-native-ionicons";
 import TestLogin from "./TestLogin";
 
 const IntoductionPages = () => {
@@ -15,14 +15,14 @@ const IntoductionPages = () => {
   const RenderNextButton = () => {
     return (
       <View style={styles.buttonCircle}>
-        <Icon
+        {/* <Icon
           //name="arrow-forward-outline"
           name="information-circle-outline"
           // name="ion:arrow-forward-circle"
           color="rgba(255, 255, 255, .9)"
           size={24}
           style={{ backgroundColor: "transparent" }}
-        />
+        /> */}
       </View>
     );
   };
@@ -30,14 +30,14 @@ const IntoductionPages = () => {
   const RenderDoneButton = () => {
     return (
       <View style={styles.buttonCircle}>
-        <Icon
+        {/* <Icon
           name="information-circle-outline"
           // name="ion-arrow-right-c"
           // name="ion:arrow-forward-circle"
           color="rgba(255, 255, 255, .9)"
           size={24}
           style={{ backgroundColor: "transparent" }}
-        />
+        /> */}
       </View>
     );
   };
@@ -142,7 +142,6 @@ const slides = [
     image: {
       uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1674149411/e_dk0ttn.webp",
     },
-
     backgroundColor: "#ff9482",
   },
   {
@@ -151,9 +150,8 @@ const slides = [
     text: " Best Deals on all our services",
     // image: require("../assets/Intro/plomber h.gif"),
     image: {
-      uri: "https://res.cloudinary.com/ddvyi3jpk/image/upload/v1674149300/plomber_h_dnijqk.gif",
+      uri: "https://res.cloudinary.com/ddvyi3jpk/image/upload/v1674206359/test_rzfkmn.png",
     },
-
-    backgroundColor: "#3395ff",
+    backgroundColor: "#257dbd",
   },
 ];

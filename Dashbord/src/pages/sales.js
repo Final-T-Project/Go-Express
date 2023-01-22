@@ -12,12 +12,13 @@ const Page = () => {
   let [product, setProduct] = useState([]);
 
   // function to get all products
-  useEffect(() => {
-    axios.get(`http://localhost:5000/admin/getallproduct`).then((result) => {
-      setProduct(result.data);
-      console.log(result.data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get(`http://localhost:5000/admin/getallproduct`).then((result) => {
+  //     setProduct(result.data);
+  //     console.log(result.data);
+  //   });
+  // }, []);
+
   return (
     <>
       <Head>

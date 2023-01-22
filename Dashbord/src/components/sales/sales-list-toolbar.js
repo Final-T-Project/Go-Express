@@ -44,6 +44,7 @@ export const SalesListToolbar = () => (
               }}
               placeholder="Search product"
               variant="outlined"
+              color="warning"
             />
           </Box>
         </CardContent>

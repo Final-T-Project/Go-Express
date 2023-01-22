@@ -11,7 +11,8 @@ const {
   DeleteProduct,
   UpdateProductPrice,
   GetAllFeedBack,
-  GetEmployers
+  DeleteProductPhoto,
+  GetEmployers,
 } = require("../contollers/admin.js");
 
 // user route
@@ -24,10 +25,10 @@ router.get("/getoneproduct/:id_product", GetOneProduct);
 router.put("/updateproductstate/:id_product", UpdateProductState);
 router.put("/updateproductprice/:id_product", UpdateProductPrice);
 router.delete("/deleteproduct/:id_product", DeleteProduct);
-
+router.delete("/deleteproduct/photo/:product_id_product", DeleteProductPhoto);
 // feedback route
 router.get("/getallfeedback", GetAllFeedBack);
 
 // employer  route
-router.get ("/getEmployers",GetEmployers)
+router.get("/getEmployers", GetEmployers);
 module.exports = router;

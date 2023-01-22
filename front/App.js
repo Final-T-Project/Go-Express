@@ -41,7 +41,7 @@ export default function App() {
   const [userCartId, setUserCartId] = useState("");
   const [listService, setListService] = useState("");
   const [date, setDate] = useState(new Date());
-  const [time,setTime]=useState("")
+  const [time, setTime] = useState("");
   const [toList, setToList] = useState("");
 
   LogBox.ignoreAllLogs();
@@ -61,16 +61,17 @@ export default function App() {
         time,
         setTime,
         toList,
-        setToList
+        setToList,
       }}
     >
       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="SideBar"
+            initialRouteName="IntoductionPages"
             screenOptions={{
               headerTintColor: "white",
+              headerShown: false,
               headerStyle: {
                 backgroundColor: "#ED5C00",
               },

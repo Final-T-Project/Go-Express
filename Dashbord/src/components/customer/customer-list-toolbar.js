@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
 import { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 
 export const CustomerListToolbar = () => {
   return (
@@ -38,11 +39,7 @@ export const CustomerListToolbar = () => {
                   startAdornment: (
                     <InputAdornment position="start">
                       <SvgIcon color="action" fontSize="small">
-                        <SearchIcon
-                          onClick={() => {
-                            handleSearch();
-                          }}
-                        />
+                        <SearchIcon />
                       </SvgIcon>
                     </InputAdornment>
                   ),
@@ -52,6 +49,7 @@ export const CustomerListToolbar = () => {
                 }}
                 placeholder="Search customer"
                 variant="outlined"
+                color="warning"
               />
             </Box>
           </CardContent>
