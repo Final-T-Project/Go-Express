@@ -82,4 +82,11 @@ module.exports = {
       else res.json(result);
     }, req.params.id_cart);
   },
+
+  deleteReservations: function (req , res){
+    cart.deleteReservation(function (result,err){
+      if ( err ) res.send(err);
+      else res.json(result)
+    },req.body.idCart,req.body.idReservation)
+  },
 };

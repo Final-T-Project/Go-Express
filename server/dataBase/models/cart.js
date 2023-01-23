@@ -1,4 +1,5 @@
 // import the database connection
+const { query } = require("express");
 const connection = require("../index.js");
 
 module.exports = {
@@ -72,11 +73,22 @@ module.exports = {
     const sql = `SELECT * FROM cart_has_reservation
     JOIN reservation
     ON cart_has_reservation.reservation_id_reservation = reservation.id_reservation
+    JOIN serves
+    ON serves.id_serves = reservation.serves_id_serves
     WHERE cart_has_reservation.cart_id_cart=${idCart}
     `;
     connection.query(sql, function ( error , results ){
       callback (results,error)
     })
+  },
+
+  deleteReservation : function ( callback, idCart , idReservation){
+    const sql = ` DELETE FROM cart_has_reservation WHERE reservation_id_reservation=${idReservation} AND cart_id_cart=${idCart}`
+    connection.query(sql,function(err,result){
+      callback(result,err)
+    })
   }
 
 };
+
+ 

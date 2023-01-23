@@ -74,17 +74,19 @@ const MyCart = ({ navigation }) => {
     setCartProducts(data);
     getTotalePrice(data);
   };
+
   const getReservation = async () => {
     const { data } = await axios.get(
-      `http://${IPADRESS}:5000/carts/getCartProduct/${userCartId}`
+      `http://${IPADRESS}:5000/carts/getReservation/${userCartId}`
     );
     setCartService(data);
     getTotalePrice(data);
+    console.log("data-------->",data)
   };
 
   // function to calculate the sum
   const getTotalePrice = (data) => {
-    let sum = totalPrice;
+    let sum = 0;
     data.map((element) => {
       sum = sum + element.price;
     });
@@ -92,12 +94,25 @@ const MyCart = ({ navigation }) => {
   };
 
   //delete data from database
+  
   const DeleteProductFromCart = (idproduct) => {
     axios
       .delete(`http://${IPADRESS}:5000/carts/deleteProduct/${idproduct}`)
       .then(async () => {
         console.log("deleted");
         await getAllProducts();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const deleteReservation = (idCart,idReservation) => {
+    axios
+      .delete(`http://${IPADRESS}:5000/carts/deleteReservation`,{idCart:idCart,idReservation:idReservation})
+      .then( () => {
+        console.log("Service deleted "+idCart+' '+idReservation);
+        getReservation();
       })
       .catch((error) => {
         console.log(error);
@@ -297,6 +312,162 @@ const MyCart = ({ navigation }) => {
     );
   };
 
+  const renderService = (data, index) => {
+    return (
+      <TouchableOpacity
+        key={index}
+        style={{
+          width: "100%",
+          height: 100,
+          marginVertical: 6,
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            width: "30%",
+            height: 100,
+            padding: 14,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: COLOURS.backgroundLight,
+            borderRadius: 10,
+            marginRight: 22,
+            borderColor: "#1C2765",
+            borderWidth: 2,
+          }}
+        >
+          {data.name==="Cleaning"? <Image
+            source={{ uri: `https://www.cleaningservicespetalingjaya.com/wp-content/uploads/2022/08/house-cleaning-pj.jpg` }}
+            style={{
+              width: "130%",
+            
+              height: "120%",
+              resizeMode: "contain",
+            }}
+          />:data.name==="Moving"? <Image
+          source={{ uri: `https://media.istockphoto.com/id/1142849991/vector/moving-truck-and-moving-boxes-outdoors-removal.jpg?s=612x612&w=0&k=20&c=0dUSaNY38rXzoDQWh1IAKDivf9iQH0x0-Vh3NXPqv1Y=` }}
+          style={{
+            width: "130%",
+          
+            height: "120%",
+            resizeMode: "contain",
+          }}
+        />:data.name==="plumbing"? <Image
+        source={{ uri:`https://thewaterworks.com/wp-content/uploads/2018/04/Residential-Plumbing-Service.jpg` }}
+        style={{
+          width: "130%",
+        
+          height: "120%",
+          resizeMode: "contain",
+        }}
+      />:
+      <Image
+        source={{ uri:`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsuuQFS7H_5dXYM4oCFkePtWgyuws0m4n52YT6dFDUA-oW188jIlNtM-RipOE6M68I9Ro&usqp=CAU` }}
+        style={{
+          width: "130%",
+        
+          height: "120%",
+          resizeMode: "contain",
+        }}
+      />
+          }
+          
+          
+        </View>
+        <View
+          style={{
+            flex: 1,
+            height: "100%",
+            justifyContent: "space-around",
+          }}
+        >
+          <View style={{}}>
+            <Text
+              style={{
+                fontSize: 14,
+                maxWidth: "100%",
+                color: COLOURS.black,
+                fontWeight: "600",
+                letterSpacing: 1,
+              }}
+            >
+             {data.name}
+            </Text>
+            <View
+              style={{
+                marginTop: 4,
+                flexDirection: "row",
+                alignItems: "center",
+                opacity: 0.6,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: "400",
+                  maxWidth: "85%",
+                  marginRight: 4,
+                }}
+              >
+                {data.price}  Dt
+              </Text>
+            </View>
+            <View
+              style={{
+                marginTop: 4,
+                flexDirection: "row",
+                alignItems: "center",
+                opacity: 0.6,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: "400",
+                  maxWidth: "85%",
+                  marginRight: 4,
+                }}
+              >
+               {data.time.substring(0,5)}
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: 10,
+              }}
+            ></View>
+
+            <TouchableOpacity>
+              <MaterialCommunityIcons
+                onPress={() => deleteReservation(data.cart_id_cart,data.id_reservation)}
+                name="delete-outline"
+                style={{
+                  fontSize: 20,
+                  color: "#ED5C00",
+                  backgroundColor: COLOURS.backgroundLight,
+                  padding: 8,
+                  borderRadius: 100,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   const renderUser = (data, index) => {
     return (
       <View>
@@ -373,6 +544,7 @@ const MyCart = ({ navigation }) => {
         </Text>
         <View style={{ paddingHorizontal: 16 }}>
           {/* orders that i add   */}
+          {cartService ? cartService.map(renderService):null}
           {cartProducts ? (
             cartProducts.map(renderProducts)
           ) : (
