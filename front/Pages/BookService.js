@@ -116,9 +116,16 @@ export default function BookService({route}) {
     console.log(listService+" "+date+" "+time+" "+fromList+" "+toList)
     console.log(listService+" "+date+" "+time+" "+fromList+" "+toList)
     //Navigation.navigate("Booking Details");
+
+    
     axios.post(`http://${IPADRESS}:5000/service/addBookedService`,{"date":date,"idUser":id,"idService":listService,"idCart":idCart,"time":time,"fromPlace":fromList,"toPlace":toList})
-    .then(()=>{
-      Navigation.navigate("Booking Details")
+    .then((result)=>{
+      //console.log(result.data.insertId)
+      axios.post(`http://${IPADRESS}:5000/carts/postReservation`,{"cart_id_cart":idCart,"reservation_id_reservation":result.data.insertId}).then(()=>{
+        Navigation.navigate("Booking Details")
+      }).catch(()=>{
+        console.error("error in inserting the booked data in the cart")
+      })
       //,{params:{listService,date,time}}
     })
     .catch((err)=>{
@@ -239,7 +246,7 @@ export default function BookService({route}) {
                 borderBottomWidth: 1,
                 width: 370,
                 marginLeft: -20,
-                opacity: 0.2,
+                opacity: 0.1,
               }}
             />
 
@@ -288,7 +295,7 @@ export default function BookService({route}) {
                 borderBottomWidth: 1,
                 width: 370,
                 marginLeft: -20,
-                opacity: 0.2,
+                opacity: 0.1,
               }}
             />
 
@@ -333,7 +340,7 @@ export default function BookService({route}) {
                 borderBottomWidth: 1,
                 width: 370,
                 marginLeft: -20,
-                opacity: 0.2,
+                opacity: 0.1,
               }}
             />
 

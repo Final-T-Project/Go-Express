@@ -52,6 +52,7 @@ const MyCart = ({ navigation }) => {
 
   // state to save products in the cart
   const [cartProducts, setCartProducts] = useState([]);
+  const [cartService,setCartService]= useState([])
   const [totalPrice, setTotalPrice] = useState(0);
   const [shippingPrice, setShippingPrice] = useState(6);
 
@@ -59,6 +60,7 @@ const MyCart = ({ navigation }) => {
   useEffect(() => {
     const fetchData = () => {
       getAllProducts();
+      getReservation();
     };
     // alert(userCartId);
     fetchData();
@@ -72,10 +74,17 @@ const MyCart = ({ navigation }) => {
     setCartProducts(data);
     getTotalePrice(data);
   };
+  const getReservation = async () => {
+    const { data } = await axios.get(
+      `http://${IPADRESS}:5000/carts/getCartProduct/${userCartId}`
+    );
+    setCartService(data);
+    getTotalePrice(data);
+  };
 
   // function to calculate the sum
   const getTotalePrice = (data) => {
-    let sum = 0;
+    let sum = totalPrice;
     data.map((element) => {
       sum = sum + element.price;
     });

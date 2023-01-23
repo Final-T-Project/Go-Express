@@ -60,4 +60,23 @@ module.exports = {
       callback(error, results);
     });
   },
+
+  postReservation: function (callback, cart_id_cart , reservation_id_reservation){
+    const sql = ` INSERT INTO cart_has_reservation VALUES (${cart_id_cart},${reservation_id_reservation})`
+    connection.query(sql, function ( error , results ){
+      callback (results,error)
+    })
+  },
+
+  getReservation: function (callback, idCart){
+    const sql = `SELECT * FROM cart_has_reservation
+    JOIN reservation
+    ON cart_has_reservation.reservation_id_reservation = reservation.id_reservation
+    WHERE cart_has_reservation.cart_id_cart=${idCart}
+    `;
+    connection.query(sql, function ( error , results ){
+      callback (results,error)
+    })
+  }
+
 };

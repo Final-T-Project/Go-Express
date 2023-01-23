@@ -66,7 +66,7 @@ export default function BookingDetails({route}) {
             />
 
             <Text style={{ marginLeft: 30, fontWeight: "400", marginTop: 40 }}>
-              services :{"   "+serviceChoosen}
+              Services :{"   "+serviceChoosen}
             </Text>
             
             <Text style={{ marginLeft: 31, fontWeight: "400", marginTop: 20 }}>
@@ -74,7 +74,7 @@ export default function BookingDetails({route}) {
             </Text>
             
             <Text style={{ marginLeft: 30, fontWeight: "400", marginTop: 20 }}>
-              Time :{"   "+time}
+              Time :{"   "+time.substring(0,5)}
             </Text>
            
             {serviceChoosen === "Moving" ?<Text style={{ marginLeft: 30, fontWeight: "400", marginTop: 20 }}>

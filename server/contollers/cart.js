@@ -67,4 +67,19 @@ module.exports = {
       else res.json(result);
     }, req.params.id_user);
   },
+
+  postReservation: function (req, res) {
+    cart.postReservation(function (result, err) {
+      if (err) result.send(err);
+      else res.json(result);
+    }, req.body.cart_id_cart , req.body.reservation_id_reservation);
+  },
+
+
+  getReservation: function (req, res) {
+    cart.getReservation(function (result, err) {
+      if (err) res.send(err);
+      else res.json(result);
+    }, req.params.id_cart);
+  },
 };

@@ -11,6 +11,8 @@ const {
   ChangeCartStatusToDone,
   DeleteAll,
   GetCartHistorique,
+  postReservation,
+  getReservation
 } = require("../contollers/cart.js");
 
 router.get("/getIdCart/:id_user", GetIdCart);
@@ -24,5 +26,8 @@ router.delete("/deleteProduct/:id_product", DeleteProductFromCart);
 router.delete("/deleteALL/:id_cart", DeleteAll);
 
 router.put("/updateStateToDone/:id_cart", ChangeCartStatusToDone);
+
+router.post("/postReservation",postReservation)
+router.get("/getReservation/:id_cart",getReservation)
 
 module.exports = router;
