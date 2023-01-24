@@ -136,6 +136,9 @@ export default function BookService({route}) {
   };
 
   // ------------------------------- ALL STATE IN TUNISIA ( I WILL MAP OVER IT SO I DON'T WRITE IT MANUALLY :))
+
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
   const ville = [
     "Tunis",
     "Ariana",

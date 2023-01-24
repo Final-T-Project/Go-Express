@@ -70,7 +70,7 @@ export default function BookingDetails({route}) {
             </Text>
             
             <Text style={{ marginLeft: 31, fontWeight: "400", marginTop: 20 }}>
-              Date :{"     "+date}
+              Date :{"     "+date+" "+"January"}
             </Text>
             
             <Text style={{ marginLeft: 30, fontWeight: "400", marginTop: 20 }}>

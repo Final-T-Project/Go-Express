@@ -266,6 +266,7 @@ export default function TestLogin() {
                 />
               )}
             </View>
+         
             {!value.password.length ? null : value.passwordHide === true ? (
               <Text
                 style={{ textAlign: "center" }}
@@ -285,7 +286,10 @@ export default function TestLogin() {
                 hide password
               </Text>
             )}
-
+            
+            <Image source={require('../assets/hide.png')} style={{height:"4%",width:"8%",position:"absolute",marginTop:290,marginLeft:300}}  onPress={() =>
+                  setValue({ ...value, passwordHide: !value.passwordHide })
+                }/>
             {valueError.length ? (
               <View
                 style={{
