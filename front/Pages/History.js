@@ -153,12 +153,6 @@ export default ({ navigation }) => {
                       {" "}
                       {item.quantity} unit
                     </Text>
-                    {/* <Text
-                      style={{ fontSize: 14, opacity: 0.8, color: "#0099cc" }}
-                    >
-                      {" "}
-                      {item.payment_type}
-                    </Text> */}
                   </View>
                 </Animated.View>
               </TouchableOpacity>

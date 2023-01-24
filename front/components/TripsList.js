@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   title: {
     marginVertical: 4,
     fontSize: 14,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     color: "#070f18",
   },
   location: {
