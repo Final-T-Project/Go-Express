@@ -95,7 +95,7 @@ function TestLogin() {
       <ImageBackground
         style={{ width: "100%", height: "100%" }}
         source={{
-          uri: `https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673040221/ekher_wba4yg.png`,
+          uri: `https://res.cloudinary.com/dn9qfvg2p/image/upload/v1674060984/font_oq0zp9.png`,
         }}
       >
         <ScrollView>
@@ -110,7 +110,7 @@ function TestLogin() {
             >
               Register
             </Text>
-            <View
+            {/* <View
               style={{
                 display: "flex",
                 flexDirection: "row",
@@ -146,8 +146,8 @@ function TestLogin() {
                   marginRight: 0,
                 }}
               />
-            </View>
-            <Text
+            </View> */}
+            {/* <Text
               style={{
                 textAlign: "center",
                 fontSize: 19,
@@ -156,7 +156,7 @@ function TestLogin() {
               }}
             >
               or be classical
-            </Text>
+            </Text> */}
             <View style={{ justifyContent: "center", alignItems: "center" }}>
               <TextInput
                 style={{
@@ -345,11 +345,11 @@ const css = StyleSheet.create({
 
   box: {
     backgroundColor: "white",
-    width: 370,
-    height: 700,
+    width: 345,
+    height: 600,
     borderRadius: 4,
-    marginLeft: 23,
-    marginTop: 80,
+    marginLeft: 8,
+    marginTop: 50,
     padding: 50,
     shadowColor: "black",
     shadowOffset: {
