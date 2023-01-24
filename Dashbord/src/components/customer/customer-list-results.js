@@ -21,14 +21,13 @@ export const CustomerListResults = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox  "></TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Phone</TableCell>
-                <TableCell>gender</TableCell>
-                <TableCell>Ville</TableCell>
-
-                <TableCell>Adress </TableCell>
+                <TableCell padding="checkbox"></TableCell>
+                <TableCell style={{ color: "#ED5C00" }}>Name</TableCell>
+                <TableCell style={{ color: "#ED5C00" }}>Email</TableCell>
+                <TableCell style={{ color: "#ED5C00" }}>Phone</TableCell>
+                <TableCell style={{ color: "#ED5C00" }}>gender</TableCell>
+                <TableCell style={{ color: "#ED5C00" }}>Ville</TableCell>
+                <TableCell style={{ color: "#ED5C00" }}>Adress </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -42,7 +41,7 @@ export const CustomerListResults = (props) => {
                         display: "flex",
                       }}
                     >
-                      <Avatar src={{ uri: element.photo }} sx={{ mr: 2 }}></Avatar>
+                      <Avatar src={element.photo} sx={{ mr: 2 }}></Avatar>
 
                       <Link href={"/id"} as={`/${element.id_user}`}>
                         <Typography color="textPrimary" variant="body1">

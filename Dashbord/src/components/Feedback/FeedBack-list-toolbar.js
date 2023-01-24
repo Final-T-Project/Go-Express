@@ -43,6 +43,7 @@ export const FeedBackListToolbar = () => (
               }}
               placeholder="Search customer"
               variant="outlined"
+              color="warning"
             />
           </Box>
         </CardContent>

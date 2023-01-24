@@ -18,13 +18,9 @@ export const AccountPopover = (props) => {
       return;
     }
 
-    // Check if auth has been skipped
-    // From sign-in page we may have set "skip-auth" to "true"
-    // If this has been skipped, then redirect to "sign-in" directly
     const authSkipped = globalThis.sessionStorage.getItem("skip-auth") === "true";
 
     if (authSkipped) {
-      // Cleanup the skip auth state
       globalThis.sessionStorage.removeItem("skip-auth");
 
       // Redirect to sign-in page
@@ -68,7 +64,7 @@ export const AccountPopover = (props) => {
       >
         <Typography variant="overline">Account</Typography>
         <Typography color="text.secondary" variant="body2">
-          John Doe
+          Ahmed
         </Typography>
       </Box>
       <MenuList

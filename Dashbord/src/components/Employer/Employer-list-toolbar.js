@@ -24,11 +24,6 @@ export const EmployerListToolbar = () => (
       <Typography sx={{ m: 1 }} variant="h4">
         Employers
       </Typography>
-      <Box sx={{ m: 1 }}>
-        <Button color="primary" variant="contained">
-          Add Employer
-        </Button>
-      </Box>
     </Box>
     <Box sx={{ mt: 3 }}>
       <Card>
@@ -47,6 +42,7 @@ export const EmployerListToolbar = () => (
               }}
               placeholder="Search customer"
               variant="outlined"
+              color="warning"
             />
           </Box>
         </CardContent>

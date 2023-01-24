@@ -13,7 +13,7 @@ const Page = () => {
 
   // function to get all employer
   useEffect(() => {
-    axios.get(`http://localhost:5000/employer/getallemployer`).then((result) => {
+    axios.get(`http://localhost:5000/admin/GetEmployers`).then((result) => {
       setEmployer(result.data);
       console.log(result.data);
     });

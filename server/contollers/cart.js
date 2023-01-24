@@ -79,7 +79,7 @@ module.exports = {
   getReservation: function (req, res) {
     cart.getReservation(function (result, err) {
       if (err) res.send(err);
-      else res.json(result);
+      else res.json(result.reverse());
     }, req.params.id_cart);
   },
 

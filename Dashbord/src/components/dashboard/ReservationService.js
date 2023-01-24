@@ -9,15 +9,19 @@ export const ReservationService = () => {
   let [reservation, setReservation] = useState([]);
 
   // function to get all reservation
-  useEffect(() => {
-    axios.get(`http://localhost:5000/reservation/getallreservation`).then((result) => {
-      setReservation(result.data);
-      console.log(result.data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get(`http://localhost:5000/reservation/getallreservation`).then((result) => {
+  //     setReservation(result.data);
+  //     console.log(result.data);
+  //   });
+  // }, []);
 
   return (
-    <Card sx={{ height: "100%" }}>
+    <Card
+      sx={{
+        height: 175,
+      }}
+    >
       <CardContent>
         <Grid container spacing={3} sx={{ justifyContent: "space-between" }}>
           <Grid item>
@@ -31,18 +35,20 @@ export const ReservationService = () => {
           <Grid item>
             <Avatar
               sx={{
-                backgroundColor: "warning.main",
+                backgroundColor: "#ED5C00",
                 height: 56,
                 width: 56,
+                marginBottom: -6,
+                marginLeft: -5,
               }}
             >
               <InsertChartIcon />
             </Avatar>
           </Grid>
         </Grid>
-        <Box sx={{ pt: 3 }}>
+        {/* <Box sx={{ pt: 3 }}>
           <LinearProgress value={5.5} variant="determinate" />
-        </Box>
+        </Box> */}
       </CardContent>
     </Card>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -14,6 +14,22 @@ import axios from "axios";
 import IPADRESS from "../config/IPADRESS";
 
 const Shop = ({ navigation }) => {
+  // to set id_cart for each user and set a new id-cart after each chek-out
+
+  // const { userCartId, setUserCartId } = useContext(UserContext);
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://${IPADRESS}:5000/carts/getIdCart/${userId}`)
+  //     .then((response) => {
+  //       response.data.map((element) => {
+  //         setUserCartId(element.id_cart);
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
+
   // function to get Kitchen data length
   let [KitchenData, setKitchenData] = useState([]);
   useEffect(() => {
