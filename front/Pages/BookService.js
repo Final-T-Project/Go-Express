@@ -30,8 +30,10 @@ export default function BookService({ route }) {
 
   console.log(serviceChoosen);
 
-  const [id, setId] = useState("");
-  const [idCart, setIdCart] = useState("");
+  const minDate = new Date();
+
+  const [id,setId]=useState("")
+  const [idCart,setIdCart]=useState("")
 
   const { userId } = useContext(UserContext);
 
@@ -94,6 +96,9 @@ export default function BookService({ route }) {
 
   // ---------------------------------- Functions -------------------------------------------------//
 
+ 
+  
+
   const handleTimeChange = (time) => {
     setTime(time);
     console.log(time);
@@ -115,26 +120,29 @@ export default function BookService({ route }) {
       listService + " " + date + " " + time + " " + fromList + " " + toList
     );
     //Navigation.navigate("Booking Details");
-    axios
-      .post(`http://${IPADRESS}:5000/service/addBookedService`, {
-        date: date,
-        idUser: id,
-        idService: listService,
-        idCart: idCart,
-        time: time,
-        fromPlace: fromList,
-        toPlace: toList,
+
+    
+    axios.post(`http://${IPADRESS}:5000/service/addBookedService`,{"date":date,"idUser":id,"idService":listService,"idCart":idCart,"time":time,"fromPlace":fromList,"toPlace":toList})
+    .then((result)=>{
+      //console.log(result.data.insertId)
+      axios.post(`http://${IPADRESS}:5000/carts/postReservation`,{"cart_id_cart":idCart,"reservation_id_reservation":result.data.insertId}).then(()=>{
+        Navigation.navigate("Booking Details")
+      }).catch(()=>{
+        console.error("error in inserting the booked data in the cart")
       })
-      .then(() => {
-        Navigation.navigate("Booking Details");
-        //,{params:{listService,date,time}}
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      //,{params:{listService,date,time}}
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+
+    
   };
 
   // ------------------------------- ALL STATE IN TUNISIA ( I WILL MAP OVER IT SO I DON'T WRITE IT MANUALLY :))
+
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
   const ville = [
     "Tunis",
     "Ariana",
@@ -162,16 +170,17 @@ export default function BookService({ route }) {
     "Zaghouan",
   ];
 
-  const handleDay = (date) => {
-    let formattedDate = date.toLocaleDateString("en-US", {
-      day: "numeric",
-      month: "none",
-      year: "none",
-    });
-    console.log(formattedDate.substring(3, 5));
-    setDate(formattedDate.substring(3, 5));
-    setDShow(false);
+  const customStyles = {
+    headerText: { color: "red" },
+    header: { backgroundColor: "red" },
   };
+
+  const handleDay =(date)=>{
+    let formattedDate = date.toLocaleDateString("en-US", {day: 'numeric', month: 'none', year: 'none'});
+    console.log(formattedDate.substring(3,5))
+    setDate(formattedDate.substring(3,5))
+    setDShow(false)
+  }
 
   const handleTime = (time) => {
     let formattedTime = time.toLocaleTimeString();
@@ -180,11 +189,25 @@ export default function BookService({ route }) {
     setTimeShow(false);
   };
 
+  const boxH = () => {
+    if (serviceChoosen === "Moving") {
+      return 700;
+    } else {
+      return 500;
+    }
+  };
+
   return (
     <View style={css.container}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <ScrollView>
-          <View style={css.box}>
+          <View style={{backgroundColor: "white",
+              width: 370,
+              height:boxH(),
+              borderRadius: 4,
+              marginTop: 50,
+              paddingLeft: 20,
+              marginBottom: 50,}}>
             {/** --------------------------------TEXT ( TITLE ) --------------------------------------------- */}
             <Text
               style={{
@@ -218,7 +241,7 @@ export default function BookService({ route }) {
                 color="gray"
               />
               <Picker.Item label="Moving + tidying up things" value="1" />
-              <Picker.Item label="Cleanig" value="2" />
+              <Picker.Item label="Cleaning" value="2" />
               <Picker.Item label="Plumbing" value="3" />
               <Picker.Item label="Electricity" value="4" />
             </Picker>
@@ -230,7 +253,7 @@ export default function BookService({ route }) {
                 borderBottomWidth: 1,
                 width: 370,
                 marginLeft: -20,
-                opacity: 0.2,
+                opacity: 0.1,
               }}
             />
 
@@ -261,10 +284,12 @@ export default function BookService({ route }) {
             </View>
 
             {DShow ? (
-              <DateTimePicker
-                isVisible={DShow}
-                onConfirm={handleDay}
-                onCancel={() => setDShow(false)}
+                <DateTimePicker
+                  isVisible={DShow}
+                  onConfirm={handleDay}
+                  onCancel={()=>setDShow(false)}
+                  minimumDate={minDate}
+                  customStyles={customStyles}
               />
             ) : null}
 
@@ -277,7 +302,7 @@ export default function BookService({ route }) {
                 borderBottomWidth: 1,
                 width: 370,
                 marginLeft: -20,
-                opacity: 0.2,
+                opacity: 0.1,
               }}
             />
 
@@ -307,11 +332,12 @@ export default function BookService({ route }) {
 
             {timeShow ? (
               <DateTimePicker
-                mode="time"
-                isVisible={timeShow}
-                onConfirm={handleTime}
-                onCancel={() => setTimeShow(false)}
-              />
+              mode="time"
+              is24Hour={true}
+              isVisible={timeShow}
+              onConfirm={handleTime}
+              onCancel={()=>setTimeShow(false)}
+          />
             ) : null}
 
             <View
@@ -321,7 +347,7 @@ export default function BookService({ route }) {
                 borderBottomWidth: 1,
                 width: 370,
                 marginLeft: -20,
-                opacity: 0.2,
+                opacity: 0.1,
               }}
             />
 
@@ -473,6 +499,7 @@ export default function BookService({ route }) {
   );
 }
 
+
 const css = StyleSheet.create({
   container: {
     backgroundColor: "#373E5A",
@@ -483,7 +510,7 @@ const css = StyleSheet.create({
   box: {
     backgroundColor: "white",
     width: 370,
-    height: 700,
+    height:700,
     borderRadius: 4,
     marginTop: 50,
     paddingLeft: 20,
@@ -511,4 +538,8 @@ const css = StyleSheet.create({
     fontWeight: "bold",
     margin: 30,
   },
+  datePicker: {
+    backgroundColor: 'red',
+    color: 'white'
+}
 });
