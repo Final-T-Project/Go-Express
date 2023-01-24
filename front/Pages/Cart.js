@@ -8,7 +8,7 @@ import {
   ToastAndroid,
   StatusBar,
 } from "react-native";
-import { Box, HStack, Checkbox, useToast } from "native-base";
+import { Box, HStack, Checkbox, useToast, Radio, ListItem } from "native-base";
 import EditeAdress from "./EditeAdress.js";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { COLOURS, Items } from "../database/Database";
@@ -52,7 +52,7 @@ const MyCart = ({ navigation }) => {
 
   // state to save products in the cart
   const [cartProducts, setCartProducts] = useState([]);
-  const [cartService,setCartService]= useState([])
+  const [cartService, setCartService] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [shippingPrice, setShippingPrice] = useState(6);
 
@@ -81,7 +81,7 @@ const MyCart = ({ navigation }) => {
     );
     setCartService(data);
     getTotalePrice(data);
-    console.log("data-------->",data)
+    console.log("data-------->", data);
   };
 
   // function to calculate the sum
@@ -94,7 +94,7 @@ const MyCart = ({ navigation }) => {
   };
 
   //delete data from database
-  
+
   const DeleteProductFromCart = (idproduct) => {
     axios
       .delete(`http://${IPADRESS}:5000/carts/deleteProduct/${idproduct}`)
@@ -107,11 +107,14 @@ const MyCart = ({ navigation }) => {
       });
   };
 
-  const deleteReservation = (idCart,idReservation) => {
+  const deleteReservation = (idCart, idReservation) => {
     axios
-      .delete(`http://${IPADRESS}:5000/carts/deleteReservation`,{idCart:idCart,idReservation:idReservation})
-      .then( () => {
-        console.log("Service deleted "+idCart+' '+idReservation);
+      .delete(`http://${IPADRESS}:5000/carts/deleteReservation`, {
+        idCart: idCart,
+        idReservation: idReservation,
+      })
+      .then(() => {
+        console.log("Service deleted " + idCart + " " + idReservation);
         getReservation();
       })
       .catch((error) => {
@@ -338,43 +341,55 @@ const MyCart = ({ navigation }) => {
             borderWidth: 2,
           }}
         >
-          {data.name==="Cleaning"? <Image
-            source={{ uri: `https://www.cleaningservicespetalingjaya.com/wp-content/uploads/2022/08/house-cleaning-pj.jpg` }}
-            style={{
-              width: "130%",
-            
-              height: "120%",
-              resizeMode: "contain",
-            }}
-          />:data.name==="Moving"? <Image
-          source={{ uri: `https://media.istockphoto.com/id/1142849991/vector/moving-truck-and-moving-boxes-outdoors-removal.jpg?s=612x612&w=0&k=20&c=0dUSaNY38rXzoDQWh1IAKDivf9iQH0x0-Vh3NXPqv1Y=` }}
-          style={{
-            width: "130%",
-          
-            height: "120%",
-            resizeMode: "contain",
-          }}
-        />:data.name==="plumbing"? <Image
-        source={{ uri:`https://thewaterworks.com/wp-content/uploads/2018/04/Residential-Plumbing-Service.jpg` }}
-        style={{
-          width: "130%",
-        
-          height: "120%",
-          resizeMode: "contain",
-        }}
-      />:
-      <Image
-        source={{ uri:`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsuuQFS7H_5dXYM4oCFkePtWgyuws0m4n52YT6dFDUA-oW188jIlNtM-RipOE6M68I9Ro&usqp=CAU` }}
-        style={{
-          width: "130%",
-        
-          height: "120%",
-          resizeMode: "contain",
-        }}
-      />
-          }
-          
-          
+          {data.name === "Cleaning" ? (
+            <Image
+              source={{
+                uri: `https://www.cleaningservicespetalingjaya.com/wp-content/uploads/2022/08/house-cleaning-pj.jpg`,
+              }}
+              style={{
+                width: "130%",
+
+                height: "120%",
+                resizeMode: "contain",
+              }}
+            />
+          ) : data.name === "Moving" ? (
+            <Image
+              source={{
+                uri: `https://media.istockphoto.com/id/1142849991/vector/moving-truck-and-moving-boxes-outdoors-removal.jpg?s=612x612&w=0&k=20&c=0dUSaNY38rXzoDQWh1IAKDivf9iQH0x0-Vh3NXPqv1Y=`,
+              }}
+              style={{
+                width: "130%",
+
+                height: "120%",
+                resizeMode: "contain",
+              }}
+            />
+          ) : data.name === "plumbing" ? (
+            <Image
+              source={{
+                uri: `https://thewaterworks.com/wp-content/uploads/2018/04/Residential-Plumbing-Service.jpg`,
+              }}
+              style={{
+                width: "130%",
+
+                height: "120%",
+                resizeMode: "contain",
+              }}
+            />
+          ) : (
+            <Image
+              source={{
+                uri: `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsuuQFS7H_5dXYM4oCFkePtWgyuws0m4n52YT6dFDUA-oW188jIlNtM-RipOE6M68I9Ro&usqp=CAU`,
+              }}
+              style={{
+                width: "130%",
+
+                height: "120%",
+                resizeMode: "contain",
+              }}
+            />
+          )}
         </View>
         <View
           style={{
@@ -393,7 +408,7 @@ const MyCart = ({ navigation }) => {
                 letterSpacing: 1,
               }}
             >
-             {data.name}
+              {data.name}
             </Text>
             <View
               style={{
@@ -411,7 +426,7 @@ const MyCart = ({ navigation }) => {
                   marginRight: 4,
                 }}
               >
-                {data.price}  Dt
+                {data.price} Dt
               </Text>
             </View>
             <View
@@ -430,7 +445,7 @@ const MyCart = ({ navigation }) => {
                   marginRight: 4,
                 }}
               >
-               {data.time.substring(0,5)}
+                {data.time.substring(0, 5)}
               </Text>
             </View>
           </View>
@@ -451,7 +466,9 @@ const MyCart = ({ navigation }) => {
 
             <TouchableOpacity>
               <MaterialCommunityIcons
-                onPress={() => deleteReservation(data.cart_id_cart,data.id_reservation)}
+                onPress={() =>
+                  deleteReservation(data.cart_id_cart, data.id_reservation)
+                }
                 name="delete-outline"
                 style={{
                   fontSize: 20,
@@ -544,7 +561,7 @@ const MyCart = ({ navigation }) => {
         </Text>
         <View style={{ paddingHorizontal: 16 }}>
           {/* orders that i add   */}
-          {cartService ? cartService.map(renderService):null}
+          {cartService ? cartService.map(renderService) : null}
           {cartProducts ? (
             cartProducts.map(renderProducts)
           ) : (
@@ -556,10 +573,20 @@ const MyCart = ({ navigation }) => {
             <View
               style={{
                 paddingHorizontal: 16,
-                marginVertical: 10,
+                marginVertical: 1,
+                marginBottom: -15,
               }}
             >
-              <Box></Box>
+              <Text
+                style={{
+                  color: "#ED5C00",
+                  fontSize: 20,
+                  left: "45%",
+                  bottom: -30,
+                }}
+              >
+                *
+              </Text>
               <Text
                 style={{
                   fontSize: 16,
@@ -571,6 +598,7 @@ const MyCart = ({ navigation }) => {
               >
                 Delivery Location
               </Text>
+
               <View
                 style={{
                   flexDirection: "row",
@@ -625,6 +653,16 @@ const MyCart = ({ navigation }) => {
               marginVertical: 10,
             }}
           >
+            <Text
+              style={{
+                color: "#ED5C00",
+                fontSize: 20,
+                left: "45%",
+                bottom: -30,
+              }}
+            >
+              *
+            </Text>
             <Text
               style={{
                 fontSize: 16,

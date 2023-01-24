@@ -50,7 +50,7 @@ const Shop = ({ navigation }) => {
   let [accessoriesData, setAccessoriesData] = useState([]);
   useEffect(() => {
     axios.get(`http://${IPADRESS}:5000/products/Accessories`).then((result) => {
-      setFurnitureData(result.data);
+      setAccessoriesData(result.data);
     });
   }, []);
 
@@ -151,40 +151,51 @@ const Shop = ({ navigation }) => {
                 justifyContent: "space-between",
               }}
             ></View>
-            <View style={{ height: 10 }}></View>
+
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-              <Image
-                source={{
-                  uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673384114/quattro_4-1170x657_tjv7ca.jpg",
+              <TouchableOpacity
+                onPress={() => {
+                  SendCategory("Kitchen");
                 }}
-                style={{
-                  width: 330,
-                  height: 250,
-                  top: 1,
-                  borderColor: "#1C2765",
-                  borderWidth: 2,
-                  borderRadius: 20,
-                }}
-              />
+              >
+                <Image
+                  source={{
+                    uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673384114/quattro_4-1170x657_tjv7ca.jpg",
+                  }}
+                  style={{
+                    width: 330,
+                    height: 250,
+                    top: 1,
+                    borderColor: "#1C2765",
+                    borderWidth: 2,
+                    borderRadius: 20,
+                  }}
+                />
+              </TouchableOpacity>
               <View style={{ width: 10 }}></View>
-              <Image
-                source={{
-                  uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673391337/frikha-1170x657_qrga5u.jpg",
+              <TouchableOpacity
+                onPress={() => {
+                  SendCategory("Kitchen");
                 }}
-                style={{
-                  width: 330,
-                  height: 250,
-                  top: 1,
-                  borderColor: "#1C2765",
-                  borderWidth: 2,
-                  borderRadius: 20,
-                }}
-              />
+              >
+                <Image
+                  source={{
+                    uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673391337/frikha-1170x657_qrga5u.jpg",
+                  }}
+                  style={{
+                    width: 330,
+                    height: 250,
+                    top: 1,
+                    borderColor: "#1C2765",
+                    borderWidth: 2,
+                    borderRadius: 20,
+                  }}
+                />
+              </TouchableOpacity>
             </ScrollView>
-            {/* </TouchableOpacity> */}
           </View>
           {/* Furniture categorie */}
           <View
@@ -255,42 +266,55 @@ const Shop = ({ navigation }) => {
                 justifyContent: "space-between",
               }}
             ></View>
-            <View style={{ height: 10 }}></View>
 
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-              <Image
-                source={{
-                  uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673389221/090122_m_super_furniture_bedroom_1_izwngi.jpg",
+              <TouchableOpacity
+                onPress={() => {
+                  SendCategory("Furniture");
                 }}
-                style={{
-                  width: 330,
-                  height: 250,
-                  top: 1,
-                  borderColor: "#1C2765",
-                  borderWidth: 2,
-                  borderRadius: 20,
-                }}
-              />
+              >
+                <Image
+                  source={{
+                    uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673389221/090122_m_super_furniture_bedroom_1_izwngi.jpg",
+                  }}
+                  style={{
+                    width: 330,
+                    height: 250,
+                    top: 1,
+                    borderColor: "#1C2765",
+                    borderWidth: 2,
+                    borderRadius: 20,
+                  }}
+                />
+              </TouchableOpacity>
               <View style={{ width: 10 }}></View>
-              <Image
-                source={{
-                  uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673391185/csm_Website_Vorschaubild_COR_Haus_product_news_2021__13__44d4652b2b_vteght.jpg",
+              <TouchableOpacity
+                onPress={() => {
+                  SendCategory("Furniture");
                 }}
-                style={{
-                  width: 330,
-                  height: 250,
-                  top: 1,
-                  borderColor: "#1C2765",
-                  borderWidth: 2,
-                  borderRadius: 20,
-                }}
-              />
+              >
+                <Image
+                  source={{
+                    uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673391185/csm_Website_Vorschaubild_COR_Haus_product_news_2021__13__44d4652b2b_vteght.jpg",
+                  }}
+                  style={{
+                    width: 330,
+                    height: 250,
+                    top: 1,
+                    borderColor: "#1C2765",
+                    borderWidth: 2,
+                    borderRadius: 20,
+                  }}
+                />
+              </TouchableOpacity>
             </ScrollView>
+
             {/* </TouchableOpacity> */}
           </View>
+
           {/*Accessories categorie   */}
           <View
             style={{
@@ -366,33 +390,45 @@ const Shop = ({ navigation }) => {
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-              <Image
-                source={{
-                  uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673389632/IMG_0176_rolt48.jpg",
+              <TouchableOpacity
+                onPress={() => {
+                  SendCategory("Accessories");
                 }}
-                style={{
-                  width: 330,
-                  height: 250,
-                  top: 1,
-                  borderColor: "#1C2765",
-                  borderWidth: 2,
-                  borderRadius: 20,
-                }}
-              />
+              >
+                <Image
+                  source={{
+                    uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673389632/IMG_0176_rolt48.jpg",
+                  }}
+                  style={{
+                    width: 330,
+                    height: 250,
+                    top: 1,
+                    borderColor: "#1C2765",
+                    borderWidth: 2,
+                    borderRadius: 20,
+                  }}
+                />
+              </TouchableOpacity>
               <View style={{ width: 10 }}></View>
-              <Image
-                source={{
-                  uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673390679/sugo-guilin-lampscape-purificateur-air-design-led-01_p8lrml.jpg",
+              <TouchableOpacity
+                onPress={() => {
+                  SendCategory("Accessories");
                 }}
-                style={{
-                  width: 330,
-                  height: 250,
-                  top: 1,
-                  borderColor: "#1C2765",
-                  borderWidth: 2,
-                  borderRadius: 20,
-                }}
-              />
+              >
+                <Image
+                  source={{
+                    uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673390679/sugo-guilin-lampscape-purificateur-air-design-led-01_p8lrml.jpg",
+                  }}
+                  style={{
+                    width: 330,
+                    height: 250,
+                    top: 1,
+                    borderColor: "#1C2765",
+                    borderWidth: 2,
+                    borderRadius: 20,
+                  }}
+                />
+              </TouchableOpacity>
             </ScrollView>
 
             {/* </TouchableOpacity> */}
@@ -447,7 +483,7 @@ const Shop = ({ navigation }) => {
                 <Text
                   style={{
                     fontSize: 14,
-                    color: " COLOURS.blue",
+                    color: "#F14E24",
                     fontWeight: "400",
                   }}
                   onPress={() => {
@@ -467,7 +503,52 @@ const Shop = ({ navigation }) => {
               }}
             ></View>
             <View style={{ height: 10 }}></View>
+
             <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  SendCategory("Garden");
+                }}
+              >
+                <Image
+                  source={{
+                    uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673390071/empty-modern-colorful-rattan-furniture-outdoor-garden-weave-table-set-with-round-table-four-chairs-with-pillows-green-concrete-floor_36367-2813_fhaci8.jpg",
+                  }}
+                  style={{
+                    width: 330,
+                    height: 250,
+                    top: 1,
+                    borderColor: "#1C2765",
+                    borderWidth: 2,
+                    borderRadius: 20,
+                  }}
+                />
+              </TouchableOpacity>
+              <View style={{ width: 10 }}></View>
+              <TouchableOpacity
+                onPress={() => {
+                  SendCategory("Garden");
+                }}
+              >
+                <Image
+                  source={{
+                    uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673390338/umbrosa_lnvmfd.jpg",
+                  }}
+                  style={{
+                    width: 330,
+                    height: 250,
+                    top: 1,
+                    borderColor: "#1C2765",
+                    borderWidth: 2,
+                    borderRadius: 20,
+                  }}
+                />
+              </TouchableOpacity>
+            </ScrollView>
+            {/* <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
@@ -498,7 +579,7 @@ const Shop = ({ navigation }) => {
                   borderRadius: 20,
                 }}
               />
-            </ScrollView>
+            </ScrollView> */}
 
             {/* </TouchableOpacity> */}
           </View>

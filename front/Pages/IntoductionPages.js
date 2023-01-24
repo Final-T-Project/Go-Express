@@ -12,15 +12,12 @@ const IntoductionPages = () => {
 
   const RenderNextButton = () => {
     return (
-      <View
-       style={styles.buttonCircle}>
-        <Image 
-       style={{ width: 50,
-        height: 50,
-        bottom:-4,
-        left:1
-      }}
-        source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673556815/go_ovtczy.png"}}
+      <View style={styles.buttonCircle}>
+        <Image
+          style={{ width: 50, height: 50, bottom: -4, left: 1 }}
+          source={{
+            uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673556815/go_ovtczy.png",
+          }}
         ></Image>
       </View>
     );
@@ -29,13 +26,11 @@ const IntoductionPages = () => {
   const RenderDoneButton = () => {
     return (
       <View style={styles.buttonCircle}>
-         <Image 
-       style={{ width: 50,
-        height: 50,
-        bottom:-4,
-        left:1
-      }}
-        source={{uri:"https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673556815/go_ovtczy.png"}}
+        <Image
+          style={{ width: 50, height: 50, bottom: -4, left: 1 }}
+          source={{
+            uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673556815/go_ovtczy.png",
+          }}
         ></Image>
       </View>
     );
@@ -53,7 +48,10 @@ const IntoductionPages = () => {
         }}
       >
         <Image style={styles.introImageStyle} />
-        <Image style={{width:300 ,height:300,alignItems: "center",top:-300}} source={item.image} />
+        <Image
+          style={{ width: 300, height: 300, alignItems: "center", top: -300 }}
+          source={item.image}
+        />
         <Text style={styles.introTitleStyle}>{item.title}</Text>
       </View>
     );
@@ -89,7 +87,7 @@ const styles = StyleSheet.create({
   introImageStyle: {
     width: "100%",
     height: "100%",
-    backgroundColor:"white"
+    backgroundColor: "white",
     // marginBottom: 120,
     // marginTop: 200,
   },
@@ -105,7 +103,7 @@ const styles = StyleSheet.create({
     color: "black",
     textAlign: "center",
     alignItems: "center",
-    top:-580,
+    top: -580,
     // marginBottom: 10,
     // fontWeight: "bold",
   },
@@ -116,7 +114,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
-    
   },
   buttonCircleImage: {
     width: 40,
@@ -125,8 +122,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
-    
-    
   },
 });
 

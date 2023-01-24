@@ -6,6 +6,7 @@ import {
   ScrollView,
   Permissions,
   LogBox,
+  TextInput,
   Dimensions,
 } from "react-native";
 import {
@@ -27,6 +28,7 @@ import {
   Spinner,
   HStack,
   Heading,
+  Label,
 } from "native-base";
 import * as ImagePicker from "expo-image-picker";
 import { Formik } from "formik";
@@ -39,6 +41,22 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "../config/firebase";
+import * as Notification from "expo-notifications";
+import {
+  ALERT_TYPE,
+  Dialog,
+  AlertNotificationRoot,
+  Toast,
+} from "react-native-alert-notification";
+Notification.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+      shouldShowAlert: true,
+    };
+  },
+});
 
 const AddProduct = ({ navigation }) => {
   // initializeApp firebase
@@ -239,6 +257,7 @@ const AddProduct = ({ navigation }) => {
   const [imageTow, setImageTow] = useState(null);
   const [imageThree, setImageThree] = useState(null);
 
+  const [uploading, setUploading] = useState(false);
   const [uploadingOne, setUploadingOne] = useState(false);
   const [uploadingTow, setUploadingTow] = useState(false);
   const [uploadingThree, setUploadingThree] = useState(false);
@@ -247,6 +266,7 @@ const AddProduct = ({ navigation }) => {
     if (!name.length || !description.length || !price.length) {
       alert("Please fill all information");
     } else {
+      setUploading(true);
       axios
         .post(`http://${IPADRESS}:5000/products/addProduct`, {
           sellIerd: userId,
@@ -273,6 +293,7 @@ const AddProduct = ({ navigation }) => {
             photo3: imageThree,
             idproduct: id_post,
           });
+          setUploading(false);
         })
         .then(() => {
           toast.show({
@@ -292,6 +313,24 @@ const AddProduct = ({ navigation }) => {
           console.log(error);
         });
     }
+  };
+
+  const ScheduleNotificationHandler = () => {
+    Toast.show({
+      type: ALERT_TYPE.SUCCESS,
+      title: "Go-Express",
+      textBody: `Your product:${name} need confirmation from the admin`,
+    });
+    Notification.scheduleNotificationAsync({
+      content: {
+        title: "Go-Express",
+        body: `Your product:${name} need confirmation from the admin`,
+        data: { userName: "GOExpress" },
+      },
+      trigger: {
+        seconds: 0,
+      },
+    });
   };
 
   const toast = useToast();
@@ -321,8 +360,19 @@ const AddProduct = ({ navigation }) => {
                 {/*Name  Start */}
                 <FormControl>
                   <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    <Text
+                      style={{
+                        color: "#ED5C00",
+                        fontSize: 20,
+                        left: "1500%",
+                        bottom: -5,
+                      }}
+                    >
+                      *
+                    </Text>
                     Product Name
                   </FormControl.Label>
+
                   <Input
                     _focus={{ borderColor: "#ED5C00" }}
                     placeholder="Product Name"
@@ -333,9 +383,20 @@ const AddProduct = ({ navigation }) => {
                   />
                 </FormControl>
                 {/*Name  End */}
+
                 {/*Description  Start */}
                 <FormControl>
                   <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    <Text
+                      style={{
+                        color: "#ED5C00",
+                        fontSize: 20,
+                        left: "1500%",
+                        bottom: -5,
+                      }}
+                    >
+                      *
+                    </Text>
                     Product Description
                   </FormControl.Label>
                   <Input
@@ -351,6 +412,16 @@ const AddProduct = ({ navigation }) => {
                 {/*Price  Start */}
                 <FormControl>
                   <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    <Text
+                      style={{
+                        color: "#ED5C00",
+                        fontSize: 20,
+                        left: "1500%",
+                        bottom: -5,
+                      }}
+                    >
+                      *
+                    </Text>
                     Unit Price
                   </FormControl.Label>
                   <Input
@@ -366,6 +437,16 @@ const AddProduct = ({ navigation }) => {
                 {/*Category  Start */}
                 <FormControl>
                   <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                    <Text
+                      style={{
+                        color: "#ED5C00",
+                        fontSize: 20,
+                        left: "1500%",
+                        bottom: -5,
+                      }}
+                    >
+                      *
+                    </Text>
                     Choose Category
                   </FormControl.Label>
                   <Box maxW="600">
@@ -471,15 +552,27 @@ const AddProduct = ({ navigation }) => {
                 {/*Button Add  Start */}
                 <TouchableOpacity>
                   <View>
-                    <Button
-                      style={styles.button}
-                      backgroundColor={"#F14E24"}
-                      onPress={() => {
-                        addProductDetails();
-                      }}
-                    >
-                      Save
-                    </Button>
+                    {!uploading ? (
+                      <Button
+                        style={styles.button}
+                        backgroundColor={"#F14E24"}
+                        onPress={() => {
+                          addProductDetails();
+                        }}
+                      >
+                        Save
+                      </Button>
+                    ) : (
+                      <HStack space={2} justifyContent="center">
+                        <Spinner
+                          accessibilityLabel="Loading posts"
+                          color="#ED5C00"
+                        />
+                        <Heading color="#373E5A" fontSize="md">
+                          Loading
+                        </Heading>
+                      </HStack>
+                    )}
                   </View>
                 </TouchableOpacity>
                 {/*Button Add  End */}

@@ -24,6 +24,21 @@ module.exports = {
       else res.json(results);
     });
   },
+
+  GetAllReservation: function (req, res) {
+    admin.getAllReservation(function (err, results) {
+      if (err) res.status(500).send(err);
+      else res.json(results);
+    });
+  },
+
+  GetAllSales: function (req, res) {
+    admin.getAllSales(function (err, results) {
+      if (err) res.status(500).send(err);
+      else res.json(results);
+    });
+  },
+
   // function to get one Product
   GetOneProduct: function (req, res) {
     admin.getOneProduct(function (err, results) {
@@ -31,6 +46,14 @@ module.exports = {
       else res.json(results);
     }, req.params.id_product);
   },
+
+  GetOneProductPhoto: function (req, res) {
+    admin.getOneProductPhoto(function (err, results) {
+      if (err) res.status(500).send(err);
+      else res.json(results);
+    }, req.params.id_product);
+  },
+
   // function to change the product status
   UpdateProductState: function (req, res) {
     admin.updateProductState(
@@ -76,11 +99,10 @@ module.exports = {
     });
   },
 
-GetEmployers:function(req,res){
-  admin.GetEmployers(function (err,results){
-    if(err) res.status(500).send(err);
-    else res.json(results)
-  })
-}
-
+  GetEmployers: function (req, res) {
+    admin.GetEmployers(function (err, results) {
+      if (err) res.status(500).send(err);
+      else res.json(results);
+    });
+  },
 };
