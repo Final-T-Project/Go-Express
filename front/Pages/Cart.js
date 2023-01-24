@@ -198,28 +198,21 @@ const MyCart = ({ navigation }) => {
           alignItems: "center",
         }}
       >
-        <View
-          style={{
-            width: "30%",
-            height: 100,
-            padding: 14,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: COLOURS.backgroundLight,
-            borderRadius: 10,
-            marginRight: 22,
-            borderColor: "#1C2765",
-            borderWidth: 2,
-          }}
-        >
+        <View>
           <StatusBar backgroundColor={"white"} barStyle="dark-content" />
           <Image
             source={{ uri: data.photo_product }}
             style={{
-              width: "170%",
-              width: 150,
-              height: "130%",
-              resizeMode: "contain",
+              width: 100,
+              height: 100,
+              padding: 14,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: COLOURS.backgroundLight,
+              borderRadius: 10,
+              marginRight: 22,
+              borderColor: "#1C2765",
+              borderWidth: 2,
             }}
           />
         </View>

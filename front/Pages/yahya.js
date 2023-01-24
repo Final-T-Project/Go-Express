@@ -50,10 +50,10 @@ const Home = () => {
             {/* // mainTitle="where are here "
             // secondTitle="to facilitate your life"
           // /> */}
-          <MainHeader
+          {/* <MainHeader
             title="Go-Express To facilitate your life"
             style={styles.title}
-          />
+          /> */}
 
           <ScrollView showsVerticalScrollIndicator={false}>
             <TopPlacesCarousel list={TOP_PLACES} />

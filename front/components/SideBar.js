@@ -42,7 +42,7 @@ export default function SideBbar({ navigation, route }) {
   const { userId } = useContext(UserContext);
 
   // console.log("hetah IDCard", userCartId);
-  console.log("hetah ID", userId);
+  // console.log("hetah ID", userId);
 
   // to get profile information
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function SideBbar({ navigation, route }) {
         // resizeMode="cover"
         style={styles.image}
       >
-        <View style={{ justifyContent: "flex-start",top:-50 }}>
+        <View style={{ justifyContent: "flex-start", top: -50 }}>
           {userDataProfile.map((element) => {
             if (element.photo) {
               return (
@@ -108,7 +108,7 @@ export default function SideBbar({ navigation, route }) {
                       left: 10,
                     }}
                   >
-                    View Profil
+                    View Profile
                   </Text>
                 </TouchableOpacity>
               );
@@ -172,7 +172,7 @@ export default function SideBbar({ navigation, route }) {
             {/* {TabButton(currentTab, setCurrentTab, "Chat", chat)} */}
             {TabButton(currentTab, setCurrentTab, "Join_Us", join)}
           </View>
-          <View style={{ top: 100 }}>
+          <View style={{ top: 155 }}>
             {TabButton(currentTab, setCurrentTab, "LogOut", logout)}
           </View>
         </View>
@@ -234,7 +234,7 @@ export default function SideBbar({ navigation, route }) {
               style={{
                 width: 20,
                 height: 20,
-                tintColor: "grey",
+                tintColor: "white",
                 marginTop: 36,
               }}
             />

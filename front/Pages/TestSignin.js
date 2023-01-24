@@ -100,15 +100,28 @@ function TestLogin() {
       >
         <ScrollView>
           <View style={css.box}>
+            <Image
+              style={{
+                //  ImageAlign: "center",
+                // // fontSize: 25,
+                marginTop: -15,
+                width: 80,
+                height: 80,
+                left: "37%",
+                // fontWeight: "bold",
+              }}
+              source={{
+                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673556815/go_ovtczy.png",
+              }}
+            />
             <Text
               style={{
+                fontSize: 20,
                 textAlign: "center",
-                fontSize: 25,
-                marginTop: 30,
                 fontWeight: "bold",
               }}
             >
-              Register
+              GO EXPRESS
             </Text>
             {/* <View
               style={{

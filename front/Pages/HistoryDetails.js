@@ -18,56 +18,37 @@ export default ({ navigation, route }) => {
     <View style={StyleSheet.absoluteFillObject}>
       <View
         style={{
-          flexDirection: "row",
-          padding: SPACING,
+          // flexDirection: "center",
+          padding: 30,
           marginBottom: SPACING,
           backgroundColor: "rgba(255,255,255,0.8)",
-          borderRadius: 12,
-          borderColor: "red",
+          borderRadius: 5,
           borderWidth: 1.5,
-          borderRadius: 25,
-
-          borderColor: "#f14e24",
+          borderColor: "grey",
           shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 10,
-          },
+          width: "80%",
+          height: "30%",
           shadowOpacity: 0.3,
           shadowRadius: 20,
-          marginTop: 20,
+          marginTop: "65%",
+          right: -30,
         }}
       >
         <VStack>
           <Text
             style={{
-              fontSize: 20,
-              fontWeight: "700",
-              margintop: 10,
+              fontSize: 25,
+              fontWeight: "600",
+              margintop: 8,
               color: "#373E5A",
             }}
           >
-            Booked{" "}
+            Booked
           </Text>
-          <Text style={{ fontSize: 15, fontWeight: "700" }}>
+          <Text style={{ fontSize: 15, fontWeight: "600", color: "#f14e24" }}>
             Booked in:
-            <Text style={{ fontSize: 15, fontWeight: "400" }}>{data.date}</Text>
-          </Text>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: "700",
-              margintop: 10,
-              color: "#373E5A",
-            }}
-          >
-            {" "}
-            your Commande :
-          </Text>
-          <Text style={{ fontSize: 15, fontWeight: "700" }}>
-            Product name :
-            <Text style={{ fontSize: 15, fontWeight: "400" }}>
-              {data.product_name}
+            <Text style={{ fontSize: 15, fontWeight: "400", color: "black" }}>
+              {data.date}
             </Text>
           </Text>
           <Text
@@ -78,14 +59,32 @@ export default ({ navigation, route }) => {
               color: "#373E5A",
             }}
           >
-            {" "}
-            Delevery information
+            Your Commande :
           </Text>
-
-          <Text style={{ fontSize: 15, fontWeight: "700", margintop: 10 }}>
+          <Text style={{ fontSize: 15, fontWeight: "700", color: "#f14e24" }}>
+            Product name :{""}
+            <Text style={{ fontSize: 15, fontWeight: "400", color: "black" }}>
+              {data.product_name}
+            </Text>
+          </Text>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: "700",
+              margintop: 10,
+              color: "#f14e24",
+            }}
+          >
             {" "}
             Product Price :
-            <Text style={{ fontSize: 15, fontWeight: "400", margintop: 10 }}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "400",
+                margintop: 10,
+                color: "black",
+              }}
+            >
               {data.price} dt
             </Text>
           </Text>

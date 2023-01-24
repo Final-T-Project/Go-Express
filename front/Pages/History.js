@@ -96,10 +96,10 @@ export default ({ navigation }) => {
                     marginBottom: SPACING,
                     backgroundColor: "rgba(255,255,255,0.8)",
                     borderRadius: 12,
-                    borderColor: "red",
+                    borderColor: "grey",
                     borderWidth: 1.5,
-                    borderRadius: 25,
-                    borderColor: "#f14e24",
+                    borderRadius: 5,
+                    // borderColor: "#f14e24",
                     opacity,
                     shadowColor: "#000",
                     shadowOffset: {
@@ -107,7 +107,7 @@ export default ({ navigation }) => {
                       height: 10,
                     },
                     shadowOpacity: 0.3,
-                    shadowRadius: 20,
+                    // shadowRadius: 20,
                     transform: [{ scale }],
                   }}
                 >

@@ -70,7 +70,7 @@ function Notification() {
 
   return (
     <ScrollView>
-      <View>
+      <View style={{marginTop:30}}>
         <FlatList
           data={garden}
           keyExtractor={(item, index) => {
@@ -235,7 +235,7 @@ export default Notification;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
+    width: "95%",
     height: 110,
     padding: 15,
     marginBottom: 15,
@@ -243,17 +243,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderRadius: 12,
     borderWidth: 1.5,
-    borderRadius: 25,
-    borderColor: "#f14e24",
+    borderRadius: 5,
+    borderColor: "grey",
+    right:-10
   },
   HeaderImage: {
-    width: "100%",
-    height: "100%",
-    borderRadius: 50,
+    width: "110%",
+    height: "110%",
+    // borderRadius: 50,
   },
   image: {
-    width: 65,
-    height: 65,
-    paddingBottom: 80,
+    width: 50,
+    height: 50,
+    top:-18,
+    right:18
+    // paddingBottom: 80,
   },
 });

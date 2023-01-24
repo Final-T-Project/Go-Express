@@ -104,6 +104,7 @@ const Tabs = ({ data, scrollX, onItemPress }) => {
           justifyContent: "space-evenly",
           flex: 1,
           flexDirection: "row",
+          marginTop: 280,
         }}
       >
         {data.map((item, index) => {
@@ -151,7 +152,10 @@ const Serves = ({ navigation }) => {
         renderItem={({ item }) => {
           return (
             <View style={{ width, height }}>
-              <Image source={{ uri: item.image }} style={{ flex: 1 }} />
+              <Image
+                source={{ uri: item.image }}
+                style={{ flex: 1, opacity: 0.5 }}
+              />
               <View
                 style={[
                   StyleSheet.absoluteFillObject,

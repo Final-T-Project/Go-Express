@@ -87,25 +87,25 @@ const styles = StyleSheet.create({
   introImageStyle: {
     width: "100%",
     height: "100%",
-    backgroundColor: "white",
+    backgroundColor: "#F3F3F7",
     // marginBottom: 120,
     // marginTop: 200,
   },
   introTextStyle: {
     fontSize: 18,
-    color: "black",
+    color: "#373E5A",
     textAlign: "center",
     paddingVertical: -20,
     marginVertical: 60,
   },
   introTitleStyle: {
     fontSize: 23,
-    color: "black",
+    color: "#373E5A",
     textAlign: "center",
     alignItems: "center",
     top: -580,
     // marginBottom: 10,
-    // fontWeight: "bold",
+    fontWeight: "bold",
   },
   buttonCircle: {
     width: 40,
@@ -137,7 +137,7 @@ const slides = [
     key: "s2",
     title: "Looking For Cleaning Service ?",
     text: "Upto 25% off on Domestic Flights",
-    image: require("../assets/Intro/image_processing20210217-23409-1sk6736.gif"),
+    image: require("../assets/Intro/image-processing20210217-23409-unscreen.gif"),
     backgroundColor: "#373E5A",
   },
   {
@@ -145,7 +145,7 @@ const slides = [
     title: "Looking For an Electrical Service ?",
     text: "Enjoy Great offers on our all services",
     image: {
-      uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1674149411/e_dk0ttn.webp",
+      uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1674584536/tets-removebg-preview_xp8oia.png",
     },
     backgroundColor: "#373E5A",
   },
@@ -155,7 +155,7 @@ const slides = [
     text: " Best Deals on all our services",
     // image: require("../assets/Intro/plomber h.gif"),
     image: {
-      uri: "https://res.cloudinary.com/ddvyi3jpk/image/upload/v1674206359/test_rzfkmn.png",
+      uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1674583022/p-removebg-preview_acnfyb.png",
     },
     backgroundColor: "#373E5A",
   },

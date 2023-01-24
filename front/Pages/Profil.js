@@ -352,7 +352,7 @@ function Product() {
       .catch((error) => {
         alert(error);
       });
-  }, []);
+  }, [userDataProduct]);
   //userDataProduct
 
   return (
@@ -377,27 +377,22 @@ function Product() {
             }}
           >
             <View
-              style={{
-                width: "30%",
-                height: 100,
-                padding: 14,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: COLOURS.backgroundLight,
-                borderRadius: 10,
-                marginRight: 22,
-                borderColor: "#1C2765",
-                borderWidth: 2,
-              }}
-            >
+            style={{right:-10}}>
               <StatusBar backgroundColor={"white"} barStyle="dark-content" />
               <Image
                 source={{ uri: element.photo_product }}
                 style={{
-                  width: "170%",
-                  width: 150,
-                  height: "130%",
-                  resizeMode: "contain",
+                  width: 100,
+                  height: 100,
+                  padding: 14,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: COLOURS.backgroundLight,
+                  borderRadius: 5,
+                  marginRight: 20,
+                  borderColor: "#1C2765",
+                  borderWidth: 2,
+                  
                 }}
               />
             </View>

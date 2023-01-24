@@ -128,17 +128,27 @@ export default function TestLogin() {
           }}
         >
           <View style={css.box}>
-            <Text
+            <Image
               style={{
-                textAlign: "center",
-                fontSize: 25,
-                marginTop: 50,
-                fontWeight: "bold",
+                //  ImageAlign: "center",
+                // // fontSize: 25,
+                marginTop: -15,
+                width:80,
+                height:80,
+                left:"40%"
+                // fontWeight: "bold",
               }}
-            >
-              Log in{" "}
-            </Text>
-
+              source={{
+                uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673556815/go_ovtczy.png",
+              }}
+            />
+              <Text
+              style={{
+                fontSize:20,
+                textAlign:'center',
+                fontWeight:'bold'
+              }}
+              >GO EXPRESS</Text>
             {/* <View
               style={{
                 display: "flex",
@@ -264,7 +274,7 @@ export default function TestLogin() {
                 />
               )}
             </View>
-         
+
             {!value.password.length ? null : value.passwordHide === true ? (
               <Text
                 style={{ textAlign: "center" }}
@@ -284,10 +294,10 @@ export default function TestLogin() {
                 hide password
               </Text>
             )}
-            
-            <Image source={require('../assets/hide.png')} style={{height:"4%",width:"8%",position:"absolute",marginTop:290,marginLeft:300}}  onPress={() =>
+
+            {/* <Image source={require('../assets/hide.png')} style={{height:"4%",width:"8%",position:"absolute",marginTop:290,marginLeft:300}}  onPress={() =>
                   setValue({ ...value, passwordHide: !value.passwordHide })
-                }/>
+                }/> */}
             {valueError.length ? (
               <View
                 style={{
@@ -415,10 +425,11 @@ const css = StyleSheet.create({
   box: {
     backgroundColor: "white",
     width: 340,
-    height: 480,
+    height: 500,
     borderRadius: 4,
     marginLeft: 10,
     marginTop: 108,
+    justifyContent:'center',
 
     shadowColor: "black",
     shadowOffset: {
