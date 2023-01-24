@@ -10,6 +10,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   ScrollView,
+  Alert,
 } from "react-native";
 import firebaseConfig from "../config/firebase";
 import {
@@ -34,6 +35,8 @@ export default function TestLogin() {
     passwordHide: true,
     emailError: false,
   });
+
+  const [uploading, setUploading] = useState(false);
 
   // import userId from useContext object
   const { userId, setUserId } = useContext(UserContext);
@@ -63,8 +66,9 @@ export default function TestLogin() {
 
         return userCredential.user.uid;
       })
+
       .then((id) => {
-        Navigation.navigate("SideBar", { id });
+        Navigation.navigate("SideBar");
       })
       .catch((error) => {
         setValue({ ...value, error: error.code });
@@ -350,7 +354,7 @@ export default function TestLogin() {
                     }}
                     onPress={() => handleLogIn()}
                   >
-                    Confirm
+                    Sign In
                   </Text>
                 </View>
               </View>
@@ -359,7 +363,7 @@ export default function TestLogin() {
                 style={{ alignItems: "center", marginTop: 30 }}
                 onPress={() => handleLogIn()}
               >
-                <View style={css.buttonStyleNo} onPress={() => handleLogIn()}>
+                <View style={css.buttonStyleNo}>
                   <Text
                     style={{
                       color: "white",
@@ -367,8 +371,9 @@ export default function TestLogin() {
                       fontWeight: "400",
                       fontSize: 17,
                     }}
+                    onPress={() => handleLogIn()}
                   >
-                    Confirm
+                    Sign In
                   </Text>
                 </View>
               </View>

@@ -7,36 +7,42 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import React, { useState, useEffect, useContext } from "react";;
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../UserContext";
-import axios from "axios"
+import axios from "axios";
 import IPADRESS from "../config/IPADRESS";
 
-export default function BookingDetails({route}) {
+export default function BookingDetails({ route }) {
   const Navigation = useNavigation();
 
   // const {listService,date,time} = route.Params;
 
-  const { listService,date,time,toList } = useContext(UserContext);
+  const { listService, date, time, toList } = useContext(UserContext);
 
-  const [serviceChoosen,setServiceChoosen]=useState("")
+  const [serviceChoosen, setServiceChoosen] = useState("");
 
-  const [price,setPrice] = useState(0)
+  const [price, setPrice] = useState(0);
 
-  useEffect(()=>{
-    listService==="1"?setServiceChoosen("Moving"):listService==="2"?setServiceChoosen("Cleaning"):listService==="3"?setServiceChoosen("Plumbing"):setServiceChoosen("electricity")
-  },[listService])
-  
-  useEffect(()=>{
-    axios.get(`http://${IPADRESS}:5000/service/getPrice/${listService}`)
-    .then((res)=>{
-      setPrice(res.data[0].price)
-    })
-  },[listService])
+  useEffect(() => {
+    listService === "1"
+      ? setServiceChoosen("Moving")
+      : listService === "2"
+      ? setServiceChoosen("Cleaning")
+      : listService === "3"
+      ? setServiceChoosen("Plumbing")
+      : setServiceChoosen("electricity");
+  }, [listService]);
 
+  useEffect(() => {
+    axios
+      .get(`http://${IPADRESS}:5000/service/getPrice/${listService}`)
+      .then((res) => {
+        setPrice(res.data[0].price);
+      });
+  }, [listService]);
 
-  console.log("hethi mel details" , time);
+  console.log("hethi mel details", time);
 
   return (
     <View style={css.container}>

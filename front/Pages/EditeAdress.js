@@ -23,7 +23,7 @@ let EditeAdress = () => {
   const [open, setOpen] = useState(false);
   let [ville, setVille] = useState("");
   let [adress, setAdress] = useState("");
-
+  let [phoneNumber, setPhoneNumber] = useState("");
   const toast = useToast();
 
   const { userId } = useContext(UserContext);
@@ -34,6 +34,7 @@ let EditeAdress = () => {
       .put(`http://${IPADRESS}:5000/users/updateUserAdress/${userId}`, {
         ville: ville,
         adress: adress,
+        phoneNumber: phoneNumber,
       })
       .then(() => {
         toast.show({
@@ -95,6 +96,16 @@ let EditeAdress = () => {
           <Modal.Body>
             <FormControl>
               <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                <Text
+                  style={{
+                    color: "#ED5C00",
+                    fontSize: 20,
+                    left: "1100%",
+                    bottom: -5,
+                  }}
+                >
+                  *
+                </Text>
                 Ville
               </FormControl.Label>
               <Input
@@ -104,9 +115,42 @@ let EditeAdress = () => {
               />
             </FormControl>
             <FormControl>
-              <FormControl.Label>Adress</FormControl.Label>
+              <FormControl.Label>
+                <Text
+                  style={{
+                    color: "#ED5C00",
+                    fontSize: 20,
+                    left: "1100%",
+                    bottom: -5,
+                  }}
+                >
+                  *
+                </Text>
+                Adress
+              </FormControl.Label>
               <Input
                 onChangeText={(text) => setAdress(text)}
+                backgroundColor={"muted.100"}
+                borderColor={"muted.200"}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormControl.Label>
+                <Text
+                  style={{
+                    color: "#ED5C00",
+                    fontSize: 20,
+                    left: "1100%",
+                    bottom: -5,
+                  }}
+                >
+                  *
+                </Text>
+                Phone number
+              </FormControl.Label>
+              <Input
+                onChangeText={(text) => setPhoneNumber(text)}
                 backgroundColor={"muted.100"}
                 borderColor={"muted.200"}
               />

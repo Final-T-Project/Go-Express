@@ -24,7 +24,7 @@ export const ProductListToolbar = () => (
       }}
     >
       <Typography sx={{ m: 1 }} variant="h4">
-        Products
+        Products Waiting For Confirmation
       </Typography>
     </Box>
     <Box sx={{ mt: 3 }}>

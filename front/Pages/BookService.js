@@ -32,8 +32,8 @@ export default function BookService({ route }) {
 
   const minDate = new Date();
 
-  const [id,setId]=useState("")
-  const [idCart,setIdCart]=useState("")
+  const [id, setId] = useState("");
+  const [idCart, setIdCart] = useState("");
 
   const { userId } = useContext(UserContext);
 
@@ -96,9 +96,6 @@ export default function BookService({ route }) {
 
   // ---------------------------------- Functions -------------------------------------------------//
 
- 
-  
-
   const handleTimeChange = (time) => {
     setTime(time);
     console.log(time);
@@ -121,27 +118,52 @@ export default function BookService({ route }) {
     );
     //Navigation.navigate("Booking Details");
 
-    
-    axios.post(`http://${IPADRESS}:5000/service/addBookedService`,{"date":date,"idUser":id,"idService":listService,"idCart":idCart,"time":time,"fromPlace":fromList,"toPlace":toList})
-    .then((result)=>{
-      //console.log(result.data.insertId)
-      axios.post(`http://${IPADRESS}:5000/carts/postReservation`,{"cart_id_cart":idCart,"reservation_id_reservation":result.data.insertId}).then(()=>{
-        Navigation.navigate("Booking Details")
-      }).catch(()=>{
-        console.error("error in inserting the booked data in the cart")
+    axios
+      .post(`http://${IPADRESS}:5000/service/addBookedService`, {
+        date: date,
+        idUser: id,
+        idService: listService,
+        idCart: idCart,
+        time: time,
+        fromPlace: fromList,
+        toPlace: toList,
       })
-      //,{params:{listService,date,time}}
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
-
-    
+      .then((result) => {
+        //console.log(result.data.insertId)
+        axios
+          .post(`http://${IPADRESS}:5000/carts/postReservation`, {
+            cart_id_cart: idCart,
+            reservation_id_reservation: result.data.insertId,
+          })
+          .then(() => {
+            Navigation.navigate("Booking Details");
+          })
+          .catch(() => {
+            console.error("error in inserting the booked data in the cart");
+          });
+        //,{params:{listService,date,time}}
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // ------------------------------- ALL STATE IN TUNISIA ( I WILL MAP OVER IT SO I DON'T WRITE IT MANUALLY :))
 
-  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   const ville = [
     "Tunis",
@@ -175,12 +197,16 @@ export default function BookService({ route }) {
     header: { backgroundColor: "red" },
   };
 
-  const handleDay =(date)=>{
-    let formattedDate = date.toLocaleDateString("en-US", {day: 'numeric', month: 'none', year: 'none'});
-    console.log(formattedDate.substring(3,5))
-    setDate(formattedDate.substring(3,5))
-    setDShow(false)
-  }
+  const handleDay = (date) => {
+    let formattedDate = date.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "none",
+      year: "none",
+    });
+    console.log(formattedDate.substring(3, 5));
+    setDate(formattedDate.substring(3, 5));
+    setDShow(false);
+  };
 
   const handleTime = (time) => {
     let formattedTime = time.toLocaleTimeString();
@@ -201,13 +227,17 @@ export default function BookService({ route }) {
     <View style={css.container}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <ScrollView>
-          <View style={{backgroundColor: "white",
+          <View
+            style={{
+              backgroundColor: "white",
               width: 370,
-              height:boxH(),
+              height: boxH(),
               borderRadius: 4,
               marginTop: 50,
               paddingLeft: 20,
-              marginBottom: 50,}}>
+              marginBottom: 50,
+            }}
+          >
             {/** --------------------------------TEXT ( TITLE ) --------------------------------------------- */}
             <Text
               style={{
@@ -284,12 +314,12 @@ export default function BookService({ route }) {
             </View>
 
             {DShow ? (
-                <DateTimePicker
-                  isVisible={DShow}
-                  onConfirm={handleDay}
-                  onCancel={()=>setDShow(false)}
-                  minimumDate={minDate}
-                  customStyles={customStyles}
+              <DateTimePicker
+                isVisible={DShow}
+                onConfirm={handleDay}
+                onCancel={() => setDShow(false)}
+                minimumDate={minDate}
+                customStyles={customStyles}
               />
             ) : null}
 
@@ -332,12 +362,12 @@ export default function BookService({ route }) {
 
             {timeShow ? (
               <DateTimePicker
-              mode="time"
-              is24Hour={true}
-              isVisible={timeShow}
-              onConfirm={handleTime}
-              onCancel={()=>setTimeShow(false)}
-          />
+                mode="time"
+                is24Hour={true}
+                isVisible={timeShow}
+                onConfirm={handleTime}
+                onCancel={() => setTimeShow(false)}
+              />
             ) : null}
 
             <View
@@ -499,7 +529,6 @@ export default function BookService({ route }) {
   );
 }
 
-
 const css = StyleSheet.create({
   container: {
     backgroundColor: "#373E5A",
@@ -510,7 +539,7 @@ const css = StyleSheet.create({
   box: {
     backgroundColor: "white",
     width: 370,
-    height:700,
+    height: 700,
     borderRadius: 4,
     marginTop: 50,
     paddingLeft: 20,
@@ -539,7 +568,7 @@ const css = StyleSheet.create({
     margin: 30,
   },
   datePicker: {
-    backgroundColor: 'red',
-    color: 'white'
-}
+    backgroundColor: "red",
+    color: "white",
+  },
 });
