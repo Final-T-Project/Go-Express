@@ -11,7 +11,7 @@ export const TotalEmployer = () => {
 
   // function to get all employer
   useEffect(() => {
-    axios.get(`http://localhost:5000/employer/getallemployer`).then((result) => {
+    axios.get(`http://localhost:5000/admin/getEmployers`).then((result) => {
       setEmployer(result.data);
       console.log(result.data);
     });
@@ -27,13 +27,13 @@ export const TotalEmployer = () => {
                 Total Employer
               </Typography>
               <Typography color="textPrimary" variant="h4">
-                {employer.length}Employers
+                {employer.length} Employers
               </Typography>
             </Grid>
             <Grid item>
               <Avatar
                 sx={{
-                  backgroundColor: "success.main",
+                  backgroundColor: "#1C2765",
                   height: 56,
                   width: 56,
                 }}
@@ -49,7 +49,7 @@ export const TotalEmployer = () => {
               pt: 2,
             }}
           >
-            <ArrowUpwardIcon color="success" />
+            <ArrowUpwardIcon style={{ color: "#1C2765" }} />
             <Typography
               variant="body2"
               sx={{

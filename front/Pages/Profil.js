@@ -1,22 +1,20 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
 import TabBar from "../components/TabBar";
+import { Ionicons } from "@expo/vector-icons";
 import {
-  TouchableHighlight,
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   Image,
   ScrollView,
   Touchable,
   TouchableOpacity,
   Dimensions,
   Button,
-  TextInput,
   Alert,
-  KeyboardAvoidingView,
   StatusBar,
+  FlatList,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserContext } from "../UserContext";
@@ -40,24 +38,41 @@ import IPADRESS from "../config/IPADRESS";
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const adressIp = IPADRESS;
-
+const MAX_RATING = 5;
 // feedback side
 function Feedback() {
   const imgWidth = Dimensions.get("screen").width * 0.33333;
   const { userId } = useContext(UserContext);
   // state to save feedback text
   const [FeedBackText, setFeedBackText] = useState("");
+  // state for rating
+  const [rating, setRating] = useState(0);
+
+  // function to render numbers of stars
+  const renderStar = ({ item, index }) => {
+    const active = index < rating;
+    return (
+      <TouchableOpacity onPress={() => setRating(index + 1)}>
+        <Ionicons
+          name={active ? "ios-star" : "ios-star-outline"}
+          size={35}
+          // color="#ffc107"
+          color="#ED5C00"
+        />
+      </TouchableOpacity>
+    );
+  };
   let AddFeedback = () => {
     axios
       .post(`http://${adressIp}:5000/feedback/addFeedback`, {
         details: FeedBackText,
         id_user: userId,
+        etoile: rating,
       })
       .catch((err) => {
         alert(err);
       });
   };
-
   return (
     <View
       style={{
@@ -82,6 +97,19 @@ function Feedback() {
           >
             Your Feedback is ower key to Satisfy your needs
           </Text>
+          <FlatList
+            style={{
+              width: 180,
+              marginBottom: -42,
+              marginTop: 10,
+              left: 100,
+            }}
+            data={new Array(MAX_RATING).fill(0)}
+            renderItem={renderStar}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          />
         </View>
         <View
           style={{
@@ -144,7 +172,8 @@ function Info({ route, navigation, id }) {
       .catch((error) => {
         alert(error);
       });
-  }, [userDataProfile]);
+  }, []);
+  //userDataProfile
 
   return (
     <View
@@ -323,7 +352,8 @@ function Product() {
       .catch((error) => {
         alert(error);
       });
-  }, [userDataProduct]);
+  }, []);
+  //userDataProduct
 
   return (
     <ScrollView>
@@ -470,7 +500,8 @@ export default function Profil({ navigation, route }) {
       .catch((error) => {
         alert(error);
       });
-  }, [userDataProfile]);
+  }, []);
+  //userDataProfile
 
   return (
     <>

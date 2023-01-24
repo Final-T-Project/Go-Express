@@ -16,7 +16,7 @@ import Home from "../Pages/yahya";
 import cart from "front/assets/shopping-cart-empty-side-view.png";
 import notifications from "front/assets/notification.png";
 import chat from "../assets/chat.png";
-import join from "front/assets/join.png"
+import join from "front/assets/join.png";
 import logout from "../assets/logout.png";
 import menu from "../assets/menu.png";
 import close from "../assets/close.png";
@@ -56,7 +56,7 @@ export default function SideBbar({ navigation, route }) {
         alert(error);
       });
   }, []);
-
+  //userDataProfile
   return (
     <SafeAreaView style={styles.container}>
       {/* blaset el contenue mta el side bar */}
@@ -67,7 +67,7 @@ export default function SideBbar({ navigation, route }) {
         // resizeMode="cover"
         style={styles.image}
       >
-        <View style={{ justifyContent: "flex-start" }}>
+        <View style={{ justifyContent: "flex-start",top:-50 }}>
           {userDataProfile.map((element) => {
             if (element.photo) {
               return (
@@ -161,7 +161,7 @@ export default function SideBbar({ navigation, route }) {
             }
           })}
 
-          <View style={{ flexGrow: 1, marginTop: 60 }}>
+          <View style={{ flexGrow: 1, marginTop: 40 }}>
             {TabButton(
               currentTab,
               setCurrentTab,
@@ -172,7 +172,9 @@ export default function SideBbar({ navigation, route }) {
             {TabButton(currentTab, setCurrentTab, "Chat", chat)}
             {TabButton(currentTab, setCurrentTab, "Join_Us", join)}
           </View>
-          <View  style={{top:130}}>{TabButton(currentTab, setCurrentTab, "LogOut", logout)}</View>
+          <View style={{ top: 100 }}>
+            {TabButton(currentTab, setCurrentTab, "LogOut", logout)}
+          </View>
         </View>
       </ImageBackground>
       <Animated.View
@@ -230,10 +232,10 @@ export default function SideBbar({ navigation, route }) {
             <Image
               source={showMenu ? close : menu}
               style={{
-                width: 30,
-                height: 30,
-                tintColor: "#171717",
-                marginTop: 40,
+                width: 20,
+                height: 20,
+                tintColor: "grey",
+                marginTop: 36,
               }}
             />
           </TouchableOpacity>
@@ -283,7 +285,7 @@ const TabButton = (currentTab, setCurrentTab, title, image) => {
           paddingLeft: 13,
           paddingRight: 35,
           borderRadius: 10,
-          marginTop: 20,
+          marginTop: 10,
           left: 10,
         }}
       >
@@ -325,156 +327,3 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 });
-// nex Drower
-// import React from 'react';
-
-// import {
-//   Image, StyleSheet, ScrollView, SafeAreaView, Platform,
-// } from 'react-native';
-// import {
-
-//   DrawerItems,
-// } from 'react-navigation';
-
-// import { createDrawerNavigator } from '@react-navigation/drawer';
-
-// // screens
-// import MyCart from "../test/MyCart";
-// import Shop from 'front/test/Shop.js';
-// import History from "../Pages/History";
-// import Profil from "../Pages/Profil"; //contain the feedback side
-// import TestLogin from "../Pages/TestLogin.js"
-// // import Presentation from './src/screens/Presentation';
-// // import Dashboard from './src/screens/Dashboard';
-// // import Register from './src/screens/Register';
-// // import Registerv2 from './src/screens/Registerv2';
-// // import Grid from './src/screens/Grid';
-
-//  import theme from '../components/theme';
-// import { Block, Icon, Text } from 'galio-framework';
-
-// const SideBar = props =>{
-// return (
-//   <SafeAreaView style={styles.drawer} forceInset={{ top: 'always', horizontal: 'never' }}>
-//     <Block space="between" row style={styles.header}>
-//       <Block flex={0.3}><Image source={{ uri: 'http://i.pravatar.cc/100' }} style={styles.avatar} /></Block>
-//       <Block flex style={styles.middle}>
-//         <Text size={theme.SIZES.FONT * 0.875}>Galio Framework</Text>
-//         <Text muted size={theme.SIZES.FONT * 0.875}>React Native</Text>
-//       </Block>
-//     </Block>
-//     <ScrollView>
-//       <DrawerItems {...props} />
-//     </ScrollView>
-//   </SafeAreaView>
-// )};
-
-// const styles = StyleSheet.create({
-//   drawer: {
-//     flex: 1,
-//   },
-//   header: {
-//     paddingHorizontal: theme.SIZES.BASE,
-//     paddingTop: theme.SIZES.BASE * 0.6875,
-//     paddingBottom: theme.SIZES.BASE * 1.6875,
-//     borderBottomColor: '#D8D8D8',
-//     borderBottomWidth: 0.5,
-//     marginTop: Platform.OS === 'android' ? theme.SIZES.BASE * 2 : null,
-//   },
-//   avatar: {
-//     width: theme.SIZES.BASE * 2.5,
-//     height: theme.SIZES.BASE * 2.5,
-//     borderRadius: theme.SIZES.BASE * 1.25,
-//   },
-//   middle: {
-//     justifyContent: 'center',
-//   },
-// });
-
-// const MenuIcon = ({ name, family, focused }) => (
-//   <Icon
-//     name={name}
-//     family={family}
-//     size={theme.SIZES.FONT}
-//     color={focused ? theme.COLORS.WHITE : '#5D5D5D'}
-//   />
-// );
-
-// MenuIcon.defaultProps = {
-//   name: null,
-//   family: null,
-//   focused: false,
-// };
-
-// const screens = {
-//   Home: {
-//     screen:  Profil,
-//     navigationOptions: {
-//       drawerLabel: ' Profil',
-//       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
-//     },
-//   },
-//   History: {
-//     screen: History,
-//     navigationOptions: {
-//       drawerLabel: 'History',
-//       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
-//     },
-//   },
-//   MyCart: {
-//     screen: MyCart,
-//     navigationOptions: {
-//       drawerLabel: 'MyCart Screen',
-//       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
-//     },
-//   },
-//   Shop: {
-//     screen: Shop,
-//     navigationOptions: {
-//       drawerLabel: 'Article Cover',
-//       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
-//     },
-//   },
-// //  SignIn: {
-// //     screen:SignIn,
-// //     navigationOptions: {
-// //       drawerLabel: 'News Screen',
-// //       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
-// //     },
-// //   },
-//   TestLogin: {
-//     screen: TestLogin,
-//     navigationOptions: {
-//       drawerLabel: 'Order Confirmed',
-//       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
-//     },
-//   },
-// };
-
-// const options = {
-//   contentComponent: props => <SideBar {...props} />,
-//   contentOptions: {
-//     labelStyle: {
-//       fontWeight: '500',
-//       color: theme.COLORS.GREY,
-//       fontSize: theme.SIZES.FONT * 0.875,
-//       marginLeft: theme.SIZES.BASE * 0.75,
-//     },
-//     activeLabelStyle: {
-//       color: theme.COLORS.WHITE,
-//     },
-//     activeBackgroundColor: theme.COLORS.THEME,
-//     itemsContainerStyle: {
-//       paddingVertical: 0,
-//     },
-//     iconContainerStyle: {
-//       marginHorizontal: 0,
-//       marginLeft: theme.SIZES.BASE * 1.65,
-//       // marginRight: theme.SIZES.BASE * 0.76,
-//     },
-//   },
-// };
-
-// const GalioApp = createDrawerNavigator(screens, options);
-
-// export default GalioApp;

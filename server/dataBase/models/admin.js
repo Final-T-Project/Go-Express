@@ -51,6 +51,13 @@ module.exports = {
       callback(error, results);
     });
   },
+  deleteProductPhoto: function (callback, id_photo) {
+    const sql = `DELETE FROM product_photo WHERE product_id_product = "${id_photo}"`;
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  },
+
   getAllFeedBack: function (callback) {
     const sql = `SELECT * FROM feedback  INNER JOIN user ON feedback.user_id_user = user.id_user`;
     connection.query(sql, function (error, results) {

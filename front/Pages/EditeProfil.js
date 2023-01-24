@@ -1,13 +1,11 @@
 import { useState, useContext } from "react";
-import {
-  MaterialCommunityIcons,
-  Entypo,
-  AntDesign,
-  FontAwesome5,
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
+import firebase from "firebase/compat/app";
+import "firebase/compat/storage";
 import React from "react";
+import { initializeApp } from "firebase/app";
 import {
   IconButton,
   Icon,
@@ -17,27 +15,31 @@ import {
   FormControl,
   Input,
   Center,
-  NativeBaseProvider,
+  Spinner,
   Text,
   Image,
+  HStack,
+  Heading,
 } from "native-base";
 import axios from "axios";
 
 import IPADRESS from "../config/IPADRESS";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../UserContext";
+import firebaseConfig from "../config/firebase";
 
 export default function EditeProfil() {
   const navigation = useNavigation();
+  const [uploading, setUploading] = useState(false);
 
   const [placement, setPlacement] = useState(undefined);
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState(null);
-
   const [name, setName] = useState("");
   const [ville, setVille] = useState("");
   const [adress, setAdress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [urlImage, setUrlImage] = useState("");
 
   const { userId } = useContext(UserContext);
 
@@ -46,23 +48,65 @@ export default function EditeProfil() {
     setPlacement(placement);
   };
 
-  const pickImage = async () => {
+  if (firebase.apps.length === 0) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
+  const PickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-
     if (!result.canceled) {
-      setImage(result.uri);
+      setImage(result.assets[0].uri);
     }
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function () {
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", result.assets[0].uri, true);
+      xhr.send(null);
+    });
+    const ref = firebase.storage().ref().child(new Date().toISOString());
+    const snapshot = ref.put(blob);
+    snapshot.on(
+      firebase.storage.TaskEvent.STATE_CHANGED,
+      () => {
+        setUploading(true);
+      },
+      (error) => {
+        setUploading(false);
+        console.log(error);
+        alert(error);
+        blob.close();
+        return;
+      },
+      () => {
+        snapshot.snapshot.ref.getDownloadURL().then((url) => {
+          setUploading(false);
+          console.log("Download URL: ", url);
+          setUrlImage(url);
+          blob.close();
+          return url;
+        });
+      }
+    );
   };
+
+  console.log("hethi image", image);
+  console.log("hethi url", urlImage);
 
   const saveUpdate = () => {
     axios
       .put(`http://${IPADRESS}:5000/users/updateUser/${userId}`, {
-        photo: image,
+        photo: urlImage,
         name: name,
         ville: ville,
         adress: adress,
@@ -113,9 +157,20 @@ export default function EditeProfil() {
           <Modal.Body>
             <FormControl>
               <FormControl.Label>Image</FormControl.Label>
-              <Button backgroundColor={"#373E5A"} onPress={pickImage}>
-                Pick image
-              </Button>
+
+              {!uploading ? (
+                <Button backgroundColor={"#373E5A"} onPress={PickImage}>
+                  Pick image
+                </Button>
+              ) : (
+                <HStack space={2} justifyContent="center">
+                  <Spinner accessibilityLabel="Loading posts" color="#ED5C00" />
+                  <Heading color="#ED5C00" fontSize="md">
+                    Loading
+                  </Heading>
+                </HStack>
+              )}
+
               {image && <Image source={{ uri: image }} />}
             </FormControl>
             <FormControl>

@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import { useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/core";
-
 import axios from "axios";
 import firebaseConfig from "../config/firebase";
 import {
@@ -40,7 +39,7 @@ function TestLogin() {
   });
 
   const Navigation = useNavigation();
-  const app = initializeApp(firebaseConfig);
+   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
   const [user, setUser] = useState("");
@@ -77,10 +76,10 @@ function TestLogin() {
           .catch((error) => {
             console.log(error);
           });
-          return userCredential.user.uid
+        return userCredential.user.uid;
       })
       .then((id) => {
-        Navigation.navigate("SideBar",{id});
+        Navigation.navigate("SideBar", { id });
       })
       .catch((err) => {
         if (err.code === "auth/email-already-in-use") {

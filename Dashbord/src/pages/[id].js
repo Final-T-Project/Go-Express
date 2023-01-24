@@ -48,7 +48,11 @@ const Page = () => {
             py: 8,
           }}
         >
-          <Container maxWidth="lg">
+          <Container
+            sx={{
+              marginLeft: 40,
+            }}
+          >
             <Grid container spacing={3}>
               <Grid item lg={8} md={2} xs={20}>
                 <Card>
@@ -85,7 +89,11 @@ const Page = () => {
                       subheader="The information can't be edited"
                       title="User Information"
                     />
-                    <Divider />
+                    <Divider
+                      sx={{
+                        borderColor: "#ED5C00",
+                      }}
+                    />
                     <CardContent>
                       <Grid container spacing={3}>
                         <Grid item md={6} xs={12}>
@@ -96,6 +104,7 @@ const Page = () => {
                             name="firstName"
                             required
                             variant="outlined"
+                            color="warning"
                           />
                         </Grid>
                         <Grid item md={6} xs={12}>
@@ -105,6 +114,7 @@ const Page = () => {
                             value={element.email}
                             name="lastName"
                             variant="outlined"
+                            color="warning"
                           />
                         </Grid>
                         <Grid item md={6} xs={12}>
@@ -114,6 +124,7 @@ const Page = () => {
                             value={element.gender}
                             name="email"
                             variant="outlined"
+                            color="warning"
                           />
                         </Grid>
                         <Grid item md={6} xs={12}>
@@ -122,8 +133,8 @@ const Page = () => {
                             value={element.phone_number}
                             helperText="Phone Number"
                             name="phone"
-                            type="number"
                             variant="outlined"
+                            color="warning"
                           />
                         </Grid>
                         <Grid item md={6} xs={12}>
@@ -132,8 +143,8 @@ const Page = () => {
                             value={element.ville}
                             helperText="country"
                             name="Country"
-                            required
                             variant="outlined"
+                            color="warning"
                           />
                         </Grid>
                         <Grid item md={6} xs={12}>
@@ -144,6 +155,7 @@ const Page = () => {
                             name="state"
                             required
                             variant="outlined"
+                            color="warning"
                           ></TextField>
                         </Grid>
                       </Grid>

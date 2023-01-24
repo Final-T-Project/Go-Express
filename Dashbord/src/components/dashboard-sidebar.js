@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
-import { Box, Divider, Drawer, Typography, useMediaQuery } from "@mui/material";
+import { Avatar, Box, Divider, Drawer, Typography, useMediaQuery } from "@mui/material";
 
 import { ChartBar as ChartBarIcon } from "../icons/chart-bar";
 import { Selector as SelectorIcon } from "../icons/selector";
@@ -15,6 +15,7 @@ import { NavItem } from "./nav-item";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { color } from "@mui/system";
 
 const items = [
   {
@@ -82,12 +83,24 @@ export const DashboardSidebar = (props) => {
           <Box sx={{ p: 3 }}>
             <NextLink href="/" passHref>
               <a>
-                <Logo
+                <Avatar
                   sx={{
-                    height: 42,
-                    width: 42,
+                    width: 60,
+                    height: 60,
                   }}
+                  src="https://res.cloudinary.com/ddvyi3jpk/image/upload/v1674318312/go_wx5rsq.png"
                 />
+                <Typography
+                  sx={{
+                    width: 190,
+                    marginLeft: 9,
+                    marginTop: -6.5,
+                    fontSize: 19,
+                  }}
+                  color="white"
+                >
+                  Go Express
+                </Typography>
               </a>
             </NextLink>
           </Box>
@@ -117,7 +130,7 @@ export const DashboardSidebar = (props) => {
         </div>
         <Divider
           sx={{
-            borderColor: "#2D3748",
+            borderColor: "#ED5C00",
             my: 3,
           }}
         />
@@ -126,7 +139,7 @@ export const DashboardSidebar = (props) => {
             <NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
           ))}
         </Box>
-        <Divider sx={{ borderColor: "#2D3748" }} />
+        <Divider sx={{ borderColor: "#ED5C00" }} />
         <Box
           sx={{
             px: 2,
