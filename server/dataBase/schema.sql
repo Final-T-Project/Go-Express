@@ -78,7 +78,57 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cart` (
     FOREIGN KEY (`user_id_user`)
     REFERENCES `mydb`.`user` (`id_user`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`reservation`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`reservation` (
+  `id_reservation` INT NOT NULL AUTO_INCREMENT,
+  `date` ENUM('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31') NOT NULL,
+  `employer_id` VARCHAR(45) NULL DEFAULT NULL,
+  `user_id_user` VARCHAR(50) NOT NULL,
+  `serves_id_serves` INT NOT NULL,
+  `cart_id_cart` INT NOT NULL,
+  `time` VARCHAR(30) NULL DEFAULT NULL,
+  `fromPlace` VARCHAR(30) NULL DEFAULT NULL,
+  `toPlace` VARCHAR(30) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_reservation`),
+  INDEX `fk_reservation_user1_idx` (`user_id_user` ASC) VISIBLE,
+  INDEX `fk_reservation_serves1_idx` (`serves_id_serves` ASC) VISIBLE,
+  INDEX `fk_reservation_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
+  CONSTRAINT `fk_reservation_cart1`
+    FOREIGN KEY (`cart_id_cart`)
+    REFERENCES `mydb`.`cart` (`id_cart`),
+  CONSTRAINT `fk_reservation_serves1`
+    FOREIGN KEY (`serves_id_serves`)
+    REFERENCES `mydb`.`serves` (`id_serves`),
+  CONSTRAINT `fk_reservation_user1`
+    FOREIGN KEY (`user_id_user`)
+    REFERENCES `mydb`.`user` (`id_user`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 66
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`cart_has_reservation`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`cart_has_reservation` (
+  `cart_id_cart` INT NOT NULL,
+  `reservation_id_reservation` INT NOT NULL,
+  PRIMARY KEY (`cart_id_cart`, `reservation_id_reservation`),
+  INDEX `fk_cart_has_reservation_reservation1_idx` (`reservation_id_reservation` ASC) VISIBLE,
+  INDEX `fk_cart_has_reservation_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
+  CONSTRAINT `fk_cart_has_reservation_cart1`
+    FOREIGN KEY (`cart_id_cart`)
+    REFERENCES `mydb`.`cart` (`id_cart`),
+  CONSTRAINT `fk_cart_has_reservation_reservation1`
+    FOREIGN KEY (`reservation_id_reservation`)
+    REFERENCES `mydb`.`reservation` (`id_reservation`))
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -107,16 +157,20 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- Table `mydb`.`employer`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`employer` (
-  `id_employer` INT NOT NULL AUTO_INCREMENT,
-  `first_name` VARCHAR(20) NOT NULL,
-  `gender` ENUM('Male', 'Female') NOT NULL,
+  `id_employer` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(20) NOT NULL,
+  `cv` VARCHAR(700) NOT NULL,
+  `gender` ENUM('Male', 'female') NOT NULL,
   `adress` VARCHAR(45) NOT NULL,
   `photo` VARCHAR(300) NOT NULL,
   `phone_number` VARCHAR(8) NOT NULL,
-  `work_position` ENUM('householder','electrician','plumber','truck driver','delivery agents') NOT NULL,
   `state` ENUM('Accepted', 'Not Accepted') NOT NULL DEFAULT 'Not Accepted',
-  `last_name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_employer`))
+  `serves_id_serves` INT NOT NULL,
+  PRIMARY KEY (`id_employer`),
+  INDEX `fk_employer_serves1_idx` (`serves_id_serves` ASC) VISIBLE,
+  CONSTRAINT `fk_employer_serves1`
+    FOREIGN KEY (`serves_id_serves`)
+    REFERENCES `mydb`.`serves` (`id_serves`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -154,12 +208,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
   `category` ENUM('Kitchen', 'Garden', 'Furniture', 'Accessories') NOT NULL,
   `price` INT NOT NULL,
   `description` VARCHAR(600) NOT NULL,
-  `photo_product` VARCHAR(300) NOT NULL,
+  `photo` VARCHAR(300) NOT NULL,
   `quantity` INT NOT NULL DEFAULT '1',
   `user_id_user` VARCHAR(50) NOT NULL,
   `cart_id_cart` INT NOT NULL,
-  `productStatus` ENUM('Accepted', 'NotAccepted') NULL DEFAULT 'NotAccepted',
-  `Published_at` VARCHAR(500) NULL DEFAULT NULL,
   PRIMARY KEY (`id_product`),
   INDEX `fk_product_user_idx` (`user_id_user` ASC) VISIBLE,
   INDEX `fk_product_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
@@ -170,7 +222,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
     FOREIGN KEY (`user_id_user`)
     REFERENCES `mydb`.`user` (`id_user`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 46
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -213,54 +264,39 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`reservation`
+-- Table `mydb`.`reservation_has_cart`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`reservation` (
-  `id_reservation` INT NOT NULL AUTO_INCREMENT,
-  `date` ENUM('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31') NOT NULL,
-  `employer_id` VARCHAR(45) NULL DEFAULT NULL,
-  `user_id_user` VARCHAR(50) NOT NULL,
-  `serves_id_serves` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `mydb`.`reservation_has_cart` (
+  `reservation_id_reservation` INT NOT NULL,
   `cart_id_cart` INT NOT NULL,
-  `time` VARCHAR(30) NULL DEFAULT NULL,
-  `fromPlace` VARCHAR(30) NULL DEFAULT NULL,
-  `toPlace` VARCHAR(30) NULL DEFAULT NULL,
-  PRIMARY KEY (`id_reservation`),
-  INDEX `fk_reservation_user1_idx` (`user_id_user` ASC) VISIBLE,
-  INDEX `fk_reservation_serves1_idx` (`serves_id_serves` ASC) VISIBLE,
-  INDEX `fk_reservation_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
-  CONSTRAINT `fk_reservation_cart1`
+  PRIMARY KEY (`reservation_id_reservation`, `cart_id_cart`),
+  INDEX `fk_reservation_has_cart_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
+  INDEX `fk_reservation_has_cart_reservation1_idx` (`reservation_id_reservation` ASC) VISIBLE,
+  CONSTRAINT `fk_reservation_has_cart_cart1`
     FOREIGN KEY (`cart_id_cart`)
     REFERENCES `mydb`.`cart` (`id_cart`),
-  CONSTRAINT `fk_reservation_serves1`
-    FOREIGN KEY (`serves_id_serves`)
-    REFERENCES `mydb`.`serves` (`id_serves`),
-  CONSTRAINT `fk_reservation_user1`
-    FOREIGN KEY (`user_id_user`)
-    REFERENCES `mydb`.`user` (`id_user`))
+  CONSTRAINT `fk_reservation_has_cart_reservation1`
+    FOREIGN KEY (`reservation_id_reservation`)
+    REFERENCES `mydb`.`reservation` (`id_reservation`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`products_cart`
+-- Table `mydb`.`serves_has_cart`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`products_cart` (
-  `product_id_product` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `mydb`.`serves_has_cart` (
+  `serves_id_serves` INT NOT NULL,
   `cart_id_cart` INT NOT NULL,
-  PRIMARY KEY (`product_id_product`, `cart_id_cart`),
-  INDEX `fk_product_has_cart_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
-  INDEX `fk_product_has_cart_product1_idx` (`product_id_product` ASC) VISIBLE,
-  CONSTRAINT `fk_product_has_cart_product1`
-    FOREIGN KEY (`product_id_product`)
-    REFERENCES `mydb`.`product` (`id_product`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_product_has_cart_cart1`
+  PRIMARY KEY (`serves_id_serves`, `cart_id_cart`),
+  INDEX `fk_serves_has_cart_cart1_idx` (`cart_id_cart` ASC) VISIBLE,
+  INDEX `fk_serves_has_cart_serves1_idx` (`serves_id_serves` ASC) VISIBLE,
+  CONSTRAINT `fk_serves_has_cart_cart1`
     FOREIGN KEY (`cart_id_cart`)
-    REFERENCES `mydb`.`cart` (`id_cart`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `mydb`.`cart` (`id_cart`),
+  CONSTRAINT `fk_serves_has_cart_serves1`
+    FOREIGN KEY (`serves_id_serves`)
+    REFERENCES `mydb`.`serves` (`id_serves`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 

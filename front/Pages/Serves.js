@@ -32,7 +32,7 @@ const data = Object.keys(images).map((i) => ({
 }));
 
 const Tab = React.forwardRef(({ item, onItemPress }, ref) => {
- const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <TouchableOpacity>
       <View ref={ref}>
