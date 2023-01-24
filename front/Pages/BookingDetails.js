@@ -40,7 +40,7 @@ export default function BookingDetails({route}) {
 
   return (
     <View style={css.container}>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} style={{alignItems:"center",justifyContent:"center"}}>
         <ScrollView>
           <View style={css.box}>
             <Text
@@ -54,62 +54,36 @@ export default function BookingDetails({route}) {
               {" "}
               Booking Details :
             </Text>
+            <View
+              style={{
+                marginTop: 5,
+                borderBottomColor: "black",
+                borderBottomWidth: 1,
+                width: 370,
+                marginLeft: -20,
+                opacity: 0.2,
+              }}
+            />
 
-            <Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 40 }}>
-              services :{"   "+serviceChoosen}
+            <Text style={{ marginLeft: 30, fontWeight: "400", marginTop: 40 }}>
+              Services :{"   "+serviceChoosen}
             </Text>
-            <View
-              style={{
-                marginTop: 5,
-                borderBottomColor: "black",
-                borderBottomWidth: 1,
-                width: 370,
-                marginLeft: -20,
-                opacity: 0.2,
-              }}
-            />
-            <Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 10 }}>
-              Date :{"     "+date}
+            
+            <Text style={{ marginLeft: 31, fontWeight: "400", marginTop: 20 }}>
+              Date :{"     "+date+" "+"January"}
             </Text>
-            <View
-              style={{
-                marginTop: 5,
-                borderBottomColor: "black",
-                borderBottomWidth: 1,
-                width: 370,
-                marginLeft: -20,
-                opacity: 0.2,
-              }}
-            />
-            <Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 10 }}>
-              Time :{"   "+time}
+            
+            <Text style={{ marginLeft: 30, fontWeight: "400", marginTop: 20 }}>
+              Time :{"   "+time.substring(0,5)}
             </Text>
-            <View
-              style={{
-                marginTop: 5,
-                borderBottomColor: "black",
-                borderBottomWidth: 1,
-                width: 370,
-                marginLeft: -20,
-                opacity: 0.2,
-              }}
-            />
-            {serviceChoosen === "Moving" ?<Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 10 }}>
+           
+            {serviceChoosen === "Moving" ?<Text style={{ marginLeft: 30, fontWeight: "400", marginTop: 20 }}>
               Destination :{"   "+toList}
-            </Text>:<Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 10 }}>
-              Destination :{"   "+"The service you choose doesn't have destination field"}
+            </Text>:<Text style={{ color:"grey",marginLeft: 30, fontWeight: "400", marginTop: 20 }}>
+              Destination :{" "+"The service you choose doesn't have destination field"}
             </Text>}
-            <View
-              style={{
-                marginTop: 5,
-                borderBottomColor: "black",
-                borderBottomWidth: 1,
-                width: 370,
-                marginLeft: -20,
-                opacity: 0.2,
-              }}
-            />
-            <Text style={{ marginLeft: 30, fontWeight: "bold", marginTop: 10 }}>
+            
+            <Text style={{ marginLeft: 30, fontWeight: "400", marginTop: 20 }}>
               Price :{"    "+price+"  Dt"}
             </Text>
 
@@ -122,7 +96,7 @@ export default function BookingDetails({route}) {
                   color: "white",
                   borderRadius: 100,
                   justifyContent: "center",
-                  marginTop: 190,
+                  marginTop: 65,
                   alignItems: "center",
                 }}
                 onPress={() => Navigation.navigate("Cart")}
@@ -154,9 +128,10 @@ const css = StyleSheet.create({
     justifyContent: "center",
   },
   box: {
+    
     backgroundColor: "white",
     width: 350,
-    height: 500,
+    height: 400,
     borderRadius: 0,
     marginTop: 50,
     paddingLeft: 0,
@@ -164,11 +139,11 @@ const css = StyleSheet.create({
 
     shadowColor: "black",
     shadowOffset: {
-      width: 0,
-      height: 0,
+      width: 5,
+      height: 5,
     },
-    shadowOpacity: 60,
-    shadowRadius: 40,
-    elevation: 10,
+    shadowOpacity: 100,
+    shadowRadius: 100,
+    elevation: 15,
   },
 });

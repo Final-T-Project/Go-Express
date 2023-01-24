@@ -35,8 +35,8 @@ const data = Object.keys(images).map((i) => ({
   ref: React.createRef(),
 }));
 
-const Tab = React.forwardRef(({ navigation, item, onItemPress }, ref) => {
-  // const navigation = useNavigation();
+const Tab = React.forwardRef(({ item, onItemPress }, ref) => {
+ const navigation = useNavigation();
   return (
     <TouchableOpacity
       onPress={() =>

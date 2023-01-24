@@ -42,7 +42,7 @@ export default function SideBbar({ navigation, route }) {
   const { userId } = useContext(UserContext);
 
   // console.log("hetah IDCard", userCartId);
-  // console.log("hetah ID", userId);
+  console.log("hetah ID", userId);
 
   // to get profile information
   useEffect(() => {

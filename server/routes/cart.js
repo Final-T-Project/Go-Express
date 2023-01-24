@@ -11,7 +11,11 @@ const {
   ChangeCartStatusToDone,
   DeleteAll,
   GetCartHistorique,
+  postReservation,
+  getReservation,
+  deleteReservations,
 } = require("../contollers/cart.js");
+const { deleteReservation } = require("../dataBase/models/cart.js");
 
 router.get("/getIdCart/:id_user", GetIdCart);
 router.get("/getCartProduct/:id_cart", GetCartProduct);
@@ -24,5 +28,10 @@ router.delete("/deleteProduct/:id_product", DeleteProductFromCart);
 router.delete("/deleteALL/:id_cart", DeleteAll);
 
 router.put("/updateStateToDone/:id_cart", ChangeCartStatusToDone);
+
+router.post("/postReservation",postReservation)
+router.get("/getReservation/:id_cart",getReservation)
+
+router.delete("/deleteReservation",deleteReservations)
 
 module.exports = router;
