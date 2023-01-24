@@ -17,7 +17,6 @@ import PhoneNumber from "./Pages/PhoneNumber";
 import { NativeBaseProvider, View } from "native-base";
 import { UserContext } from "./UserContext.js";
 import { useContext, useState } from "react";
-import Shopping from "./Pages/Shopping.js";
 import Cart from "./Pages/Cart.js";
 import ProductInfo from "./Pages/ProductInfo.js";
 import ImageDetails from "./Pages/ImageDetails";
@@ -144,7 +143,7 @@ export default function App() {
             />
             <Stack.Screen name="EditeProfil" component={EditeProfil} />
             <Stack.Screen name="EditeAdress" component={EditeAdress} />
-            <Stack.Screen name="Shopping" component={Shopping} />
+
             <Stack.Screen name="Cart" component={Cart} />
             <Stack.Screen name="ProductInfo" component={ProductInfo} />
             <Stack.Screen name="ImageDetails" component={ImageDetails} />

@@ -6,12 +6,8 @@ import {
   Text,
   View,
   Dimensions,
-  FlatList,
   Animated,
   Image,
-  findNodeHandle,
-  Touchable,
-  RefreshControl,
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
@@ -35,16 +31,15 @@ const data = Object.keys(images).map((i) => ({
   ref: React.createRef(),
 }));
 
-const Tab = React.forwardRef(({ navigation, item, onItemPress }, ref) => {
-  // const navigation = useNavigation();
+const Tab = React.forwardRef(({ item }, ref) => {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("BookService", { service: item.title })
-      }
-    >
+    <TouchableOpacity>
       <View ref={ref}>
         <Text
+          onPress={() =>
+            navigation.navigate("BookService", { service: item.title })
+          }
           style={{
             color: "#373E5A",
             fontSize: 70 / data.length,

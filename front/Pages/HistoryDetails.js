@@ -26,6 +26,7 @@ export default ({ navigation, route }) => {
           borderColor: "red",
           borderWidth: 1.5,
           borderRadius: 25,
+
           borderColor: "#f14e24",
           shadowColor: "#000",
           shadowOffset: {

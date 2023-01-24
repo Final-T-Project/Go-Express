@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
+import SwipeableViews from "react-swipeable-views";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import Head from "next/head";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 
 import {
   CardContent,
@@ -26,23 +28,13 @@ import { useRouter } from "next/router";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   display: "flex",
-  //   flexDirection: "column",
-  //   width: "100%",
-  //   height: "100%",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  //   marginTop: "2%",
-  //   // marginLeft: -50,
-  //   // marginTop: 50,
-  // },
   media: {
     width: "100%",
     height: 400,
     width: 400,
     objectFit: "cover",
     borderRadius: 12,
+    marginLeft: "30%",
   },
   content: {
     width: "100%",
@@ -55,6 +47,19 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.5rem",
     fontWeight: "bold",
     color: theme.palette.primary.main,
+  },
+
+  ButtonLeft: {
+    color: "#ED5C00",
+    marginLeft: "-30%",
+  },
+  ButtonRight: {
+    color: "#ED5C00",
+    marginRight: "-50%",
+  },
+
+  text: {
+    marginLeft: "13%",
   },
 
   response: {
@@ -84,16 +89,47 @@ function Page() {
 
   // state to store oneproduct
   const [oneproduct, setOneproduct] = useState([]);
-
+  const [oneproductPhoto, setOneproductPhoto] = useState([]);
   // state to store the new price
   const [newPrice, setNewPrice] = useState("");
+
+  // function to get one product photo
+  useEffect(() => {
+    if (router.isReady) {
+      axios
+        .get(`http://localhost:5000/admin/getoneproduct/photo/${router.query.id}`)
+        .then((result) => {
+          setOneproductPhoto(result.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [router.isReady]);
+
+  // function to extract url of images and push them in the array to loop over-it
+  let myimages = [];
+  let MyPhotoArray = () => {
+    oneproductPhoto.map((element) => {
+      myimages.push(element.Photo1);
+      myimages.push(element.Photo2);
+      myimages.push(element.Photo3);
+    });
+    return myimages;
+  };
+
+  MyPhotoArray();
 
   // function to get one product
   useEffect(() => {
     if (router.isReady) {
       axios
         .get(`http://localhost:5000/admin/getoneproduct/${router.query.id}`)
-        .then((res) => setOneproduct(res.data))
+        .then((res) => {
+          setOneproduct(res.data);
+          console.log("testtttt", res.data);
+        })
+
         .catch((err) => console.log(err));
     }
   }, [router.isReady]);
@@ -107,7 +143,6 @@ function Page() {
       .catch((err) => console.log(err));
   };
 
-  //
   // function to delete product (not_accepted)
   let DeleteProduct = () => {
     axios
@@ -134,8 +169,24 @@ function Page() {
       router.push("../products");
     }, "1500");
   };
+  // function next
+  const handlePrevious = () => {
+    if (index === 0) {
+      setIndex(myimages.length - 1);
+    } else {
+      setIndex(index - 1);
+    }
+  };
+  // function next previous
+  const handleNext = () => {
+    if (index === myimages.length - 1) {
+      setIndex(0);
+    } else {
+      setIndex(index + 1);
+    }
+  };
 
-  console.log("hay", oneproduct);
+  const [index, setIndex] = useState(0);
   return (
     <>
       <Head>
@@ -180,11 +231,23 @@ function Page() {
                       flexDirection: "column",
                     }}
                   >
-                    <CardMedia
-                      className={classes.media}
-                      image={element.photo_product}
-                      title="product.name"
-                    />
+                    <Grid>
+                      <SwipeableViews index={index} onChangeIndex={(i) => setIndex(i)}>
+                        {myimages.map((element, i) => (
+                          <img key={i} className={classes.media} src={element} />
+                        ))}
+                      </SwipeableViews>
+                    </Grid>
+
+                    <Grid>
+                      <Button className={classes.ButtonLeft} onClick={handlePrevious}>
+                        <NavigateBeforeIcon />
+                      </Button>
+
+                      <Button className={classes.ButtonRight} onClick={handleNext}>
+                        <NavigateNextIcon />
+                      </Button>
+                    </Grid>
                   </Box>
                 </CardContent>
                 <Divider />
@@ -193,7 +256,7 @@ function Page() {
           </Grid>
           <form autoComplete="off" noValidate>
             <Card>
-              <CardContent>
+              <CardContent className={classes.text}>
                 <Grid container spacing={2}>
                   <Grid item md={6} xs={12}>
                     <Typography variant="h6" gutterBottom>
@@ -245,7 +308,7 @@ function Page() {
 
                   <Grid item md={6} xs={12}>
                     <Typography variant="h6" gutterBottom>
-                      Seller : {element.sellIerd}
+                      Seller : {element.name}
                     </Typography>
                   </Grid>
                   <Grid item md={6} xs={12}>

@@ -13,6 +13,9 @@ const {
   GetAllFeedBack,
   DeleteProductPhoto,
   GetEmployers,
+  GetOneProductPhoto,
+  GetAllReservation,
+  GetAllSales,
 } = require("../contollers/admin.js");
 
 // user route
@@ -22,6 +25,10 @@ router.get("/getoneuser/:id_user", GetOneUser);
 // product route
 router.get("/getallproductnotaccepted", GetAllProductsNotAccepted);
 router.get("/getoneproduct/:id_product", GetOneProduct);
+router.get("/getoneproduct/photo/:id_product", GetOneProductPhoto);
+router.get("/getallreservation", GetAllReservation);
+router.get("/getallsales", GetAllSales);
+
 router.put("/updateproductstate/:id_product", UpdateProductState);
 router.put("/updateproductprice/:id_product", UpdateProductPrice);
 router.delete("/deleteproduct/:id_product", DeleteProduct);

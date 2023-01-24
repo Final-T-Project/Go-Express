@@ -9,12 +9,12 @@ export const ReservationService = () => {
   let [reservation, setReservation] = useState([]);
 
   // function to get all reservation
-  // useEffect(() => {
-  //   axios.get(`http://localhost:5000/reservation/getallreservation`).then((result) => {
-  //     setReservation(result.data);
-  //     console.log(result.data);
-  //   });
-  // }, []);
+  useEffect(() => {
+    axios.get(`http://localhost:5000/admin/getallreservation`).then((result) => {
+      setReservation(result.data);
+      console.log(result.data);
+    });
+  }, []);
 
   return (
     <Card

@@ -4,7 +4,7 @@ import * as ImagePicker from "expo-image-picker";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
-import React from "react";
+import React, { useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import {
   IconButton,
@@ -20,6 +20,8 @@ import {
   Image,
   HStack,
   Heading,
+  useToast,
+  Box,
 } from "native-base";
 import axios from "axios";
 
@@ -30,6 +32,7 @@ import firebaseConfig from "../config/firebase";
 
 export default function EditeProfil() {
   const navigation = useNavigation();
+  const toast = useToast();
   const [uploading, setUploading] = useState(false);
 
   const [placement, setPlacement] = useState(undefined);
@@ -113,6 +116,17 @@ export default function EditeProfil() {
         phoneNumber: phoneNumber,
       })
       .then(() => {
+        toast.show({
+          render: () => {
+            return (
+              <Box bg="green.500" px="5" py="1" rounded="sm" mb={7}>
+                Your Profile Updated
+              </Box>
+            );
+          },
+        });
+      })
+      .then(() => {
         setOpen(false);
         navigation.navigate("Profil");
       })
@@ -175,6 +189,16 @@ export default function EditeProfil() {
             </FormControl>
             <FormControl>
               <FormControl.Label fontStyle={{ color: "#373E5A" }}>
+                <Text
+                  style={{
+                    color: "#ED5C00",
+                    fontSize: 20,
+                    left: "1100%",
+                    bottom: -5,
+                  }}
+                >
+                  *
+                </Text>
                 Name
               </FormControl.Label>
               <Input
@@ -190,7 +214,19 @@ export default function EditeProfil() {
             </FormControl>
             <FormControl>
               <FormControl>
-                <FormControl.Label>ville</FormControl.Label>
+                <FormControl.Label>
+                  <Text
+                    style={{
+                      color: "#ED5C00",
+                      fontSize: 20,
+                      left: "1100%",
+                      bottom: -5,
+                    }}
+                  >
+                    *
+                  </Text>
+                  ville
+                </FormControl.Label>
                 <Input
                   backgroundColor={"muted.100"}
                   borderColor={"muted.200"}
@@ -202,7 +238,19 @@ export default function EditeProfil() {
                   }}
                 />
               </FormControl>
-              <FormControl.Label>Adress</FormControl.Label>
+              <FormControl.Label>
+                <Text
+                  style={{
+                    color: "#ED5C00",
+                    fontSize: 20,
+                    left: "1100%",
+                    bottom: -5,
+                  }}
+                >
+                  *
+                </Text>
+                Adress
+              </FormControl.Label>
               <Input
                 backgroundColor={"muted.100"}
                 borderColor={"muted.200"}
@@ -215,7 +263,19 @@ export default function EditeProfil() {
               />
             </FormControl>
             <FormControl>
-              <FormControl.Label>Phone number </FormControl.Label>
+              <FormControl.Label>
+                <Text
+                  style={{
+                    color: "#ED5C00",
+                    fontSize: 20,
+                    left: "1100%",
+                    bottom: -5,
+                  }}
+                >
+                  *
+                </Text>
+                Phone number{" "}
+              </FormControl.Label>
               <Input
                 backgroundColor={"muted.100"}
                 borderColor={"muted.200"}

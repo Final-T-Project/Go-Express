@@ -51,7 +51,7 @@ module.exports = {
   getProducts: function (callback, category) {
     const sql = `SELECT * FROM product WHERE category="${category}"and productStatus ="Accepted"`;
     connection.query(sql, function (error, results) {
-      callback(error, results);
+      callback(error, results.reverse());
     });
   },
 };

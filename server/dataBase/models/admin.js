@@ -16,6 +16,20 @@ module.exports = {
     });
   },
 
+  getAllReservation: function (callback) {
+    const sql = `SELECT * FROM reservation `;
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  },
+
+  getAllSales: function (callback) {
+    const sql = `SELECT * FROM cart WHERE state="done" `;
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  },
+
   getAllProductNotAccepted: function (callback) {
     const sql = `SELECT * FROM product WHERE productStatus="NotAccepted"`;
     connection.query(sql, function (error, results) {
@@ -26,6 +40,13 @@ module.exports = {
   getOneProduct: function (callback, id) {
     // const sql = `SELECT * FROM product WHERE id_product ="${id}"`;
     const sql = `SELECT * FROM product INNER JOIN user ON product.user_id_user = user.id_user WHERE id_product="${id}"`;
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  },
+
+  getOneProductPhoto: function (callback, id) {
+    const sql = `SELECT * FROM product_photo WHERE product_id_product="${id}"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
@@ -65,10 +86,10 @@ module.exports = {
     });
   },
 
-  GetEmployers:function(callback){
-    const sql =`SELECT * FROM employer `;
+  GetEmployers: function (callback) {
+    const sql = `SELECT * FROM employer `;
     connection.query(sql, function (error, results) {
       callback(error, results);
-  })
-},
+    });
+  },
 };

@@ -3,81 +3,86 @@ import { Avatar, Box, Card, CardContent, Divider, Grid, Typography } from "@mui/
 import { Clock as ClockIcon } from "../../icons/clock";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faEye } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 export const SalesCard = (props) => {
   return (
-    <>
-      {props.product.map((element) => (
-        <Card
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            height: 400,
-          }}
-        >
-          <CardContent>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                pb: 3,
-                width: 300,
-              }}
-            >
-              <Avatar
-                sx={{
-                  justifyContent: "center",
-                  height: 200,
-                  width: 260,
-                  pb: 5,
-                }}
-                alt="Product"
-                src={element.photo}
-                variant="square"
-              />
-            </Box>
-            <Typography align="center" color="textPrimary" gutterBottom variant="h5">
-              {element.name}
-            </Typography>
-            <Typography align="center" color="textPrimary" gutterBottom variant="h6">
-              element.price dt
-            </Typography>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={1}>
+        <Grid container item spacing={4}>
+          {props.product.map((element) => (
+            <Grid>
+              <CardContent sx={{}}>
+                <Box>
+                  <Avatar
+                    sx={{
+                      justifyContent: "center",
+                      alignContent: "center",
+                      height: 300,
+                      width: 300,
+                      borderRadius: 2,
+                    }}
+                    alt="Product"
+                    src={element.photo_product}
+                    variant="square"
+                  />
 
-            <Typography align="center" color="textPrimary" variant="body1">
-              product.description
-            </Typography>
-          </CardContent>
-          <Box sx={{ flexGrow: 1 }} />
-          <Divider />
-          <Box sx={{ p: 2 }}>
-            <Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
-              <Grid
-                item
-                sx={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
-                  <FontAwesomeIcon icon={faClock} />
-                  Published at :
-                </Typography>
-              </Grid>
-              <Grid
-                item
-                sx={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
-                  <FontAwesomeIcon icon={faEye} /> View Detail
-                </Typography>
-              </Grid>
+                  <Typography align="center" color="textPrimary" gutterBottom variant="h5">
+                    {element.product_name}
+                  </Typography>
+                </Box>
+              </CardContent>
+              <Box sx={{ flexGrow: 1 }} />
+              <Divider />
+              <Box sx={{ p: 2 }}>
+                <Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
+                  <Grid
+                    item
+                    sx={{
+                      alignItems: "center",
+                      display: "flex",
+                    }}
+                  >
+                    {/* <Typography
+                      color="textSecondary"
+                      display="inline"
+                      sx={{ pl: 1 }}
+                      variant="body2"
+                    >
+                      <FontAwesomeIcon icon={faClock} />
+                      Published at :{element.Published_at}
+                    </Typography> */}
+                  </Grid>
+                  <Grid
+                    item
+                    sx={{
+                      alignItems: "center",
+                      display: "flex",
+                    }}
+                  >
+                    <Link href={"/product/id"} as={`/product/${element.id_product}`}>
+                      <Typography
+                        // color="textSecondary"
+
+                        sx={{
+                          alignItems: "center",
+                          display: "flex",
+                          marginRight: 15,
+                          marginTop: -7,
+                          color: "#ED5C00",
+                        }}
+                        variant="body2"
+                      >
+                        <FontAwesomeIcon icon={faEye} /> View Detail
+                      </Typography>
+                    </Link>
+                  </Grid>
+                </Grid>
+              </Box>
             </Grid>
-          </Box>
-        </Card>
-      ))}
-    </>
+          ))}
+        </Grid>
+      </Grid>
+    </Box>
   );
 };

@@ -72,6 +72,7 @@ const Page = () => {
                           width: 150,
                         }}
                       />
+
                       <Typography color="textPrimary" gutterBottom variant="h5">
                         {element.name}
                       </Typography>

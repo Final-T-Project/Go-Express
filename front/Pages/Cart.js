@@ -8,7 +8,7 @@ import {
   ToastAndroid,
   StatusBar,
 } from "react-native";
-import { Box, HStack, Checkbox, useToast } from "native-base";
+import { Box, HStack, Checkbox, useToast, Radio, ListItem } from "native-base";
 import EditeAdress from "./EditeAdress.js";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { COLOURS, Items } from "../database/Database";
@@ -375,10 +375,20 @@ const MyCart = ({ navigation }) => {
             <View
               style={{
                 paddingHorizontal: 16,
-                marginVertical: 10,
+                marginVertical: 1,
+                marginBottom: -15,
               }}
             >
-              <Box></Box>
+              <Text
+                style={{
+                  color: "#ED5C00",
+                  fontSize: 20,
+                  left: "45%",
+                  bottom: -30,
+                }}
+              >
+                *
+              </Text>
               <Text
                 style={{
                   fontSize: 16,
@@ -390,6 +400,7 @@ const MyCart = ({ navigation }) => {
               >
                 Delivery Location
               </Text>
+
               <View
                 style={{
                   flexDirection: "row",
@@ -444,6 +455,16 @@ const MyCart = ({ navigation }) => {
               marginVertical: 10,
             }}
           >
+            <Text
+              style={{
+                color: "#ED5C00",
+                fontSize: 20,
+                left: "45%",
+                bottom: -30,
+              }}
+            >
+              *
+            </Text>
             <Text
               style={{
                 fontSize: 16,
