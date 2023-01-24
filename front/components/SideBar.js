@@ -169,7 +169,7 @@ export default function SideBbar({ navigation, route }) {
               notifications
             )}
             {TabButton(currentTab, setCurrentTab, "MyCart", cart)}
-            {TabButton(currentTab, setCurrentTab, "Chat", chat)}
+            {/* {TabButton(currentTab, setCurrentTab, "Chat", chat)} */}
             {TabButton(currentTab, setCurrentTab, "Join_Us", join)}
           </View>
           <View style={{ top: 100 }}>
