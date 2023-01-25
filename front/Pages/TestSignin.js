@@ -39,7 +39,7 @@ function TestLogin() {
   });
 
   const Navigation = useNavigation();
-   const app = initializeApp(firebaseConfig);
+  const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
   const [user, setUser] = useState("");

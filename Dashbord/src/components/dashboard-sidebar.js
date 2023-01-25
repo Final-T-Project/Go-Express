@@ -36,7 +36,7 @@ const items = [
   {
     href: "/account",
     icon: <UserAddIcon fontSize="small" />,
-    title: "Employer",
+    title: "Employers",
     // <UserIcon fontSize="small" />,
   },
 

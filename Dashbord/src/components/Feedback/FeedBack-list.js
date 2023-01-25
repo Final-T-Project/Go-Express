@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const FeedBack = (props) => {
+  console.log("hi", props.feedback);
   let [value, setValue] = useState(0);
   const classes = useStyles();
   return (
@@ -35,7 +36,7 @@ export const FeedBack = (props) => {
                       }}
                       alt="p=user"
                       // src="https://www.adobe.com/fr/express/create/media_1bb4d071398492506a1b76b3b6f9d69a5e96d7ffc.png?width=750&format=png&optimize=medium"
-                      src={{ uri: element.photo }}
+                      src={element.photo}
                       variant="square"
                     />
                   </Box>

@@ -42,11 +42,14 @@ export default function BookingDetails({ route }) {
       });
   }, [listService]);
 
-  console.log("hethi mel details", time);
+  // console.log("hethi mel details", time);
 
   return (
     <View style={css.container}>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} style={{alignItems:"center",justifyContent:"center"}}>
+      <TouchableWithoutFeedback
+        onPress={() => Keyboard.dismiss()}
+        style={{ alignItems: "center", justifyContent: "center" }}
+      >
         <ScrollView>
           <View style={css.box}>
             <Text
@@ -72,25 +75,39 @@ export default function BookingDetails({ route }) {
             />
 
             <Text style={{ marginLeft: 30, fontWeight: "400", marginTop: 40 }}>
-              Services :{"   "+serviceChoosen}
+              Services :{"   " + serviceChoosen}
             </Text>
-            
+
             <Text style={{ marginLeft: 31, fontWeight: "400", marginTop: 20 }}>
-              Date :{"     "+date+" "+"January"}
+              Date :{"     " + date + " " + "January"}
             </Text>
-            
+
             <Text style={{ marginLeft: 30, fontWeight: "400", marginTop: 20 }}>
-              Time :{"   "+time.substring(0,5)}
+              Time :{"   " + time.substring(0, 5)}
             </Text>
-           
-            {serviceChoosen === "Moving" ?<Text style={{ marginLeft: 30, fontWeight: "400", marginTop: 20 }}>
-              Destination :{"   "+toList}
-            </Text>:<Text style={{ color:"grey",marginLeft: 30, fontWeight: "400", marginTop: 20 }}>
-              Destination :{" "+"The service you choose doesn't have destination field"}
-            </Text>}
-            
+
+            {serviceChoosen === "Moving" ? (
+              <Text
+                style={{ marginLeft: 30, fontWeight: "400", marginTop: 20 }}
+              >
+                Destination :{"   " + toList}
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  color: "grey",
+                  marginLeft: 30,
+                  fontWeight: "400",
+                  marginTop: 20,
+                }}
+              >
+                Destination :
+                {" " + "The service you choose doesn't have destination field"}
+              </Text>
+            )}
+
             <Text style={{ marginLeft: 30, fontWeight: "400", marginTop: 20 }}>
-              Price :{"    "+price+"  Dt"}
+              Price :{"    " + price + "  Dt"}
             </Text>
 
             <View style={{ alignItems: "center" }}>
@@ -134,7 +151,6 @@ const css = StyleSheet.create({
     justifyContent: "center",
   },
   box: {
-    
     backgroundColor: "white",
     width: 350,
     height: 400,

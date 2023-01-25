@@ -69,12 +69,15 @@ module.exports = {
   },
 
   postReservation: function (req, res) {
-    cart.postReservation(function (result, err) {
-      if (err) result.send(err);
-      else res.json(result);
-    }, req.body.cart_id_cart , req.body.reservation_id_reservation);
+    cart.postReservation(
+      function (result, err) {
+        if (err) result.send(err);
+        else res.json(result);
+      },
+      req.body.cart_id_cart,
+      req.body.reservation_id_reservation
+    );
   },
-
 
   getReservation: function (req, res) {
     cart.getReservation(function (result, err) {
@@ -83,10 +86,32 @@ module.exports = {
     }, req.params.id_cart);
   },
 
-  deleteReservations: function (req , res){
-    cart.deleteReservation(function (result,err){
-      if ( err ) res.send(err);
-      else res.json(result)
-    },req.body.idCart,req.body.idReservation)
+  deleteReservations: function (req, res) {
+    cart.deleteReservation(
+      function (result, err) {
+        if (err) res.send(err);
+        else res.json(result);
+      },
+      // req.body.idCart,
+      req.params.reservation_id_reservation
+    );
+  },
+  deleteOnCheckOut: function (req, res) {
+    cart.deleteOnCheckOut(function (result, err) {
+      if (err) res.send(err);
+      else res.json(result);
+    }, req.body.idCart);
+  },
+  GetNumberReservation: function (req, res) {
+    cart.getNumberReservation(function (err, result) {
+      if (err) res.status(500).send(err);
+      else res.json(result);
+    });
+  },
+  getServiceNumber: function (req, res) {
+    cart.getServiceNumber(function (err, result) {
+      if (err) res.status(500).send(err);
+      else res.json(result);
+    }, req.params.service);
   },
 };

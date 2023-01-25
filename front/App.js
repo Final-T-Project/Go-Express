@@ -38,7 +38,7 @@ export default function App() {
   const [showContent, setShowContent] = useState("");
   const [userId, setUserId] = useState("");
   const [userCartId, setUserCartId] = useState("");
-  const [listService, setListService] = useState("");
+  const [listService, setListService] = useState(0);
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState("");
   const [toList, setToList] = useState("");
@@ -159,12 +159,11 @@ export default function App() {
             />
             <Stack.Screen name="BookService" component={BookService} />
             <Stack.Screen name="Booking Details" component={BookingDetails} />
-            <Stack.Screen name="HistoryDetails"  component={HistoryDetails} />
+            <Stack.Screen name="HistoryDetails" component={HistoryDetails} />
             <Stack.Screen name="Join_Us" component={Join_Us} />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>
-    </UserContext.Provider>   
+    </UserContext.Provider>
   );
 }
-

@@ -21,14 +21,13 @@ function Notification() {
   let [furniture, setFurniture] = useState([]);
   const [data, setData] = useState([]);
 
-  const [userDataProfile, setUserDataProfile] = useState([]);
-  const [count, setCount] = useState(0);
-  const navigation = useNavigation();
+  // const [userDataProfile, setUserDataProfile] = useState([]);
+  // const [count, setCount] = useState(0);
+  // const navigation = useNavigation();
   useEffect(() => {
     (async function () {
       axios.get(`http://${IPADRESS}:5000/products/garden`).then((result) => {
         setGarden(result.data);
-        console.log(garden, "ffffffffffffffffffffffffffffffff");
       });
 
       axios
@@ -52,17 +51,17 @@ function Notification() {
     GetAllProduct();
   }, []);
 
-  useEffect(() => {
-    axios
-      .get(`http://${IPADRESS}:5000/users/getUserPorfile/${userId}`)
-      .then((response) => {
-        setUserDataProfile(response.data);
-        // console.log("user_data", response.data);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://${IPADRESS}:5000/users/getUserPorfile/${userId}`)
+  //     .then((response) => {
+  //       setUserDataProfile(response.data);
+  //       // console.log("user_data", response.data);
+  //     })
+  //     .catch((error) => {
+  //       alert(error);
+  //     });
+  // }, []);
   var gardenstore = setGarden.length + 1;
   var accessoriesstore = setAccessories.length + 1;
   var furniturestore = setFurniture.length + 1;
@@ -70,7 +69,7 @@ function Notification() {
 
   return (
     <ScrollView>
-      <View style={{marginTop:30}}>
+      <View style={{ marginTop: 30 }}>
         <FlatList
           data={garden}
           keyExtractor={(item, index) => {
@@ -94,9 +93,9 @@ function Notification() {
                       <Text style={{ color: "#1B6ADF", fontSize: 15 }}>
                         GO-Express
                       </Text>
-
                       <Text style={{ color: "#64676B", width: "80%" }}>
-                        The admin has been confirmed your {item.product_name} in{" "}
+                        The admin has been accepted your product{" "}
+                        {item.product_name} Product under Category{" "}
                         {item.category}
                       </Text>
 
@@ -110,7 +109,7 @@ function Notification() {
             );
           }}
         />
-        <FlatList
+        {/* <FlatList
           data={accessories}
           keyExtractor={(item, index) => {
             return index.toString();
@@ -187,8 +186,8 @@ function Notification() {
               </Pressable>
             );
           }}
-        />
-        <FlatList
+        /> */}
+        {/* <FlatList
           data={kitchen}
           keyExtractor={(item, index) => {
             return index.toString();
@@ -226,7 +225,7 @@ function Notification() {
               </Pressable>
             );
           }}
-        />
+        /> */}
       </View>
     </ScrollView>
   );
@@ -245,7 +244,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderRadius: 5,
     borderColor: "grey",
-    right:-10
+    right: -10,
   },
   HeaderImage: {
     width: "110%",
@@ -255,8 +254,8 @@ const styles = StyleSheet.create({
   image: {
     width: 50,
     height: 50,
-    top:-18,
-    right:18
+    top: -18,
+    right: 18,
     // paddingBottom: 80,
   },
 });

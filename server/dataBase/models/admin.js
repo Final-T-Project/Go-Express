@@ -24,7 +24,7 @@ module.exports = {
   },
 
   getAllSales: function (callback) {
-    const sql = `SELECT * FROM cart WHERE state="done" `;
+    const sql = `SELECT * FROM cart WHERE state="done"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });

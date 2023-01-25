@@ -376,8 +376,7 @@ function Product() {
               alignItems: "center",
             }}
           >
-            <View
-            style={{right:-10}}>
+            <View style={{ right: -10 }}>
               <StatusBar backgroundColor={"white"} barStyle="dark-content" />
               <Image
                 source={{ uri: element.photo_product }}
@@ -392,7 +391,6 @@ function Product() {
                   marginRight: 20,
                   borderColor: "#1C2765",
                   borderWidth: 2,
-                  
                 }}
               />
             </View>

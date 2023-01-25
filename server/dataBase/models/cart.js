@@ -62,14 +62,18 @@ module.exports = {
     });
   },
 
-  postReservation: function (callback, cart_id_cart , reservation_id_reservation){
-    const sql = ` INSERT INTO cart_has_reservation VALUES (${cart_id_cart},${reservation_id_reservation})`
-    connection.query(sql, function ( error , results ){
-      callback (results,error)
-    })
+  postReservation: function (
+    callback,
+    cart_id_cart,
+    reservation_id_reservation
+  ) {
+    const sql = ` INSERT INTO cart_has_reservation VALUES (${cart_id_cart},${reservation_id_reservation})`;
+    connection.query(sql, function (error, results) {
+      callback(results, error);
+    });
   },
 
-  getReservation: function (callback, idCart){
+  getReservation: function (callback, idCart) {
     const sql = `SELECT * FROM cart_has_reservation
     JOIN reservation
     ON cart_has_reservation.reservation_id_reservation = reservation.id_reservation
@@ -77,18 +81,37 @@ module.exports = {
     ON serves.id_serves = reservation.serves_id_serves
     WHERE cart_has_reservation.cart_id_cart=${idCart}
     `;
-    connection.query(sql, function ( error , results ){
-      callback (results,error)
-    })
+    connection.query(sql, function (error, results) {
+      callback(results, error);
+    });
   },
 
-  deleteReservation : function ( callback, idCart , idReservation){
-    const sql = ` DELETE FROM cart_has_reservation WHERE reservation_id_reservation=${idReservation} AND cart_id_cart=${idCart}`
-    connection.query(sql,function(err,result){
-      callback(result,err)
-    })
-  }
+  deleteReservation: function (callback, id) {
+    // const sql = ` DELETE FROM cart_has_reservation WHERE reservation_id_reservation=${idReservation} AND cart_id_cart=${idCart}`;
 
+    const sql = `DELETE FROM cart_has_reservation WHERE reservation_id_reservation=${id}`;
+    connection.query(sql, function (err, result) {
+      callback(result, err);
+    });
+  },
+  deleteOnCheckOut: function (callback, idCart) {
+    const sql = `DELETE FROM cart_has_reservation WHERE cart_id_cart=${idCart}`;
+    connection.query(sql, function (err, result) {
+      callback(result, err);
+    });
+  },
+
+  getNumberReservation: function (callback) {
+    const sql = `SELECT COUNT (*) as NUM FROM reservation`;
+    connection.query(sql, function (error, result) {
+      callback(error, result);
+    });
+  },
+
+  getServiceNumber: function (callback, service) {
+    const sql = `SELECT COUNT (*) as NUM FROM reservation WHERE serves_id_serves=${service}`;
+    connection.query(sql, function (error, result) {
+      callback(error, result);
+    });
+  },
 };
-
- 

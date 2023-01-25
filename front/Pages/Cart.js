@@ -106,16 +106,21 @@ const MyCart = ({ navigation }) => {
         console.log(error);
       });
   };
+  //http://localhost:5000/carts/deleteReservation/17
 
-  const deleteReservation = (idCart, idReservation) => {
+  //deleteReservation/:id_reservation
+  const deleteReservation = (idReservation) => {
     axios
-      .delete(`http://${IPADRESS}:5000/carts/deleteReservation`, {
-        idCart: idCart,
-        idReservation: idReservation,
-      })
-      .then(() => {
-        console.log("Service deleted " + idCart + " " + idReservation);
-        getReservation();
+      .delete(
+        `http://${IPADRESS}:5000/carts/deleteReservation/${idReservation}`
+      )
+      // .then(() => {
+      //   axios.delete(`http://${IPADRESS}:5000/carts/deletetablereservation/24`);
+      // })
+
+      .then(async () => {
+        console.log("Service deleted");
+        await getReservation();
       })
       .catch((error) => {
         console.log(error);
@@ -138,7 +143,7 @@ const MyCart = ({ navigation }) => {
 
   //change the status of cart to note done to done  (payment)
   let ChangeCartStatus = () => {
-    if (cartProducts.length === 0) {
+    if (cartProducts.length === 0 && cartService.length === 0) {
       return toast.show({
         render: () => {
           return (
@@ -152,6 +157,11 @@ const MyCart = ({ navigation }) => {
       axios
         .put(`http://${IPADRESS}:5000/carts/updateStateToDone/${userCartId}`, {
           date: checkout_at,
+        })
+        .then(() => {
+          axios.delete(`http://${IPADRESS}:5000/carts/deleteOnCheckOut`, {
+            idCart: userCartId,
+          });
         })
         .then(() => {
           // axios.delete(`http://${IPADRESS}:5000/carts/deleteALL/${userCartId}`);
@@ -341,7 +351,6 @@ const MyCart = ({ navigation }) => {
               }}
               style={{
                 width: "130%",
-
                 height: "120%",
                 resizeMode: "contain",
               }}
@@ -377,7 +386,6 @@ const MyCart = ({ navigation }) => {
               }}
               style={{
                 width: "130%",
-
                 height: "120%",
                 resizeMode: "contain",
               }}
@@ -459,9 +467,7 @@ const MyCart = ({ navigation }) => {
 
             <TouchableOpacity>
               <MaterialCommunityIcons
-                onPress={() =>
-                  deleteReservation(data.cart_id_cart, data.id_reservation)
-                }
+                onPress={() => deleteReservation(data.id_reservation)}
                 name="delete-outline"
                 style={{
                   fontSize: 20,

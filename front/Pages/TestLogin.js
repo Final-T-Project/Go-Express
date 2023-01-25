@@ -133,22 +133,24 @@ export default function TestLogin() {
                 //  ImageAlign: "center",
                 // // fontSize: 25,
                 marginTop: -15,
-                width:80,
-                height:80,
-                left:"40%"
+                width: 80,
+                height: 80,
+                left: "40%",
                 // fontWeight: "bold",
               }}
               source={{
                 uri: "https://res.cloudinary.com/dn9qfvg2p/image/upload/v1673556815/go_ovtczy.png",
               }}
             />
-              <Text
+            <Text
               style={{
-                fontSize:20,
-                textAlign:'center',
-                fontWeight:'bold'
+                fontSize: 20,
+                textAlign: "center",
+                fontWeight: "bold",
               }}
-              >GO EXPRESS</Text>
+            >
+              GO EXPRESS
+            </Text>
             {/* <View
               style={{
                 display: "flex",
@@ -429,7 +431,7 @@ const css = StyleSheet.create({
     borderRadius: 4,
     marginLeft: 10,
     marginTop: 108,
-    justifyContent:'center',
+    justifyContent: "center",
 
     shadowColor: "black",
     shadowOffset: {

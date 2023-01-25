@@ -15,6 +15,7 @@ const Home = () => {
   const { userId } = useContext(UserContext);
   const { userCartId, setUserCartId } = useContext(UserContext);
 
+  // console.log("from home ", userCartId);
   // to set id_cart for each user and set a new id-cart after each chek-out
   useEffect(() => {
     axios
@@ -47,7 +48,7 @@ const Home = () => {
             onPress={() => {
               navig;
             }} */}
-            {/* // mainTitle="where are here "
+          {/* // mainTitle="where are here "
             // secondTitle="to facilitate your life"
           // /> */}
           {/* <MainHeader

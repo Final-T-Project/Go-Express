@@ -28,58 +28,38 @@ import IPADRESS from "../config/IPADRESS";
 export default function BookService({ route }) {
   const serviceChoosen = route.params.service;
 
-  console.log(serviceChoosen);
+  console.log("testoo", serviceChoosen);
 
   const minDate = new Date();
 
-  const [id, setId] = useState("");
-  const [idCart, setIdCart] = useState("");
-
   const { userId } = useContext(UserContext);
+  const { userCartId } = useContext(UserContext);
+  const { listService, setListService } = useContext(UserContext);
+  console.log("my new id", userId);
+  console.log("my new idcart", userCartId);
 
   useEffect(() => {
-    setId(userId);
     axios
       .get(`http://${IPADRESS}:5000/carts/getIdCart/${userId}`)
-      .then((res) => {
-        //console.log(res.data[0].id_cart)
-        setIdCart(res.data[0].id_cart);
+      .then(() => {
         serviceChoosen === "Moving"
-          ? setListService("1")
+          ? setListService(1)
           : serviceChoosen === "Cleaning"
-          ? setListService("2")
+          ? setListService(2)
           : serviceChoosen === "Plumbing"
-          ? setListService("3")
-          : setListService("4");
+          ? setListService(3)
+          : setListService(4);
       })
       .catch((err) => {
         console.log("Error ----------->" + err);
       });
   }, [userId]);
-
-  useEffect(() => {
-    axios
-      .get(`http://${IPADRESS}:5000/carts/getIdCart/${userId}`)
-      .then((res) => {
-        console.log(res.data[0].id_cart);
-        setIdCart(res.data[0].id_cart);
-      })
-      .catch((err) => {
-        console.log("Error ----------->" + err);
-      });
-  }, [userId]);
-
-  console.log(id);
-  console.log(idCart);
 
   const Navigation = useNavigation();
 
   const { date, setDate } = useContext(UserContext);
   const { time, setTime } = useContext(UserContext);
   const { toList, setToList } = useContext(UserContext);
-  // ---------------------------------- Drop list state -------------------------------------------------//
-
-  const { listService, setListService } = useContext(UserContext);
 
   // ---------------------------------- Date state -------------------------------------------------//
   const [dateChoosen, setDateChoosen] = useState("");
@@ -121,18 +101,19 @@ export default function BookService({ route }) {
     axios
       .post(`http://${IPADRESS}:5000/service/addBookedService`, {
         date: date,
-        idUser: id,
+        idUser: userId,
         idService: listService,
-        idCart: idCart,
+        idCart: userCartId,
         time: time,
         fromPlace: fromList,
         toPlace: toList,
+        // idService: 1,
       })
       .then((result) => {
         //console.log(result.data.insertId)
         axios
           .post(`http://${IPADRESS}:5000/carts/postReservation`, {
-            cart_id_cart: idCart,
+            cart_id_cart: userCartId,
             reservation_id_reservation: result.data.insertId,
           })
           .then(() => {
