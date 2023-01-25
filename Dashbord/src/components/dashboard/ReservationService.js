@@ -1,7 +1,7 @@
 import { Avatar, Box, Card, CardContent, Grid, LinearProgress, Typography } from "@mui/material";
 import InsertChartIcon from "@mui/icons-material/InsertChartOutlined";
 
-import axios from "axios";
+
 import { useState, useEffect } from "react";
 
 export const ReservationService = () => {

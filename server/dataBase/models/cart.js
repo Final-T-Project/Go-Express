@@ -4,6 +4,21 @@ const connection = require("../index.js");
 
 module.exports = {
   // function to add cart
+  getNumberReservation : function ( callback ){
+    const sql = ` SELECT COUNT (*) as NUM FROM reservation`
+    connection.query(sql,function (error,result){
+      callback(error,result)
+    })
+  },
+
+  getServiceNumber : function ( callback ,service ){
+    const sql = ` SELECT COUNT (*) as NUM FROM reservation WHERE serves_id_serves=${service}`
+    connection.query(sql,function (error,result){
+      callback(error,result)
+    })
+  }
+,
+
   add: function (callback, payment_type, date, id_user, state) {
     const sql = `INSERT INTO cart (payment_type,date,user_id_user,state) VALUES("${payment_type}","${date}","${id_user}", "${state}")`;
     connection.query(sql, function (error, results) {
@@ -84,6 +99,13 @@ module.exports = {
 
   deleteReservation : function ( callback, idCart , idReservation){
     const sql = ` DELETE FROM cart_has_reservation WHERE reservation_id_reservation=${idReservation} AND cart_id_cart=${idCart}`
+    connection.query(sql,function(err,result){
+      callback(result,err)
+    })
+  }
+,
+  deleteOnCheckOut : function (callback , idCart ){
+    const sql = ` DELETE FROM cart_has_reservation WHERE cart_id_cart=${idCart}`
     connection.query(sql,function(err,result){
       callback(result,err)
     })

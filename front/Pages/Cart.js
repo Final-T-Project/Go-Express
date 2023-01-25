@@ -135,7 +135,7 @@ const MyCart = ({ navigation }) => {
 
   //change the status of cart to note done to done  (payment)
   let ChangeCartStatus = () => {
-    if (cartProducts.length === 0) {
+    if (cartProducts.length === 0 && cartService.length=== 0 ) {
       return toast.show({
         render: () => {
           return (
@@ -149,6 +149,10 @@ const MyCart = ({ navigation }) => {
       axios
         .put(`http://${IPADRESS}:5000/carts/updateStateToDone/${userCartId}`, {
           date: checkout_at,
+        })
+        axios.delete(`http://localhost:5000/carts/deleteOnCheckOut`,{idCart:userCartId})
+        .then(()=>{
+          console.log("------------------------>serives deleted from Cart_has_reservation")
         })
         .then(() => {
           // axios.delete(`http://${IPADRESS}:5000/carts/deleteALL/${userCartId}`);
@@ -164,6 +168,7 @@ const MyCart = ({ navigation }) => {
         .then(() => {
           setCartProducts(null);
           setTotalPrice(0);
+         
         })
         .then(() => {
           toast.show({

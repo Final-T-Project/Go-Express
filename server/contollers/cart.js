@@ -2,6 +2,21 @@ const cart = require("../dataBase/models/cart.js");
 
 module.exports = {
   // function to add user
+  GetNumberReservation : function ( req , res ){
+    cart.getNumberReservation(function(err,result){
+      if(err) res.status(500).send(err);
+      else res.json(result)
+    })
+  }
+,
+getServiceNumber : function ( req , res ){
+  cart.getServiceNumber(function(err,result){
+    if ( err ) res.status(500).send(err);
+    else res.json(result)   
+  },req.params.service)
+}
+
+,
   AddCart: function (req, res) {
     cart.add(
       function (err, results) {
@@ -89,4 +104,11 @@ module.exports = {
       else res.json(result)
     },req.body.idCart,req.body.idReservation)
   },
+
+  deleteOnCheckOut: function (req ,res){
+    cart.deleteOnCheckOut(function(result,err){
+      if (err) res.send(err)
+        else res.json(result)
+    },req.body.idCart)
+  }
 };

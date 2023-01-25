@@ -3,21 +3,89 @@ import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme } fro
 import CountertopsIcon from "@mui/icons-material/Countertops";
 import BedroomChildIcon from "@mui/icons-material/BedroomChild";
 import DeckIcon from "@mui/icons-material/Deck";
+import axios from "axios"
+import {useState,useEffect} from "react"
+
+
 
 export const TrafficByDevice = (props) => {
   const theme = useTheme();
 
+  const [totalReservation,setTotalReservation] = useState(0)
+
+  const [MovingPer,setMovingPer]= useState(0)
+  const [CleaningPer,setCleaningPer]= useState(0)
+  const [PlumbingPer,setPlumbingPer]= useState(0)
+  const [ElectricityPer,setElectricityPer]= useState(0)
+
+  useEffect(()=>{
+    calculate();
+  },[ElectricityPer])
+
+  const purcente = (num,numPrin) => {
+    return num / numPrin * 100 
+  }
+
+  const calculate = () =>{
+    axios.get(`http://localhost:5000/carts/getNumberReservation`)
+    .then((res)=>{
+      console.log("-------------->"+JSON.stringify(res.data[0]["NUM"]))
+      setTotalReservation(Number(res.data[0]["NUM"]))
+    }).then(()=>{
+      axios.get(`http://localhost:5000/carts/getServiceNumber/${1}`)
+      .then((res)=>{
+        console.log("------Moving-------->"+JSON.stringify(res.data[0]["NUM"]))
+        const theNumber=Number(res.data[0]["NUM"])
+        const purc=Math.floor(purcente(theNumber,totalReservation))
+        setMovingPer(purc)
+      })
+  
+      axios.get(`http://localhost:5000/carts/getServiceNumber/${2}`)
+      .then((res)=>{
+        console.log("------Cleaning-------->"+JSON.stringify(res.data[0]["NUM"]))
+        const theNumber=Number(res.data[0]["NUM"])
+        const purc=Math.floor(purcente(theNumber,totalReservation))
+        setCleaningPer(purc)
+      })
+  
+      axios.get(`http://localhost:5000/carts/getServiceNumber/${3}`)
+      .then((res)=>{
+        console.log("------Plumbing-------->"+JSON.stringify(res.data[0]["NUM"]))
+        const theNumber=Number(res.data[0]["NUM"])
+        const purc=Math.floor(purcente(theNumber,totalReservation))
+        setPlumbingPer(purc)
+      })
+  
+      axios.get(`http://localhost:5000/carts/getServiceNumber/${4}`)
+      .then((res)=>{
+        console.log("------Electricity-------->"+JSON.stringify(res.data[0]["NUM"]))
+        const theNumber=Number(res.data[0]["NUM"])
+        const purc=Math.floor(purcente(theNumber,totalReservation))
+        setElectricityPer(purc)
+      })
+    })
+    .then(()=>{
+      console.log(MovingPer+" "+CleaningPer+ " " + PlumbingPer+ " " + ElectricityPer )
+    })
+
+
+    
+
+
+  }
+  
+
   const data = {
     datasets: [
       {
-        data: [63, 15, 22],
-        backgroundColor: ["#1C2765", "#ada8a8", "#ED5C00"],
+        data: [MovingPer, CleaningPer, PlumbingPer , ElectricityPer ],
+        backgroundColor: ["#1C2765", "#ada8a8", "#ED5C00","#ff9d5e"],
         borderWidth: 8,
         borderColor: "#FFFFFF",
         hoverBorderColor: "#FFFFFF",
       },
     ],
-    labels: ["Kitchen", "Furniture", "Garden"],
+    labels: ["Moving", "Cleaning", "Plumbing" , "Electricity"],
   };
 
   const options = {
@@ -44,22 +112,28 @@ export const TrafficByDevice = (props) => {
 
   const devices = [
     {
-      title: "Kitchen",
-      value: 63,
+      title: "Moving",
+      value: data.datasets[0].data[0],
       icon: CountertopsIcon,
       color: "#1C2765",
     },
     {
-      title: "Furniture",
-      value: 15,
-      icon: BedroomChildIcon,
+      title: "Cleaning",
+      value: data.datasets[0].data[1],
+      icon: CountertopsIcon,
       color: "#ada8a8",
     },
     {
-      title: "Garden",
-      value: 23,
-      icon: DeckIcon,
+      title: "Plumbing",
+      value: data.datasets[0].data[2],
+      icon: CountertopsIcon,
       color: "#ED5C00",
+    },
+    {
+      title: "Electricity",
+      value: data.datasets[0].data[3],
+      icon: CountertopsIcon,
+      color: "#ff9d5e",
     },
   ];
 
@@ -69,6 +143,7 @@ export const TrafficByDevice = (props) => {
         height: 628,
       }}
     >
+
       <CardHeader title="Product By Category" />
       <Divider />
       <CardContent>
